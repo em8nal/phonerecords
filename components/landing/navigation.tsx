@@ -12,15 +12,15 @@ export function Navigation() {
   const [isScrolled, setIsScrolled] = useState(false);
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
 
-  // Hash links live on the home page only — prefix with /<lang> so they
-  // also work from sub-pages like /es/artistas/newen-afrobeat.
+  // Real route links go to dedicated pages; Roster anchors to the home grid.
   const home = `/${language}`;
+  const isEs = language === "es";
   const navLinks = [
-    { name: t.nav.features, href: `${home}#features` },
     { name: "Roster", href: `${home}#integrations` },
-    { name: t.nav.howItWorks, href: `${home}#how-it-works` },
-    { name: t.nav.developers, href: `${home}#developers` },
-    { name: t.nav.pricing, href: `${home}#pricing` },
+    { name: isEs ? "Catálogo" : "Catalogue", href: `${home}/catalogo` },
+    { name: t.nav.developers, href: `${home}/eventos` },
+    { name: t.nav.howItWorks, href: `${home}/manifiesto` },
+    { name: t.nav.features, href: `${home}/sello` },
   ];
 
   useEffect(() => {

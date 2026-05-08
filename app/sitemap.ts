@@ -1,5 +1,6 @@
 import type { MetadataRoute } from "next";
 import { artistSlugs } from "@/lib/artists";
+import { releaseSlugs } from "@/lib/releases";
 
 const BASE = "https://phonerecords.cl";
 const LOCALES = ["es", "en"] as const;
@@ -12,7 +13,7 @@ function withAlternates(path: string) {
   };
 }
 
-const STATIC_PAGES = ["/manifiesto", "/sello"] as const;
+const STATIC_PAGES = ["/manifiesto", "/sello", "/catalogo", "/eventos"] as const;
 
 export default function sitemap(): MetadataRoute.Sitemap {
   const now = new Date();
@@ -45,5 +46,15 @@ export default function sitemap(): MetadataRoute.Sitemap {
     }))
   );
 
-  return [...home, ...editorial, ...artists];
+  const releases = LOCALES.flatMap((lang) =>
+    releaseSlugs.map((slug) => ({
+      url: `${BASE}/${lang}/releases/${slug}`,
+      lastModified: now,
+      changeFrequency: "yearly" as const,
+      priority: 0.6,
+      alternates: { languages: withAlternates(`/releases/${slug}`) },
+    }))
+  );
+
+  return [...home, ...editorial, ...artists, ...releases];
 }

@@ -5,7 +5,17 @@ import { ArrowLeft, ExternalLink, FileText } from "lucide-react";
 import { Navigation } from "@/components/landing/navigation";
 import { FooterSection } from "@/components/landing/footer-section";
 import { artistSlugs, getArtist } from "@/lib/artists";
+import { getReleasesByArtist } from "@/lib/releases";
+import { SpotifyArtistEmbed } from "@/components/spotify-embed";
 import type { Language } from "@/lib/translations";
+
+function extractSpotifyArtistId(links: { href: string }[]): string | null {
+  const sp = links.find((l) => l.href.includes("open.spotify.com/artist/"));
+  if (!sp) return null;
+  const m = sp.href.match(/artist\/([A-Za-z0-9]+)/);
+  return m ? m[1] : null;
+}
+
 
 type ArtistParams = { lang: string; slug: string };
 
@@ -63,10 +73,12 @@ export default async function ArtistPage({
   const isEs = lang === "es";
   const bio = isEs ? artist.bio.es : artist.bio.en;
   const labels = isEs
-    ? { back: "Volver al roster", releases: "Discografía", links: "Enlaces", origin: "Origen", genre: "Género", stats: "Métricas", roster: "Roster" }
-    : { back: "Back to roster", releases: "Discography", links: "Links", origin: "Origin", genre: "Genre", stats: "Metrics", roster: "Roster" };
+    ? { back: "Volver al roster", releases: "Discografía", links: "Enlaces", origin: "Origen", genre: "Género", stats: "Métricas", roster: "Roster", listenSpotify: "Escuchar en Spotify", catalogue: "Catálogo", viewRelease: "Ver release" }
+    : { back: "Back to roster", releases: "Discography", links: "Links", origin: "Origin", genre: "Genre", stats: "Metrics", roster: "Roster", listenSpotify: "Listen on Spotify", catalogue: "Catalogue", viewRelease: "View release" };
   const numberLocale = isEs ? "es-CL" : "en-US";
   const url = `https://phonerecords.cl/${lang}/artistas/${slug}`;
+  const spotifyArtistId = extractSpotifyArtistId(artist.links);
+  const detailedReleases = getReleasesByArtist(slug);
 
   // Schema.org JSON-LD: MusicGroup + BreadcrumbList for rich snippets.
   const schema = {
@@ -246,9 +258,55 @@ export default async function ArtistPage({
           </aside>
         </section>
 
-        {/* Releases */}
-        {artist.releases && artist.releases.length > 0 && (
-          <section>
+        {/* Spotify embed (top tracks) */}
+        {spotifyArtistId && (
+          <section className="mb-20">
+            <h2 className="font-mono text-xs text-muted-foreground uppercase tracking-widest mb-6">
+              {labels.listenSpotify}
+            </h2>
+            <SpotifyArtistEmbed artistId={spotifyArtistId} />
+          </section>
+        )}
+
+        {/* Releases — links to detail pages when we have them, fallback to old static list */}
+        {detailedReleases.length > 0 ? (
+          <section className="mb-20">
+            <div className="flex items-baseline justify-between mb-12">
+              <h2 className="text-3xl lg:text-5xl font-display tracking-tight">
+                {labels.releases}
+              </h2>
+              <Link
+                href={`/${lang}/catalogo`}
+                className="font-mono text-xs uppercase tracking-widest text-muted-foreground hover:text-foreground transition-colors"
+              >
+                {labels.catalogue} →
+              </Link>
+            </div>
+            <div className="border-t border-foreground/10">
+              {detailedReleases.map((r) => (
+                <Link
+                  key={r.slug}
+                  href={`/${lang}/releases/${r.slug}`}
+                  className="group grid grid-cols-12 gap-4 py-6 border-b border-foreground/10 hover:bg-foreground/[0.02] transition-colors px-2 -mx-2"
+                >
+                  <div className="col-span-12 sm:col-span-2 font-mono text-sm text-muted-foreground self-center">
+                    {r.releaseDate.slice(0, 7)}
+                  </div>
+                  <div className="col-span-12 sm:col-span-6">
+                    <div className="font-display text-lg group-hover:translate-x-1 transition-transform">{r.title}</div>
+                    {r.format && (
+                      <div className="text-sm text-muted-foreground mt-1">{r.format}</div>
+                    )}
+                  </div>
+                  <div className="col-span-12 sm:col-span-4 text-sm text-muted-foreground self-center">
+                    {r.label && <div className="font-mono text-xs uppercase tracking-wider">{r.label}</div>}
+                  </div>
+                </Link>
+              ))}
+            </div>
+          </section>
+        ) : artist.releases && artist.releases.length > 0 ? (
+          <section className="mb-20">
             <h2 className="text-3xl lg:text-5xl font-display tracking-tight mb-12">
               {labels.releases}
             </h2>
@@ -275,7 +333,7 @@ export default async function ArtistPage({
               ))}
             </div>
           </section>
-        )}
+        ) : null}
       </article>
 
       <FooterSection />

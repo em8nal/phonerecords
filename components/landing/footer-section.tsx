@@ -18,9 +18,9 @@ function buildFooterLinks(lang: "es" | "en"): Record<string, FooterHref[]> {
     ],
     // Order matches: Releases, Vinilo/Vinyl, Cassette, Digital
     Catalogue: [
-      { href: "https://newenafrobeat.bandcamp.com/music", external: true },
-      { href: "#pricing" },
-      { href: "#pricing" },
+      { href: `/${lang}/catalogo` },
+      { href: `/${lang}/catalogo` },
+      { href: `/${lang}/catalogo` },
       { href: "https://newenafrobeat.bandcamp.com/album/grietas-2", external: true },
     ],
     // Order matches: About PHŌNÉ, Manifesto, Press kit, Contact
