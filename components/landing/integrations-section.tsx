@@ -1,23 +1,21 @@
 "use client";
 
 import { useEffect, useState, useRef } from "react";
+import { useLanguage } from "@/lib/language-context";
 
-const integrations = [
-  { name: "GitHub", category: "Version Control" },
-  { name: "Slack", category: "Communication" },
-  { name: "Stripe", category: "Payments" },
-  { name: "PostgreSQL", category: "Database" },
-  { name: "Redis", category: "Cache" },
-  { name: "AWS", category: "Cloud" },
-  { name: "MongoDB", category: "Database" },
-  { name: "Vercel", category: "Hosting" },
-  { name: "Figma", category: "Design" },
-  { name: "Linear", category: "Project Management" },
-  { name: "Notion", category: "Documentation" },
-  { name: "OpenAI", category: "AI/ML" },
+const roster = [
+  { name: "Newen Afrobeat", genre: "Afrobeat · Afrofunk", country: "Chile / international" },
+  { name: "Claudio Solís", genre: "Dark Minimal · Techno", country: "Santiago, Chile" },
+  { name: "Ecamhi", genre: "Instrumental · Interdisciplinary", country: "Santiago, Chile" },
+  { name: "Con.fusión", genre: "Hip hop · Jazz · Neo soul", country: "Santiago, Chile" },
+  { name: "Klaus Brantmayer", genre: "Nu-jazz · Hip-hop jazz", country: "Santiago, Chile" },
+  { name: "Andrés Abrigo", genre: "Ambient · Post-tempo", country: "Chile" },
+  { name: "Pau · PAUPERRIMO", genre: "Rock · Indie (creative direction)", country: "Chile" },
+  { name: "Valentina Marinkovic", genre: "Voice · Composition", country: "Chile" },
 ];
 
 export function IntegrationsSection() {
+  const { language } = useLanguage();
   const [isVisible, setIsVisible] = useState(false);
   const sectionRef = useRef<HTMLElement>(null);
 
@@ -33,6 +31,20 @@ export function IntegrationsSection() {
     return () => observer.disconnect();
   }, []);
 
+  const copy = language === "es"
+    ? {
+        eyebrow: "Roster",
+        headline1: "Ocho proyectos.",
+        headline2: "Una línea editorial.",
+        description: "Artistas acompañados con representación integral en Chile y en circuitos europeos y latinoamericanos.",
+      }
+    : {
+        eyebrow: "Roster",
+        headline1: "Eight projects.",
+        headline2: "One editorial line.",
+        description: "Artists supported with integral representation across Chile and European / Latin American circuits.",
+      };
+
   return (
     <section id="integrations" ref={sectionRef} className="relative py-24 lg:py-32 overflow-hidden">
       <div className="max-w-[1400px] mx-auto px-6 lg:px-12">
@@ -44,58 +56,37 @@ export function IntegrationsSection() {
         >
           <span className="inline-flex items-center gap-3 text-sm font-mono text-muted-foreground mb-6">
             <span className="w-8 h-px bg-foreground/30" />
-            Integrations
+            {copy.eyebrow}
             <span className="w-8 h-px bg-foreground/30" />
           </span>
           <h2 className="text-4xl lg:text-6xl font-display tracking-tight mb-6">
-            Works with everything
+            {copy.headline1}
             <br />
-            you already use.
+            {copy.headline2}
           </h2>
-          <p className="text-xl text-muted-foreground">
-            200+ pre-built integrations. Connect your entire stack in minutes.
-          </p>
+          <p className="text-xl text-muted-foreground">{copy.description}</p>
         </div>
 
-      </div>
-      
-      {/* Full-width marquees outside container */}
-      <div className="w-full mb-6">
-        <div className="flex gap-6 marquee">
-          {[...Array(2)].map((_, setIndex) => (
-            <div key={setIndex} className="flex gap-6 shrink-0">
-              {integrations.map((integration) => (
-                <div
-                  key={`${integration.name}-${setIndex}`}
-                  className="shrink-0 px-8 py-6 border border-foreground/10 hover:border-foreground/30 hover:bg-foreground/[0.02] transition-all duration-300 group"
-                >
-                  <div className="text-lg font-medium group-hover:translate-x-1 transition-transform">
-                    {integration.name}
-                  </div>
-                  <div className="text-sm text-muted-foreground">{integration.category}</div>
-                </div>
-              ))}
-            </div>
-          ))}
-        </div>
-      </div>
-      
-      {/* Reverse marquee */}
-      <div className="w-full">
-        <div className="flex gap-6 marquee-reverse">
-          {[...Array(2)].map((_, setIndex) => (
-            <div key={setIndex} className="flex gap-6 shrink-0">
-              {[...integrations].reverse().map((integration) => (
-                <div
-                  key={`${integration.name}-reverse-${setIndex}`}
-                  className="shrink-0 px-8 py-6 border border-foreground/10 hover:border-foreground/30 hover:bg-foreground/[0.02] transition-all duration-300 group"
-                >
-                  <div className="text-lg font-medium group-hover:translate-x-1 transition-transform">
-                    {integration.name}
-                  </div>
-                  <div className="text-sm text-muted-foreground">{integration.category}</div>
-                </div>
-              ))}
+        {/* Grid */}
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-px bg-foreground/10 border border-foreground/10">
+          {roster.map((artist, i) => (
+            <div
+              key={artist.name}
+              className={`bg-background p-8 lg:p-10 hover:bg-foreground/[0.02] transition-all duration-500 group ${
+                isVisible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-4"
+              }`}
+              style={{ transitionDelay: isVisible ? `${i * 60}ms` : "0ms" }}
+            >
+              <div className="font-mono text-xs text-muted-foreground mb-6">
+                {String(i + 1).padStart(2, "0")}
+              </div>
+              <h3 className="text-2xl font-display tracking-tight mb-3 group-hover:translate-x-1 transition-transform">
+                {artist.name}
+              </h3>
+              <p className="text-sm text-foreground/70 mb-2">{artist.genre}</p>
+              <p className="text-xs font-mono text-muted-foreground uppercase tracking-wider">
+                {artist.country}
+              </p>
             </div>
           ))}
         </div>

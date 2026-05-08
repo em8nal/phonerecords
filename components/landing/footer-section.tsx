@@ -5,45 +5,46 @@ import { AnimatedWave } from "./animated-wave";
 import { useLanguage } from "@/lib/language-context";
 
 const footerLinksHref = {
-  Product: [
-    { href: "#features" },
-    { href: "#how-it-works" },
-    { href: "#pricing" },
+  Roster: [
+    { href: "#integrations" },
+    { href: "#integrations" },
+    { href: "#integrations" },
     { href: "#integrations" },
   ],
-  Developers: [
-    { href: "#developers" },
-    { href: "#" },
-    { href: "#developers" },
-    { href: "#" },
+  Catalogue: [
+    { href: "#features" },
+    { href: "#pricing" },
+    { href: "#pricing" },
+    { href: "#pricing" },
   ],
-  Company: [
-    { href: "#" },
-    { href: "#" },
-    { href: "#", hasBadge: true },
-    { href: "#" },
+  Label: [
+    { href: "#features" },
+    { href: "#how-it-works" },
+    { href: "mailto:contacto@phonerecords.cl", hasBadge: true },
+    { href: "mailto:contacto@phonerecords.cl" },
   ],
-  Legal: [
-    { href: "#" },
-    { href: "#" },
-    { href: "#security" },
+  Connect: [
+    { href: "https://www.instagram.com/phone_records/" },
+    { href: "https://newenafrobeat.bandcamp.com/music" },
+    { href: "https://open.spotify.com/artist/0PTJ848ulShbjTx2yqaAlb" },
+    { href: "https://www.youtube.com/channel/UCTHMwr5NTvQ0MWbq0nbeP-w" },
   ],
 };
 
 const socialLinks = [
-  { name: "Twitter", href: "#" },
-  { name: "GitHub", href: "#" },
-  { name: "LinkedIn", href: "#" },
+  { name: "Instagram", href: "https://www.instagram.com/phone_records/" },
+  { name: "Bandcamp", href: "https://newenafrobeat.bandcamp.com/music" },
+  { name: "YouTube", href: "https://www.youtube.com/channel/UCTHMwr5NTvQ0MWbq0nbeP-w" },
 ];
 
 export function FooterSection() {
   const { t } = useLanguage();
 
   const footerCategories = [
-    { title: "Product", links: t.footer.links.Product, hrefs: footerLinksHref.Product },
-    { title: "Developers", links: t.footer.links.Developers, hrefs: footerLinksHref.Developers },
-    { title: "Company", links: t.footer.links.Company, hrefs: footerLinksHref.Company },
-    { title: "Legal", links: t.footer.links.Legal, hrefs: footerLinksHref.Legal },
+    { title: "Roster", links: t.footer.links.Roster, hrefs: footerLinksHref.Roster },
+    { title: "Catalogue", links: t.footer.links.Catalogue, hrefs: footerLinksHref.Catalogue },
+    { title: "Label", links: t.footer.links.Label, hrefs: footerLinksHref.Label },
+    { title: "Connect", links: t.footer.links.Connect, hrefs: footerLinksHref.Connect },
   ];
 
   return (
@@ -60,8 +61,8 @@ export function FooterSection() {
             {/* Brand Column */}
             <div className="col-span-2">
               <a href="#" className="inline-flex items-center gap-2 mb-6">
-                <span className="text-2xl font-display">Optimus</span>
-                <span className="text-xs text-muted-foreground font-mono">TM</span>
+                <span className="text-2xl font-display tracking-[0.2em]">PHŌNÉ</span>
+                <span className="text-xs text-muted-foreground font-mono">RECORDS</span>
               </a>
 
               <p className="text-muted-foreground leading-relaxed mb-8 max-w-xs">

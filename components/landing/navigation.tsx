@@ -13,6 +13,7 @@ export function Navigation() {
 
   const navLinks = [
     { name: t.nav.features, href: "#features" },
+    { name: "Roster", href: "#integrations" },
     { name: t.nav.howItWorks, href: "#how-it-works" },
     { name: t.nav.developers, href: "#developers" },
     { name: t.nav.pricing, href: "#pricing" },
@@ -47,9 +48,9 @@ export function Navigation() {
           }`}
         >
           {/* Logo */}
-          <a href="#" className="flex items-center gap-2 group">
-            <span className={`font-display tracking-tight transition-all duration-500 ${isScrolled ? "text-xl" : "text-2xl"}`}>Optimus</span>
-            <span className={`text-muted-foreground font-mono transition-all duration-500 ${isScrolled ? "text-[10px] mt-0.5" : "text-xs mt-1"}`}>TM</span>
+          <a href="#" className="flex items-center gap-2 group" aria-label="PHŌNÉ Records">
+            <span className={`font-display tracking-[0.2em] transition-all duration-500 ${isScrolled ? "text-lg" : "text-xl"}`}>PHŌNÉ</span>
+            <span className={`text-muted-foreground font-mono transition-all duration-500 hidden sm:inline ${isScrolled ? "text-[10px]" : "text-xs"}`}>RECORDS</span>
           </a>
 
           {/* Desktop Navigation */}

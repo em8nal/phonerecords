@@ -6,30 +6,39 @@ import { useLanguage } from "@/lib/language-context";
 
 const codeExamples = [
   {
-    code: `npm install @optimus/sdk
+    code: `# AGOSTO · AUGUST 2026
 
-# or
-yarn add @optimus/sdk
-pnpm add @optimus/sdk`,
+20 ago — Innsbruck, AT       Treibhaus
+21 ago — Frick, CH           Marktfest Frick
+22 ago — Basel, CH           MECK à FRICK
+23 ago — Frankfurt, DE       Jazzmontez
+28 ago — Ginebra, CH         La Jonquille
+30 ago — Viena, AT           Porgy & Bess`,
   },
   {
-    code: `import { Optimus } from '@optimus/sdk'
+    code: `# SEPTIEMBRE · SEPTEMBER 2026
 
-const optimus = new Optimus({
-  apiKey: process.env.OPTIMUS_KEY
-})`,
+09 sep — Londres, UK         The Jazz Cafe
+
+# + más fechas por confirmar
+# + more dates to be confirmed
+
+booking@phonerecords.cl
+info@ludwigsound.com`,
   },
   {
-    code: `const app = await optimus.deploy({
-  name: 'my-app',
-  region: 'auto',
-  scaling: {
-    min: 1,
-    max: 100
-  }
-})
+    code: `# RIDER & BOOKING
 
-console.log('Live at:', app.url)`,
+Newen Afrobeat — 11-piece ensemble
+  · vocals (×2), brass (×3), saxes (×2)
+  · electric guitar, bass, drums, percussion
+
+Live show: 75–90 min
+Available: aug 11 – sep 13, 2026
+
+Press kit: phonerecords.cl/press
+Booking EU: Ludwig Sound (DE)
+Booking LATAM: PHŌNÉ Records (CL)`,
   },
 ];
 

@@ -4,26 +4,35 @@ import { useEffect, useRef, useState } from "react";
 import { useLanguage } from "@/lib/language-context";
 
 const codeExamples = [
-  `import { optimus } from '@optimus/core'
+  `// SEGMENT I · AUDIENCE
 
-optimus.connect({
-  source: 'your-database',
-  sync: true
-})`,
-  `optimus.workflow('process', {
-  trigger: 'event',
-  actions: [
-    'validate',
-    'transform', 
-    'deliver'
-  ]
-})`,
-  `optimus.deploy({
-  target: 'production',
-  regions: 'auto'
-})
+audience: {
+  members: 'active community',
+  formats: ['vinyl', 'cassette', 'digital'],
+  experiences: [
+    'listening sessions',
+    'expanded concerts',
+    'editorial drops'
+  ],
+  not: 'passive listeners'
+}`,
+  `// SEGMENT II · COLLABORATORS
 
-// Deployed to 12 regions`,
+collaborators: {
+  producers: ['Crooker', 'Cancura', 'Pavez'],
+  visual: ['photography', 'art direction'],
+  technical: ['mixing', 'mastering'],
+  network: 'creative + technical agents'
+}`,
+  `// SEGMENT III · ARTISTS
+
+artists: 8,
+representation: 'integral',
+horizon: 'long-term',
+care: ['creative', 'strategic',
+       'operational', 'symbolic']
+
+// Not one-off campaigns.`,
 ];
 
 export function HowItWorksSection() {

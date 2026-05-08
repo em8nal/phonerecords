@@ -22,8 +22,35 @@ const jetbrainsMono = JetBrains_Mono({
 });
 
 export const metadata: Metadata = {
-  title: 'Optimus - Platform to Create',
-  description: 'The creative platform for teams who ship. Build, deploy, and scale with unprecedented velocity.',
+  metadataBase: new URL('https://phonerecords.cl'),
+  title: {
+    default: 'PHŌNÉ Records — Sello cultural independiente · Santiago de Chile',
+    template: '%s — PHŌNÉ Records',
+  },
+  description:
+    'Sello cultural independiente con dirección autoral. Roster: Newen Afrobeat, Claudio Solís, Ecamhi, Con.fusión, Klaus Brantmayer, Andrés Abrigo, Pau, Valentina Marinkovic.',
+  keywords: [
+    'PHŌNÉ Records', 'sello chileno', 'música independiente Chile',
+    'Newen Afrobeat', 'Claudio Solís', 'Ecamhi', 'Con.fusión',
+    'Klaus Brantmayer', 'afrobeat Chile', 'minimal techno Chile',
+  ],
+  authors: [{ name: 'PHŌNÉ Records', url: 'https://phonerecords.cl' }],
+  alternates: { canonical: 'https://phonerecords.cl' },
+  openGraph: {
+    type: 'website',
+    locale: 'es_CL',
+    alternateLocale: 'en_US',
+    url: 'https://phonerecords.cl',
+    siteName: 'PHŌNÉ Records',
+    title: 'PHŌNÉ Records — Sello cultural independiente',
+    description:
+      'Producción integral de obras musicales situadas. En diálogo con circuitos europeos y latinoamericanos.',
+  },
+  twitter: {
+    card: 'summary_large_image',
+    title: 'PHŌNÉ Records',
+    description: 'Sello cultural independiente · Santiago de Chile',
+  },
   generator: 'v0.app',
 }
 
@@ -33,7 +60,7 @@ export default function RootLayout({
   children: React.ReactNode
 }>) {
   return (
-    <html lang="en">
+    <html lang="es">
       <body className={`${instrumentSans.variable} ${instrumentSerif.variable} ${jetbrainsMono.variable} font-sans antialiased bg-background`}>
         <LanguageProvider>
           {children}

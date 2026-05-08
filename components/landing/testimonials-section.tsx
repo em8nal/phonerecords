@@ -119,7 +119,7 @@ export function TestimonialsSection() {
         <div className="flex gap-16 items-center marquee">
           {[...Array(2)].map((_, setIdx) => (
             <div key={setIdx} className="flex gap-16 items-center shrink-0">
-              {["Meridian Labs", "Flux Systems", "Beacon AI", "Prism Analytics", "Nova Tech", "Quantum Corp", "Atlas Digital", "Vertex Labs"].map(
+              {["OfficeHome Records", "Aquarians", "Lichens Family", "Vyasa Discos", "Atmos Music Label", "Ludwig Sound", "Sendero", "Inwave"].map(
                 (company) => (
                   <span
                     key={`${setIdx}-${company}`}
