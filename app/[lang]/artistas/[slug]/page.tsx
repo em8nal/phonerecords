@@ -161,10 +161,12 @@ export default async function ArtistPage({
 
         {/* Bio */}
         <section className="grid lg:grid-cols-12 gap-12 lg:gap-16 mb-20">
-          <div className="lg:col-span-8">
-            <p className="text-lg lg:text-xl text-foreground/90 leading-relaxed whitespace-pre-line">
-              {bio}
-            </p>
+          <div className="lg:col-span-8 space-y-6 text-lg lg:text-xl text-foreground/90 leading-relaxed">
+            {bio.split(/\n{2,}/).map((paragraph, i) => (
+              <p key={i} className={i === 0 ? "text-xl lg:text-2xl text-foreground" : ""}>
+                {paragraph}
+              </p>
+            ))}
           </div>
 
           {/* Sidebar: links + stats */}
