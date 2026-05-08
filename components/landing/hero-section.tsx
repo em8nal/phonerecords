@@ -117,19 +117,23 @@ export function HeroSection() {
               isVisible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-4"
             }`}
           >
-            <Button 
-              size="lg" 
+            <Button
+              asChild
+              size="lg"
               className="bg-foreground hover:bg-foreground/90 text-background px-8 h-14 text-base rounded-full group"
             >
-              {t.hero.ctaPrimary}
-              <ArrowRight className="w-4 h-4 ml-2 transition-transform group-hover:translate-x-1" />
+              <a href="#integrations">
+                {t.hero.ctaPrimary}
+                <ArrowRight className="w-4 h-4 ml-2 transition-transform group-hover:translate-x-1" />
+              </a>
             </Button>
-            <Button 
-              size="lg" 
-              variant="outline" 
+            <Button
+              asChild
+              size="lg"
+              variant="outline"
               className="h-14 px-8 text-base rounded-full border-foreground/20 hover:bg-foreground/5"
             >
-              {t.hero.ctaSecondary}
+              <a href="#how-it-works">{t.hero.ctaSecondary}</a>
             </Button>
           </div>
         </div>

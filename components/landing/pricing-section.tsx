@@ -131,7 +131,12 @@ export function PricingSection() {
         {/* Bottom Note */}
         <p className="mt-12 text-center text-sm text-muted-foreground">
           {t.pricing.bottomNote}{" "}
-          <a href="#" className="underline underline-offset-4 hover:text-foreground transition-colors">
+          <a
+            href="https://newenafrobeat.bandcamp.com/music"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="underline underline-offset-4 hover:text-foreground transition-colors"
+          >
             {t.pricing.compareFeatures}
           </a>
         </p>

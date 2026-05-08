@@ -207,11 +207,19 @@ export function DevelopersSection() {
             
             {/* Links */}
             <div className="mt-6 flex items-center gap-6 text-sm">
-              <a href="#" className="text-foreground hover:underline underline-offset-4">
+              <a
+                href="https://newenafrobeat.bandcamp.com/music"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="text-foreground hover:underline underline-offset-4"
+              >
                 {t.developers.readDocs}
               </a>
               <span className="text-foreground/20">|</span>
-              <a href="#" className="text-muted-foreground hover:text-foreground">
+              <a
+                href="mailto:booking@phonerecords.cl"
+                className="text-muted-foreground hover:text-foreground"
+              >
                 {t.developers.viewGithub}
               </a>
             </div>

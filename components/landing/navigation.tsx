@@ -1,6 +1,7 @@
 "use client";
 
 import { useState, useEffect } from "react";
+import Image from "next/image";
 import { Button } from "@/components/ui/button";
 import { Menu, X } from "lucide-react";
 import { useLanguage } from "@/lib/language-context";
@@ -48,9 +49,15 @@ export function Navigation() {
           }`}
         >
           {/* Logo */}
-          <a href="#" className="flex items-center gap-2 group" aria-label="PHŌNÉ Records">
-            <span className={`font-display tracking-[0.2em] transition-all duration-500 ${isScrolled ? "text-lg" : "text-xl"}`}>PHŌNÉ</span>
-            <span className={`text-muted-foreground font-mono transition-all duration-500 hidden sm:inline ${isScrolled ? "text-[10px]" : "text-xs"}`}>RECORDS</span>
+          <a href="#" className="flex items-center group" aria-label="PHŌNÉ Records">
+            <Image
+              src="/phone-logo-light.png"
+              alt="PHŌNÉ Records"
+              width={2000}
+              height={2000}
+              priority
+              className={`w-auto transition-all duration-500 dark:invert ${isScrolled ? "h-7" : "h-9"}`}
+            />
           </a>
 
           {/* Desktop Navigation */}
@@ -70,14 +77,18 @@ export function Navigation() {
           {/* Desktop CTA */}
           <div className="hidden md:flex items-center gap-4">
             <LanguageSelector />
-            <a href="#" className={`text-foreground/70 hover:text-foreground transition-all duration-500 ${isScrolled ? "text-xs" : "text-sm"}`}>
+            <a
+              href="mailto:press@phonerecords.cl"
+              className={`text-foreground/70 hover:text-foreground transition-all duration-500 ${isScrolled ? "text-xs" : "text-sm"}`}
+            >
               {t.nav.signIn}
             </a>
             <Button
+              asChild
               size="sm"
               className={`bg-foreground hover:bg-foreground/90 text-background rounded-full transition-all duration-500 ${isScrolled ? "px-4 h-8 text-xs" : "px-6"}`}
             >
-              {t.nav.startCreating}
+              <a href="mailto:booking@phonerecords.cl">{t.nav.startCreating}</a>
             </Button>
           </div>
 
@@ -139,18 +150,20 @@ export function Navigation() {
           }`}
           style={{ transitionDelay: isMobileMenuOpen ? "300ms" : "0ms" }}
           >
-            <Button 
-              variant="outline" 
+            <Button
+              asChild
+              variant="outline"
               className="flex-1 rounded-full h-14 text-base"
               onClick={() => setIsMobileMenuOpen(false)}
             >
-              {t.nav.signIn}
+              <a href="mailto:press@phonerecords.cl">{t.nav.signIn}</a>
             </Button>
-            <Button 
+            <Button
+              asChild
               className="flex-1 bg-foreground text-background rounded-full h-14 text-base"
               onClick={() => setIsMobileMenuOpen(false)}
             >
-              {t.nav.startCreating}
+              <a href="mailto:booking@phonerecords.cl">{t.nav.startCreating}</a>
             </Button>
           </div>
         </div>

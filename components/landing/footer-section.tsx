@@ -1,33 +1,40 @@
 "use client";
 
+import Image from "next/image";
 import { ArrowUpRight } from "lucide-react";
 import { AnimatedWave } from "./animated-wave";
 import { useLanguage } from "@/lib/language-context";
 
-const footerLinksHref = {
+type FooterHref = { href: string; external?: boolean; hasBadge?: boolean };
+
+const footerLinksHref: Record<string, FooterHref[]> = {
+  // Order matches translations.ts: Newen, Claudio, Ecamhi, Con.fusión
   Roster: [
+    { href: "https://newenafrobeat.bandcamp.com/music", external: true },
     { href: "#integrations" },
-    { href: "#integrations" },
-    { href: "#integrations" },
+    { href: "https://soundcloud.com/enrique-camhi", external: true },
     { href: "#integrations" },
   ],
+  // Order matches: Releases, Vinilo/Vinyl, Cassette, Digital
   Catalogue: [
-    { href: "#features" },
+    { href: "https://newenafrobeat.bandcamp.com/music", external: true },
     { href: "#pricing" },
     { href: "#pricing" },
-    { href: "#pricing" },
+    { href: "https://newenafrobeat.bandcamp.com/album/grietas-2", external: true },
   ],
+  // Order matches: About PHŌNÉ, Manifesto, Press kit, Contact
   Label: [
     { href: "#features" },
     { href: "#how-it-works" },
-    { href: "mailto:contacto@phonerecords.cl", hasBadge: true },
+    { href: "mailto:press@phonerecords.cl", hasBadge: true },
     { href: "mailto:contacto@phonerecords.cl" },
   ],
+  // Order matches: Instagram, Bandcamp, Spotify, YouTube
   Connect: [
-    { href: "https://www.instagram.com/phone_records/" },
-    { href: "https://newenafrobeat.bandcamp.com/music" },
-    { href: "https://open.spotify.com/artist/0PTJ848ulShbjTx2yqaAlb" },
-    { href: "https://www.youtube.com/channel/UCTHMwr5NTvQ0MWbq0nbeP-w" },
+    { href: "https://www.instagram.com/phone_records/", external: true },
+    { href: "https://newenafrobeat.bandcamp.com/music", external: true },
+    { href: "https://open.spotify.com/artist/0PTJ848ulShbjTx2yqaAlb", external: true },
+    { href: "https://www.youtube.com/channel/UCTHMwr5NTvQ0MWbq0nbeP-w", external: true },
   ],
 };
 
@@ -60,9 +67,14 @@ export function FooterSection() {
           <div className="grid grid-cols-2 md:grid-cols-6 gap-12 lg:gap-8">
             {/* Brand Column */}
             <div className="col-span-2">
-              <a href="#" className="inline-flex items-center gap-2 mb-6">
-                <span className="text-2xl font-display tracking-[0.2em]">PHŌNÉ</span>
-                <span className="text-xs text-muted-foreground font-mono">RECORDS</span>
+              <a href="#" className="inline-flex items-center mb-6" aria-label="PHŌNÉ Records">
+                <Image
+                  src="/phone-logo-light.png"
+                  alt="PHŌNÉ Records"
+                  width={2000}
+                  height={2000}
+                  className="h-12 w-auto dark:invert"
+                />
               </a>
 
               <p className="text-muted-foreground leading-relaxed mb-8 max-w-xs">
@@ -75,6 +87,8 @@ export function FooterSection() {
                   <a
                     key={link.name}
                     href={link.href}
+                    target="_blank"
+                    rel="noopener noreferrer"
                     className="text-sm text-muted-foreground hover:text-foreground transition-colors flex items-center gap-1 group"
                   >
                     {link.name}
@@ -89,21 +103,26 @@ export function FooterSection() {
               <div key={category.title}>
                 <h3 className="text-sm font-medium mb-6">{category.title}</h3>
                 <ul className="space-y-4">
-                  {category.links.map((linkName, idx) => (
-                    <li key={linkName}>
-                      <a
-                        href={category.hrefs[idx]?.href || "#"}
-                        className="text-sm text-muted-foreground hover:text-foreground transition-colors inline-flex items-center gap-2"
-                      >
-                        {linkName}
-                        {category.hrefs[idx]?.hasBadge && (
-                          <span className="text-xs px-2 py-0.5 bg-foreground text-background rounded-full">
-                            {t.footer.hiring}
-                          </span>
-                        )}
-                      </a>
-                    </li>
-                  ))}
+                  {category.links.map((linkName, idx) => {
+                    const meta = category.hrefs[idx];
+                    const external = meta?.external;
+                    return (
+                      <li key={linkName}>
+                        <a
+                          href={meta?.href || "#"}
+                          {...(external && { target: "_blank", rel: "noopener noreferrer" })}
+                          className="text-sm text-muted-foreground hover:text-foreground transition-colors inline-flex items-center gap-2"
+                        >
+                          {linkName}
+                          {meta?.hasBadge && (
+                            <span className="text-xs px-2 py-0.5 bg-foreground text-background rounded-full">
+                              {t.footer.hiring}
+                            </span>
+                          )}
+                        </a>
+                      </li>
+                    );
+                  })}
                 </ul>
               </div>
             ))}
