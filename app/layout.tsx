@@ -1,18 +1,16 @@
 import React from "react"
-import type { Metadata } from 'next'
+import type { Metadata, Viewport } from 'next'
 import { headers } from 'next/headers'
 import { Instrument_Sans, Instrument_Serif, JetBrains_Mono, Fraunces } from 'next/font/google'
 import { Analytics } from '@vercel/analytics/next'
-import { LanguageProvider } from '@/lib/language-context'
-import type { Language } from '@/lib/translations'
 import './globals.css'
 
-const instrumentSans = Instrument_Sans({ 
+const instrumentSans = Instrument_Sans({
   subsets: ["latin"],
   variable: '--font-instrument'
 });
 
-const instrumentSerif = Instrument_Serif({ 
+const instrumentSerif = Instrument_Serif({
   subsets: ["latin"],
   weight: "400",
   variable: '--font-instrument-serif'
@@ -30,6 +28,10 @@ const fraunces = Fraunces({
   variable: '--font-fraunces',
 });
 
+export const viewport: Viewport = {
+  themeColor: '#000000',
+};
+
 export const metadata: Metadata = {
   metadataBase: new URL('https://phonerecords.cl'),
   title: {
@@ -45,7 +47,14 @@ export const metadata: Metadata = {
     'afrobeat Chile', 'minimal techno Chile',
   ],
   authors: [{ name: 'PHŌNÉ Records', url: 'https://phonerecords.cl' }],
-  alternates: { canonical: 'https://phonerecords.cl' },
+  alternates: {
+    canonical: 'https://phonerecords.cl/es',
+    languages: {
+      es: 'https://phonerecords.cl/es',
+      en: 'https://phonerecords.cl/en',
+      'x-default': 'https://phonerecords.cl/es',
+    },
+  },
   openGraph: {
     type: 'website',
     locale: 'es_CL',
@@ -69,22 +78,16 @@ export default async function RootLayout({
 }: Readonly<{
   children: React.ReactNode
 }>) {
-  // Geo-based default: Spanish for Chile, English everywhere else.
-  // Vercel injects x-vercel-ip-country at the edge; we honour Accept-Language as a fallback
-  // for local dev / non-Vercel runtimes. localStorage on the client overrides both.
+  // The locale is propagated from middleware via the x-phone-locale header so
+  // <html lang> always matches the URL segment. Middleware also redirects
+  // any unprefixed request to /es or /en before reaching here.
   const h = await headers()
-  const country = h.get('x-vercel-ip-country') || ''
-  const acceptLang = h.get('accept-language') || ''
-  const isChile = country.toUpperCase() === 'CL'
-  const prefersSpanish = !country && /\bes(-|;|,|$)/i.test(acceptLang)
-  const initialLanguage: Language = (isChile || prefersSpanish) ? 'es' : 'en'
+  const locale = h.get('x-phone-locale') === 'en' ? 'en' : 'es'
 
   return (
-    <html lang={initialLanguage}>
+    <html lang={locale}>
       <body className={`${instrumentSans.variable} ${instrumentSerif.variable} ${jetbrainsMono.variable} ${fraunces.variable} font-sans antialiased bg-background`}>
-        <LanguageProvider initialLanguage={initialLanguage}>
-          {children}
-        </LanguageProvider>
+        {children}
         <Analytics />
       </body>
     </html>

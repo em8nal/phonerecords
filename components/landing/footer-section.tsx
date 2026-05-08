@@ -7,36 +7,38 @@ import { useLanguage } from "@/lib/language-context";
 
 type FooterHref = { href: string; external?: boolean; hasBadge?: boolean };
 
-const footerLinksHref: Record<string, FooterHref[]> = {
-  // Order matches translations.ts: Newen, Claudio, Ecamhi, Con.fusión
-  Roster: [
-    { href: "/artistas/newen-afrobeat" },
-    { href: "/artistas/claudio-solis" },
-    { href: "/artistas/ecamhi" },
-    { href: "/artistas/con-fusion" },
-  ],
-  // Order matches: Releases, Vinilo/Vinyl, Cassette, Digital
-  Catalogue: [
-    { href: "https://newenafrobeat.bandcamp.com/music", external: true },
-    { href: "#pricing" },
-    { href: "#pricing" },
-    { href: "https://newenafrobeat.bandcamp.com/album/grietas-2", external: true },
-  ],
-  // Order matches: About PHŌNÉ, Manifesto, Press kit, Contact
-  Label: [
-    { href: "#features" },
-    { href: "#how-it-works" },
-    { href: "mailto:press@phonerecords.cl", hasBadge: true },
-    { href: "mailto:contacto@phonerecords.cl" },
-  ],
-  // Order matches: Instagram, Bandcamp, Spotify, YouTube
-  Connect: [
-    { href: "https://www.instagram.com/phone_records/", external: true },
-    { href: "https://newenafrobeat.bandcamp.com/music", external: true },
-    { href: "https://open.spotify.com/artist/0PTJ848ulShbjTx2yqaAlb", external: true },
-    { href: "https://www.youtube.com/channel/UCTHMwr5NTvQ0MWbq0nbeP-w", external: true },
-  ],
-};
+function buildFooterLinks(lang: "es" | "en"): Record<string, FooterHref[]> {
+  return {
+    // Order matches translations.ts: Newen, Claudio, Ecamhi, Con.fusión
+    Roster: [
+      { href: `/${lang}/artistas/newen-afrobeat` },
+      { href: `/${lang}/artistas/claudio-solis` },
+      { href: `/${lang}/artistas/ecamhi` },
+      { href: `/${lang}/artistas/con-fusion` },
+    ],
+    // Order matches: Releases, Vinilo/Vinyl, Cassette, Digital
+    Catalogue: [
+      { href: "https://newenafrobeat.bandcamp.com/music", external: true },
+      { href: "#pricing" },
+      { href: "#pricing" },
+      { href: "https://newenafrobeat.bandcamp.com/album/grietas-2", external: true },
+    ],
+    // Order matches: About PHŌNÉ, Manifesto, Press kit, Contact
+    Label: [
+      { href: "#features" },
+      { href: "#how-it-works" },
+      { href: "mailto:press@phonerecords.cl", hasBadge: true },
+      { href: "mailto:contacto@phonerecords.cl" },
+    ],
+    // Order matches: Instagram, Bandcamp, Spotify, YouTube
+    Connect: [
+      { href: "https://www.instagram.com/phone_records/", external: true },
+      { href: "https://newenafrobeat.bandcamp.com/music", external: true },
+      { href: "https://open.spotify.com/artist/0PTJ848ulShbjTx2yqaAlb", external: true },
+      { href: "https://www.youtube.com/channel/UCTHMwr5NTvQ0MWbq0nbeP-w", external: true },
+    ],
+  };
+}
 
 const socialLinks = [
   { name: "Instagram", href: "https://www.instagram.com/phone_records/" },
@@ -45,7 +47,8 @@ const socialLinks = [
 ];
 
 export function FooterSection() {
-  const { t } = useLanguage();
+  const { t, language } = useLanguage();
+  const footerLinksHref = buildFooterLinks(language);
 
   const footerCategories = [
     { title: "Roster", links: t.footer.links.Roster, hrefs: footerLinksHref.Roster },
@@ -67,7 +70,7 @@ export function FooterSection() {
           <div className="grid grid-cols-2 md:grid-cols-6 gap-12 lg:gap-8">
             {/* Brand Column */}
             <div className="col-span-2">
-              <a href="#" className="inline-flex items-center mb-6" aria-label="PHŌNÉ Records">
+              <a href={`/${language}`} className="inline-flex items-center mb-6" aria-label="PHŌNÉ Records">
                 <Image
                   src="/phone-logo-light.png"
                   alt="PHŌNÉ Records"

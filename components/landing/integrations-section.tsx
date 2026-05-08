@@ -71,7 +71,7 @@ export function IntegrationsSection() {
           {roster.map((artist, i) => (
             <Link
               key={artist.slug}
-              href={`/artistas/${artist.slug}`}
+              href={`/${language}/artistas/${artist.slug}`}
               className={`block bg-background p-8 lg:p-10 hover:bg-foreground/[0.02] transition-all duration-500 group ${
                 isVisible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-4"
               }`}

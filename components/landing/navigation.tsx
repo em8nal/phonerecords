@@ -8,16 +8,19 @@ import { useLanguage } from "@/lib/language-context";
 import { LanguageSelector } from "@/components/language-selector";
 
 export function Navigation() {
-  const { t } = useLanguage();
+  const { t, language } = useLanguage();
   const [isScrolled, setIsScrolled] = useState(false);
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
 
+  // Hash links live on the home page only — prefix with /<lang> so they
+  // also work from sub-pages like /es/artistas/newen-afrobeat.
+  const home = `/${language}`;
   const navLinks = [
-    { name: t.nav.features, href: "#features" },
-    { name: "Roster", href: "#integrations" },
-    { name: t.nav.howItWorks, href: "#how-it-works" },
-    { name: t.nav.developers, href: "#developers" },
-    { name: t.nav.pricing, href: "#pricing" },
+    { name: t.nav.features, href: `${home}#features` },
+    { name: "Roster", href: `${home}#integrations` },
+    { name: t.nav.howItWorks, href: `${home}#how-it-works` },
+    { name: t.nav.developers, href: `${home}#developers` },
+    { name: t.nav.pricing, href: `${home}#pricing` },
   ];
 
   useEffect(() => {
@@ -49,7 +52,7 @@ export function Navigation() {
           }`}
         >
           {/* Logo */}
-          <a href="#" className="flex items-center group" aria-label="PHŌNÉ Records">
+          <a href={home} className="flex items-center group" aria-label="PHŌNÉ Records">
             <Image
               src="/phone-logo-light.png"
               alt="PHŌNÉ Records"

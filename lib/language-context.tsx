@@ -1,10 +1,12 @@
 "use client";
 
-import { createContext, useContext, useState, useEffect, type ReactNode } from "react";
+import { createContext, useContext, type ReactNode } from "react";
 import { translations, type Language, type Translations } from "./translations";
 
 interface LanguageContextType {
   language: Language;
+  /** No-op kept for backwards compatibility. Language switching now happens
+   *  via URL navigation in LanguageSelector. */
   setLanguage: (lang: Language) => void;
   t: Translations;
 }
@@ -18,26 +20,15 @@ export function LanguageProvider({
   children: ReactNode;
   initialLanguage?: Language;
 }) {
-  const [language, setLanguage] = useState<Language>(initialLanguage);
-
-  useEffect(() => {
-    // localStorage override beats the geo-detected default once a user has chosen.
-    const savedLang = localStorage.getItem("language") as Language | null;
-    if (savedLang && (savedLang === "en" || savedLang === "es")) {
-      setLanguage(savedLang);
-    }
-  }, []);
-
-  const handleSetLanguage = (lang: Language) => {
-    setLanguage(lang);
-    localStorage.setItem("language", lang);
-  };
+  // The URL segment ([lang] in the route) is the source of truth for language.
+  // The provider just exposes that to client components via useLanguage().
+  const language = initialLanguage;
 
   return (
     <LanguageContext.Provider
       value={{
         language,
-        setLanguage: handleSetLanguage,
+        setLanguage: () => undefined,
         t: translations[language],
       }}
     >

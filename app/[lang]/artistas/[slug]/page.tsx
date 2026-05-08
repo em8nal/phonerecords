@@ -1,58 +1,64 @@
 import type { Metadata } from "next";
 import { notFound } from "next/navigation";
-import { headers } from "next/headers";
 import Link from "next/link";
 import { ArrowLeft, ExternalLink } from "lucide-react";
 import { Navigation } from "@/components/landing/navigation";
 import { FooterSection } from "@/components/landing/footer-section";
-import { artists, artistSlugs, getArtist } from "@/lib/artists";
+import { artistSlugs, getArtist } from "@/lib/artists";
+import type { Language } from "@/lib/translations";
+
+type ArtistParams = { lang: string; slug: string };
 
 export function generateStaticParams() {
-  return artistSlugs.map((slug) => ({ slug }));
+  const langs: Language[] = ["es", "en"];
+  return langs.flatMap((lang) =>
+    artistSlugs.map((slug) => ({ lang, slug }))
+  );
 }
 
 export async function generateMetadata(
-  { params }: { params: Promise<{ slug: string }> }
+  { params }: { params: Promise<ArtistParams> }
 ): Promise<Metadata> {
-  const { slug } = await params;
+  const { lang, slug } = await params;
   const artist = getArtist(slug);
   if (!artist) return { title: "Artista no encontrado" };
-  const desc = artist.bio.es.slice(0, 160);
+  const isEs = lang === "es";
+  const desc = (isEs ? artist.bio.es : artist.bio.en).slice(0, 160);
   return {
     title: artist.name,
     description: desc,
+    alternates: {
+      canonical: `https://phonerecords.cl/${lang}/artistas/${slug}`,
+      languages: {
+        es: `https://phonerecords.cl/es/artistas/${slug}`,
+        en: `https://phonerecords.cl/en/artistas/${slug}`,
+        "x-default": `https://phonerecords.cl/es/artistas/${slug}`,
+      },
+    },
     openGraph: {
       title: `${artist.name} — PHŌNÉ Records`,
       description: desc,
-      url: `https://phonerecords.cl/artistas/${slug}`,
+      url: `https://phonerecords.cl/${lang}/artistas/${slug}`,
+      locale: isEs ? "es_CL" : "en_US",
     },
-    alternates: { canonical: `https://phonerecords.cl/artistas/${slug}` },
   };
-}
-
-async function detectLanguage(): Promise<"es" | "en"> {
-  const h = await headers();
-  const country = (h.get("x-vercel-ip-country") || "").toUpperCase();
-  const acceptLang = h.get("accept-language") || "";
-  if (country === "CL") return "es";
-  if (!country && /\bes(-|;|,|$)/i.test(acceptLang)) return "es";
-  return country ? "en" : "es";
 }
 
 export default async function ArtistPage({
   params,
 }: {
-  params: Promise<{ slug: string }>;
+  params: Promise<ArtistParams>;
 }) {
-  const { slug } = await params;
+  const { lang, slug } = await params;
   const artist = getArtist(slug);
   if (!artist) notFound();
 
-  const lang = await detectLanguage();
-  const bio = artist.bio[lang];
-  const labels = lang === "es"
+  const isEs = lang === "es";
+  const bio = isEs ? artist.bio.es : artist.bio.en;
+  const labels = isEs
     ? { back: "Volver al roster", releases: "Discografía", links: "Enlaces", origin: "Origen", genre: "Género", stats: "Métricas" }
     : { back: "Back to roster", releases: "Discography", links: "Links", origin: "Origin", genre: "Genre", stats: "Metrics" };
+  const numberLocale = isEs ? "es-CL" : "en-US";
 
   return (
     <main className="relative min-h-screen overflow-x-hidden noise-overlay">
@@ -61,7 +67,7 @@ export default async function ArtistPage({
       <article className="max-w-[1200px] mx-auto px-6 lg:px-12 pt-32 lg:pt-40 pb-24">
         {/* Back link */}
         <Link
-          href="/#integrations"
+          href={`/${lang}#integrations`}
           className="inline-flex items-center gap-2 text-sm text-muted-foreground hover:text-foreground transition-colors mb-12 group"
         >
           <ArrowLeft className="w-4 h-4 group-hover:-translate-x-1 transition-transform" />
@@ -100,10 +106,10 @@ export default async function ArtistPage({
                   {artist.stats.monthlyListeners != null && (
                     <div className="flex items-baseline justify-between border-b border-foreground/10 pb-2">
                       <dt className="text-sm text-muted-foreground">
-                        {lang === "es" ? "Oyentes mensuales" : "Monthly listeners"}
+                        {isEs ? "Oyentes mensuales" : "Monthly listeners"}
                       </dt>
                       <dd className="font-display text-xl">
-                        {artist.stats.monthlyListeners.toLocaleString(lang === "es" ? "es-CL" : "en-US")}
+                        {artist.stats.monthlyListeners.toLocaleString(numberLocale)}
                       </dd>
                     </div>
                   )}
@@ -111,7 +117,7 @@ export default async function ArtistPage({
                     <div className="flex items-baseline justify-between border-b border-foreground/10 pb-2">
                       <dt className="text-sm text-muted-foreground">Spotify</dt>
                       <dd className="font-display text-xl">
-                        {artist.stats.spotifyFollowers.toLocaleString(lang === "es" ? "es-CL" : "en-US")}
+                        {artist.stats.spotifyFollowers.toLocaleString(numberLocale)}
                       </dd>
                     </div>
                   )}
@@ -119,7 +125,7 @@ export default async function ArtistPage({
                     <div className="flex items-baseline justify-between border-b border-foreground/10 pb-2">
                       <dt className="text-sm text-muted-foreground">YouTube</dt>
                       <dd className="font-display text-xl">
-                        {artist.stats.youtubeSubs.toLocaleString(lang === "es" ? "es-CL" : "en-US")}
+                        {artist.stats.youtubeSubs.toLocaleString(numberLocale)}
                       </dd>
                     </div>
                   )}
