@@ -78,8 +78,8 @@ export default async function RootLayout({
 }: Readonly<{
   children: React.ReactNode
 }>) {
-  // The locale is propagated from middleware via the x-phone-locale header so
-  // <html lang> always matches the URL segment. Middleware also redirects
+  // The locale is propagated from the proxy via the x-phone-locale header so
+  // <html lang> always matches the URL segment. The proxy also redirects
   // any unprefixed request to /es or /en before reaching here.
   const h = await headers()
   const locale = h.get('x-phone-locale') === 'en' ? 'en' : 'es'

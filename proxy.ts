@@ -25,7 +25,7 @@ function pickLocale(request: NextRequest): Locale {
   return DEFAULT_LOCALE;
 }
 
-export function middleware(request: NextRequest) {
+export function proxy(request: NextRequest) {
   const { pathname } = request.nextUrl;
 
   // Already prefixed with a known locale → propagate the locale to layout via header
