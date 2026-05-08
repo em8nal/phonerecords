@@ -78,8 +78,8 @@ export function HeroSection() {
             <span className="block">{t.hero.headline1}</span>
             <span className="block">
               {t.hero.headline2}{" "}
-              <span className="relative inline-block">
-                <span 
+              <span className="relative inline-block italic font-normal pr-[0.06em]" style={{ fontFamily: "var(--font-instrument-serif)" }}>
+                <span
                   key={wordIndex}
                   className="inline-flex"
                 >
