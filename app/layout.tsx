@@ -1,7 +1,7 @@
 import React from "react"
 import type { Metadata } from 'next'
 import { headers } from 'next/headers'
-import { Instrument_Sans, Instrument_Serif, JetBrains_Mono } from 'next/font/google'
+import { Instrument_Sans, Instrument_Serif, JetBrains_Mono, Fraunces } from 'next/font/google'
 import { Analytics } from '@vercel/analytics/next'
 import { LanguageProvider } from '@/lib/language-context'
 import type { Language } from '@/lib/translations'
@@ -18,9 +18,16 @@ const instrumentSerif = Instrument_Serif({
   variable: '--font-instrument-serif'
 });
 
-const jetbrainsMono = JetBrains_Mono({ 
+const jetbrainsMono = JetBrains_Mono({
   subsets: ["latin"],
   variable: '--font-jetbrains'
+});
+
+const fraunces = Fraunces({
+  subsets: ["latin"],
+  style: ["italic", "normal"],
+  weight: ["400", "500", "600"],
+  variable: '--font-fraunces',
 });
 
 export const metadata: Metadata = {
@@ -74,7 +81,7 @@ export default async function RootLayout({
 
   return (
     <html lang={initialLanguage}>
-      <body className={`${instrumentSans.variable} ${instrumentSerif.variable} ${jetbrainsMono.variable} font-sans antialiased bg-background`}>
+      <body className={`${instrumentSans.variable} ${instrumentSerif.variable} ${jetbrainsMono.variable} ${fraunces.variable} font-sans antialiased bg-background`}>
         <LanguageProvider initialLanguage={initialLanguage}>
           {children}
         </LanguageProvider>
