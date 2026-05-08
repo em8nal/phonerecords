@@ -3,7 +3,6 @@ import type { Metadata, Viewport } from 'next'
 import { headers } from 'next/headers'
 import { Instrument_Sans, Instrument_Serif, JetBrains_Mono, Fraunces } from 'next/font/google'
 import { Analytics } from '@vercel/analytics/next'
-import { SpeedInsights } from '@vercel/speed-insights/next'
 import './globals.css'
 
 const instrumentSans = Instrument_Sans({
@@ -90,7 +89,6 @@ export default async function RootLayout({
       <body className={`${instrumentSans.variable} ${instrumentSerif.variable} ${jetbrainsMono.variable} ${fraunces.variable} font-sans antialiased bg-background`}>
         {children}
         <Analytics />
-        <SpeedInsights />
       </body>
     </html>
   )
