@@ -12,6 +12,8 @@ function withAlternates(path: string) {
   };
 }
 
+const STATIC_PAGES = ["/manifiesto", "/sello"] as const;
+
 export default function sitemap(): MetadataRoute.Sitemap {
   const now = new Date();
 
@@ -23,6 +25,16 @@ export default function sitemap(): MetadataRoute.Sitemap {
     alternates: { languages: withAlternates("") },
   }));
 
+  const editorial = LOCALES.flatMap((lang) =>
+    STATIC_PAGES.map((path) => ({
+      url: `${BASE}/${lang}${path}`,
+      lastModified: now,
+      changeFrequency: "monthly" as const,
+      priority: 0.7,
+      alternates: { languages: withAlternates(path) },
+    }))
+  );
+
   const artists = LOCALES.flatMap((lang) =>
     artistSlugs.map((slug) => ({
       url: `${BASE}/${lang}/artistas/${slug}`,
@@ -33,5 +45,5 @@ export default function sitemap(): MetadataRoute.Sitemap {
     }))
   );
 
-  return [...home, ...artists];
+  return [...home, ...editorial, ...artists];
 }

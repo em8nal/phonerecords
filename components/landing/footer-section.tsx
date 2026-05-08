@@ -25,8 +25,8 @@ function buildFooterLinks(lang: "es" | "en"): Record<string, FooterHref[]> {
     ],
     // Order matches: About PHŌNÉ, Manifesto, Press kit, Contact
     Label: [
-      { href: "#features" },
-      { href: "#how-it-works" },
+      { href: `/${lang}/sello` },
+      { href: `/${lang}/manifiesto` },
       { href: "mailto:press@phonerecords.cl", hasBadge: true },
       { href: "mailto:contacto@phonerecords.cl" },
     ],
