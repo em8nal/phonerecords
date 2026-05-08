@@ -54,12 +54,12 @@ export function Navigation() {
           {/* Logo */}
           <a href={home} className="flex items-center group" aria-label="PHŌNÉ Records">
             <Image
-              src="/phone-logo-light.png"
+              src="/phone-logo-dark.png"
               alt="PHŌNÉ Records"
               width={2000}
               height={2000}
               priority
-              className={`w-auto transition-all duration-500 dark:invert ${isScrolled ? "h-7" : "h-9"}`}
+              className={`w-auto transition-all duration-500 ${isScrolled ? "h-7" : "h-9"}`}
             />
           </a>
 

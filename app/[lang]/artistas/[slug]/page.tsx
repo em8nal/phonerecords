@@ -16,6 +16,13 @@ export function generateStaticParams() {
   );
 }
 
+function trimToLength(text: string, max: number): string {
+  if (text.length <= max) return text;
+  const cut = text.slice(0, max);
+  const lastSpace = cut.lastIndexOf(" ");
+  return (lastSpace > max * 0.6 ? cut.slice(0, lastSpace) : cut).replace(/[\s,;:.\-—]+$/, "") + "…";
+}
+
 export async function generateMetadata(
   { params }: { params: Promise<ArtistParams> }
 ): Promise<Metadata> {
@@ -23,7 +30,7 @@ export async function generateMetadata(
   const artist = getArtist(slug);
   if (!artist) return { title: "Artista no encontrado" };
   const isEs = lang === "es";
-  const desc = (isEs ? artist.bio.es : artist.bio.en).slice(0, 160);
+  const desc = trimToLength(isEs ? artist.bio.es : artist.bio.en, 158);
   return {
     title: artist.name,
     description: desc,
@@ -56,12 +63,77 @@ export default async function ArtistPage({
   const isEs = lang === "es";
   const bio = isEs ? artist.bio.es : artist.bio.en;
   const labels = isEs
-    ? { back: "Volver al roster", releases: "Discografía", links: "Enlaces", origin: "Origen", genre: "Género", stats: "Métricas" }
-    : { back: "Back to roster", releases: "Discography", links: "Links", origin: "Origin", genre: "Genre", stats: "Metrics" };
+    ? { back: "Volver al roster", releases: "Discografía", links: "Enlaces", origin: "Origen", genre: "Género", stats: "Métricas", roster: "Roster" }
+    : { back: "Back to roster", releases: "Discography", links: "Links", origin: "Origin", genre: "Genre", stats: "Metrics", roster: "Roster" };
   const numberLocale = isEs ? "es-CL" : "en-US";
+  const url = `https://phonerecords.cl/${lang}/artistas/${slug}`;
+
+  // Schema.org JSON-LD: MusicGroup + BreadcrumbList for rich snippets.
+  const schema = {
+    "@context": "https://schema.org",
+    "@graph": [
+      {
+        "@type": "MusicGroup",
+        "@id": `${url}#artist`,
+        name: artist.name,
+        description: bio,
+        genre: artist.genres,
+        url,
+        sameAs: artist.links.map((l) => l.href),
+        location: {
+          "@type": "Place",
+          name: artist.origin,
+        },
+        recordLabel: {
+          "@type": "MusicLabel",
+          "@id": "https://phonerecords.cl/#organization",
+          name: "PHŌNÉ Records",
+        },
+        ...(artist.releases && artist.releases.length
+          ? {
+              album: artist.releases.map((r) => ({
+                "@type": "MusicAlbum",
+                name: r.title,
+                ...(r.year ? { datePublished: r.year } : {}),
+                ...(r.label ? { recordLabel: { "@type": "Organization", name: r.label } } : {}),
+                ...(r.notes ? { description: r.notes } : {}),
+                byArtist: { "@id": `${url}#artist` },
+              })),
+            }
+          : {}),
+      },
+      {
+        "@type": "BreadcrumbList",
+        itemListElement: [
+          {
+            "@type": "ListItem",
+            position: 1,
+            name: "PHŌNÉ Records",
+            item: `https://phonerecords.cl/${lang}`,
+          },
+          {
+            "@type": "ListItem",
+            position: 2,
+            name: labels.roster,
+            item: `https://phonerecords.cl/${lang}#integrations`,
+          },
+          {
+            "@type": "ListItem",
+            position: 3,
+            name: artist.name,
+            item: url,
+          },
+        ],
+      },
+    ],
+  };
 
   return (
     <main className="relative min-h-screen overflow-x-hidden noise-overlay">
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(schema) }}
+      />
       <Navigation />
 
       <article className="max-w-[1200px] mx-auto px-6 lg:px-12 pt-32 lg:pt-40 pb-24">

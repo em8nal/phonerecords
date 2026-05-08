@@ -20,11 +20,11 @@ export async function generateMetadata(
   const isEs = lang === "es";
   return {
     title: isEs
-      ? "PHŌNÉ Records — Sello cultural independiente · Santiago de Chile"
+      ? "PHŌNÉ Records — Sello cultural independiente · Santiago"
       : "PHŌNÉ Records — Independent cultural label · Santiago, Chile",
     description: isEs
-      ? "Sello cultural independiente con dirección autoral. Producción integral, management y curaduría de música independiente latinoamericana en diálogo con circuitos globales."
-      : "Independent cultural label with strong authorial direction. Integral production, management and curation of independent Latin American music in dialogue with global circuits.",
+      ? "Sello cultural independiente con dirección autoral. Roster latinoamericano en diálogo con circuitos globales: Newen Afrobeat, Claudio Solís, Ecamhi, Klaus B."
+      : "Independent cultural label from Santiago, Chile. Latin American roster in dialogue with global circuits: Newen Afrobeat, Claudio Solís, Ecamhi, Klaus B.",
     alternates: {
       canonical: `https://phonerecords.cl/${lang}`,
       languages: {
@@ -41,9 +41,82 @@ export async function generateMetadata(
   };
 }
 
-export default function Home() {
+export default async function Home({
+  params,
+}: {
+  params: Promise<LangParams>;
+}) {
+  const { lang } = await params;
+  const isEs = lang === "es";
+
+  // Schema.org JSON-LD: Organization that is also a MusicLabel.
+  // Helps Google Knowledge Graph render the label brand and its artists.
+  const labelSchema = {
+    "@context": "https://schema.org",
+    "@graph": [
+      {
+        "@type": ["Organization", "MusicLabel"],
+        "@id": "https://phonerecords.cl/#organization",
+        name: "PHŌNÉ Records",
+        url: "https://phonerecords.cl",
+        logo: "https://phonerecords.cl/phone-logo-dark.png",
+        description: isEs
+          ? "Sello cultural independiente con dirección autoral. Producción integral, management y curaduría de música independiente latinoamericana."
+          : "Independent cultural label with strong authorial direction. Integral production, management and curation of independent Latin American music.",
+        foundingLocation: {
+          "@type": "Place",
+          name: "Santiago, Chile",
+          address: {
+            "@type": "PostalAddress",
+            addressLocality: "Santiago",
+            addressRegion: "Región Metropolitana",
+            addressCountry: "CL",
+          },
+        },
+        sameAs: [
+          "https://www.instagram.com/phone_records/",
+          "https://newenafrobeat.bandcamp.com/music",
+          "https://open.spotify.com/artist/0PTJ848ulShbjTx2yqaAlb",
+          "https://www.youtube.com/channel/UCTHMwr5NTvQ0MWbq0nbeP-w",
+        ],
+        contactPoint: [
+          {
+            "@type": "ContactPoint",
+            contactType: "press",
+            email: "press@phonerecords.cl",
+          },
+          {
+            "@type": "ContactPoint",
+            contactType: "booking",
+            email: "booking@phonerecords.cl",
+          },
+        ],
+        member: [
+          { "@type": "MusicGroup", name: "Newen Afrobeat", url: `https://phonerecords.cl/${lang}/artistas/newen-afrobeat` },
+          { "@type": "MusicGroup", name: "Claudio Solís", url: `https://phonerecords.cl/${lang}/artistas/claudio-solis` },
+          { "@type": "MusicGroup", name: "Ecamhi", url: `https://phonerecords.cl/${lang}/artistas/ecamhi` },
+          { "@type": "MusicGroup", name: "Con.fusión", url: `https://phonerecords.cl/${lang}/artistas/con-fusion` },
+          { "@type": "MusicGroup", name: "Klaus Brantmayer", url: `https://phonerecords.cl/${lang}/artistas/klaus-brantmayer` },
+          { "@type": "MusicGroup", name: "Andrés Abrigo", url: `https://phonerecords.cl/${lang}/artistas/andres-abrigo` },
+        ],
+      },
+      {
+        "@type": "WebSite",
+        "@id": "https://phonerecords.cl/#website",
+        url: "https://phonerecords.cl",
+        name: "PHŌNÉ Records",
+        publisher: { "@id": "https://phonerecords.cl/#organization" },
+        inLanguage: ["es-CL", "en"],
+      },
+    ],
+  };
+
   return (
     <main className="relative min-h-screen overflow-x-hidden noise-overlay">
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(labelSchema) }}
+      />
       <Navigation />
       <HeroSection />
       <IntegrationsSection />

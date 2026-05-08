@@ -72,11 +72,11 @@ export function FooterSection() {
             <div className="col-span-2">
               <a href={`/${language}`} className="inline-flex items-center mb-6" aria-label="PHŌNÉ Records">
                 <Image
-                  src="/phone-logo-light.png"
+                  src="/phone-logo-dark.png"
                   alt="PHŌNÉ Records"
                   width={2000}
                   height={2000}
-                  className="h-12 w-auto dark:invert"
+                  className="h-12 w-auto"
                 />
               </a>
 

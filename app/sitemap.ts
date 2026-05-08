@@ -1,0 +1,37 @@
+import type { MetadataRoute } from "next";
+import { artistSlugs } from "@/lib/artists";
+
+const BASE = "https://phonerecords.cl";
+const LOCALES = ["es", "en"] as const;
+
+function withAlternates(path: string) {
+  return {
+    es: `${BASE}/es${path}`,
+    en: `${BASE}/en${path}`,
+    "x-default": `${BASE}/es${path}`,
+  };
+}
+
+export default function sitemap(): MetadataRoute.Sitemap {
+  const now = new Date();
+
+  const home = LOCALES.map((lang) => ({
+    url: `${BASE}/${lang}`,
+    lastModified: now,
+    changeFrequency: "weekly" as const,
+    priority: 1.0,
+    alternates: { languages: withAlternates("") },
+  }));
+
+  const artists = LOCALES.flatMap((lang) =>
+    artistSlugs.map((slug) => ({
+      url: `${BASE}/${lang}/artistas/${slug}`,
+      lastModified: now,
+      changeFrequency: "monthly" as const,
+      priority: 0.8,
+      alternates: { languages: withAlternates(`/artistas/${slug}`) },
+    }))
+  );
+
+  return [...home, ...artists];
+}
