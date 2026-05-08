@@ -189,3 +189,270 @@
     background-size: 100% 100%, 8px 8px;
   }
 }
+
+/* ----------------------------------------------------------------------
+ * Press kit — minimal A4 document layout (matches site aesthetic).
+ * Used by /press/[lang]/[slug]/page.tsx; "Save as PDF" via window.print().
+ * ----------------------------------------------------------------------*/
+.press-page {
+  font-family: var(--font-instrument), system-ui, sans-serif;
+}
+.press-document {
+  max-width: 210mm;
+  padding: 22mm 18mm 22mm 18mm;
+  font-size: 11pt;
+  line-height: 1.5;
+  color: #0a0a0a;
+}
+
+/* Header */
+.press-header {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  border-bottom: 1px solid #0a0a0a;
+  padding-bottom: 12mm;
+  margin-bottom: 12mm;
+}
+.press-logo-img {
+  height: 32px;
+  width: auto;
+}
+.press-header-meta {
+  text-align: right;
+  font-family: var(--font-jetbrains), monospace;
+  font-size: 9pt;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+}
+.press-kit-label {
+  font-weight: 500;
+}
+.press-kit-date {
+  opacity: 0.55;
+  margin-top: 4px;
+}
+
+/* Artist title block */
+.press-artist-block {
+  margin-bottom: 14mm;
+}
+.press-eyebrow {
+  font-family: var(--font-jetbrains), monospace;
+  font-size: 9pt;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  opacity: 0.6;
+  margin-bottom: 6mm;
+}
+.press-artist-name {
+  font-family: var(--font-fraunces), Georgia, serif;
+  font-style: italic;
+  font-weight: 400;
+  font-size: 48pt;
+  line-height: 1;
+  letter-spacing: -0.01em;
+  margin: 0;
+}
+
+/* Sections */
+.press-section {
+  margin-bottom: 12mm;
+}
+.press-section-title {
+  font-family: var(--font-jetbrains), monospace;
+  font-size: 9pt;
+  font-weight: 500;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  opacity: 0.55;
+  margin: 0 0 5mm 0;
+  border-top: 1px solid #0a0a0a;
+  padding-top: 4mm;
+}
+
+/* Bio */
+.press-bio p {
+  margin: 0 0 4mm 0;
+}
+.press-bio p:first-child {
+  font-size: 12pt;
+  font-weight: 500;
+}
+
+/* Discography */
+.press-discography {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 10pt;
+}
+.press-discography td {
+  vertical-align: top;
+  padding: 3mm 0;
+  border-bottom: 1px solid rgba(10, 10, 10, 0.08);
+}
+.press-disc-year {
+  width: 22mm;
+  font-family: var(--font-jetbrains), monospace;
+  font-size: 9pt;
+  opacity: 0.6;
+}
+.press-disc-name {
+  display: block;
+  font-weight: 500;
+}
+.press-disc-format {
+  display: block;
+  font-size: 9pt;
+  opacity: 0.6;
+  margin-top: 1mm;
+}
+.press-disc-label {
+  width: 60mm;
+  font-size: 9pt;
+}
+.press-disc-label span {
+  display: block;
+}
+.press-disc-notes {
+  opacity: 0.65;
+  margin-top: 1mm;
+}
+
+/* Links */
+.press-links-list {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+.press-links-list li {
+  display: flex;
+  justify-content: space-between;
+  gap: 8mm;
+  padding: 2mm 0;
+  border-bottom: 1px solid rgba(10, 10, 10, 0.08);
+  font-size: 10pt;
+}
+.press-link-label {
+  font-family: var(--font-jetbrains), monospace;
+  font-size: 9pt;
+  text-transform: uppercase;
+  letter-spacing: 0.16em;
+  opacity: 0.55;
+}
+.press-link-href {
+  font-family: var(--font-jetbrains), monospace;
+  font-size: 9pt;
+  word-break: break-all;
+}
+
+/* PHŌNÉ block at the bottom */
+.press-label-block {
+  margin-top: 18mm;
+  padding-top: 8mm;
+  border-top: 2px solid #0a0a0a;
+  page-break-inside: avoid;
+  break-inside: avoid;
+}
+.press-label-header {
+  display: flex;
+  align-items: center;
+  gap: 6mm;
+  margin-bottom: 6mm;
+}
+.press-label-logo {
+  height: 26px;
+  width: auto;
+}
+.press-label-title {
+  font-family: var(--font-fraunces), Georgia, serif;
+  font-style: italic;
+  font-size: 14pt;
+}
+.press-label-subtitle {
+  font-family: var(--font-jetbrains), monospace;
+  font-size: 9pt;
+  letter-spacing: 0.18em;
+  opacity: 0.55;
+  margin-top: 1mm;
+}
+.press-label-blurb {
+  font-size: 10pt;
+  line-height: 1.55;
+  margin: 0 0 6mm 0;
+}
+.press-contact-grid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 0;
+  margin-bottom: 5mm;
+}
+.press-contact-row {
+  display: flex;
+  justify-content: space-between;
+  gap: 8mm;
+  padding: 1.5mm 0;
+  border-bottom: 1px solid rgba(10, 10, 10, 0.08);
+  font-size: 10pt;
+}
+.press-contact-label {
+  font-family: var(--font-jetbrains), monospace;
+  font-size: 9pt;
+  text-transform: uppercase;
+  letter-spacing: 0.16em;
+  opacity: 0.55;
+  flex-shrink: 0;
+  min-width: 25mm;
+}
+.press-contact-value {
+  text-align: right;
+  font-family: var(--font-jetbrains), monospace;
+  font-size: 9pt;
+}
+.press-mgmt-note {
+  font-size: 9pt;
+  font-style: italic;
+  opacity: 0.7;
+  margin: 4mm 0 0 0;
+  line-height: 1.5;
+}
+.press-footnote {
+  margin-top: 8mm;
+  padding-top: 4mm;
+  border-top: 1px solid rgba(10, 10, 10, 0.15);
+  font-family: var(--font-jetbrains), monospace;
+  font-size: 8pt;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  opacity: 0.5;
+  text-align: center;
+}
+
+/* Print rules — A4, no chrome, no scroll */
+@media print {
+  @page {
+    size: A4;
+    margin: 0;
+  }
+  html, body {
+    background: white !important;
+    color: black !important;
+  }
+  body * {
+    visibility: hidden;
+  }
+  .press-document, .press-document * {
+    visibility: visible;
+  }
+  .press-document {
+    position: absolute;
+    left: 0;
+    top: 0;
+    width: 210mm;
+    padding: 18mm 16mm 18mm 16mm;
+  }
+  .print\:hidden,
+  .press-toolbar {
+    display: none !important;
+  }
+}

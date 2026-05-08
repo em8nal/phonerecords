@@ -1,7 +1,7 @@
 import type { Metadata } from "next";
 import { notFound } from "next/navigation";
 import Link from "next/link";
-import { ArrowLeft, ExternalLink } from "lucide-react";
+import { ArrowLeft, ExternalLink, FileText } from "lucide-react";
 import { Navigation } from "@/components/landing/navigation";
 import { FooterSection } from "@/components/landing/footer-section";
 import { artistSlugs, getArtist } from "@/lib/artists";
@@ -229,6 +229,20 @@ export default async function ArtistPage({
                 </ul>
               </div>
             )}
+
+            {/* Press kit */}
+            <div>
+              <h3 className="font-mono text-xs text-muted-foreground uppercase tracking-widest mb-4">
+                {isEs ? "Press kit" : "Press kit"}
+              </h3>
+              <Link
+                href={`/press/${lang}/${slug}`}
+                className="inline-flex items-center gap-2 px-4 h-10 text-sm rounded-full border border-foreground/20 hover:bg-foreground/5 transition-colors"
+              >
+                <FileText className="w-4 h-4" />
+                {isEs ? "Descargar PDF" : "Download PDF"}
+              </Link>
+            </div>
           </aside>
         </section>
 
