@@ -11,11 +11,17 @@ interface LanguageContextType {
 
 const LanguageContext = createContext<LanguageContextType | undefined>(undefined);
 
-export function LanguageProvider({ children }: { children: ReactNode }) {
-  const [language, setLanguage] = useState<Language>("en");
+export function LanguageProvider({
+  children,
+  initialLanguage = "es",
+}: {
+  children: ReactNode;
+  initialLanguage?: Language;
+}) {
+  const [language, setLanguage] = useState<Language>(initialLanguage);
 
   useEffect(() => {
-    // Check localStorage for saved language preference
+    // localStorage override beats the geo-detected default once a user has chosen.
     const savedLang = localStorage.getItem("language") as Language | null;
     if (savedLang && (savedLang === "en" || savedLang === "es")) {
       setLanguage(savedLang);

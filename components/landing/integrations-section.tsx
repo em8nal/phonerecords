@@ -1,17 +1,16 @@
 "use client";
 
 import { useEffect, useState, useRef } from "react";
+import Link from "next/link";
 import { useLanguage } from "@/lib/language-context";
 
 const roster = [
-  { name: "Newen Afrobeat", genre: "Afrobeat · Afrofunk", country: "Chile / international" },
-  { name: "Claudio Solís", genre: "Dark Minimal · Techno", country: "Santiago, Chile" },
-  { name: "Ecamhi", genre: "Instrumental · Interdisciplinary", country: "Santiago, Chile" },
-  { name: "Con.fusión", genre: "Hip hop · Jazz · Neo soul", country: "Santiago, Chile" },
-  { name: "Klaus Brantmayer", genre: "Nu-jazz · Hip-hop jazz", country: "Santiago, Chile" },
-  { name: "Andrés Abrigo", genre: "Ambient · Post-tempo", country: "Chile" },
-  { name: "Pau · PAUPERRIMO", genre: "Rock · Indie (creative direction)", country: "Chile" },
-  { name: "Valentina Marinkovic", genre: "Voice · Composition", country: "Chile" },
+  { slug: "newen-afrobeat", name: "Newen Afrobeat", genre: "Afrobeat · Afrofunk", country: "Chile / international" },
+  { slug: "claudio-solis", name: "Claudio Solís", genre: "Dark Minimal · Techno", country: "Santiago, Chile" },
+  { slug: "ecamhi", name: "Ecamhi", genre: "Instrumental · Interdisciplinary", country: "Santiago, Chile" },
+  { slug: "con-fusion", name: "Con.fusión", genre: "Hip hop · Jazz · Neo soul", country: "Santiago, Chile" },
+  { slug: "klaus-brantmayer", name: "Klaus Brantmayer", genre: "Nu-jazz · Hip-hop jazz", country: "Santiago, Chile" },
+  { slug: "andres-abrigo", name: "Andrés Abrigo", genre: "Ambient · Post-tempo", country: "Chile" },
 ];
 
 export function IntegrationsSection() {
@@ -34,13 +33,13 @@ export function IntegrationsSection() {
   const copy = language === "es"
     ? {
         eyebrow: "Roster",
-        headline1: "Ocho proyectos.",
+        headline1: "Seis proyectos.",
         headline2: "Una línea editorial.",
         description: "Artistas acompañados con representación integral en Chile y en circuitos europeos y latinoamericanos.",
       }
     : {
         eyebrow: "Roster",
-        headline1: "Eight projects.",
+        headline1: "Six projects.",
         headline2: "One editorial line.",
         description: "Artists supported with integral representation across Chile and European / Latin American circuits.",
       };
@@ -68,11 +67,12 @@ export function IntegrationsSection() {
         </div>
 
         {/* Grid */}
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-px bg-foreground/10 border border-foreground/10">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-px bg-foreground/10 border border-foreground/10">
           {roster.map((artist, i) => (
-            <div
-              key={artist.name}
-              className={`bg-background p-8 lg:p-10 hover:bg-foreground/[0.02] transition-all duration-500 group ${
+            <Link
+              key={artist.slug}
+              href={`/artistas/${artist.slug}`}
+              className={`block bg-background p-8 lg:p-10 hover:bg-foreground/[0.02] transition-all duration-500 group ${
                 isVisible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-4"
               }`}
               style={{ transitionDelay: isVisible ? `${i * 60}ms` : "0ms" }}
@@ -87,7 +87,7 @@ export function IntegrationsSection() {
               <p className="text-xs font-mono text-muted-foreground uppercase tracking-wider">
                 {artist.country}
               </p>
-            </div>
+            </Link>
           ))}
         </div>
       </div>

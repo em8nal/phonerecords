@@ -1,6 +1,7 @@
 "use client";
 
 import { useEffect, useState, useRef } from "react";
+import { useLanguage } from "@/lib/language-context";
 
 function AnimatedCounter({ end, suffix = "", prefix = "" }: { end: number; suffix?: string; prefix?: string }) {
   const [count, setCount] = useState(0);
@@ -44,34 +45,36 @@ function AnimatedCounter({ end, suffix = "", prefix = "" }: { end: number; suffi
   );
 }
 
-const metrics = [
-  { 
-    value: 2847392, 
-    suffix: "", 
-    prefix: "",
-    label: "API requests today",
+const metricsData = {
+  es: {
+    eyebrow: "El sello en cifras",
+    headline1: "Música independiente",
+    headline2: "que viaja.",
+    liveLabel: "Activo",
+    items: [
+      { value: 8, suffix: "", prefix: "", label: "Artistas en el roster" },
+      { value: 35, suffix: "+", prefix: "", label: "Releases entre Newen y Klaus B" },
+      { value: 7, suffix: "", prefix: "", label: "Países en gira Europa 2026" },
+      { value: 13, suffix: "", prefix: "", label: "Años desde el primer LP del catálogo" },
+    ],
   },
-  { 
-    value: 99, 
-    suffix: ".99%", 
-    prefix: "",
-    label: "Uptime this quarter",
+  en: {
+    eyebrow: "The label in numbers",
+    headline1: "Independent music",
+    headline2: "that travels.",
+    liveLabel: "Active",
+    items: [
+      { value: 8, suffix: "", prefix: "", label: "Artists on the roster" },
+      { value: 35, suffix: "+", prefix: "", label: "Releases between Newen and Klaus B" },
+      { value: 7, suffix: "", prefix: "", label: "Countries on Europe 2026 tour" },
+      { value: 13, suffix: "", prefix: "", label: "Years since the catalogue's first LP" },
+    ],
   },
-  { 
-    value: 23, 
-    suffix: "ms", 
-    prefix: "",
-    label: "Average response time",
-  },
-  { 
-    value: 184, 
-    suffix: "", 
-    prefix: "",
-    label: "Countries served",
-  },
-];
+};
 
 export function MetricsSection() {
+  const { language } = useLanguage();
+  const copy = metricsData[language];
   const [time, setTime] = useState(new Date());
   const [isVisible, setIsVisible] = useState(false);
   const sectionRef = useRef<HTMLElement>(null);
@@ -101,31 +104,31 @@ export function MetricsSection() {
           <div>
             <span className="inline-flex items-center gap-3 text-sm font-mono text-muted-foreground mb-6">
               <span className="w-8 h-px bg-foreground/30" />
-              Live metrics
+              {copy.eyebrow}
             </span>
             <h2
               className={`text-4xl lg:text-6xl font-display tracking-tight transition-all duration-700 ${
                 isVisible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-4"
               }`}
             >
-              Performance you
+              {copy.headline1}
               <br />
-              can measure.
+              {copy.headline2}
             </h2>
           </div>
           <div className="flex items-center gap-4 font-mono text-sm text-muted-foreground">
             <span className="flex items-center gap-2">
               <span className="w-2 h-2 rounded-full bg-green-500 animate-pulse" />
-              Live
+              {copy.liveLabel}
             </span>
             <span className="text-foreground/30">|</span>
-            <span>{time.toLocaleTimeString()}</span>
+            <span suppressHydrationWarning>{time.toLocaleTimeString(language === "es" ? "es-CL" : "en-GB")}</span>
           </div>
         </div>
-        
+
         {/* Metrics Grid */}
         <div className="grid grid-cols-1 md:grid-cols-2 gap-px bg-foreground/10">
-          {metrics.map((metric, index) => (
+          {copy.items.map((metric, index) => (
             <div
               key={metric.label}
               className={`bg-background p-8 lg:p-12 transition-all duration-700 ${

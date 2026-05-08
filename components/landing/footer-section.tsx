@@ -10,10 +10,10 @@ type FooterHref = { href: string; external?: boolean; hasBadge?: boolean };
 const footerLinksHref: Record<string, FooterHref[]> = {
   // Order matches translations.ts: Newen, Claudio, Ecamhi, Con.fusión
   Roster: [
-    { href: "https://newenafrobeat.bandcamp.com/music", external: true },
-    { href: "#integrations" },
-    { href: "https://soundcloud.com/enrique-camhi", external: true },
-    { href: "#integrations" },
+    { href: "/artistas/newen-afrobeat" },
+    { href: "/artistas/claudio-solis" },
+    { href: "/artistas/ecamhi" },
+    { href: "/artistas/con-fusion" },
   ],
   // Order matches: Releases, Vinilo/Vinyl, Cassette, Digital
   Catalogue: [
