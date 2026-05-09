@@ -45,13 +45,6 @@ const copy = {
         { name: "PR y prensa", body: "Estrategia de comunicación, press kit, campañas de prensa, gestión de medios y relaciones con curadurías." },
       ],
     },
-    structure: {
-      title: "Estructura tarifaria",
-      items: [
-        { label: "Comisión sobre presentaciones", value: "15%", note: "Sobre ingresos generados por presentaciones gestionadas directamente por PHŌNÉ." },
-        { label: "Administración mensual", value: "$150.000 CLP", note: "Mínimo. Incluye booking, gestión de oportunidades, planificación estratégica, coordinación general, acompañamiento en decisiones clave, facturación y administración financiera." },
-      ],
-    },
     contact: {
       title: "Contacto",
       items: [
@@ -88,13 +81,6 @@ const copy = {
         { name: "Creative direction", body: "Visual identity, art direction for release and campaign, photographic direction, video direction and documentation." },
         { name: "Booking and tour management", body: "Concerts, showcases, national and international tours. EU booking via Ludwig Sound Booking Agency (Heidelberg, Germany)." },
         { name: "PR and press", body: "Communication strategy, press kit, press campaigns, media management and curation relationships." },
-      ],
-    },
-    structure: {
-      title: "Tariff structure",
-      items: [
-        { label: "Commission on presentations", value: "15%", note: "Over income generated from shows managed directly by PHŌNÉ." },
-        { label: "Monthly administration", value: "150,000 CLP", note: "Minimum. Includes booking, opportunity management, strategic planning, general coordination, key-decision support, invoicing and financial administration." },
       ],
     },
     contact: {
@@ -167,24 +153,6 @@ export default async function SelloPage({
                 </div>
                 <h3 className="text-xl font-display tracking-tight mb-3">{service.name}</h3>
                 <p className="text-base text-foreground/75 leading-relaxed">{service.body}</p>
-              </div>
-            ))}
-          </div>
-        </section>
-
-        {/* Tariffs */}
-        <section className="mb-20 lg:mb-28">
-          <h2 className="text-3xl lg:text-5xl font-display tracking-tight mb-12">
-            {c.structure.title}
-          </h2>
-          <div className="space-y-8">
-            {c.structure.items.map((item) => (
-              <div key={item.label} className="grid lg:grid-cols-12 gap-4 lg:gap-8 py-6 border-b border-foreground/10">
-                <div className="lg:col-span-4 font-mono text-sm uppercase tracking-widest text-muted-foreground">
-                  {item.label}
-                </div>
-                <div className="lg:col-span-3 text-3xl lg:text-4xl font-display">{item.value}</div>
-                <div className="lg:col-span-5 text-sm text-foreground/70 leading-relaxed">{item.note}</div>
               </div>
             ))}
           </div>
