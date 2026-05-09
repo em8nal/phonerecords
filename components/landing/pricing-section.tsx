@@ -11,7 +11,7 @@ const prices = [
 ];
 
 export function PricingSection() {
-  const { t } = useLanguage();
+  const { t, language } = useLanguage();
   const [isAnnual, setIsAnnual] = useState(true);
 
   return (
@@ -132,9 +132,7 @@ export function PricingSection() {
         <p className="mt-12 text-center text-sm text-muted-foreground">
           {t.pricing.bottomNote}{" "}
           <a
-            href="https://newenafrobeat.bandcamp.com/music"
-            target="_blank"
-            rel="noopener noreferrer"
+            href={`/${language}/catalogo`}
             className="underline underline-offset-4 hover:text-foreground transition-colors"
           >
             {t.pricing.compareFeatures}
