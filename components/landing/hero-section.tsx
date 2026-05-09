@@ -122,7 +122,7 @@ export function HeroSection() {
               size="lg"
               className="bg-foreground hover:bg-foreground/90 text-background px-8 h-14 text-base rounded-full group"
             >
-              <a href="#integrations">
+              <a href="#roster">
                 {t.hero.ctaPrimary}
                 <ArrowRight className="w-4 h-4 ml-2 transition-transform group-hover:translate-x-1" />
               </a>

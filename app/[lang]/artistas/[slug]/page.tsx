@@ -127,7 +127,7 @@ export default async function ArtistPage({
             "@type": "ListItem",
             position: 2,
             name: labels.roster,
-            item: `https://phonerecords.cl/${lang}#integrations`,
+            item: `https://phonerecords.cl/${lang}#roster`,
           },
           {
             "@type": "ListItem",
@@ -151,7 +151,7 @@ export default async function ArtistPage({
       <article className="max-w-[1200px] mx-auto px-6 lg:px-12 pt-32 lg:pt-40 pb-24">
         {/* Back link */}
         <Link
-          href={`/${lang}#integrations`}
+          href={`/${lang}#roster`}
           className="inline-flex items-center gap-2 text-sm text-muted-foreground hover:text-foreground transition-colors mb-12 group"
         >
           <ArrowLeft className="w-4 h-4 group-hover:-translate-x-1 transition-transform" />

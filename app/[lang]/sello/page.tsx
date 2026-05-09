@@ -203,7 +203,7 @@ export default async function SelloPage({
             {c.cta.manifesto}
           </Link>
           <Link
-            href={`/${lang}#integrations`}
+            href={`/${lang}#roster`}
             className="inline-flex items-center justify-center px-8 h-14 text-base rounded-full border border-foreground/20 hover:bg-foreground/5 transition-colors"
           >
             {c.cta.roster}

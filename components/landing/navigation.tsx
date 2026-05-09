@@ -16,7 +16,7 @@ export function Navigation() {
   const home = `/${language}`;
   const isEs = language === "es";
   const navLinks = [
-    { name: "Roster", href: `${home}#integrations` },
+    { name: "Roster", href: `${home}#roster` },
     { name: isEs ? "Catálogo" : "Catalogue", href: `${home}/catalogo` },
     { name: t.nav.developers, href: `${home}/eventos` },
     { name: t.nav.howItWorks, href: `${home}/manifiesto` },
