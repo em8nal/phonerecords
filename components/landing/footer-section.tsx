@@ -27,8 +27,8 @@ function buildFooterLinks(lang: "es" | "en"): Record<string, FooterHref[]> {
     Label: [
       { href: `/${lang}/sello` },
       { href: `/${lang}/manifiesto` },
-      { href: "mailto:press@phonerecords.cl", hasBadge: true },
-      { href: "mailto:contacto@phonerecords.cl" },
+      { href: "mailto:recs.phone@gmail.com", hasBadge: true },
+      { href: "mailto:recs.phone@gmail.com" },
     ],
     // Order matches: Instagram, Bandcamp, Spotify, YouTube
     Connect: [

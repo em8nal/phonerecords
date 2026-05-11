@@ -23,7 +23,7 @@ const codeExamples = [
 # + más fechas por confirmar
 # + more dates to be confirmed
 
-booking@phonerecords.cl
+recs.phone@gmail.com
 info@ludwigsound.com`,
   },
   {
@@ -217,7 +217,7 @@ export function DevelopersSection() {
               </a>
               <span className="text-foreground/20">|</span>
               <a
-                href="mailto:booking@phonerecords.cl"
+                href="mailto:recs.phone@gmail.com"
                 className="text-muted-foreground hover:text-foreground"
               >
                 {t.developers.viewGithub}

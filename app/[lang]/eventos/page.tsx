@@ -185,14 +185,14 @@ export default async function EventosPage({
                 {t.booking}
               </h2>
               <p className="text-sm text-muted-foreground">
-                booking@phonerecords.cl · Ludwig Sound · info@ludwigsound.com
+                recs.phone@gmail.com · Ludwig Sound · info@ludwigsound.com
               </p>
             </div>
             <a
-              href="mailto:booking@phonerecords.cl"
+              href="mailto:recs.phone@gmail.com"
               className="inline-flex items-center justify-center px-8 h-12 text-sm rounded-full bg-foreground text-background hover:bg-foreground/90 transition-colors"
             >
-              booking@phonerecords.cl
+              recs.phone@gmail.com
             </a>
           </div>
         </section>

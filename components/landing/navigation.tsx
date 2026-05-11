@@ -81,7 +81,7 @@ export function Navigation() {
           <div className="hidden md:flex items-center gap-4">
             <LanguageSelector />
             <a
-              href="mailto:press@phonerecords.cl"
+              href="mailto:recs.phone@gmail.com"
               className={`text-foreground/70 hover:text-foreground transition-all duration-500 ${isScrolled ? "text-xs" : "text-sm"}`}
             >
               {t.nav.signIn}
@@ -91,7 +91,7 @@ export function Navigation() {
               size="sm"
               className={`bg-foreground hover:bg-foreground/90 text-background rounded-full transition-all duration-500 ${isScrolled ? "px-4 h-8 text-xs" : "px-6"}`}
             >
-              <a href="mailto:booking@phonerecords.cl">{t.nav.startCreating}</a>
+              <a href="mailto:recs.phone@gmail.com">{t.nav.startCreating}</a>
             </Button>
           </div>
 
@@ -159,14 +159,14 @@ export function Navigation() {
               className="flex-1 rounded-full h-14 text-base"
               onClick={() => setIsMobileMenuOpen(false)}
             >
-              <a href="mailto:press@phonerecords.cl">{t.nav.signIn}</a>
+              <a href="mailto:recs.phone@gmail.com">{t.nav.signIn}</a>
             </Button>
             <Button
               asChild
               className="flex-1 bg-foreground text-background rounded-full h-14 text-base"
               onClick={() => setIsMobileMenuOpen(false)}
             >
-              <a href="mailto:booking@phonerecords.cl">{t.nav.startCreating}</a>
+              <a href="mailto:recs.phone@gmail.com">{t.nav.startCreating}</a>
             </Button>
           </div>
         </div>

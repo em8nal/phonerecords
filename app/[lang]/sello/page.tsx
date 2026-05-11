@@ -48,9 +48,7 @@ const copy = {
     contact: {
       title: "Contacto",
       items: [
-        { label: "Press", value: "press@phonerecords.cl", href: "mailto:press@phonerecords.cl" },
-        { label: "Booking", value: "booking@phonerecords.cl", href: "mailto:booking@phonerecords.cl" },
-        { label: "General", value: "contacto@phonerecords.cl", href: "mailto:contacto@phonerecords.cl" },
+        { label: "General · Prensa · Booking", value: "recs.phone@gmail.com", href: "mailto:recs.phone@gmail.com" },
         { label: "Booking EU", value: "Ludwig Sound — info@ludwigsound.com", href: "mailto:info@ludwigsound.com" },
       ],
     },
@@ -86,9 +84,7 @@ const copy = {
     contact: {
       title: "Contact",
       items: [
-        { label: "Press", value: "press@phonerecords.cl", href: "mailto:press@phonerecords.cl" },
-        { label: "Booking", value: "booking@phonerecords.cl", href: "mailto:booking@phonerecords.cl" },
-        { label: "General", value: "contacto@phonerecords.cl", href: "mailto:contacto@phonerecords.cl" },
+        { label: "General · Press · Booking", value: "recs.phone@gmail.com", href: "mailto:recs.phone@gmail.com" },
         { label: "EU Booking", value: "Ludwig Sound — info@ludwigsound.com", href: "mailto:info@ludwigsound.com" },
       ],
     },
