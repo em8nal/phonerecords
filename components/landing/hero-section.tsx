@@ -1,10 +1,19 @@
 "use client";
 
 import { useEffect, useState } from "react";
+import dynamic from "next/dynamic";
 import { Button } from "@/components/ui/button";
 import { ArrowRight } from "lucide-react";
-import { AnimatedSphere } from "./animated-sphere";
 import { useLanguage } from "@/lib/language-context";
+
+// Three.js bundle (~280KB gzipped) is the LCP killer of the hero.
+// Defer it until after first paint: SSR off + dynamic import means the
+// rest of the hero renders immediately and the sphere fades in once the
+// chunk loads on the client.
+const AnimatedSphere = dynamic(
+  () => import("./animated-sphere").then((m) => m.AnimatedSphere),
+  { ssr: false, loading: () => null }
+);
 
 export function HeroSection() {
   const { t } = useLanguage();

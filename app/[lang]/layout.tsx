@@ -1,6 +1,7 @@
 import { notFound } from "next/navigation";
 import type { ReactNode } from "react";
 import { LanguageProvider } from "@/lib/language-context";
+import { CookieBanner } from "@/components/cookie-banner";
 import type { Language } from "@/lib/translations";
 
 const LOCALES: readonly Language[] = ["es", "en"] as const;
@@ -22,6 +23,7 @@ export default async function LangLayout({
   return (
     <LanguageProvider initialLanguage={lang as Language}>
       {children}
+      <CookieBanner />
     </LanguageProvider>
   );
 }

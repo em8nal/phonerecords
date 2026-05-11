@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import Link from "next/link";
-import { ArrowLeft, ArrowUpRight } from "lucide-react";
+import Image from "next/image";
+import { ArrowLeft } from "lucide-react";
 import { Navigation } from "@/components/landing/navigation";
 import { FooterSection } from "@/components/landing/footer-section";
 import { getAllReleasesSorted } from "@/lib/releases";
@@ -86,29 +87,42 @@ export default async function CatalogoPage({
           <p className="text-xl text-foreground/85 leading-relaxed">{t.intro}</p>
         </header>
 
-        {/* Releases list */}
-        <div className="border-t border-foreground/10">
+        {/* Releases grid with covers */}
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-px bg-foreground/10 border border-foreground/10">
           {releases.map((r) => (
             <Link
               key={r.slug}
               href={`/${lang}/releases/${r.slug}`}
-              className="group grid grid-cols-12 gap-4 lg:gap-8 py-8 lg:py-10 border-b border-foreground/10 hover:bg-foreground/[0.02] transition-colors px-2 lg:px-4 -mx-2 lg:-mx-4"
+              className="group block bg-background hover:bg-foreground/[0.02] transition-colors"
             >
-              <div className="col-span-12 sm:col-span-2 font-mono text-xs uppercase tracking-widest text-muted-foreground self-center">
-                {r.releaseDate.slice(0, 7)}
+              <div className="relative aspect-square overflow-hidden bg-foreground/5">
+                {r.cover ? (
+                  <Image
+                    src={r.cover}
+                    alt={`${r.title} — ${r.artistName}`}
+                    fill
+                    sizes="(min-width: 1024px) 33vw, (min-width: 640px) 50vw, 100vw"
+                    className="object-cover transition-transform duration-500 group-hover:scale-[1.02]"
+                  />
+                ) : (
+                  <div className="absolute inset-0 flex items-center justify-center text-muted-foreground/40 font-display text-5xl tracking-widest">
+                    PHŌNÉ
+                  </div>
+                )}
               </div>
-              <div className="col-span-12 sm:col-span-7 lg:col-span-6">
-                <h2 className="text-2xl lg:text-3xl font-display tracking-tight group-hover:translate-x-1 transition-transform">
+              <div className="p-6 lg:p-8">
+                <div className="font-mono text-xs uppercase tracking-widest text-muted-foreground mb-3">
+                  {r.releaseDate.slice(0, 7)} · {r.format.split(" · ")[0]}
+                </div>
+                <h2 className="text-xl lg:text-2xl font-display tracking-tight mb-1 group-hover:translate-x-1 transition-transform">
                   {r.title}
                 </h2>
-                <p className="text-sm text-muted-foreground mt-1">{r.artistName}</p>
-              </div>
-              <div className="col-span-8 sm:col-span-2 lg:col-span-3 text-sm text-foreground/70 self-center">
-                {r.format}
-                {r.label && <span className="block text-xs text-muted-foreground mt-1">{r.label}</span>}
-              </div>
-              <div className="col-span-4 sm:col-span-1 self-center text-right">
-                <ArrowUpRight className="w-5 h-5 ml-auto opacity-0 -translate-x-1 group-hover:opacity-100 group-hover:translate-x-0 transition-all" />
+                <p className="text-sm text-muted-foreground">{r.artistName}</p>
+                {r.label && (
+                  <p className="font-mono text-xs uppercase tracking-wider text-muted-foreground/70 mt-3">
+                    {r.label}
+                  </p>
+                )}
               </div>
             </Link>
           ))}

@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import { notFound } from "next/navigation";
 import Link from "next/link";
+import Image from "next/image";
 import { ArrowLeft, ArrowUpRight, ExternalLink } from "lucide-react";
 import { Navigation } from "@/components/landing/navigation";
 import { FooterSection } from "@/components/landing/footer-section";
@@ -48,6 +49,7 @@ export async function generateMetadata(
       description: desc,
       url: `https://phonerecords.cl/${lang}/releases/${slug}`,
       locale: isEs ? "es_CL" : "en_US",
+      ...(release.cover ? { images: [{ url: release.cover, width: 1200, height: 1200, alt: `${release.title} — ${release.artistName}` }] } : {}),
     },
   };
 }
@@ -83,6 +85,7 @@ export default async function ReleasePage({
         name: release.title,
         url,
         datePublished: release.releaseDate,
+        ...(release.cover ? { image: release.cover } : {}),
         albumReleaseType: release.type === "single"
           ? "https://schema.org/SingleRelease"
           : release.type === "ep"
@@ -134,21 +137,37 @@ export default async function ReleasePage({
           {labels.back}
         </Link>
 
-        {/* Header */}
-        <header className="mb-16 lg:mb-24">
-          <Link
-            href={`/${lang}/artistas/${release.artistSlug}`}
-            className="font-mono text-xs text-muted-foreground tracking-widest uppercase mb-6 inline-block hover:text-foreground transition-colors"
-          >
-            {release.artistName}
-          </Link>
-          <h1 className="text-5xl lg:text-8xl font-display tracking-tight leading-[0.9] mb-8">
-            {release.title}
-          </h1>
-          <div className="flex flex-wrap gap-x-8 gap-y-2 text-sm font-mono text-muted-foreground uppercase tracking-widest">
-            <span>{labels.releaseDate}: {release.releaseDate}</span>
-            <span>{labels.format}: {release.format}</span>
-            {release.label && <span>{labels.label}: {release.label}</span>}
+        {/* Cover + Header */}
+        <header className="grid lg:grid-cols-12 gap-10 lg:gap-16 mb-16 lg:mb-24 items-start">
+          {release.cover && (
+            <div className="lg:col-span-5">
+              <div className="relative aspect-square overflow-hidden border border-foreground/10 bg-foreground/5">
+                <Image
+                  src={release.cover}
+                  alt={`${release.title} — ${release.artistName}`}
+                  fill
+                  sizes="(min-width: 1024px) 40vw, 100vw"
+                  priority
+                  className="object-cover"
+                />
+              </div>
+            </div>
+          )}
+          <div className={release.cover ? "lg:col-span-7" : "lg:col-span-12"}>
+            <Link
+              href={`/${lang}/artistas/${release.artistSlug}`}
+              className="font-mono text-xs text-muted-foreground tracking-widest uppercase mb-6 inline-block hover:text-foreground transition-colors"
+            >
+              {release.artistName}
+            </Link>
+            <h1 className="text-4xl lg:text-7xl font-display tracking-tight leading-[0.9] mb-8">
+              {release.title}
+            </h1>
+            <div className="flex flex-wrap gap-x-8 gap-y-2 text-sm font-mono text-muted-foreground uppercase tracking-widest">
+              <span>{labels.releaseDate}: {release.releaseDate}</span>
+              <span>{labels.format}: {release.format}</span>
+              {release.label && <span>{labels.label}: {release.label}</span>}
+            </div>
           </div>
         </header>
 

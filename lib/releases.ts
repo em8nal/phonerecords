@@ -42,6 +42,7 @@ export const releases: Release[] = [
     type: "album",
     format: "LP · vinilo + digital",
     label: "OfficeHome Records (París)",
+    cover: "https://f4.bcbits.com/img/a1399189381_10.jpg",
     description: {
       es:
         "Cuarto LP de Newen Afrobeat, grabado en Santuario Sónico (Santiago, abril 2022) con producción general de Sebastián Crooker, mezcla de Fran 'Antena' Infante y master de Carlos Barros. El disco articula a cuatro artistas del roster PHŌNÉ: Ecamhi (trompeta + co-composición de Mare Mare + co-dirección de arte con Tom Pavez), Klaus Brantmayer (composición de Es la Vida), y Claudio Solís (diseño gráfico). Featurings de Lido Pimienta, Dele Sosimi, Joe Vasconcellos y Chico César.",
@@ -80,6 +81,7 @@ export const releases: Release[] = [
     type: "live",
     format: "EP en vivo · 4 tracks",
     label: "Independent",
+    cover: "https://f4.bcbits.com/img/a2149195633_10.jpg",
     description: {
       es:
         "EP en vivo capturado en Quarry, Liverpool, durante la gira de verano 2024. Versiones explosivas en directo de tracks de Grietas junto a relecturas de clásicos de Fela Kuti. Grabado 100% en vivo y completamente análogo. Representa el cruce entre la herencia musical africana y las perspectivas latinoamericanas.",
@@ -111,6 +113,7 @@ export const releases: Release[] = [
     year: 2019,
     type: "album",
     format: "2° LP · 7 tracks (48 min)",
+    cover: "https://f4.bcbits.com/img/a2154521327_10.jpg",
     description: {
       es:
         "Segundo álbum de larga duración. Documenta la exploración continua del afrobeat y los viajes a Lagos, Nigeria para estudiar con maestros del género. Tematiza desigualdad, migración, rol femenino, culturas indígenas. Grabado, mezclado y masterizado en Santuario Sónico, Santiago de Chile. Participaciones de Oghene Kologbo, Enrique Camhi (Ecamhi) y Diego Alarcón.",
@@ -139,6 +142,7 @@ export const releases: Release[] = [
     year: 2017,
     type: "ep",
     format: "EP · CD (sold out) + digital",
+    cover: "https://f4.bcbits.com/img/a2971239057_10.jpg",
     description: {
       es:
         "EP que reúne dos composiciones de Fela Anikulapo Kuti junto a colaboradores notables: Seun Kuti, Cheick Tidiane Seck y músicos de Egypt 80. Tres tracks que extienden la conversación de Newen con la fuente del afrobeat.",
@@ -163,6 +167,7 @@ export const releases: Release[] = [
     year: 2014,
     type: "album",
     format: "LP debut · 7 tracks (74 min)",
+    cover: "https://f4.bcbits.com/img/a1477748070_10.jpg",
     description: {
       es:
         "LP debut. Un viaje groovero por el primer afrobeat chileno jamás grabado. Producido por Chalo Gonzáles y Nicolás Urbina en Estudios del Sur durante 2013.",
@@ -193,6 +198,7 @@ export const releases: Release[] = [
     year: 2025,
     type: "mixtape",
     format: "LP / Mixtape · 15 tracks",
+    cover: "https://f4.bcbits.com/img/a2195737014_10.jpg",
     description: {
       es:
         "Mirada íntima a una exploración musical personal desplegada durante varios años, combinando canciones e improvisaciones entre el jazz y el hip hop con grabaciones orgánicas. Presentado como archivo biográfico y documento vivo de evolución creativa.",
@@ -234,6 +240,7 @@ export const releases: Release[] = [
     year: 2025,
     type: "live",
     format: "EP en vivo · 3 tracks",
+    cover: "https://f4.bcbits.com/img/a0583641197_10.jpg",
     description: {
       es:
         "EP en vivo grabado en Estudios Del Maipo, Cajón del Maipo, Chile, 2025. Tres piezas largas que cruzan rap, jazz y groove orgánico con la sección instrumental completa.",
@@ -270,6 +277,7 @@ export const releases: Release[] = [
     year: 2024,
     type: "album",
     format: "LP · 12 tracks",
+    cover: "https://f4.bcbits.com/img/a0044868647_10.jpg",
     description: {
       es:
         "Álbum innovador del rapero Gestosimple y el saxofonista, flautista y productor Klaus B. Cruce de rap, nu-jazz, neo-soul y funk con una colaboración extensa de vocalistas, DJs e instrumentistas. Temas: vida, amor, música.",
@@ -307,6 +315,7 @@ export const releases: Release[] = [
     year: 2023,
     type: "single",
     format: "Single",
+    cover: "https://f4.bcbits.com/img/a2195737014_10.jpg",
     description: {
       es:
         "Single producido en Santiago de Chile entre 2022 y 2023, después de viajes en gira a Lagos, Nigeria con Newen Afrobeat. Reúne la sección de bronces de Newen completa, incluido Ecamhi en trompeta.",
@@ -339,6 +348,7 @@ export const releases: Release[] = [
     year: 2025,
     type: "single",
     format: "Single",
+    cover: "https://f4.bcbits.com/img/a2195737014_10.jpg",
     description: {
       es:
         "Producido en Santiago de Chile, en colaboración y co-producción con Lister Rossel (Mr.Li) en Londres, MC Seven Star en Orlando y MC Racecar en París. Hip-hop, jazz fusion, neo-soul.",
@@ -368,6 +378,7 @@ export const releases: Release[] = [
     year: 2025,
     type: "single",
     format: "Single",
+    cover: "https://f4.bcbits.com/img/a2828912453_10.jpg",
     description: {
       es: "Single producido por Klaus B. Hip-hop / rap, jazz fusion, rap jazz, groove, jazz, neo-soul instrumental, nu-jazz.",
       en: "Single produced by Klaus B. Hip-hop / rap, jazz fusion, rap jazz, groove, jazz, instrumental neo-soul, nu-jazz.",
@@ -385,6 +396,7 @@ export const releases: Release[] = [
     year: 2021,
     type: "single",
     format: "Single instrumental",
+    cover: "https://f4.bcbits.com/img/a4057419649_10.jpg",
     description: {
       es:
         "Track instrumental groovero, liderado por una flauta funk brillante que rebota sobre un beat relajado. Cuando el viento gana el poder de brillar.",
@@ -412,6 +424,7 @@ export const releases: Release[] = [
     year: 2021,
     type: "single",
     format: "Single",
+    cover: "https://f4.bcbits.com/img/a1553461504_10.jpg",
     description: {
       es: "Single de Klaus B (2021). Hip hop, jazz, lo-fi, nu-jazz: una mezcla downtempo de raíz jazz con rap.",
       en: "Klaus B single (2021). Hip hop, jazz, lo-fi, nu-jazz: a downtempo blend of jazz roots with rap.",
