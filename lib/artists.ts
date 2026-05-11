@@ -82,6 +82,7 @@ They have toured Chile, Brazil, Nigeria, the United States, Canada, the United K
     name: "Claudio Solís",
     genres: ["Dark Minimal", "Minimal Techno"],
     origin: "Santiago, Chile",
+    stats: { monthlyListeners: 155 },
     bio: {
       es:
         `En una escena dominada por la inmediatez, Claudio Solís ha optado por una trayectoria pausada. Surgido del underground santiaguino, cultivó un sonido donde la oscuridad opera como principio estructural, no como adorno estético.
@@ -108,7 +109,9 @@ Beyond the booth, Solís has acted as a discreet bridge between Latin America an
 
 His performances are not built for climax but for transformation: slow-burning structures where darkness becomes architecture. The curation of his catalogue continues to expand with scheduled appearances on European labels through 2026, in parallel with vinyl sessions and residencies in alternative-circuit clubs.`,
     },
-    links: [],
+    links: [
+      { label: "Spotify", href: "https://open.spotify.com/artist/7Ldq8qyOs4jJ42cN1oD4qN" },
+    ],
     releases: [
       { year: "2025-02", title: "Oneiroi", label: "Advisual Records" },
       { year: "2025-01", title: "Selección Natural", label: "Nada Espacial" },
@@ -152,9 +155,11 @@ He is the cross-orchestra voice of the PHŌNÉ ecosystem: besides Newen, he appe
 He is working on new materials that extend the interdisciplinary logic of the first EP, with emphasis on tape-recorded live sessions and exhibitions that combine image, sound and text. He continues active in Newen Afrobeat's formation with scheduled performances on the Europe 2026 tour.`,
     },
     links: [
+      { label: "Spotify", href: "https://open.spotify.com/artist/6dUvYBGnjpf2emwATOIP4c" },
       { label: "SoundCloud", href: "https://soundcloud.com/enrique-camhi" },
       { label: "Instagram", href: "https://www.instagram.com/ecamhi/" },
     ],
+    stats: { monthlyListeners: 3 },
     releases: [
       { year: "2024", title: "en viaje", format: "EP · 4 tracks", label: "PHŌNÉ Records", notes: "Lanzamiento inaugural del sello" },
       { year: "2024-09", title: "Grietas (Newen Afrobeat)", format: "LP", notes: "Trompeta + co-composición Mare Mare + co-dirección de arte" },
@@ -166,6 +171,7 @@ He is working on new materials that extend the interdisciplinary logic of the fi
     name: "Con.fusión",
     genres: ["Hip Hop", "Jazz", "Neo Soul"],
     origin: "Santiago, Chile",
+    stats: { monthlyListeners: 8700 },
     bio: {
       es:
         `Con.fusión es el proyecto solista de Catalina Aguilera Martínez: una propuesta vocal que transita entre el hip hop, el jazz, el neo soul y la exploración de la voz como territorio de investigación, no como decoración.
@@ -192,7 +198,9 @@ Her debut album Tulpa is in production, an intensive laboratory of research and 
 
 She has applied to the FRECUENCIAS 2026 residency (Bordeaux, France, October 2026) to deepen the project's stage dimension. PHŌNÉ accompanies the production of Tulpa with creative direction, arrangement assistance and visual curation, in an extended-format process that prioritises incubation over rushed release.`,
     },
-    links: [],
+    links: [
+      { label: "Spotify", href: "https://open.spotify.com/artist/3LnpeMefgyavyTUTFNs5Xd" },
+    ],
     releases: [
       { year: "2024", title: "Cantas Veces", format: "Single", notes: "Disponible en plataformas" },
       { year: "in production", title: "Tulpa", format: "Álbum", notes: "Tracks: Acertijo · En vez de quejarte tanto · Pisando caca a propósito" },
