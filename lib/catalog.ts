@@ -22,6 +22,9 @@ export type CatalogEntry = {
   cover?: string;
   /** Slug if the entry has a /releases/[slug] detail page; otherwise undefined. */
   releaseSlug?: string;
+  /** External storefront/streaming URL for lightweight entries (no detail page). */
+  externalHref?: string;
+  externalKind?: "buy" | "listen";
 };
 
 function slugify(s: string) {
@@ -105,6 +108,8 @@ function buildAllEntries(): CatalogEntry[] {
         notes: r.notes,
         cover: undefined,
         releaseSlug: undefined,
+        externalHref: r.href,
+        externalKind: r.hrefKind ?? (r.href ? "buy" : undefined),
       })),
   );
 

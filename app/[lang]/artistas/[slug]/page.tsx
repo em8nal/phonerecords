@@ -6,6 +6,27 @@ import { Navigation } from "@/components/landing/navigation";
 import { FooterSection } from "@/components/landing/footer-section";
 import { artistSlugs, getArtist } from "@/lib/artists";
 import { getArtistEntries } from "@/lib/catalog";
+import { getRelease } from "@/lib/releases";
+
+type ActionLink = { href: string; kind: "listen" | "buy" };
+
+function pickReleaseAction(links: { label: string; href: string }[] | undefined): ActionLink | null {
+  if (!links?.length) return null;
+  // Priority: explicit buy markers first (Discogs marketplace, Beatport), then listen (Bandcamp/Spotify/SoundCloud).
+  for (const l of links) {
+    const u = l.href.toLowerCase();
+    if (u.includes("discogs.com/release") || u.includes("beatport.com")) {
+      return { href: l.href, kind: "buy" };
+    }
+  }
+  for (const l of links) {
+    const u = l.href.toLowerCase();
+    if (u.includes("bandcamp.com") || u.includes("open.spotify.com") || u.includes("soundcloud.com") || u.includes("music.apple.com")) {
+      return { href: l.href, kind: "listen" };
+    }
+  }
+  return { href: links[0].href, kind: "listen" };
+}
 import { SpotifyArtistEmbed } from "@/components/spotify-embed";
 import type { Language } from "@/lib/translations";
 
@@ -73,8 +94,8 @@ export default async function ArtistPage({
   const isEs = lang === "es";
   const bio = isEs ? artist.bio.es : artist.bio.en;
   const labels = isEs
-    ? { back: "Volver al roster", releases: "Discografía", links: "Enlaces", origin: "Origen", genre: "Género", stats: "Métricas", roster: "Roster", listenSpotify: "Escuchar en Spotify", catalogue: "Catálogo", viewRelease: "Ver release" }
-    : { back: "Back to roster", releases: "Discography", links: "Links", origin: "Origin", genre: "Genre", stats: "Metrics", roster: "Roster", listenSpotify: "Listen on Spotify", catalogue: "Catalogue", viewRelease: "View release" };
+    ? { back: "Volver al roster", releases: "Discografía", links: "Enlaces", origin: "Origen", genre: "Género", stats: "Métricas", roster: "Roster", listenSpotify: "Escuchar en Spotify", catalogue: "Catálogo", viewRelease: "Ver release", listen: "Escuchar", buy: "Comprar" }
+    : { back: "Back to roster", releases: "Discography", links: "Links", origin: "Origin", genre: "Genre", stats: "Metrics", roster: "Roster", listenSpotify: "Listen on Spotify", catalogue: "Catalogue", viewRelease: "View release", listen: "Listen", buy: "Buy" };
   const numberLocale = isEs ? "es-CL" : "en-US";
   const url = `https://phonerecords.cl/${lang}/artistas/${slug}`;
   const spotifyArtistId = extractSpotifyArtistId(artist.links);
@@ -285,37 +306,51 @@ export default async function ArtistPage({
             </div>
             <div className="border-t border-foreground/10">
               {allEntries.map((r) => {
-                const inner = (
-                  <>
-                    <div className="col-span-12 sm:col-span-2 font-mono text-sm text-muted-foreground self-center">
+                const release = r.releaseSlug ? getRelease(r.releaseSlug) : undefined;
+                const richAction = pickReleaseAction(release?.links);
+                const action: ActionLink | null = richAction
+                  ?? (r.externalHref ? { href: r.externalHref, kind: r.externalKind ?? "buy" } : null);
+                const actionLabel = action ? (action.kind === "buy" ? labels.buy : labels.listen) : null;
+                const titleNode = (
+                  <span className="font-display text-lg group-hover:translate-x-1 transition-transform inline-block">
+                    {r.title}
+                  </span>
+                );
+                return (
+                  <div
+                    key={r.key}
+                    className="group grid grid-cols-12 gap-4 py-6 border-b border-foreground/10 hover:bg-foreground/[0.02] transition-colors px-2 -mx-2"
+                  >
+                    <div className="col-span-6 sm:col-span-2 font-mono text-sm text-muted-foreground self-center">
                       {r.year || r.releaseDate.slice(0, 7)}
                     </div>
-                    <div className="col-span-12 sm:col-span-6">
-                      <div className="font-display text-lg group-hover:translate-x-1 transition-transform">{r.title}</div>
+                    <div className="col-span-12 sm:col-span-5 order-3 sm:order-none">
+                      {r.releaseSlug ? (
+                        <Link href={`/${lang}/releases/${r.releaseSlug}`}>{titleNode}</Link>
+                      ) : (
+                        titleNode
+                      )}
                       {r.format && r.format !== "—" && (
                         <div className="text-sm text-muted-foreground mt-1">{r.format}</div>
                       )}
                     </div>
-                    <div className="col-span-12 sm:col-span-4 text-sm text-muted-foreground self-center">
+                    <div className="col-span-12 sm:col-span-3 text-sm text-muted-foreground self-center order-4 sm:order-none">
                       {r.label && <div className="font-mono text-xs uppercase tracking-wider">{r.label}</div>}
                       {r.notes && <div className="mt-1">{r.notes}</div>}
                     </div>
-                  </>
-                );
-                return r.releaseSlug ? (
-                  <Link
-                    key={r.key}
-                    href={`/${lang}/releases/${r.releaseSlug}`}
-                    className="group grid grid-cols-12 gap-4 py-6 border-b border-foreground/10 hover:bg-foreground/[0.02] transition-colors px-2 -mx-2"
-                  >
-                    {inner}
-                  </Link>
-                ) : (
-                  <div
-                    key={r.key}
-                    className="group grid grid-cols-12 gap-4 py-6 border-b border-foreground/10 px-2"
-                  >
-                    {inner}
+                    <div className="col-span-6 sm:col-span-2 self-center text-right order-2 sm:order-none">
+                      {action && actionLabel ? (
+                        <a
+                          href={action.href}
+                          target="_blank"
+                          rel="noopener noreferrer"
+                          className="inline-flex items-center gap-1 px-3 h-8 text-xs font-mono uppercase tracking-widest rounded-full bg-foreground/5 hover:bg-foreground text-foreground hover:text-background transition-colors"
+                        >
+                          {actionLabel}
+                          <ExternalLink className="w-3 h-3" />
+                        </a>
+                      ) : null}
+                    </div>
                   </div>
                 );
               })}

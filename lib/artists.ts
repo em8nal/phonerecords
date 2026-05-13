@@ -13,6 +13,10 @@ export type Release = {
   format?: string;
   label?: string;
   notes?: string;
+  /** Storefront URL for "Comprar" button on artist page / catalog. */
+  href?: string;
+  /** Action label preference if explicitly set. Defaults to "buy" when href is a storefront. */
+  hrefKind?: "buy" | "listen";
 };
 
 export type Artist = {
@@ -85,29 +89,29 @@ They have toured Chile, Brazil, Nigeria, the United States, Canada, the United K
     stats: { monthlyListeners: 155 },
     bio: {
       es:
-        `En una escena dominada por la inmediatez, Claudio Solís ha optado por una trayectoria pausada. Surgido del underground santiaguino, cultivó un sonido donde la oscuridad opera como principio estructural, no como adorno estético.
+        `Claudio Solís es DJ, productor y curador chileno radicado en Santiago. Trabaja entre minimal techno, dark minimal y breakbeat, con énfasis en estructuras rítmicas pausadas y atmósferas extendidas.
 
-Mucho antes de que el minimalismo oscuro se convirtiera en etiqueta de circuito, Solís exploraba estructuras rítmicas despojadas, atmósferas cargadas de tensión y narrativas groove de larga duración, moldeadas a través de extensas sesiones de vinilo y ambientes íntimos de club. Su catálogo entre 2023 y 2025 acumula veintisiete lanzamientos, distribuidos en sellos como Aquarians, Nada Espacial, Atmos Music Label, DUB Musik, Saraw, Solina, FAFO, CSS, Vyasa Discos, Inwave y Cultrun Cult Records (Nueva Zelanda).
+Activo desde 2009, ese año fundó el sello Agua y Sed, dedicado a la escena electrónica chilena: 195 lanzamientos y más de 300 artistas pasaron por su catálogo entre 2009 y 2022. En 2023 inició Aquarians, sello hermano enfocado en dark minimal, con artistas de Chile, Rumania, México, Estados Unidos, Australia y Nueva Zelanda. Su propio imprint Vyasa Discos prensa la mayoría de sus vinilos.
 
-Entre los hitos del periodo se cuentan los LPs Occvltheque (Aquarians, 2024), How Long is the Night (Nihil Sine Musica, 2024), Doing Without Saying (CSS, 2024) y Nothing but the Truth (Vyasa Discos, 2023), junto a los EPs Oneiroi (Advisual, 2025), Lota (Atmos, 2025), Tierra Fertil (Atmos CL, 2024), Aram251 (DUB Musik, 2024), Parashara (Minimum Music Mindset, 2024) e Ikigai (Solina, 2024).
+Como artista cuenta con más de treinta y ocho lanzamientos en vinilo entre 2017 y 2026, distribuidos en Vyasa Discos, Aquarians, 5 Universos Records, P.U.N.C.H.I.S. Records, Gilesku Records, FAFO Records y Agua y Sed. Series principales: Sons of Medusa, Occvltheque, Doing Without Saying, Pleroma, Kirtan Club, Nothing But The Truth y La Puerta Abre Hacia Adentro. En paralelo publica digitalmente en Inwave, Advisual Records, Cavilar, Paravibe Records, Brosh Records, Robot Ranch, Nihil Sine Musica y Minimum Music Mindset, entre otros.
 
-Su lenguaje se construye desde la tensión, la contención y la presión inmersiva en frecuencias bajas, una aproximación sonora a menudo asociada a las raíces del dark minimal. Los sets se despliegan con paciencia, privilegiando la atmósfera por sobre el impacto y la narrativa por sobre la inmediatez. Desplazamientos rítmicos sutiles y texturas oscurecidas definen un sonido que resiste tendencias mientras mantiene cuerpo físico en el club.
+Además del trabajo solista, hace el mastering del catálogo completo de 5 Universos Records (vinilo y digital). Firma también el diseño gráfico del LP Grietas de Newen Afrobeat (OfficeHome Records, 2024) y del LP Fiesta Groove Humo de Tercer Tipo (Ferona Discos, 2018).
 
-Más allá del booth, Solís ha actuado como puente discreto entre Latinoamérica y el movimiento minimal europeo, fomentando diálogo entre escenas y acompañando productores en ambos hemisferios. Dentro del ecosistema PHŌNÉ firma además el diseño gráfico del LP Grietas (Newen Afrobeat, OfficeHome Records, 2024), conectando su práctica visual con la línea editorial del sello.
+Dentro del ecosistema PHŌNÉ co-firma con Enrique Camhi (Ecamhi) el EP Ebs y el single Mystical Healers I (2023), y con Fco Martinez los singles Noche Oscura Del Alma (2023) y Apagón (2024).
 
-Sus presentaciones no se construyen para el clímax sino para la transformación: estructuras de combustión lenta donde la oscuridad deviene arquitectura. La curaduría de su catálogo continúa expandiéndose con apariciones programadas en sellos europeos durante 2026, en paralelo a sesiones de vinilo y residencias en clubes del circuito alternativo.`,
+Sus sets privilegian sesiones largas, atmósfera y narrativa. Ha tocado en Club der Visionaere (Berlín), Trotamundo Festival (Ecuador) y mantiene presencia constante en circuitos minimal de Chile y Europa.`,
       en:
-        `In a scene dominated by immediacy, Claudio Solís has chosen a slow-paced trajectory. Emerging from the Santiago underground, he cultivated a sound where darkness operates as a structural principle, not as aesthetic ornament.
+        `Claudio Solís is a Chilean DJ, producer and label curator based in Santiago. He works between minimal techno, dark minimal and breakbeat, with a focus on measured rhythmic structures and extended atmospheres.
 
-Long before dark minimalism became a circuit label, Solís was exploring stripped rhythmic structures, atmospheres charged with tension and long-duration groove narratives, shaped through extensive vinyl sessions and intimate club environments. His catalogue between 2023 and 2025 amounts to twenty-seven releases, distributed across labels including Aquarians, Nada Espacial, Atmos Music Label, DUB Musik, Saraw, Solina, FAFO, CSS, Vyasa Discos, Inwave and Cultrun Cult Records (New Zealand).
+Active since 2009, that year he founded the label Agua y Sed, dedicated to the Chilean electronic scene: 195 releases and more than 300 artists passed through its catalogue between 2009 and 2022. In 2023 he started Aquarians, a sister label focused on dark minimal, with artists from Chile, Romania, Mexico, the United States, Australia and New Zealand. His own imprint Vyasa Discos presses most of his vinyls.
 
-Highlights from the period include the LPs Occvltheque (Aquarians, 2024), How Long is the Night (Nihil Sine Musica, 2024), Doing Without Saying (CSS, 2024) and Nothing but the Truth (Vyasa Discos, 2023), alongside the EPs Oneiroi (Advisual, 2025), Lota (Atmos, 2025), Tierra Fertil (Atmos CL, 2024), Aram251 (DUB Musik, 2024), Parashara (Minimum Music Mindset, 2024) and Ikigai (Solina, 2024).
+As an artist his vinyl catalogue counts more than thirty-eight releases between 2017 and 2026, distributed on Vyasa Discos, Aquarians, 5 Universos Records, P.U.N.C.H.I.S. Records, Gilesku Records, FAFO Records and Agua y Sed. Main series: Sons of Medusa, Occvltheque, Doing Without Saying, Pleroma, Kirtan Club, Nothing But The Truth and La Puerta Abre Hacia Adentro. He also releases digitally on Inwave, Advisual Records, Cavilar, Paravibe Records, Brosh Records, Robot Ranch, Nihil Sine Musica and Minimum Music Mindset, among others.
 
-His language is built from tension, restraint and immersive low-frequency pressure, a sonic approach often associated with the foundations of dark minimal. Sets unfold patiently, privileging atmosphere over impact and narrative over immediacy. Subtle rhythmic displacements and shadowed textures define a sound that resists trends while keeping physical body on the club floor.
+Beyond solo work, he masters the full 5 Universos Records catalogue (vinyl and digital). He also signs the graphic design for Newen Afrobeat's LP Grietas (OfficeHome Records, 2024) and for Tercer Tipo's LP Fiesta Groove Humo (Ferona Discos, 2018).
 
-Beyond the booth, Solís has acted as a discreet bridge between Latin America and the European minimal movement, fostering dialogue between scenes and supporting producers across both hemispheres. Within the PHŌNÉ ecosystem he also signs the graphic design of the LP Grietas (Newen Afrobeat, OfficeHome Records, 2024), connecting his visual practice with the label's editorial line.
+Within the PHŌNÉ ecosystem he co-signs the EP Ebs and the single Mystical Healers I (2023) with Enrique Camhi (Ecamhi), and the singles Noche Oscura Del Alma (2023) and Apagón (2024) with Fco Martinez.
 
-His performances are not built for climax but for transformation: slow-burning structures where darkness becomes architecture. The curation of his catalogue continues to expand with scheduled appearances on European labels through 2026, in parallel with vinyl sessions and residencies in alternative-circuit clubs.`,
+His sets favour long sessions, atmosphere and narrative. He has played at Club der Visionaere (Berlin), Trotamundo Festival (Ecuador) and maintains a steady presence in minimal circuits in Chile and Europe.`,
     },
     links: [
       { label: "Spotify", href: "https://open.spotify.com/artist/7Ldq8qyOs4jJ42cN1oD4qN" },
@@ -116,44 +120,44 @@ His performances are not built for climax but for transformation: slow-burning s
       { label: "Instagram", href: "https://www.instagram.com/solisolisolis/" },
     ],
     releases: [
-      { year: "2026", title: "Kalki", format: "Vinilo · LP", label: "Vyasa Discos" },
-      { year: "2025", title: "Sons of Medusa IV", format: "Vinilo · LP", label: "Vyasa Discos" },
-      { year: "2025", title: "Sons of Medusa III", format: "Vinilo · LP", label: "Vyasa Discos" },
-      { year: "2025", title: "Sons of Medusa II", format: "Vinilo · LP", label: "Vyasa Discos" },
-      { year: "2025", title: "Sons of Medusa I", format: "Vinilo · LP", label: "Vyasa Discos" },
-      { year: "2025", title: "Ciencia Oculta", format: "Vinilo · EP", label: "Vyasa Discos" },
-      { year: "2025", title: "Kototama", format: "Vinilo · EP", label: "Aquarians" },
-      { year: "2024", title: "Occvltheque II", format: "Vinilo · LP", label: "Vyasa Discos" },
-      { year: "2024", title: "Occvltheque I", format: "Vinilo · LP", label: "Vyasa Discos" },
-      { year: "2024", title: "Doing Without Saying II", format: "Vinilo · LP", label: "Vyasa Discos" },
-      { year: "2024", title: "Doing Without Saying I", format: "Vinilo · LP", label: "Vyasa Discos" },
-      { year: "2023", title: "Nothing but the truth IV", format: "Vinilo · EP", label: "Vyasa Discos" },
-      { year: "2023", title: "Nothing but the truth III", format: "Vinilo · EP", label: "Vyasa Discos" },
-      { year: "2023", title: "Nothing but the truth II", format: "Vinilo · EP", label: "Vyasa Discos" },
-      { year: "2023", title: "Nothing but the truth", format: "Vinilo · EP", label: "Vyasa Discos" },
-      { year: "2023", title: "Magical Correspondences", format: "Vinilo · LP", label: "Vyasa Discos" },
-      { year: "2023", title: "Diez", format: "Vinilo · EP", label: "Vyasa Discos" },
+      { year: "2026", title: "Kalki", format: "Vinilo · LP", label: "Vyasa Discos", href: "https://elasticstage.com/vyasa-discos/releases/kalki-album" },
+      { year: "2025", title: "Sons of Medusa IV", format: "Vinilo · LP", label: "Vyasa Discos", href: "https://elasticstage.com/vyasa-discos/releases/sons-of-medusa-iv-album" },
+      { year: "2025", title: "Sons of Medusa III", format: "Vinilo · LP", label: "Vyasa Discos", href: "https://elasticstage.com/vyasa-discos/releases/sons-of-medusa-iii-album" },
+      { year: "2025", title: "Sons of Medusa II", format: "Vinilo · LP", label: "Vyasa Discos", href: "https://elasticstage.com/vyasa-discos/releases/sons-of-medusa-ii-album" },
+      { year: "2025", title: "Sons of Medusa I", format: "Vinilo · LP", label: "Vyasa Discos", href: "https://elasticstage.com/vyasa-discos/releases/sons-of-medusa-album" },
+      { year: "2025", title: "Ciencia Oculta", format: "Vinilo · EP", label: "Vyasa Discos", href: "https://elasticstage.com/vyasa-discos/releases/ciencia-oculta-singleep" },
+      { year: "2025", title: "Kototama", format: "Vinilo · EP", label: "Aquarians", href: "https://elasticstage.com/aquarians/releases/kototama-singleep" },
+      { year: "2024", title: "Occvltheque II", format: "Vinilo · LP", label: "Vyasa Discos", href: "https://elasticstage.com/vyasa-discos/releases/occvltheque-ii-album" },
+      { year: "2024", title: "Occvltheque I", format: "Vinilo · LP", label: "Vyasa Discos", href: "https://elasticstage.com/vyasa-discos/releases/occvltheque-i-album" },
+      { year: "2024", title: "Doing Without Saying II", format: "Vinilo · LP", label: "Vyasa Discos", href: "https://elasticstage.com/vyasa-discos/releases/doing-without-saying-ii-album" },
+      { year: "2024", title: "Doing Without Saying I", format: "Vinilo · LP", label: "Vyasa Discos", href: "https://elasticstage.com/vyasa-discos/releases/doing-without-saying-album" },
+      { year: "2023", title: "Nothing but the truth IV", format: "Vinilo · EP", label: "Vyasa Discos", href: "https://elasticstage.com/vyasa-discos/releases/nothing-but-the-truth-iv-singleep" },
+      { year: "2023", title: "Nothing but the truth III", format: "Vinilo · EP", label: "Vyasa Discos", href: "https://elasticstage.com/vyasa-discos/releases/nothing-but-the-truth-iii-singleep" },
+      { year: "2023", title: "Nothing but the truth II", format: "Vinilo · EP", label: "Vyasa Discos", href: "https://elasticstage.com/vyasa-discos/releases/nothing-but-the-truth-ii-singleep" },
+      { year: "2023", title: "Nothing but the truth", format: "Vinilo · EP", label: "Vyasa Discos", href: "https://elasticstage.com/vyasa-discos/releases/nothing-but-the-truth-singleep" },
+      { year: "2023", title: "Magical Correspondences", format: "Vinilo · LP", label: "Vyasa Discos", href: "https://elasticstage.com/vyasa-discos/releases/magical-correspondences-album" },
+      { year: "2023", title: "Diez", format: "Vinilo · EP", label: "Vyasa Discos", href: "https://elasticstage.com/vyasa-discos/releases/diez-singleep" },
       { year: "2023", title: "5UR 003", format: "Vinilo · EP 180g", label: "5 Universos Records", notes: "Sold out" },
-      { year: "2022", title: "Pleroma II", format: "Vinilo · LP", label: "Vyasa Discos" },
-      { year: "2022", title: "Pleroma I", format: "Vinilo · LP", label: "Vyasa Discos" },
-      { year: "2022", title: "Pandit", format: "Vinilo · EP", label: "Vyasa Discos" },
-      { year: "2022", title: "La puerta abre hacia adentro II", format: "Vinilo · EP", label: "Vyasa Discos" },
-      { year: "2022", title: "La puerta abre hacia adentro I", format: "Vinilo · LP", label: "Vyasa Discos" },
-      { year: "2022", title: "Jai Jagannath", format: "Vinilo · EP", label: "Vyasa Discos" },
+      { year: "2022", title: "Pleroma II", format: "Vinilo · LP", label: "Vyasa Discos", href: "https://elasticstage.com/vyasa-discos/releases/pleroma-ii-album" },
+      { year: "2022", title: "Pleroma I", format: "Vinilo · LP", label: "Vyasa Discos", href: "https://elasticstage.com/vyasa-discos/releases/pleroma-album" },
+      { year: "2022", title: "Pandit", format: "Vinilo · EP", label: "Vyasa Discos", href: "https://elasticstage.com/vyasa-discos/releases/pandit-singleep" },
+      { year: "2022", title: "La puerta abre hacia adentro II", format: "Vinilo · EP", label: "Vyasa Discos", href: "https://elasticstage.com/vyasa-discos/releases/la-puerta-abre-hacia-adentro-ii-singleep" },
+      { year: "2022", title: "La puerta abre hacia adentro I", format: "Vinilo · LP", label: "Vyasa Discos", href: "https://elasticstage.com/vyasa-discos/releases/la-puerta-abre-hacia-adentro-album" },
+      { year: "2022", title: "Jai Jagannath", format: "Vinilo · EP", label: "Vyasa Discos", href: "https://elasticstage.com/vyasa-discos/releases/jai-jagannath-singleep" },
       { year: "2022", title: "5UR 002", format: "Vinilo · EP", label: "5 Universos Records", notes: "Sold out" },
       { year: "2022", title: "FAFO 011", format: "Vinilo · VA", label: "FAFO Records", notes: "Sold out" },
-      { year: "2021", title: "Kirtan Club II", format: "Vinilo · EP", label: "Vyasa Discos" },
-      { year: "2021", title: "Kirtan Club I", format: "Vinilo · EP", label: "Vyasa Discos" },
-      { year: "2021", title: "Goura Nitai", format: "Vinilo · EP", label: "Vyasa Discos" },
-      { year: "2021", title: "Devotional Service", format: "Vinilo · LP", label: "Vyasa Discos" },
+      { year: "2021", title: "Kirtan Club II", format: "Vinilo · EP", label: "Vyasa Discos", href: "https://elasticstage.com/vyasa-discos/releases/kirtan-club-ii-singleep" },
+      { year: "2021", title: "Kirtan Club I", format: "Vinilo · EP", label: "Vyasa Discos", href: "https://elasticstage.com/vyasa-discos/releases/kirtan-club-singleep" },
+      { year: "2021", title: "Goura Nitai", format: "Vinilo · EP", label: "Vyasa Discos", href: "https://elasticstage.com/vyasa-discos/releases/goura-nitai-singleep" },
+      { year: "2021", title: "Devotional Service", format: "Vinilo · LP", label: "Vyasa Discos", href: "https://elasticstage.com/vyasa-discos/releases/devotional-service-album" },
       { year: "2021", title: "Chileans Are Playing", format: "Vinilo · VA", label: "Agua y Sed", notes: "Sold out" },
       { year: "2021", title: "12 Interplanetary Ursa Escape Rooms", format: "Vinilo · EP", label: "P.U.N.C.H.I.S. Records", notes: "Sold out" },
-      { year: "2020", title: "Vaisnava", format: "Vinilo · LP", label: "Vyasa Discos" },
-      { year: "2020", title: "Pelican Piety", format: "Vinilo · EP", label: "Vyasa Discos" },
+      { year: "2020", title: "Vaisnava", format: "Vinilo · LP", label: "Vyasa Discos", href: "https://elasticstage.com/vyasa-discos/releases/vaisnava-album" },
+      { year: "2020", title: "Pelican Piety", format: "Vinilo · EP", label: "Vyasa Discos", href: "https://elasticstage.com/vyasa-discos/releases/pelican-piety-singleep" },
       { year: "2019", title: "Nibbana Traxx", format: "Vinilo · EP (ed. 30)", label: "Gilesku Records", notes: "Sold out" },
-      { year: "2018", title: "Alquimia", format: "Vinilo · EP", label: "Vyasa Discos" },
-      { year: "2017", title: "Lost Hierophant", format: "Vinilo · LP", label: "Vyasa Discos" },
-      { year: "2000", title: "Silent weapons for quiet war", format: "Vinilo · EP", label: "Vyasa Discos" },
+      { year: "2018", title: "Alquimia", format: "Vinilo · EP", label: "Vyasa Discos", href: "https://elasticstage.com/vyasa-discos/releases/alquimia-singleep" },
+      { year: "2017", title: "Lost Hierophant", format: "Vinilo · LP", label: "Vyasa Discos", href: "https://elasticstage.com/vyasa-discos/releases/lost-hierophant-album" },
+      { year: "2000", title: "Silent weapons for quiet war", format: "Vinilo · EP", label: "Vyasa Discos", href: "https://elasticstage.com/vyasa-discos/releases/silent-weapons-for-quiet-war-singleep" },
     ],
   },
   {

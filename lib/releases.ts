@@ -592,7 +592,7 @@ export const releases: Release[] = [
     year: 2021,
     type: "single",
     format: "Single · digital",
-    cover: "https://is1-ssl.mzstatic.com/image/thumb/Music124/v4/4e/bf/78/4ebf78f4-a3bb-02f6/0.jpg/1000x1000bb.jpg",
+    cover: "https://is1-ssl.mzstatic.com/image/thumb/Music124/v4/4e/bf/78/4ebf78f4-a3bb-02f6-9374-436c8719d001/cover.jpg/1000x1000bb.jpg",
     description: {
       es:
         "Single co-firmado por Enrique Camhi y Felipe Cortes. Primer registro publicado bajo el nombre Enrique Camhi previo al EP en viaje.",
@@ -634,6 +634,9 @@ export const releases: Release[] = [
       en:
         "Minimal piece of nocturnal tension signed by Claudio Solís and Fco Martinez, with Enrique Camhi on trumpet.",
     },
+    links: [
+      { label: "Apple Music", href: "https://music.apple.com/us/album/noche-oscura-del-alma/1716215340" },
+    ],
   },
   {
     slug: "claudio-solis-apagon",
@@ -652,6 +655,9 @@ export const releases: Release[] = [
       en:
         "Triple-signed single between Fco Martinez, Claudio Solís and Enrique Camhi. Continuation of the minimal/trumpet axis opened with Mystical Healers and Noche Oscura.",
     },
+    links: [
+      { label: "Apple Music", href: "https://music.apple.com/us/album/apagon-single/1737220462" },
+    ],
   },
   {
     slug: "claudio-solis-kototama-single",
@@ -669,6 +675,9 @@ export const releases: Release[] = [
       en:
         "Digital version of Kototama, co-signed with Seymour. The 12\" EP vinyl edition on Aquarians (2025) is released in parallel.",
     },
+    links: [
+      { label: "Apple Music", href: "https://music.apple.com/us/album/kototama-single/1811269979" },
+    ],
   },
   {
     slug: "claudio-solis-ecamhi-mystical-healers",
@@ -680,13 +689,16 @@ export const releases: Release[] = [
     year: 2023,
     type: "single",
     format: "Single · digital",
-    cover: "https://is1-ssl.mzstatic.com/image/thumb/Music116/v4/b7/c5/d5/b7c5d533-ca30-e705/0.jpg/1000x1000bb.jpg",
+    cover: "https://is1-ssl.mzstatic.com/image/thumb/Music116/v4/b7/c5/d5/b7c5d533-ca30-e705-5a4c-fc15915e3882/00_Cover_Art.jpg/1000x1000bb.jpg",
     description: {
       es:
         "Primer single de la serie Mystical Healers, co-firmada por Claudio Solís y Enrique Camhi (Ecamhi). Antecedente directo del EP Ebs (2023).",
       en:
         "First single in the Mystical Healers series, co-signed by Claudio Solís and Enrique Camhi (Ecamhi). Direct precursor to the Ebs EP (2023).",
     },
+    links: [
+      { label: "Apple Music", href: "https://music.apple.com/us/album/mystical-healers-i/1702724386" },
+    ],
   },
   {
     slug: "claudio-solis-ecamhi-ebs",
@@ -705,6 +717,9 @@ export const releases: Release[] = [
       en:
         "Collaborative EP between Claudio Solís and Enrique Camhi (Ecamhi): minimal and trumpet in extended dialogue. Joint release within the PHŌNÉ ecosystem.",
     },
+    links: [
+      { label: "Apple Music", href: "https://music.apple.com/us/album/ebs-ep/1713387572" },
+    ],
   },
 
   // ─────────── Con.fusión ───────────
