@@ -277,6 +277,7 @@ He was awarded the 2026 Fondo de la Música to develop a new project in collabor
     links: [
       { label: "Bandcamp", href: "https://klausb.bandcamp.com/music" },
       { label: "Spotify", href: "https://open.spotify.com/artist/53A3Tz7xYVj0n3LlEwSmyw" },
+      { label: "Apple Music", href: "https://music.apple.com/us/artist/klaus-b/1571046890" },
       { label: "YouTube", href: "https://www.youtube.com/channel/UCN-g9sETAcl84PdpXWUTXOg" },
       { label: "Instagram", href: "https://www.instagram.com/klaausb/" },
     ],

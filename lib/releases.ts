@@ -250,6 +250,7 @@ export const releases: Release[] = [
       { role: "Master", name: "Victor Sáez & Chalo G" },
     ],
     links: [
+      { label: "Apple Music", href: "https://music.apple.com/us/album/memorias-mixtape/1854040694" },
       { label: "Bandcamp", href: "https://klausb.bandcamp.com/album/memorias-mixtape" },
     ],
   },
@@ -453,6 +454,9 @@ export const releases: Release[] = [
       en:
         "Klaus B instrumental single released in late 2021. Atmospheric piece extending the funk/neo-soul line opened with Viento Radiante.",
     },
+    links: [
+      { label: "Apple Music", href: "https://music.apple.com/us/album/espejismos/1591949693" },
+    ],
   },
   {
     slug: "klaus-b-de-noche",
@@ -514,6 +518,9 @@ export const releases: Release[] = [
       en:
         "Enrique Camhi (Ecamhi) appears as guest on Gaviotas, a Diego de la Noche single with Felipe Montero. Trumpet over a chamber electronic-pop beat.",
     },
+    links: [
+      { label: "Apple Music", href: "https://music.apple.com/us/album/gaviotas-feat-felipe-montero-enrique-camhi-radio-edit/1654207363" },
+    ],
   },
   {
     slug: "ecamhi-laruz",
@@ -531,6 +538,9 @@ export const releases: Release[] = [
       en:
         "Ecamhi appears on Laruz, a Diego de la Noche single released the same day as Gaviotas (November 2022).",
     },
+    links: [
+      { label: "Apple Music", href: "https://music.apple.com/us/album/laruz-feat-enrique-camhi/1654191971" },
+    ],
   },
   {
     slug: "ecamhi-ofrenda-de-amor",
@@ -548,6 +558,9 @@ export const releases: Release[] = [
       en:
         "Single co-signed by Ugnė Danielė, Enrique Camhi and Adydo. Crosses chamber-jazz with vocals and European–South American improvisation.",
     },
+    links: [
+      { label: "Apple Music", href: "https://music.apple.com/us/album/ofrenda-de-amor/1762193381" },
+    ],
   },
   {
     slug: "ecamhi-mad-summer",
@@ -565,6 +578,9 @@ export const releases: Release[] = [
       en:
         "Single signed by Alejandro Camhi and Enrique Camhi. Electronic summer with trumpet on top.",
     },
+    links: [
+      { label: "Apple Music", href: "https://music.apple.com/us/album/mad-summer/1752686994" },
+    ],
   },
   {
     slug: "ecamhi-fake-money",
@@ -582,6 +598,9 @@ export const releases: Release[] = [
       en:
         "4Yo4U single featuring Enrique Camhi. Trumpet over contemporary electronics, echoing the en viaje language.",
     },
+    links: [
+      { label: "Apple Music", href: "https://music.apple.com/us/album/fake-money/1831169551" },
+    ],
   },
   {
     slug: "ecamhi-fake-love",
@@ -616,6 +635,9 @@ export const releases: Release[] = [
       en:
         "Solo single by Enrique Camhi (Ecamhi), released prior to the inaugural EP en viaje. Trumpet and self-production: a precedent of the project's interdisciplinary language.",
     },
+    links: [
+      { label: "Apple Music", href: "https://music.apple.com/us/album/move-to/1618064796" },
+    ],
   },
   {
     slug: "claudio-solis-noche-oscura-del-alma",
@@ -739,6 +761,9 @@ export const releases: Release[] = [
       en:
         "Con.fusión single in collaboration with Fat Jota. Voice as instrument over organic beats: hip hop, jazz and neo soul as compact song-form.",
     },
+    links: [
+      { label: "Apple Music", href: "https://music.apple.com/us/album/a%C3%BCa/1565365860" },
+    ],
   },
   {
     slug: "con-fusion-que-aburrido",
@@ -756,6 +781,9 @@ export const releases: Release[] = [
       en:
         "Single with Fat Jota. Hip hop beat with a vocal flow that crosses rap, scat and melody. An early statement of Con.fusión's voice.",
     },
+    links: [
+      { label: "Apple Music", href: "https://music.apple.com/us/album/que-aburrido/1518666439" },
+    ],
   },
   {
     slug: "con-fusion-borboleta",
@@ -773,6 +801,9 @@ export const releases: Release[] = [
       en:
         "Portuguese-language single with Ziervo. Crosses neo soul, jazz and MPB hints; shows the project's cinematic dimension.",
     },
+    links: [
+      { label: "Apple Music", href: "https://music.apple.com/us/album/borboleta-feat-ziervo/1531907261" },
+    ],
   },
 ];
 
