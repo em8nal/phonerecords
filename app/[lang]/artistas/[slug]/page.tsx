@@ -5,7 +5,7 @@ import { ArrowLeft, ExternalLink, FileText } from "lucide-react";
 import { Navigation } from "@/components/landing/navigation";
 import { FooterSection } from "@/components/landing/footer-section";
 import { artistSlugs, getArtist } from "@/lib/artists";
-import { getReleasesByArtist } from "@/lib/releases";
+import { getArtistEntries } from "@/lib/catalog";
 import { SpotifyArtistEmbed } from "@/components/spotify-embed";
 import type { Language } from "@/lib/translations";
 
@@ -78,7 +78,8 @@ export default async function ArtistPage({
   const numberLocale = isEs ? "es-CL" : "en-US";
   const url = `https://phonerecords.cl/${lang}/artistas/${slug}`;
   const spotifyArtistId = extractSpotifyArtistId(artist.links);
-  const detailedReleases = getReleasesByArtist(slug);
+  // Full discography for the profile (rich + lightweight unioned, no /catalogo curation).
+  const allEntries = getArtistEntries(slug);
 
   // Schema.org JSON-LD: MusicGroup + BreadcrumbList for rich snippets.
   const schema = {
@@ -101,9 +102,9 @@ export default async function ArtistPage({
           "@id": "https://phonerecords.cl/#organization",
           name: "PHŌNÉ Records",
         },
-        ...(artist.releases && artist.releases.length
+        ...(allEntries.length
           ? {
-              album: artist.releases.map((r) => ({
+              album: allEntries.map((r) => ({
                 "@type": "MusicAlbum",
                 name: r.title,
                 ...(r.year ? { datePublished: r.year } : {}),
@@ -268,8 +269,8 @@ export default async function ArtistPage({
           </section>
         )}
 
-        {/* Releases — links to detail pages when we have them, fallback to old static list */}
-        {detailedReleases.length > 0 ? (
+        {/* Full discography — rich entries link to detail pages, lightweight ones don't */}
+        {allEntries.length > 0 ? (
           <section className="mb-20">
             <div className="flex items-baseline justify-between mb-12">
               <h2 className="text-3xl lg:text-5xl font-display tracking-tight">
@@ -283,54 +284,41 @@ export default async function ArtistPage({
               </Link>
             </div>
             <div className="border-t border-foreground/10">
-              {detailedReleases.map((r) => (
-                <Link
-                  key={r.slug}
-                  href={`/${lang}/releases/${r.slug}`}
-                  className="group grid grid-cols-12 gap-4 py-6 border-b border-foreground/10 hover:bg-foreground/[0.02] transition-colors px-2 -mx-2"
-                >
-                  <div className="col-span-12 sm:col-span-2 font-mono text-sm text-muted-foreground self-center">
-                    {r.releaseDate.slice(0, 7)}
+              {allEntries.map((r) => {
+                const inner = (
+                  <>
+                    <div className="col-span-12 sm:col-span-2 font-mono text-sm text-muted-foreground self-center">
+                      {r.year || r.releaseDate.slice(0, 7)}
+                    </div>
+                    <div className="col-span-12 sm:col-span-6">
+                      <div className="font-display text-lg group-hover:translate-x-1 transition-transform">{r.title}</div>
+                      {r.format && r.format !== "—" && (
+                        <div className="text-sm text-muted-foreground mt-1">{r.format}</div>
+                      )}
+                    </div>
+                    <div className="col-span-12 sm:col-span-4 text-sm text-muted-foreground self-center">
+                      {r.label && <div className="font-mono text-xs uppercase tracking-wider">{r.label}</div>}
+                      {r.notes && <div className="mt-1">{r.notes}</div>}
+                    </div>
+                  </>
+                );
+                return r.releaseSlug ? (
+                  <Link
+                    key={r.key}
+                    href={`/${lang}/releases/${r.releaseSlug}`}
+                    className="group grid grid-cols-12 gap-4 py-6 border-b border-foreground/10 hover:bg-foreground/[0.02] transition-colors px-2 -mx-2"
+                  >
+                    {inner}
+                  </Link>
+                ) : (
+                  <div
+                    key={r.key}
+                    className="group grid grid-cols-12 gap-4 py-6 border-b border-foreground/10 px-2"
+                  >
+                    {inner}
                   </div>
-                  <div className="col-span-12 sm:col-span-6">
-                    <div className="font-display text-lg group-hover:translate-x-1 transition-transform">{r.title}</div>
-                    {r.format && (
-                      <div className="text-sm text-muted-foreground mt-1">{r.format}</div>
-                    )}
-                  </div>
-                  <div className="col-span-12 sm:col-span-4 text-sm text-muted-foreground self-center">
-                    {r.label && <div className="font-mono text-xs uppercase tracking-wider">{r.label}</div>}
-                  </div>
-                </Link>
-              ))}
-            </div>
-          </section>
-        ) : artist.releases && artist.releases.length > 0 ? (
-          <section className="mb-20">
-            <h2 className="text-3xl lg:text-5xl font-display tracking-tight mb-12">
-              {labels.releases}
-            </h2>
-            <div className="border-t border-foreground/10">
-              {artist.releases.map((release, i) => (
-                <div
-                  key={`${release.year}-${release.title}-${i}`}
-                  className="grid grid-cols-12 gap-4 py-6 border-b border-foreground/10 hover:bg-foreground/[0.02] transition-colors px-2"
-                >
-                  <div className="col-span-12 sm:col-span-2 font-mono text-sm text-muted-foreground">
-                    {release.year}
-                  </div>
-                  <div className="col-span-12 sm:col-span-6">
-                    <div className="font-display text-lg">{release.title}</div>
-                    {release.format && (
-                      <div className="text-sm text-muted-foreground mt-1">{release.format}</div>
-                    )}
-                  </div>
-                  <div className="col-span-12 sm:col-span-4 text-sm text-muted-foreground">
-                    {release.label && <div className="font-mono text-xs uppercase tracking-wider">{release.label}</div>}
-                    {release.notes && <div className="mt-1">{release.notes}</div>}
-                  </div>
-                </div>
-              ))}
+                );
+              })}
             </div>
           </section>
         ) : null}

@@ -23,8 +23,8 @@ const codeExamples = [
 # + más fechas por confirmar
 # + more dates to be confirmed
 
-recs.phone@gmail.com
-info@ludwigsound.com`,
+phonerecords.cl/contacto
+Ludwig Sound (booking EU)`,
   },
   {
     code: `# RIDER & BOOKING
@@ -71,7 +71,7 @@ const codeAnimationStyles = `
 `;
 
 export function DevelopersSection() {
-  const { t } = useLanguage();
+  const { t, language } = useLanguage();
   const [activeTab, setActiveTab] = useState(0);
   const [copied, setCopied] = useState(false);
   const [isVisible, setIsVisible] = useState(false);
@@ -217,7 +217,7 @@ export function DevelopersSection() {
               </a>
               <span className="text-foreground/20">|</span>
               <a
-                href="mailto:recs.phone@gmail.com"
+                href={`/${language}/contacto`}
                 className="text-muted-foreground hover:text-foreground"
               >
                 {t.developers.viewGithub}

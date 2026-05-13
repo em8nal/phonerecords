@@ -13,7 +13,7 @@ function withAlternates(path: string) {
   };
 }
 
-const STATIC_PAGES = ["/manifiesto", "/sello", "/catalogo", "/eventos", "/privacidad"] as const;
+const STATIC_PAGES = ["/manifiesto", "/sello", "/catalogo", "/eventos", "/contacto", "/privacidad"] as const;
 
 export default function sitemap(): MetadataRoute.Sitemap {
   const now = new Date();

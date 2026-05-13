@@ -83,12 +83,12 @@ export default async function Home({
           {
             "@type": "ContactPoint",
             contactType: "press",
-            email: "recs.phone@gmail.com",
+            url: `https://phonerecords.cl/${lang}/contacto`,
           },
           {
             "@type": "ContactPoint",
             contactType: "booking",
-            email: "recs.phone@gmail.com",
+            url: `https://phonerecords.cl/${lang}/contacto`,
           },
         ],
         member: [

@@ -28,6 +28,11 @@ function pickLocale(request: NextRequest): Locale {
 export function proxy(request: NextRequest) {
   const { pathname } = request.nextUrl;
 
+  // Press kit routes carry their own /<lang>/ segment after /press → skip i18n proxy.
+  if (pathname.startsWith("/press/")) {
+    return NextResponse.next();
+  }
+
   // Already prefixed with a known locale → propagate the locale to layout via header
   for (const l of LOCALES) {
     if (pathname === `/${l}` || pathname.startsWith(`/${l}/`)) {

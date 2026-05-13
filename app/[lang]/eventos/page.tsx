@@ -185,15 +185,15 @@ export default async function EventosPage({
                 {t.booking}
               </h2>
               <p className="text-sm text-muted-foreground">
-                recs.phone@gmail.com · Ludwig Sound · info@ludwigsound.com
+                {isEs ? "PHŌNÉ Records" : "PHŌNÉ Records"} · Ludwig Sound (EU)
               </p>
             </div>
-            <a
-              href="mailto:recs.phone@gmail.com"
+            <Link
+              href={`/${lang}/contacto`}
               className="inline-flex items-center justify-center px-8 h-12 text-sm rounded-full bg-foreground text-background hover:bg-foreground/90 transition-colors"
             >
-              recs.phone@gmail.com
-            </a>
+              {isEs ? "Escríbenos" : "Get in touch"}
+            </Link>
           </div>
         </section>
       </article>

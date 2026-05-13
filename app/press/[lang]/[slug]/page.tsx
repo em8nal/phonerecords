@@ -216,7 +216,7 @@ export default async function PressKitPage({
             <div className="press-contact-grid">
               <div className="press-contact-row">
                 <span className="press-contact-label">{t.general} · {t.press} · {t.booking}</span>
-                <span className="press-contact-value">recs.phone@gmail.com</span>
+                <span className="press-contact-value">phonerecords.cl/{lang}/contacto</span>
               </div>
               <div className="press-contact-row">
                 <span className="press-contact-label">{t.bookingEU}</span>

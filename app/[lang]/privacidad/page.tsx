@@ -40,7 +40,7 @@ const copy = {
     sections: [
       {
         title: "1 · Responsable del tratamiento",
-        body: `PHŌNÉ Records · representada por Enrique Ariel Camhi Ibarlucea · Eduardo Castillo Velasco 2325, depto A, Ñuñoa, Región Metropolitana, Chile. Email de contacto para asuntos de privacidad: recs.phone@gmail.com.`,
+        body: `PHŌNÉ Records · representada por Enrique Ariel Camhi Ibarlucea · Eduardo Castillo Velasco 2325, depto A, Ñuñoa, Región Metropolitana, Chile. Canal de contacto para asuntos de privacidad: formulario en phonerecords.cl/es/contacto.`,
       },
       {
         title: "2 · Datos que recolectamos",
@@ -52,7 +52,7 @@ Sí utilizamos:
 — Vercel Web Analytics, que cuenta visitas sin recolectar dirección IP, sin huella digital, sin cookies de seguimiento. Es agregado y anónimo.
 — Vercel Speed Insights, que mide rendimiento de carga (LCP, INP, CLS) de forma anónima.
 
-Si nos escribes por email a recs.phone@gmail.com, conservamos tu mensaje para responderte. No lo usamos para nada más.`,
+Si nos escribes por el formulario de contacto (phonerecords.cl/es/contacto), conservamos tu nombre, email y mensaje para responderte. No lo usamos para nada más.`,
       },
       {
         title: "3 · Cómo usamos los datos",
@@ -79,7 +79,7 @@ No utilizamos Google Analytics, Meta Pixel, ni publicidad de terceros.`,
 — Oposición: puedes oponerte al tratamiento.
 — Portabilidad (GDPR): puedes pedir tus datos en formato estructurado.
 
-Para ejercer cualquiera de estos derechos, escribe a recs.phone@gmail.com. Te respondemos en un plazo máximo de 30 días.`,
+Para ejercer cualquiera de estos derechos, escríbenos por el formulario en phonerecords.cl/es/contacto. Te respondemos en un plazo máximo de 30 días.`,
       },
       {
         title: "6 · Retención",
@@ -99,7 +99,7 @@ Para ejercer cualquiera de estos derechos, escribe a recs.phone@gmail.com. Te re
         title: "9 · Contacto",
         body: `Para cualquier consulta sobre privacidad o protección de datos:
 
-recs.phone@gmail.com
+phonerecords.cl/es/contacto
 PHŌNÉ Records
 Eduardo Castillo Velasco 2325, depto A
 Ñuñoa, Región Metropolitana, Chile`,
@@ -115,7 +115,7 @@ Eduardo Castillo Velasco 2325, depto A
     sections: [
       {
         title: "1 · Data controller",
-        body: `PHŌNÉ Records · represented by Enrique Ariel Camhi Ibarlucea · Eduardo Castillo Velasco 2325, apt A, Ñuñoa, Región Metropolitana, Chile. Contact email for privacy matters: recs.phone@gmail.com.`,
+        body: `PHŌNÉ Records · represented by Enrique Ariel Camhi Ibarlucea · Eduardo Castillo Velasco 2325, apt A, Ñuñoa, Región Metropolitana, Chile. Contact channel for privacy matters: form at phonerecords.cl/en/contacto.`,
       },
       {
         title: "2 · Data we collect",
@@ -127,7 +127,7 @@ We do use:
 — Vercel Web Analytics, which counts visits without collecting IP address, without fingerprinting, without tracking cookies. It is aggregate and anonymous.
 — Vercel Speed Insights, which measures load performance (LCP, INP, CLS) anonymously.
 
-If you write to us by email at recs.phone@gmail.com, we keep your message to respond. We don't use it for anything else.`,
+If you write to us via the contact form (phonerecords.cl/en/contacto), we keep your name, email and message to respond. We don't use it for anything else.`,
       },
       {
         title: "3 · How we use the data",
@@ -154,7 +154,7 @@ We do not use Google Analytics, Meta Pixel, or third-party advertising.`,
 — Objection: you can object to processing.
 — Portability (GDPR): you can request your data in a structured format.
 
-To exercise any of these rights, write to recs.phone@gmail.com. We respond within a maximum of 30 days.`,
+To exercise any of these rights, write us via the form at phonerecords.cl/en/contacto. We respond within a maximum of 30 days.`,
       },
       {
         title: "6 · Retention",
@@ -174,7 +174,7 @@ To exercise any of these rights, write to recs.phone@gmail.com. We respond withi
         title: "9 · Contact",
         body: `For any inquiry about privacy or data protection:
 
-recs.phone@gmail.com
+phonerecords.cl/en/contacto
 PHŌNÉ Records
 Eduardo Castillo Velasco 2325, apt A
 Ñuñoa, Región Metropolitana, Chile`,

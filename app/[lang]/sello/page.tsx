@@ -48,7 +48,7 @@ const copy = {
     contact: {
       title: "Contacto",
       items: [
-        { label: "General · Prensa · Booking", value: "recs.phone@gmail.com", href: "mailto:recs.phone@gmail.com" },
+        { label: "General · Prensa · Booking", value: "Escríbenos por el formulario", href: "/es/contacto" },
         { label: "Booking EU", value: "Ludwig Sound — info@ludwigsound.com", href: "mailto:info@ludwigsound.com" },
       ],
     },
@@ -84,7 +84,7 @@ const copy = {
     contact: {
       title: "Contact",
       items: [
-        { label: "General · Press · Booking", value: "recs.phone@gmail.com", href: "mailto:recs.phone@gmail.com" },
+        { label: "General · Press · Booking", value: "Write us via the contact form", href: "/en/contacto" },
         { label: "EU Booking", value: "Ludwig Sound — info@ludwigsound.com", href: "mailto:info@ludwigsound.com" },
       ],
     },

@@ -26,8 +26,9 @@ export type Release = {
   tracklist?: Track[];
   credits?: ReleaseCredit[];
   links?: { label: string; href: string }[];
-  // Optional: cover art URL (we don't have files yet — leave undefined for now)
   cover?: string;
+  /** Co-credited roster artists; release appears under their filter too. */
+  featuredArtistSlugs?: string[];
 };
 
 export const releases: Release[] = [
@@ -156,6 +157,27 @@ export const releases: Release[] = [
     ],
     links: [
       { label: "Bandcamp", href: "https://newenafrobeat.bandcamp.com/album/newen-plays-fela" },
+    ],
+  },
+  {
+    slug: "newen-afrobeat-newen-plays-fela-vinyl-2023",
+    title: "Newen Plays Fela (12\" Vinyl)",
+    artistSlug: "newen-afrobeat",
+    artistName: "Newen Afrobeat",
+    releaseDate: "2023-01-01",
+    year: 2023,
+    type: "ep",
+    format: "Vinilo · 12\" Mini-Album · Limited Edition",
+    label: "PHŌNÉ Records",
+    cover: "https://i.discogs.com/V_c_R4zAmfvxQztwqufyZABwIIJF49zOobJ0bc-6Vdg/rs:fit/g:sm/q:90/h:587/w:600/czM6Ly9kaXNjb2dz/LWRhdGFiYXNlLWlt/YWdlcy9SLTI5MDUx/NTM2LTE3MDEyMDQw/MDMtNTQ4OS5qcGVn.jpeg",
+    description: {
+      es:
+        "Edición limitada en vinilo 12\" del EP Newen Plays Fela, prensada en Chile por PHŌNÉ Records en 2023. Reúne las composiciones del EP original (2017) en formato físico.",
+      en:
+        "Limited 12\" vinyl edition of the Newen Plays Fela EP, pressed in Chile by PHŌNÉ Records in 2023. Gathers the original EP compositions (2017) in physical format.",
+    },
+    links: [
+      { label: "Discogs", href: "https://www.discogs.com/release/29051536" },
     ],
   },
   {
@@ -315,7 +337,7 @@ export const releases: Release[] = [
     year: 2023,
     type: "single",
     format: "Single",
-    cover: "https://f4.bcbits.com/img/a2195737014_10.jpg",
+    cover: "https://f4.bcbits.com/img/a2824675677_10.jpg",
     description: {
       es:
         "Single producido en Santiago de Chile entre 2022 y 2023, después de viajes en gira a Lagos, Nigeria con Newen Afrobeat. Reúne la sección de bronces de Newen completa, incluido Ecamhi en trompeta.",
@@ -348,7 +370,7 @@ export const releases: Release[] = [
     year: 2025,
     type: "single",
     format: "Single",
-    cover: "https://f4.bcbits.com/img/a2195737014_10.jpg",
+    cover: "https://f4.bcbits.com/img/a4131860185_10.jpg",
     description: {
       es:
         "Producido en Santiago de Chile, en colaboración y co-producción con Lister Rossel (Mr.Li) en Londres, MC Seven Star en Orlando y MC Racecar en París. Hip-hop, jazz fusion, neo-soul.",
@@ -416,6 +438,23 @@ export const releases: Release[] = [
     ],
   },
   {
+    slug: "klaus-b-espejismos",
+    title: "Espejismos",
+    artistSlug: "klaus-brantmayer",
+    artistName: "Klaus B",
+    releaseDate: "2021-11-12",
+    year: 2021,
+    type: "single",
+    format: "Single · digital",
+    cover: "https://is1-ssl.mzstatic.com/image/thumb/Music126/v4/99/23/1e/99231ed5-787f-3488-a8a6-fe9698d9e3b0/0.jpg/1000x1000bb.jpg",
+    description: {
+      es:
+        "Single instrumental de Klaus B publicado a fines de 2021. Pieza atmosférica que extiende la línea funk/neo-soul iniciada con Viento Radiante.",
+      en:
+        "Klaus B instrumental single released in late 2021. Atmospheric piece extending the funk/neo-soul line opened with Viento Radiante.",
+    },
+  },
+  {
     slug: "klaus-b-de-noche",
     title: "De Noche",
     artistSlug: "klaus-brantmayer",
@@ -458,6 +497,267 @@ export const releases: Release[] = [
       { role: "Mezcla", name: "Enrique Camhi" },
       { role: "Master", name: "Daniel Pérez" },
     ],
+  },
+  {
+    slug: "ecamhi-gaviotas",
+    title: "Gaviotas (feat. Felipe Montero & Enrique Camhi)",
+    artistSlug: "ecamhi",
+    artistName: "Diego de la Noche feat. Enrique Camhi",
+    releaseDate: "2022-11-09",
+    year: 2022,
+    type: "single",
+    format: "Single · digital",
+    cover: "https://is1-ssl.mzstatic.com/image/thumb/Music126/v4/1d/19/c3/1d19c399-c5a2-a510-0f2d-9e83855fea82/artwork.jpg/1000x1000bb.jpg",
+    description: {
+      es:
+        "Aparición de Enrique Camhi (Ecamhi) como invitado en Gaviotas, single de Diego de la Noche con Felipe Montero. Trompeta sobre un beat de pop electrónico de cámara.",
+      en:
+        "Enrique Camhi (Ecamhi) appears as guest on Gaviotas, a Diego de la Noche single with Felipe Montero. Trumpet over a chamber electronic-pop beat.",
+    },
+  },
+  {
+    slug: "ecamhi-laruz",
+    title: "Laruz (feat. Enrique Camhi)",
+    artistSlug: "ecamhi",
+    artistName: "Diego de la Noche feat. Enrique Camhi",
+    releaseDate: "2022-11-09",
+    year: 2022,
+    type: "single",
+    format: "Single · digital",
+    cover: "https://is1-ssl.mzstatic.com/image/thumb/Music116/v4/b0/d6/b5/b0d6b5b4-7d56-28cf-33f7-9ace20c4fc36/artwork.jpg/1000x1000bb.jpg",
+    description: {
+      es:
+        "Aparición de Ecamhi en Laruz, single de Diego de la Noche publicado el mismo día que Gaviotas (noviembre 2022).",
+      en:
+        "Ecamhi appears on Laruz, a Diego de la Noche single released the same day as Gaviotas (November 2022).",
+    },
+  },
+  {
+    slug: "ecamhi-ofrenda-de-amor",
+    title: "Ofrenda De Amor",
+    artistSlug: "ecamhi",
+    artistName: "Ugnė Danielė, Enrique Camhi & Adydo",
+    releaseDate: "2024-08-15",
+    year: 2024,
+    type: "single",
+    format: "Single · digital",
+    cover: "https://is1-ssl.mzstatic.com/image/thumb/Music211/v4/38/6b/bb/386bbbc9-a0b9-255c-c793-66d93238cd9c/artwork.jpg/1000x1000bb.jpg",
+    description: {
+      es:
+        "Single co-firmado por Ugnė Danielė, Enrique Camhi y Adydo. Cruza chamber-jazz con voces e improvisación europea-sudamericana.",
+      en:
+        "Single co-signed by Ugnė Danielė, Enrique Camhi and Adydo. Crosses chamber-jazz with vocals and European–South American improvisation.",
+    },
+  },
+  {
+    slug: "ecamhi-mad-summer",
+    title: "Mad Summer",
+    artistSlug: "ecamhi",
+    artistName: "Alejandro Camhi & Enrique Camhi",
+    releaseDate: "2024-07-03",
+    year: 2024,
+    type: "single",
+    format: "Single · digital",
+    cover: "https://is1-ssl.mzstatic.com/image/thumb/Music221/v4/ce/a0/f2/cea0f2b6-47f9-8d1e-5646-a29f601424be/artwork.jpg/1000x1000bb.jpg",
+    description: {
+      es:
+        "Single firmado por Alejandro Camhi y Enrique Camhi. Verano electrónico con trompeta encima.",
+      en:
+        "Single signed by Alejandro Camhi and Enrique Camhi. Electronic summer with trumpet on top.",
+    },
+  },
+  {
+    slug: "ecamhi-fake-money",
+    title: "Fake Money",
+    artistSlug: "ecamhi",
+    artistName: "4Yo4U & Enrique Camhi",
+    releaseDate: "2025-08-22",
+    year: 2025,
+    type: "single",
+    format: "Single · digital",
+    cover: "https://is1-ssl.mzstatic.com/image/thumb/Music221/v4/4d/5f/c4/4d5fc454-7958-7218-cfc5-fe5922a2da7a/199502158057_cover.jpg/1000x1000bb.jpg",
+    description: {
+      es:
+        "Single de 4Yo4U con Enrique Camhi. Trompeta sobre electrónica contemporánea, eco del lenguaje de en viaje.",
+      en:
+        "4Yo4U single featuring Enrique Camhi. Trumpet over contemporary electronics, echoing the en viaje language.",
+    },
+  },
+  {
+    slug: "ecamhi-fake-love",
+    title: "Fake Love",
+    artistSlug: "ecamhi",
+    artistName: "Enrique Camhi & Felipe Cortes",
+    releaseDate: "2021-04-09",
+    year: 2021,
+    type: "single",
+    format: "Single · digital",
+    cover: "https://is1-ssl.mzstatic.com/image/thumb/Music124/v4/4e/bf/78/4ebf78f4-a3bb-02f6/0.jpg/1000x1000bb.jpg",
+    description: {
+      es:
+        "Single co-firmado por Enrique Camhi y Felipe Cortes. Primer registro publicado bajo el nombre Enrique Camhi previo al EP en viaje.",
+      en:
+        "Single co-signed by Enrique Camhi and Felipe Cortes. First record released under the Enrique Camhi name prior to the en viaje EP.",
+    },
+  },
+  {
+    slug: "ecamhi-move-to",
+    title: "Move To",
+    artistSlug: "ecamhi",
+    artistName: "Enrique Camhi",
+    releaseDate: "2022-05-19",
+    year: 2022,
+    type: "single",
+    format: "Single · digital",
+    cover: "https://is1-ssl.mzstatic.com/image/thumb/Music112/v4/3e/11/34/3e11342c-ef83-217d-471d-cda2270ed24b/00_Cover_Art.jpg/1000x1000bb.jpg",
+    description: {
+      es:
+        "Single solista de Enrique Camhi (Ecamhi) publicado previo al EP inaugural en viaje. Trompeta y producción propia: precedente del lenguaje interdisciplinar del proyecto.",
+      en:
+        "Solo single by Enrique Camhi (Ecamhi), released prior to the inaugural EP en viaje. Trumpet and self-production: a precedent of the project's interdisciplinary language.",
+    },
+  },
+  {
+    slug: "claudio-solis-noche-oscura-del-alma",
+    title: "Noche Oscura Del Alma",
+    artistSlug: "claudio-solis",
+    artistName: "Claudio Solis & Fco Martinez",
+    featuredArtistSlugs: ["ecamhi"],
+    releaseDate: "2023-12-15",
+    year: 2023,
+    type: "single",
+    format: "Single · digital",
+    cover: "https://is1-ssl.mzstatic.com/image/thumb/Music126/v4/dc/36/68/dc366893-4b0b-8110-9c40-77de890020eb/00_Cover_Art.jpg/1000x1000bb.jpg",
+    description: {
+      es:
+        "Pieza minimal de tensión nocturna firmada por Claudio Solís y Fco Martinez, con Enrique Camhi en trompeta.",
+      en:
+        "Minimal piece of nocturnal tension signed by Claudio Solís and Fco Martinez, with Enrique Camhi on trumpet.",
+    },
+  },
+  {
+    slug: "claudio-solis-apagon",
+    title: "Apagon",
+    artistSlug: "claudio-solis",
+    artistName: "Fco Martinez, Claudio Solis & Enrique Camhi",
+    featuredArtistSlugs: ["ecamhi"],
+    releaseDate: "2024-04-10",
+    year: 2024,
+    type: "single",
+    format: "Single · digital",
+    cover: "https://is1-ssl.mzstatic.com/image/thumb/Music211/v4/91/04/f2/9104f232-bda3-da2d-546a-3258f5993ac4/cover.jpg/1000x1000bb.jpg",
+    description: {
+      es:
+        "Single triple-firmado entre Fco Martinez, Claudio Solís y Enrique Camhi. Continuación del eje minimal/trompeta abierto con Mystical Healers y Noche Oscura.",
+      en:
+        "Triple-signed single between Fco Martinez, Claudio Solís and Enrique Camhi. Continuation of the minimal/trumpet axis opened with Mystical Healers and Noche Oscura.",
+    },
+  },
+  {
+    slug: "claudio-solis-kototama-single",
+    title: "Kototama (single)",
+    artistSlug: "claudio-solis",
+    artistName: "Claudio Solis & Seymour",
+    releaseDate: "2025-06-25",
+    year: 2025,
+    type: "single",
+    format: "Single · digital",
+    cover: "https://is1-ssl.mzstatic.com/image/thumb/Music221/v4/dc/2e/b5/dc2eb59e-25e6-7f6e-1520-78c0a5e9c34a/00_Cover_Art.jpg/1000x1000bb.jpg",
+    description: {
+      es:
+        "Versión digital del tema Kototama, co-firmado con Seymour. La edición en vinilo 12\" EP en Aquarians (2025) se publica en paralelo.",
+      en:
+        "Digital version of Kototama, co-signed with Seymour. The 12\" EP vinyl edition on Aquarians (2025) is released in parallel.",
+    },
+  },
+  {
+    slug: "claudio-solis-ecamhi-mystical-healers",
+    title: "Mystical Healers I",
+    artistSlug: "claudio-solis",
+    artistName: "Claudio Solis & Enrique Camhi",
+    featuredArtistSlugs: ["ecamhi"],
+    releaseDate: "2023-09-28",
+    year: 2023,
+    type: "single",
+    format: "Single · digital",
+    cover: "https://is1-ssl.mzstatic.com/image/thumb/Music116/v4/b7/c5/d5/b7c5d533-ca30-e705/0.jpg/1000x1000bb.jpg",
+    description: {
+      es:
+        "Primer single de la serie Mystical Healers, co-firmada por Claudio Solís y Enrique Camhi (Ecamhi). Antecedente directo del EP Ebs (2023).",
+      en:
+        "First single in the Mystical Healers series, co-signed by Claudio Solís and Enrique Camhi (Ecamhi). Direct precursor to the Ebs EP (2023).",
+    },
+  },
+  {
+    slug: "claudio-solis-ecamhi-ebs",
+    title: "Ebs",
+    artistSlug: "claudio-solis",
+    artistName: "Claudio Solis & Enrique Camhi",
+    featuredArtistSlugs: ["ecamhi"],
+    releaseDate: "2023-11-30",
+    year: 2023,
+    type: "ep",
+    format: "EP · digital",
+    cover: "https://is1-ssl.mzstatic.com/image/thumb/Music126/v4/92/af/c9/92afc9d4-36ca-9d50-b32b-9c9176509368/00_Cover_Art.jpg/1000x1000bb.jpg",
+    description: {
+      es:
+        "EP colaborativo entre Claudio Solís y Enrique Camhi (Ecamhi): minimal y trompeta en diálogo extendido. Lanzamiento conjunto dentro del ecosistema PHŌNÉ.",
+      en:
+        "Collaborative EP between Claudio Solís and Enrique Camhi (Ecamhi): minimal and trumpet in extended dialogue. Joint release within the PHŌNÉ ecosystem.",
+    },
+  },
+
+  // ─────────── Con.fusión ───────────
+  {
+    slug: "con-fusion-aua",
+    title: "Aüa",
+    artistSlug: "con-fusion",
+    artistName: "Con.fusión",
+    releaseDate: "2021-02-26",
+    year: 2021,
+    type: "single",
+    format: "Single · digital",
+    cover: "https://is1-ssl.mzstatic.com/image/thumb/Music125/v4/cd/61/ca/cd61ca54-884f-8045-cf53-78550b4b960c/0.jpg/1000x1000bb.jpg",
+    description: {
+      es:
+        "Single de Con.fusión en colaboración con Fat Jota. Voz como instrumento sobre beats orgánicos: hip hop, jazz y neo soul en clave de canción breve.",
+      en:
+        "Con.fusión single in collaboration with Fat Jota. Voice as instrument over organic beats: hip hop, jazz and neo soul as compact song-form.",
+    },
+  },
+  {
+    slug: "con-fusion-que-aburrido",
+    title: "Que Aburrido!",
+    artistSlug: "con-fusion",
+    artistName: "Con.fusión",
+    releaseDate: "2020-07-10",
+    year: 2020,
+    type: "single",
+    format: "Single · digital",
+    cover: "https://is1-ssl.mzstatic.com/image/thumb/Music113/v4/5d/ca/30/5dca302d-2a10-e04e-cfbc-4f5604f5cb67/0.jpg/1000x1000bb.jpg",
+    description: {
+      es:
+        "Single con Fat Jota. Beat hip hop con flow vocal mestizo entre rap, scat y melodía. Una declaración temprana del lenguaje de Con.fusión.",
+      en:
+        "Single with Fat Jota. Hip hop beat with a vocal flow that crosses rap, scat and melody. An early statement of Con.fusión's voice.",
+    },
+  },
+  {
+    slug: "con-fusion-borboleta",
+    title: "Borboleta (feat. Ziervo)",
+    artistSlug: "con-fusion",
+    artistName: "Con.fusión",
+    releaseDate: "2020-10-08",
+    year: 2020,
+    type: "single",
+    format: "Single · digital",
+    cover: "https://is1-ssl.mzstatic.com/image/thumb/Music124/v4/35/52/db/3552dbb8-895c-2cfb-cbde-30cd6e80a14b/0.jpg/1000x1000bb.jpg",
+    description: {
+      es:
+        "Single en portugués con Ziervo. Cruza neo soul, jazz y guiños a la MPB; muestra la dimensión cinematográfica del proyecto.",
+      en:
+        "Portuguese-language single with Ziervo. Crosses neo soul, jazz and MPB hints; shows the project's cinematic dimension.",
+    },
   },
 ];
 
