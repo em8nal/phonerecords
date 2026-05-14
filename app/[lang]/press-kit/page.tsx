@@ -199,7 +199,7 @@ export default async function PressKitPage({
         </section>
 
         {/* Section: roster */}
-        <section className="mb-16">
+        <section className="mb-16 press-roster-section">
           <div className="flex items-baseline justify-between mb-10">
             <h2 className="text-2xl lg:text-3xl font-display tracking-tight">
               {c.sections.roster}
@@ -208,14 +208,14 @@ export default async function PressKitPage({
               {rosterRows.length} {c.artistInside}
             </span>
           </div>
-          <div className="space-y-12">
+          <div className="space-y-12 press-roster">
             {rosterRows.map((r) => {
               const introLine =
                 r.bio.split("\n").find((line) => line.trim().length > 0) ?? "";
               return (
                 <div
                   key={r.slug}
-                  className="grid lg:grid-cols-12 gap-6 lg:gap-10 pb-12 border-b border-foreground/10 last:border-0"
+                  className="press-roster-row grid lg:grid-cols-12 gap-6 lg:gap-10 pb-12 border-b border-foreground/10 last:border-0"
                 >
                   <div className="lg:col-span-3">
                     <div className="relative aspect-square bg-foreground/5 overflow-hidden rounded">
@@ -279,7 +279,7 @@ export default async function PressKitPage({
         </section>
 
         {/* Section: contact */}
-        <section className="mb-16 grid lg:grid-cols-12 gap-6 lg:gap-12">
+        <section className="mb-16 grid lg:grid-cols-12 gap-6 lg:gap-12 press-contact-section">
           <h2 className="lg:col-span-4 text-2xl lg:text-3xl font-display tracking-tight text-foreground/70">
             {c.sections.contact}
           </h2>

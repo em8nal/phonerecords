@@ -492,4 +492,53 @@
     color: #000 !important;
     text-decoration: none !important;
   }
+  /* /press-kit roster: 2 artists per page, never split an artist row. */
+  .press-roster-section {
+    page-break-before: always;
+    break-before: page;
+  }
+  .press-roster > * + * {
+    margin-top: 4mm !important; /* override space-y-12 in print */
+  }
+  .press-roster-row {
+    display: grid !important;
+    grid-template-columns: 38mm 1fr !important;
+    gap: 8mm !important;
+    padding-top: 2mm !important;
+    padding-bottom: 2mm !important;
+    border-bottom: 1px solid rgba(0,0,0,0.12) !important;
+    page-break-inside: avoid;
+    break-inside: avoid;
+  }
+  .press-roster-row > div:first-child {
+    grid-column: auto !important;
+  }
+  .press-roster-row > div:last-child {
+    grid-column: auto !important;
+  }
+  /* Cap the photo so it doesn't blow up a row */
+  .press-roster-row .relative.aspect-square {
+    max-width: 38mm;
+    max-height: 38mm;
+  }
+  /* Shrink artist headings and bios in print so 2 rows fit per page */
+  .press-roster-row h3 {
+    font-size: 14pt !important;
+    line-height: 1.1 !important;
+  }
+  .press-roster-row p {
+    font-size: 9.5pt !important;
+    line-height: 1.4 !important;
+  }
+  .press-roster-row :is(.font-mono, .text-xs, .text-sm) {
+    font-size: 8pt !important;
+  }
+  .press-roster-row:nth-child(2n):not(:last-child) {
+    page-break-after: always;
+    break-after: page;
+  }
+  .press-contact-section {
+    page-break-before: always;
+    break-before: page;
+  }
 }

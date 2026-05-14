@@ -32,6 +32,7 @@ LANGS=(es en)
 gen() {
   local url="$1" out="$2"
   "$CHROME" --headless=new --no-pdf-header-footer --print-to-pdf="$out" \
+    --window-size=1200,1600 \
     --virtual-time-budget=20000 --hide-scrollbars --disable-gpu "$url" 2>/dev/null
   printf "  %-40s %7d bytes\n" "$(basename "$out")" "$(stat -f%z "$out")"
 }
