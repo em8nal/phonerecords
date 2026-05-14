@@ -32,8 +32,49 @@ const copy = {
     eyebrow: "Sobre PHŌNÉ",
     headline: "Sello cultural\nindependiente.",
     intro:
-      "Producimos vinilos y digital, gestionamos artistas, dirigimos arte y dirigimos creativamente. Operamos en Santiago de Chile y trabajamos en circuitos europeos vía Ludwig Sound Booking Agency (Heidelberg, Alemania).",
+      "PHŌNÉ Records produce condiciones de existencia para la música independiente: no sólo discos, sino contextos, archivo y trayectorias sostenidas en el tiempo. Operamos como empresa cultural con corazón de atelier desde Santiago de Chile, en diálogo con circuitos europeos vía Ludwig Sound Booking Agency (Heidelberg, Alemania).",
     backHome: "Volver al inicio",
+    modes: {
+      title: "Modos de producción",
+      lede:
+        "PHŌNÉ no activa todas sus áreas en todos los proyectos. Cada obra prioriza uno de tres modos —catálogo, experiencias o memoria— según contexto, escala y sentido.",
+      items: [
+        {
+          name: "Catálogo",
+          subtitle: "Lo que queda",
+          body: "Desarrollo de un corpus fonográfico coherente y duradero —vinilo y digital— con gestión de derechos, narrativa editorial y valor acumulativo.",
+        },
+        {
+          name: "Experiencias",
+          subtitle: "Lo que activa cuerpo y comunidad",
+          body: "Creación de acontecimientos musicales —giras, conciertos, residencias, showcases— donde el contexto, el cuerpo y la presencia son centrales.",
+        },
+        {
+          name: "Memoria",
+          subtitle: "Lo que legitima y permanece",
+          body: "Archivo, documentación y recontextualización de obras y procesos. Reediciones, relato histórico y permanencia cultural.",
+        },
+      ],
+    },
+    position: {
+      title: "Posicionamiento",
+      lede:
+        "Tres criterios sostienen la curaduría —de género no importa, importa el criterio— y atraviesan cada decisión de catálogo, arte y gira.",
+      items: [
+        {
+          name: "Territorio",
+          body: "Origen, desplazamiento y contexto de circulación. No internacionalizamos la música chilena: desplazamos el centro, produciendo música del mundo desde el sur para el mundo.",
+        },
+        {
+          name: "Cuerpo",
+          body: "Ritmo, energía, presencia, performatividad. El cuerpo es infraestructura crítica: ninguna gira ni lanzamiento se planifica sin cuidar quién paga el costo invisible.",
+        },
+        {
+          name: "Tiempo",
+          body: "Memoria, proceso, archivo, duración. PHŌNÉ no crece por acumulación: crece por densidad. Nunca sacrificamos tiempo largo por urgencias de tiempo corto.",
+        },
+      ],
+    },
     services: {
       title: "Servicios",
       items: [
@@ -68,8 +109,49 @@ const copy = {
     eyebrow: "About PHŌNÉ",
     headline: "Independent\ncultural label.",
     intro:
-      "We produce vinyl and digital, manage artists, direct art and direct creatively. Based in Santiago, Chile, working in European circuits via Ludwig Sound Booking Agency (Heidelberg, Germany).",
+      "PHŌNÉ Records produces conditions of existence for independent music: not only records, but contexts, archive and trajectories sustained over time. We operate as a cultural enterprise with the heart of an atelier from Santiago de Chile, in dialogue with European circuits via Ludwig Sound Booking Agency (Heidelberg, Germany).",
     backHome: "Back to home",
+    modes: {
+      title: "Modes of production",
+      lede:
+        "PHŌNÉ does not activate all its areas in every project. Each work prioritises one of three modes —catalogue, experiences or memory— according to context, scale and sense.",
+      items: [
+        {
+          name: "Catalogue",
+          subtitle: "What stays",
+          body: "Building a coherent, lasting phonographic corpus —vinyl and digital— with rights management, editorial narrative and cumulative value.",
+        },
+        {
+          name: "Experiences",
+          subtitle: "What activates body and community",
+          body: "Creating musical events —tours, concerts, residencies, showcases— where context, body and presence are central.",
+        },
+        {
+          name: "Memory",
+          subtitle: "What legitimises and persists",
+          body: "Archive, documentation and recontextualisation of works and processes. Reissues, historical narrative and cultural permanence.",
+        },
+      ],
+    },
+    position: {
+      title: "Position",
+      lede:
+        "Three criteria sustain the curation —genre is not the point, criterion is— and run through every decision of catalogue, art and tour.",
+      items: [
+        {
+          name: "Territory",
+          body: "Origin, displacement and context of circulation. We don't internationalise Chilean music: we displace the centre, producing world music from the south for the world.",
+        },
+        {
+          name: "Body",
+          body: "Rhythm, energy, presence, performativity. The body is critical infrastructure: no tour or release is planned without caring for who pays the invisible cost.",
+        },
+        {
+          name: "Time",
+          body: "Memory, process, archive, duration. PHŌNÉ does not grow by accumulation: it grows by density. We never sacrifice long time for short-time urgencies.",
+        },
+      ],
+    },
     services: {
       title: "Services",
       items: [
@@ -179,6 +261,58 @@ export default async function SelloPage({
             {c.intro}
           </p>
         </header>
+
+        {/* Modes of production */}
+        <section className="mb-20 lg:mb-28">
+          <h2 className="text-3xl lg:text-5xl font-display tracking-tight mb-6">
+            {c.modes.title}
+          </h2>
+          <p className="text-lg text-foreground/80 leading-relaxed max-w-3xl mb-12">
+            {c.modes.lede}
+          </p>
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-px bg-foreground/10 border border-foreground/10">
+            {c.modes.items.map((mode, i) => (
+              <div key={mode.name} className="bg-background p-8 lg:p-10 flex flex-col">
+                <div className="font-mono text-xs text-muted-foreground mb-4">
+                  {String(i + 1).padStart(2, "0")}
+                </div>
+                <h3 className="text-2xl font-display tracking-tight mb-1">{mode.name}</h3>
+                <div className="font-mono text-xs uppercase tracking-widest text-muted-foreground mb-4">
+                  {mode.subtitle}
+                </div>
+                <p className="text-base text-foreground/75 leading-relaxed">{mode.body}</p>
+              </div>
+            ))}
+          </div>
+        </section>
+
+        {/* Position / criteria */}
+        <section className="mb-20 lg:mb-28">
+          <h2 className="text-3xl lg:text-5xl font-display tracking-tight mb-6">
+            {c.position.title}
+          </h2>
+          <p className="text-lg text-foreground/80 leading-relaxed max-w-3xl mb-12">
+            {c.position.lede}
+          </p>
+          <div className="space-y-px bg-foreground/10 border border-foreground/10">
+            {c.position.items.map((item, i) => (
+              <div
+                key={item.name}
+                className="bg-background grid grid-cols-1 md:grid-cols-12 gap-6 md:gap-12 p-8 lg:p-10"
+              >
+                <div className="md:col-span-3">
+                  <div className="font-mono text-xs text-muted-foreground mb-2">
+                    {String(i + 1).padStart(2, "0")}
+                  </div>
+                  <h3 className="text-2xl font-display tracking-tight">{item.name}</h3>
+                </div>
+                <p className="md:col-span-9 text-base text-foreground/80 leading-relaxed">
+                  {item.body}
+                </p>
+              </div>
+            ))}
+          </div>
+        </section>
 
         {/* Services */}
         <section className="mb-20 lg:mb-28">

@@ -133,7 +133,7 @@ His sets favour long sessions, atmosphere and narrative. He has played at Club d
       es:
         `Enrique Camhi —Ecamhi— es trompetista, fluegelhornista, productor y fotógrafo chileno cuyo trabajo solista habita en la zona donde imagen y sonido se alimentan mutuamente. No firma "música con fotos" ni "fotos con música": ambas vienen del mismo gesto creativo y se publican como un solo objeto.
 
-Su primer EP, en viaje, fue el lanzamiento inaugural del sello PHŌNÉ Records. El disco surge de un archivo de fotografías capturadas en giras internacionales: cuatro imágenes inspiraron cuatro canciones que se presentaron en una exhibición donde cada foto estaba acompañada de audífonos con su pieza correspondiente. La estructura curatorial —imagen como punto de partida, sonido como respuesta— se volvió una declaración de método del sello.
+Prepara su primer EP, en viaje, lanzamiento inaugural del sello PHŌNÉ Records. La obra parte de un archivo de fotografías capturadas durante sus giras internacionales como trompetista de Newen Afrobeat: cada canción se enlaza a una imagen tomada en el tránsito entre países, y se concibe como un archivo sensible del cruce —compañías momentáneas, paradas breves, emociones que dejan huella. El lanzamiento se monta como exhibición no lineal con estaciones de escucha individuales: cada visitante construye su propio recorrido entre fotografía, audífonos y pieza correspondiente. La estructura curatorial —imagen como punto de partida, sonido como respuesta— funciona como declaración de método del sello.
 
 Como sesionista, integra desde hace años la sección de bronces de Newen Afrobeat. Su trompeta aparece en los LPs Curiche (2019) y Grietas (OfficeHome Records, 2024), donde además co-compone Mare Mare junto a Martin Concha y co-dirige el arte del disco con Tom Pavez.
 
@@ -141,11 +141,11 @@ En su trabajo solista cruza música instrumental, jazz, electrónica de cámara 
 
 Es la voz orquestal cruzada del ecosistema PHŌNÉ: además de Newen, aparece como invitado en Estudios Del Maipo: Live Session de Gestosimple & Klaus B (2025) y en el single Quisiera Entender de Klaus B (2023), grabado tras los viajes a Lagos con Newen Afrobeat. La voz invitada de su EP en viaje es Catalina Aguilera (Con.fusión); el sax y co-composición son de Vicente Aravena; el master, de Daniel Pérez.
 
-Trabaja en nuevos materiales que extienden la lógica interdisciplinar del primer EP, con énfasis en sesiones en vivo grabadas en cinta y exposiciones que combinan imagen, sonido y texto. Continúa activo en la formación de Newen Afrobeat con presentaciones programadas en la gira Europa 2026.`,
+Continúa activo en la formación de Newen Afrobeat con presentaciones programadas en la gira Europa 2026.`,
       en:
         `Enrique Camhi —Ecamhi— is a Chilean trumpet and flugelhorn player, producer and photographer whose solo work inhabits the zone where image and sound feed each other. He doesn't sign "music with photos" or "photos with music": both come from the same creative gesture and are published as a single object.
 
-His first EP, en viaje, was the inaugural release of PHŌNÉ Records. The album emerges from an archive of photographs captured on international tours: four images inspired four songs, presented as an exhibition where each photo was accompanied by headphones playing its corresponding piece. The curatorial structure —image as starting point, sound as response— became a methodological statement for the label.
+He is preparing his debut EP, en viaje, the inaugural release of PHŌNÉ Records. The work departs from an archive of photographs captured during his international tours as trumpet player of Newen Afrobeat: each song is linked to an image taken in the transit between countries, conceived as a sensitive archive of crossing —momentary companions, brief stops, emotions that leave a mark. The launch is staged as a non-linear exhibition with individual listening stations: each visitor builds their own path between photograph, headphones and corresponding piece. The curatorial structure —image as starting point, sound as response— operates as a methodological statement for the label.
 
 As a session player, he has been part of Newen Afrobeat's brass section for years. His trumpet appears on the LPs Curiche (2019) and Grietas (OfficeHome Records, 2024), where he also co-composes Mare Mare with Martin Concha and co-directs the album art with Tom Pavez.
 
@@ -153,7 +153,7 @@ In his solo work he crosses instrumental music, jazz, chamber electronics and in
 
 He is the cross-orchestra voice of the PHŌNÉ ecosystem: besides Newen, he appears as a guest in Estudios Del Maipo: Live Session by Gestosimple & Klaus B (2025) and on the single Quisiera Entender by Klaus B (2023), recorded after the Lagos tours with Newen Afrobeat. The guest voice on his en viaje EP is Catalina Aguilera (Con.fusión); sax and co-composition are by Vicente Aravena; mastering by Daniel Pérez.
 
-He is working on new materials that extend the interdisciplinary logic of the first EP, with emphasis on tape-recorded live sessions and exhibitions that combine image, sound and text. He continues active in Newen Afrobeat's formation with scheduled performances on the Europe 2026 tour.`,
+He continues active in Newen Afrobeat's formation with scheduled performances on the Europe 2026 tour.`,
     },
     links: [
       { label: "Spotify", href: "https://open.spotify.com/artist/6dUvYBGnjpf2emwATOIP4c" },
