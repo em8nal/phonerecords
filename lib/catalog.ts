@@ -47,7 +47,9 @@ function normalizeDateForSort(raw: string): string {
 }
 
 function isVinyl(format: string): boolean {
-  return /(vinilo|vinyl|\bLP\b|\bEP\b|12"|7"|10")/i.test(format);
+  // Only flag explicit vinyl markers — "LP" and "EP" alone also appear in
+  // digital format strings ("EP · digital · 4 tracks"), so we exclude them.
+  return /(vinilo|vinyl|12"|7"|10")/i.test(format);
 }
 
 // Per-artist curation for /catalogo. Solis publishes prolifically; on PHŌNÉ
