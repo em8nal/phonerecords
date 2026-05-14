@@ -10,6 +10,14 @@ import { getArtistEntries } from "@/lib/catalog";
 
 type LangParams = { lang: string };
 
+const ARTISTS_WITH_PHOTO = new Set([
+  "claudio-solis",
+  "newen-afrobeat",
+  "con-fusion",
+  "klaus-brantmayer",
+  "ecamhi",
+]);
+
 export async function generateMetadata(
   { params }: { params: Promise<LangParams> },
 ): Promise<Metadata> {
@@ -48,7 +56,7 @@ const copy = {
     labelBody:
       "Fundado en Santiago de Chile, PHŌNÉ Records produce condiciones de existencia para la música independiente: marco editorial, dirección de arte, prensaje en vinilo y distribución digital. El sello opera como infraestructura para un roster latinoamericano —Newen Afrobeat, Claudio Solís, Ecamhi, Con.fusión, Klaus Brantmayer y Andrés Abrigo— y construye puentes editoriales con sellos europeos (OfficeHome Records, Aquarians) y agencias de booking (Ludwig Sound, Heidelberg). El catálogo abarca afrobeat, dark minimal, nu-jazz, neo-soul y composición experimental.",
     contactBody:
-      "Para consultas de prensa, booking o trabajo con el sello, contacto vía el formulario en phonerecords.cl/es/contacto · Eduardo Castillo Velasco 2325, Ñuñoa, Santiago de Chile.",
+      "Para consultas de prensa, booking o trabajo con el sello, contacto vía el formulario en phonerecords.cl/es/contacto · Ñuñoa, Santiago de Chile.",
     individualPress: "Press kit individual:",
     seeRelease: "Ver release",
     artistInside: "artistas en el ecosistema",
@@ -71,7 +79,7 @@ const copy = {
     labelBody:
       "Founded in Santiago de Chile, PHŌNÉ Records produces conditions of existence for independent music: editorial frame, art direction, vinyl pressing and digital distribution. The label operates as infrastructure for a Latin American roster —Newen Afrobeat, Claudio Solís, Ecamhi, Con.fusión, Klaus Brantmayer and Andrés Abrigo— and builds editorial bridges with European labels (OfficeHome Records, Aquarians) and booking agencies (Ludwig Sound, Heidelberg). The catalogue spans afrobeat, dark minimal, nu-jazz, neo-soul and experimental composition.",
     contactBody:
-      "For press inquiries, booking or working with the label, contact us via the form at phonerecords.cl/en/contacto · Eduardo Castillo Velasco 2325, Ñuñoa, Santiago de Chile.",
+      "For press inquiries, booking or working with the label, contact us via the form at phonerecords.cl/en/contacto · Ñuñoa, Santiago de Chile.",
     individualPress: "Individual press kit:",
     seeRelease: "View release",
     artistInside: "artists in the ecosystem",
@@ -193,7 +201,15 @@ export default async function PressKitPage({
                 >
                   <div className="lg:col-span-3">
                     <div className="relative aspect-square bg-foreground/5 overflow-hidden rounded">
-                      {r.sampleCover ? (
+                      {ARTISTS_WITH_PHOTO.has(r.slug) ? (
+                        <Image
+                          src={`/artists/${r.slug}.jpg`}
+                          alt={r.name}
+                          fill
+                          sizes="(min-width: 1024px) 25vw, 100vw"
+                          className="object-cover"
+                        />
+                      ) : r.sampleCover ? (
                         <Image
                           src={r.sampleCover}
                           alt={`${r.name} — ${r.sampleTitle}`}

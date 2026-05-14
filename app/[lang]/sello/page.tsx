@@ -56,7 +56,7 @@ const copy = {
       title: "Datos legales",
       lines: [
         "Representante legal: Enrique Ariel Camhi Ibarlucea",
-        "Domicilio: Eduardo Castillo Velasco 2325, depto A, Ñuñoa, Región Metropolitana, Chile",
+        "Domicilio: Ñuñoa, Región Metropolitana, Chile",
       ],
     },
     cta: {
@@ -92,7 +92,7 @@ const copy = {
       title: "Legal information",
       lines: [
         "Legal representative: Enrique Ariel Camhi Ibarlucea",
-        "Address: Eduardo Castillo Velasco 2325, apt A, Ñuñoa, Región Metropolitana, Chile",
+        "Address: Ñuñoa, Región Metropolitana, Chile",
       ],
     },
     cta: {
@@ -123,7 +123,6 @@ export default async function SelloPage({
         foundingLocation: { "@type": "Place", name: "Santiago, Chile" },
         address: {
           "@type": "PostalAddress",
-          streetAddress: "Eduardo Castillo Velasco 2325, depto A",
           addressLocality: "Ñuñoa",
           addressRegion: "Región Metropolitana",
           addressCountry: "CL",

@@ -163,6 +163,11 @@ export default async function EventosPage({
                   >
                     {ev.artistName}
                   </Link>
+                  {ev.notes?.[isEs ? "es" : "en"] && (
+                    <p className="text-xs text-muted-foreground/80 mt-2 leading-relaxed">
+                      {ev.notes[isEs ? "es" : "en"]}
+                    </p>
+                  )}
                 </div>
                 <div className="col-span-12 sm:col-span-3 self-center text-right">
                   {ev.ticketsUrl ? (

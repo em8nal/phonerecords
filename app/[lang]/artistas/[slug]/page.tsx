@@ -66,6 +66,16 @@ function extractSpotifyArtistId(links: { href: string }[]): string | null {
 
 type ArtistParams = { lang: string; slug: string };
 
+// Whitelist of artist slugs that have a portrait in /public/artists/<slug>.jpg.
+// Update this set when adding new photo files.
+const ARTISTS_WITH_PHOTO = new Set([
+  "claudio-solis",
+  "newen-afrobeat",
+  "con-fusion",
+  "klaus-brantmayer",
+  "ecamhi",
+]);
+
 export function generateStaticParams() {
   const langs: Language[] = ["es", "en"];
   return langs.flatMap((lang) =>
@@ -207,16 +217,32 @@ export default async function ArtistPage({
         </Link>
 
         {/* Header */}
-        <header className="mb-16 lg:mb-24">
-          <div className="font-mono text-xs text-muted-foreground tracking-widest uppercase mb-6">
-            {labels.genre} · {artist.genres.join(" · ")}
+        <header className={`mb-16 lg:mb-24 ${ARTISTS_WITH_PHOTO.has(slug) ? "grid lg:grid-cols-12 gap-8 lg:gap-12 items-end" : ""}`}>
+          <div className={ARTISTS_WITH_PHOTO.has(slug) ? "lg:col-span-7 order-2 lg:order-1" : ""}>
+            <div className="font-mono text-xs text-muted-foreground tracking-widest uppercase mb-6">
+              {labels.genre} · {artist.genres.join(" · ")}
+            </div>
+            <h1 className="text-5xl lg:text-8xl font-display tracking-tight leading-[0.9] mb-8">
+              {artist.name}
+            </h1>
+            <div className="font-mono text-sm text-muted-foreground">
+              {labels.origin} · {artist.origin}
+            </div>
           </div>
-          <h1 className="text-5xl lg:text-8xl font-display tracking-tight leading-[0.9] mb-8">
-            {artist.name}
-          </h1>
-          <div className="font-mono text-sm text-muted-foreground">
-            {labels.origin} · {artist.origin}
-          </div>
+          {ARTISTS_WITH_PHOTO.has(slug) && (
+            <div className="lg:col-span-5 order-1 lg:order-2">
+              <div className="relative aspect-square bg-foreground/5 rounded overflow-hidden">
+                <Image
+                  src={`/artists/${slug}.jpg`}
+                  alt={artist.name}
+                  fill
+                  sizes="(min-width: 1024px) 40vw, 100vw"
+                  className="object-cover"
+                  priority
+                />
+              </div>
+            </div>
+          )}
         </header>
 
         {/* Bio */}

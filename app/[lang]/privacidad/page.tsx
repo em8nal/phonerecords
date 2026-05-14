@@ -40,7 +40,7 @@ const copy = {
     sections: [
       {
         title: "1 · Responsable del tratamiento",
-        body: `PHŌNÉ Records · representada por Enrique Ariel Camhi Ibarlucea · Eduardo Castillo Velasco 2325, depto A, Ñuñoa, Región Metropolitana, Chile. Canal de contacto para asuntos de privacidad: formulario en phonerecords.cl/es/contacto.`,
+        body: `PHŌNÉ Records · representada por Enrique Ariel Camhi Ibarlucea · Ñuñoa, Región Metropolitana, Chile. Canal de contacto para asuntos de privacidad: formulario en phonerecords.cl/es/contacto.`,
       },
       {
         title: "2 · Datos que recolectamos",
@@ -101,7 +101,6 @@ Para ejercer cualquiera de estos derechos, escríbenos por el formulario en phon
 
 phonerecords.cl/es/contacto
 PHŌNÉ Records
-Eduardo Castillo Velasco 2325, depto A
 Ñuñoa, Región Metropolitana, Chile`,
       },
     ],
@@ -115,7 +114,7 @@ Eduardo Castillo Velasco 2325, depto A
     sections: [
       {
         title: "1 · Data controller",
-        body: `PHŌNÉ Records · represented by Enrique Ariel Camhi Ibarlucea · Eduardo Castillo Velasco 2325, apt A, Ñuñoa, Región Metropolitana, Chile. Contact channel for privacy matters: form at phonerecords.cl/en/contacto.`,
+        body: `PHŌNÉ Records · represented by Enrique Ariel Camhi Ibarlucea · Ñuñoa, Región Metropolitana, Chile. Contact channel for privacy matters: form at phonerecords.cl/en/contacto.`,
       },
       {
         title: "2 · Data we collect",
@@ -176,7 +175,6 @@ To exercise any of these rights, write us via the form at phonerecords.cl/en/con
 
 phonerecords.cl/en/contacto
 PHŌNÉ Records
-Eduardo Castillo Velasco 2325, apt A
 Ñuñoa, Región Metropolitana, Chile`,
       },
     ],

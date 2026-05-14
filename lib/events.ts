@@ -26,28 +26,28 @@ export const events: Event[] = [
     country: "Austria",
     countryCode: "AT",
     status: "scheduled",
+    ticketsUrl:
+      "https://www.treibhaus.at/karten/2026/08/20/15174-newen-afrobeat-kollektiv-upside-down-tribute-to-fela-kuti-fernweh-chile",
+    notes: {
+      es: "Upside Down — Tribute to Fela Kuti // Fernweh: Chile. 20:30 hrs.",
+      en: "Upside Down — Tribute to Fela Kuti // Fernweh: Chile. Doors 20:30.",
+    },
   },
   {
-    slug: "newen-2026-08-21-frick",
-    date: "2026-08-21",
+    slug: "newen-2026-08-22-frick",
+    date: "2026-08-22",
     artistSlug: "newen-afrobeat",
     artistName: "Newen Afrobeat",
-    venue: "Marktfest Frick",
+    venue: "Marktfest Frick — Meck-Bühne",
     city: "Frick",
     country: "Suiza",
     countryCode: "CH",
     status: "scheduled",
-  },
-  {
-    slug: "newen-2026-08-22-basel",
-    date: "2026-08-22",
-    artistSlug: "newen-afrobeat",
-    artistName: "Newen Afrobeat",
-    venue: "MECK à FRICK",
-    city: "Basel / Frick",
-    country: "Suiza",
-    countryCode: "CH",
-    status: "scheduled",
+    ticketsUrl: "https://marktfest.ch/programm/",
+    notes: {
+      es: "Marktfest Frick 2026 · Meck-Bühne · 22:30–00:15. Pase 3 días desde CHF 20.",
+      en: "Marktfest Frick 2026 · Meck-Bühne · 22:30–00:15. 3-day pass from CHF 20.",
+    },
   },
   {
     slug: "newen-2026-08-23-frankfurt",
@@ -59,6 +59,11 @@ export const events: Event[] = [
     country: "Alemania",
     countryCode: "DE",
     status: "scheduled",
+    ticketsUrl: "https://jazzmontez.de/events",
+    notes: {
+      es: "Programación del venue se publica más cerca de la fecha.",
+      en: "Venue programme published closer to the date.",
+    },
   },
   {
     slug: "newen-2026-08-28-geneva",
@@ -70,6 +75,11 @@ export const events: Event[] = [
     country: "Suiza",
     countryCode: "CH",
     status: "scheduled",
+    ticketsUrl: "https://www.lajonquille.ch/events",
+    notes: {
+      es: "Programación del venue se publica más cerca de la fecha.",
+      en: "Venue programme published closer to the date.",
+    },
   },
   {
     slug: "newen-2026-08-30-vienna",
@@ -81,6 +91,27 @@ export const events: Event[] = [
     country: "Austria",
     countryCode: "AT",
     status: "scheduled",
+    ticketsUrl: "https://www.porgy.at/en/events/upcoming",
+    notes: {
+      es: "Programación del venue se publica más cerca de la fecha.",
+      en: "Venue programme published closer to the date.",
+    },
+  },
+  {
+    slug: "newen-2026-09-03-manchester",
+    date: "2026-09-03",
+    artistSlug: "newen-afrobeat",
+    artistName: "Newen Afrobeat",
+    venue: "Band on the Wall",
+    city: "Manchester",
+    country: "Reino Unido",
+    countryCode: "GB",
+    status: "scheduled",
+    ticketsUrl: "https://dice.fm/artist/newen-afrobeat-nvgn9",
+    notes: {
+      es: "Doors 19:30. Tickets desde £26.25 — venta el 15 de mayo de 2026 vía DICE.",
+      en: "Doors 19:30. Tickets from £26.25 — on sale 15 May 2026 via DICE.",
+    },
   },
   {
     slug: "newen-2026-09-09-london",
@@ -92,6 +123,11 @@ export const events: Event[] = [
     country: "Reino Unido",
     countryCode: "GB",
     status: "scheduled",
+    ticketsUrl: "https://thejazzcafe.com/event/newen-afrobeat-3/",
+    notes: {
+      es: "Chile's Afrobeat Pioneers · Doors 19:00–22:30 · Standing £22.50.",
+      en: "Chile's Afrobeat Pioneers · Doors 19:00–22:30 · Standing £22.50.",
+    },
   },
 ];
 
