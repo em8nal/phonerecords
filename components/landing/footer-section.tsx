@@ -27,7 +27,7 @@ function buildFooterLinks(lang: "es" | "en"): Record<string, FooterHref[]> {
     Label: [
       { href: `/${lang}/sello` },
       { href: `/${lang}/manifiesto` },
-      { href: `/${lang}/contacto`, hasBadge: true },
+      { href: `/${lang}/press-kit`, hasBadge: true },
       { href: `/${lang}/contacto` },
     ],
     // Order matches: Instagram, Bandcamp, Spotify, YouTube
