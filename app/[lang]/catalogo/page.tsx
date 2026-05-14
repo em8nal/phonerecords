@@ -90,6 +90,13 @@ export default async function CatalogoPage({
           empty: "Sin resultados.",
           detail: "Ver release",
           artist: "Filtrar por artista",
+          year: "Año",
+          sort: "Ordenar",
+          sortRecent: "Reciente",
+          sortAZ: "A → Z",
+          sortZA: "Z → A",
+          viewGrid: "Grilla",
+          viewList: "Lista",
         },
       }
     : {
@@ -103,6 +110,13 @@ export default async function CatalogoPage({
           empty: "No results.",
           detail: "View release",
           artist: "Filter by artist",
+          year: "Year",
+          sort: "Sort",
+          sortRecent: "Recent",
+          sortAZ: "A → Z",
+          sortZA: "Z → A",
+          viewGrid: "Grid",
+          viewList: "List",
         },
       };
 
