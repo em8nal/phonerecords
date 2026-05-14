@@ -125,8 +125,23 @@ export const events: Event[] = [
     status: "scheduled",
     ticketsUrl: "https://thejazzcafe.com/event/newen-afrobeat-3/",
     notes: {
-      es: "Chile's Afrobeat Pioneers · Doors 19:00–22:30 · Standing £22.50.",
-      en: "Chile's Afrobeat Pioneers · Doors 19:00–22:30 · Standing £22.50.",
+      es: "Cuarta visita al Jazz Cafe · Doors 19:00–22:30 · Standing £22.50.",
+      en: "Fourth visit to Jazz Cafe · Doors 19:00–22:30 · Standing £22.50.",
+    },
+  },
+  {
+    slug: "newen-2026-09-11-naples",
+    date: "2026-09-11",
+    artistSlug: "newen-afrobeat",
+    artistName: "Newen Afrobeat",
+    venue: "Festival Ethnos",
+    city: "Nápoles",
+    country: "Italia",
+    countryCode: "IT",
+    status: "scheduled",
+    notes: {
+      es: "Festival Ethnos 2026 · Torre del Greco, Nápoles · dirección artística: Gigi D'Luca.",
+      en: "Festival Ethnos 2026 · Torre del Greco, Naples · artistic direction: Gigi D'Luca.",
     },
   },
 ];

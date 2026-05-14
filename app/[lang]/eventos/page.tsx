@@ -15,8 +15,8 @@ export async function generateMetadata(
   return {
     title: isEs ? "Eventos · Gira" : "Events · Tour",
     description: isEs
-      ? "Calendario de gira PHŌNÉ Records. Newen Afrobeat — Europa 2026: Innsbruck, Frankfurt, Viena, Londres y más fechas."
-      : "PHŌNÉ Records tour calendar. Newen Afrobeat — Europe 2026: Innsbruck, Frankfurt, Vienna, London and more dates.",
+      ? "Calendario de gira PHŌNÉ Records. Newen Afrobeat — Europa 2026: Innsbruck, Frick, Frankfurt, Ginebra, Viena, Manchester, Londres y Nápoles."
+      : "PHŌNÉ Records tour calendar. Newen Afrobeat — Europe 2026: Innsbruck, Frick, Frankfurt, Geneva, Vienna, Manchester, London and Naples.",
     alternates: {
       canonical: `https://phonerecords.cl/${lang}/eventos`,
       languages: {

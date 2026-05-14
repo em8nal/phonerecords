@@ -54,7 +54,7 @@ El sonido dialoga con highlife, jazz modal, funk y rare groove, pero opera desde
 
 Han colaborado con Tony Allen, Seun Kuti, Femi Kuti, Cheick Tidiane Seck, Oghene Kologbo, Lido Pimienta, Joe Vasconcellos, Dele Sosimi y Chico César. Dentro del ecosistema PHŌNÉ, Ecamhi participa como trompetista histórico y co-compositor de Mare Mare, y Klaus Brantmayer firma la composición de Es la Vida; Claudio Solís diseña el arte gráfico del LP Grietas.
 
-Han girado por Chile, Brasil, Nigeria, Estados Unidos, Canadá, Reino Unido y Europa, con presentación destacada en Glastonbury. La gira Europa 2026 (agosto-septiembre) los lleva a Innsbruck, Frick, Frankfurt, Ginebra, Viena y al Jazz Cafe de Londres, con management compartido entre PHŌNÉ Records (Chile) y Ludwig Sound Booking Agency (Heidelberg, Alemania).`,
+Han girado por Chile, Brasil, Nigeria, Estados Unidos, Canadá, Reino Unido y Europa, con presentación destacada en Glastonbury. La gira Europa 2026 (agosto-septiembre) los lleva a Innsbruck, Frick, Frankfurt, Ginebra, Viena, Manchester, al Jazz Cafe de Londres y al Festival Ethnos en Nápoles, con management compartido entre PHŌNÉ Records (Chile) y Ludwig Sound Booking Agency (Heidelberg, Alemania).`,
       en:
         `Newen Afrobeat is the first Chilean afrobeat orchestra: an eleven-piece formation that takes the language founded by Fela Kuti in Lagos and writes it from the southern hemisphere, without imitation and without pose.
 
@@ -66,7 +66,7 @@ The sound dialogues with highlife, modal jazz, funk and rare groove, but operate
 
 They have collaborated with Tony Allen, Seun Kuti, Femi Kuti, Cheick Tidiane Seck, Oghene Kologbo, Lido Pimienta, Joe Vasconcellos, Dele Sosimi and Chico César. Within the PHŌNÉ ecosystem, Ecamhi plays as historic trumpet player and co-composer of Mare Mare, and Klaus Brantmayer signs the composition of Es la Vida; Claudio Solís designs the graphic art of the LP Grietas.
 
-They have toured Chile, Brazil, Nigeria, the United States, Canada, the United Kingdom and Europe, with a notable presentation at Glastonbury. The Europe 2026 tour (August-September) takes them to Innsbruck, Frick, Frankfurt, Geneva, Vienna and Jazz Cafe in London, with management shared between PHŌNÉ Records (Chile) and Ludwig Sound Booking Agency (Heidelberg, Germany).`,
+They have toured Chile, Brazil, Nigeria, the United States, Canada, the United Kingdom and Europe, with a notable presentation at Glastonbury. The Europe 2026 tour (August-September) takes them to Innsbruck, Frick, Frankfurt, Geneva, Vienna, Manchester, Jazz Cafe in London and Festival Ethnos in Naples, with management shared between PHŌNÉ Records (Chile) and Ludwig Sound Booking Agency (Heidelberg, Germany).`,
     },
     links: [
       { label: "Bandcamp", href: "https://newenafrobeat.bandcamp.com/music" },
