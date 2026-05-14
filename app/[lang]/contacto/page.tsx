@@ -59,9 +59,33 @@ export default async function ContactoPage({
   const { lang } = await params;
   const c = lang === "es" ? copy.es : copy.en;
   const formLang: "es" | "en" = lang === "en" ? "en" : "es";
+  const isEs = lang === "es";
+
+  const schema = {
+    "@context": "https://schema.org",
+    "@type": "ContactPage",
+    "@id": `https://phonerecords.cl/${lang}/contacto`,
+    name: isEs ? "Contacto" : "Contact",
+    inLanguage: isEs ? "es-CL" : "en-US",
+    isPartOf: { "@id": "https://phonerecords.cl/#organization" },
+    mainEntity: {
+      "@type": "Organization",
+      "@id": "https://phonerecords.cl/#organization",
+      name: "PHŌNÉ Records",
+      contactPoint: [
+        { "@type": "ContactPoint", contactType: "general", url: `https://phonerecords.cl/${lang}/contacto` },
+        { "@type": "ContactPoint", contactType: "booking", url: `https://phonerecords.cl/${lang}/contacto` },
+        { "@type": "ContactPoint", contactType: "press", url: `https://phonerecords.cl/${lang}/contacto` },
+      ],
+    },
+  };
 
   return (
     <main className="relative min-h-screen overflow-x-hidden noise-overlay">
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(schema) }}
+      />
       <Navigation />
 
       <article className="max-w-[1100px] mx-auto px-6 lg:px-12 pt-32 lg:pt-40 pb-24">

@@ -18,13 +18,16 @@ export async function generateMetadata(
 ): Promise<Metadata> {
   const { lang } = await params;
   const isEs = lang === "es";
+  const title = isEs
+    ? "PHŌNÉ Records — Sello cultural independiente · Santiago de Chile"
+    : "PHŌNÉ Records — Independent cultural label · Santiago, Chile";
+  const description = isEs
+    ? "Sello cultural independiente con dirección autoral. Roster latinoamericano en diálogo con circuitos globales: Newen Afrobeat, Claudio Solís, Ecamhi, Klaus B."
+    : "Independent cultural label from Santiago, Chile. Latin American roster in dialogue with global circuits: Newen Afrobeat, Claudio Solís, Ecamhi, Klaus B.";
   return {
-    title: isEs
-      ? "PHŌNÉ Records — Sello cultural independiente · Santiago"
-      : "PHŌNÉ Records — Independent cultural label · Santiago, Chile",
-    description: isEs
-      ? "Sello cultural independiente con dirección autoral. Roster latinoamericano en diálogo con circuitos globales: Newen Afrobeat, Claudio Solís, Ecamhi, Klaus B."
-      : "Independent cultural label from Santiago, Chile. Latin American roster in dialogue with global circuits: Newen Afrobeat, Claudio Solís, Ecamhi, Klaus B.",
+    // Use `absolute` so the layout-level title template doesn't append "— PHŌNÉ Records" twice on the home page.
+    title: { absolute: title },
+    description,
     alternates: {
       canonical: `https://phonerecords.cl/${lang}`,
       languages: {
@@ -34,9 +37,27 @@ export async function generateMetadata(
       },
     },
     openGraph: {
+      type: "website",
       url: `https://phonerecords.cl/${lang}`,
+      siteName: "PHŌNÉ Records",
+      title,
+      description,
       locale: isEs ? "es_CL" : "en_US",
       alternateLocale: isEs ? ["en_US"] : ["es_CL"],
+      images: [
+        {
+          url: "/opengraph-image",
+          width: 1200,
+          height: 630,
+          alt: "PHŌNÉ Records",
+        },
+      ],
+    },
+    twitter: {
+      card: "summary_large_image",
+      title: "PHŌNÉ Records",
+      description,
+      images: ["/opengraph-image"],
     },
   };
 }

@@ -196,9 +196,25 @@ export default async function PrivacyPage({
     day: "numeric",
   });
   const lastUpdatedFmt = dateFormatter.format(new Date(LAST_UPDATED));
+  const isEs = lang === "es";
+
+  const schema = {
+    "@context": "https://schema.org",
+    "@type": "WebPage",
+    "@id": `https://phonerecords.cl/${lang}/privacidad`,
+    name: isEs ? "Política de privacidad" : "Privacy policy",
+    inLanguage: isEs ? "es-CL" : "en-US",
+    isPartOf: { "@id": "https://phonerecords.cl/#organization" },
+    dateModified: LAST_UPDATED,
+    about: { "@type": "Organization", "@id": "https://phonerecords.cl/#organization" },
+  };
 
   return (
     <main className="relative min-h-screen overflow-x-hidden noise-overlay">
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(schema) }}
+      />
       <Navigation />
 
       <article className="max-w-[1000px] mx-auto px-6 lg:px-12 pt-32 lg:pt-40 pb-24">

@@ -39,6 +39,34 @@ export default async function CatalogoPage({
   const entries = getCatalogEntries();
   const artistsList = getCatalogArtists();
 
+  const schema = {
+    "@context": "https://schema.org",
+    "@type": "CollectionPage",
+    "@id": `https://phonerecords.cl/${lang}/catalogo`,
+    name: isEs ? "Catálogo PHŌNÉ Records" : "PHŌNÉ Records Catalogue",
+    inLanguage: isEs ? "es-CL" : "en-US",
+    isPartOf: { "@id": "https://phonerecords.cl/#organization" },
+    mainEntity: {
+      "@type": "ItemList",
+      numberOfItems: entries.length,
+      itemListElement: entries.slice(0, 30).map((e, i) => ({
+        "@type": "ListItem",
+        position: i + 1,
+        item: {
+          "@type": "MusicAlbum",
+          name: e.title,
+          byArtist: { "@type": "MusicGroup", name: e.artistName },
+          datePublished: e.year,
+          ...(e.label ? { recordLabel: { "@type": "Organization", name: e.label } } : {}),
+          ...(e.cover ? { image: e.cover } : {}),
+          ...(e.releaseSlug
+            ? { url: `https://phonerecords.cl/${lang}/releases/${e.releaseSlug}` }
+            : {}),
+        },
+      })),
+    },
+  };
+
   const t = isEs
     ? {
         eyebrow: "Catálogo",
@@ -69,6 +97,10 @@ export default async function CatalogoPage({
 
   return (
     <main className="relative min-h-screen overflow-x-hidden noise-overlay">
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(schema) }}
+      />
       <Navigation />
 
       <article className="max-w-[1400px] mx-auto px-6 lg:px-12 pt-32 lg:pt-40 pb-24">

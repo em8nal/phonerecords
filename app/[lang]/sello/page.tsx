@@ -109,9 +109,47 @@ export default async function SelloPage({
 }) {
   const { lang } = await params;
   const c = lang === "es" ? copy.es : copy.en;
+  const isEs = lang === "es";
+
+  const schema = {
+    "@context": "https://schema.org",
+    "@graph": [
+      {
+        "@type": "MusicLabel",
+        "@id": "https://phonerecords.cl/#organization",
+        name: "PHŌNÉ Records",
+        url: "https://phonerecords.cl",
+        logo: "https://phonerecords.cl/phone-logo-dark.png",
+        foundingLocation: { "@type": "Place", name: "Santiago, Chile" },
+        address: {
+          "@type": "PostalAddress",
+          streetAddress: "Eduardo Castillo Velasco 2325, depto A",
+          addressLocality: "Ñuñoa",
+          addressRegion: "Región Metropolitana",
+          addressCountry: "CL",
+        },
+        sameAs: [
+          "https://www.instagram.com/phone_records/",
+          "https://newenafrobeat.bandcamp.com/music",
+          "https://open.spotify.com/artist/0PTJ848ulShbjTx2yqaAlb",
+        ],
+      },
+      {
+        "@type": "AboutPage",
+        url: `https://phonerecords.cl/${lang}/sello`,
+        name: isEs ? "Sobre el sello" : "About the label",
+        inLanguage: isEs ? "es-CL" : "en-US",
+        isPartOf: { "@id": "https://phonerecords.cl/#organization" },
+      },
+    ],
+  };
 
   return (
     <main className="relative min-h-screen overflow-x-hidden noise-overlay">
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(schema) }}
+      />
       <Navigation />
 
       <article className="max-w-[1200px] mx-auto px-6 lg:px-12 pt-32 lg:pt-40 pb-24">
