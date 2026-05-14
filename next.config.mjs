@@ -39,6 +39,10 @@ const nextConfig = {
         protocol: "https",
         hostname: "is5-ssl.mzstatic.com",
       },
+      {
+        protocol: "https",
+        hostname: "es-ew1-prod-assets.s3.eu-west-1.amazonaws.com",
+      },
     ],
   },
 }

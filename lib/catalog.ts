@@ -106,7 +106,7 @@ function buildAllEntries(): CatalogEntry[] {
         format: r.format ?? "—",
         label: r.label,
         notes: r.notes,
-        cover: undefined,
+        cover: r.cover,
         releaseSlug: undefined,
         externalHref: r.href,
         externalKind: r.hrefKind ?? (r.href ? "buy" : undefined),
