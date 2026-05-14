@@ -149,9 +149,9 @@ export const releases: Release[] = [
     cover: "https://f4.bcbits.com/img/a2971239057_10.jpg",
     description: {
       es:
-        "EP que reúne dos composiciones de Fela Anikulapo Kuti junto a colaboradores notables: Seun Kuti, Cheick Tidiane Seck y músicos de Egypt 80. Tres tracks que extienden la conversación de Newen con la fuente del afrobeat.",
+        "EP grabado en Lagos durante el viaje formativo de la banda a Nigeria. Tres tracks que reúnen dos composiciones de Fela Anikulapo Kuti con Seun Kuti, Cheick Tidiane Seck y músicos de Egypt 80 en sesiones directas. No es homenaje desde la distancia: es Newen escribiendo afrobeat junto a quienes lo fundaron, en su lugar de origen. Documento clave del puente que la banda construye entre el afrobeat clásico y la lectura latinoamericana posterior.",
       en:
-        "EP that gathers two compositions by Fela Anikulapo Kuti alongside notable collaborators: Seun Kuti, Cheick Tidiane Seck and Egypt 80 musicians. Three tracks that extend Newen's conversation with the source of afrobeat.",
+        "EP recorded in Lagos during the band's formative trip to Nigeria. Three tracks gathering two Fela Anikulapo Kuti compositions with Seun Kuti, Cheick Tidiane Seck and Egypt 80 musicians in direct sessions. Not homage from a distance: it's Newen writing afrobeat alongside those who founded it, in its place of origin. Key document of the bridge the band builds between classic afrobeat and the later Latin American reading.",
     },
     tracklist: [
       { n: 1, title: "Upside Down", duration: "11:06" },
@@ -197,9 +197,9 @@ export const releases: Release[] = [
     cover: "https://f4.bcbits.com/img/a1477748070_10.jpg",
     description: {
       es:
-        "LP debut. Un viaje groovero por el primer afrobeat chileno jamás grabado. Producido por Chalo Gonzáles y Nicolás Urbina en Estudios del Sur durante 2013.",
+        "Edición limitada en vinilo 12\" prensada por PHŌNÉ Records en 2023, seis años después del EP digital original. Recupera las composiciones de Fela —Upside Down y Opposite People— en formato físico con dirección de arte revisada para el prensaje. Marca el primer prensaje del sello PHŌNÉ con cat# PHONELTD001 y abre la línea de reediciones físicas del catálogo de Newen Afrobeat. Edición agotada en gran parte tras la gira europea.",
       en:
-        "Debut LP. A groovy trip through the first Chilean Afrobeat ever made. Produced by Chalo Gonzáles and Nicolás Urbina at Estudios del Sur during 2013.",
+        "Limited 12\" vinyl edition pressed by PHŌNÉ Records in 2023, six years after the original digital EP. Recovers Fela's compositions — Upside Down and Opposite People — in physical format with revised art direction for the pressing. Marks PHŌNÉ Records' first pressing with cat# PHONELTD001 and opens the line of physical reissues from Newen Afrobeat's catalogue. Largely sold out after the European tour.",
     },
     tracklist: [
       { n: 1, title: "Santiago", duration: "13:31" },
@@ -229,9 +229,9 @@ export const releases: Release[] = [
     cover: "https://f4.bcbits.com/img/a2195737014_10.jpg",
     description: {
       es:
-        "Mirada íntima a una exploración musical personal desplegada durante varios años, combinando canciones e improvisaciones entre el jazz y el hip hop con grabaciones orgánicas. Presentado como archivo biográfico y documento vivo de evolución creativa.",
+        "Mixtape de 15 tracks que funciona como archivo personal: piezas compuestas y grabadas a lo largo de varios años que Klaus reúne en un solo objeto. Cruza nu-jazz, hip-hop jazz, neo-soul instrumental, vocoder y flauta. No es álbum convencional sino documento vivo de una práctica continua, presentado como mixtape porque ese formato permite la heterogeneidad que el LP cerrado no admite. Master de Victor Sáez y Chalo G.",
       en:
-        "An intimate look at a personal musical exploration that unfolded over several years, combining songs and improvisations between jazz and hip hop with organic recordings. Presented as a biographical archive and living document of creative evolution.",
+        "15-track mixtape that functions as personal archive: pieces composed and recorded over several years that Klaus gathers in a single object. Crosses nu-jazz, hip-hop jazz, instrumental neo-soul, vocoder and flute. Not a conventional album but a living document of continuous practice, presented as mixtape because that format allows the heterogeneity a closed LP doesn't admit. Mastering by Victor Sáez and Chalo G.",
     },
     tracklist: [
       { n: 1, title: "Intro: Memorias", duration: "1:52" },
@@ -273,9 +273,9 @@ export const releases: Release[] = [
     cover: "https://f4.bcbits.com/img/a0583641197_10.jpg",
     description: {
       es:
-        "EP en vivo grabado en Estudios Del Maipo, Cajón del Maipo, Chile, 2025. Tres piezas largas que cruzan rap, jazz y groove orgánico con la sección instrumental completa.",
+        "EP en vivo del dúo Gestosimple & Klaus B grabado en Cajón del Maipo, con Enrique Camhi en trompeta como invitado. Tres tracks que cruzan future jazz y hip-hop instrumental en formato sesión cerrada: nada de la artificialidad del estudio, todo el aire del lugar. Es uno de los pocos registros en vivo del catálogo de Klaus y el más reciente puente formal entre su proyecto y el de Ecamhi dentro del ecosistema PHŌNÉ.",
       en:
-        "Live EP recorded at Estudios Del Maipo, Cajón del Maipo, Chile, 2025. Three long pieces crossing rap, jazz and organic groove with the full instrumental section.",
+        "Live EP by the duo Gestosimple & Klaus B recorded in Cajón del Maipo, with Enrique Camhi as guest on trumpet. Three tracks crossing future jazz and instrumental hip-hop in closed-session format: none of the studio's artifice, all the air of the place. One of the few live records in Klaus's catalogue and the most recent formal bridge between his project and Ecamhi's within the PHŌNÉ ecosystem.",
     },
     tracklist: [
       { n: 1, title: "Intro: Thank You Jay Dee", duration: "1:08" },
@@ -311,9 +311,9 @@ export const releases: Release[] = [
     cover: "https://f4.bcbits.com/img/a0044868647_10.jpg",
     description: {
       es:
-        "Álbum innovador del rapero Gestosimple y el saxofonista, flautista y productor Klaus B. Cruce de rap, nu-jazz, neo-soul y funk con una colaboración extensa de vocalistas, DJs e instrumentistas. Temas: vida, amor, música.",
+        "Primer LP largo del dúo Gestosimple & Klaus B. Doce tracks con featurings de Fran Ri, DJ Dacel, Valentina Marinkovic, Cidtronyck, Celeste Shaw, Wagabond, Senciyo Samuel HuiZa y 22Ruzz. Articula la red de productores que comparten el lenguaje rap-jazz / future funk en Santiago de Chile, con Klaus como punto de convergencia técnica. Es el disco más extendido del catálogo Klaus y el manifiesto colectivo del proyecto Gestosimple.",
       en:
-        "Innovative album from rapper Gestosimple and saxophonist, flutist and producer Klaus B. Crossing rap, nu-jazz, neo-soul and funk with extensive collaboration of vocalists, DJs and instrumentalists. Themes: life, love, music.",
+        "First long LP from the duo Gestosimple & Klaus B. Twelve tracks featuring Fran Ri, DJ Dacel, Valentina Marinkovic, Cidtronyck, Celeste Shaw, Wagabond, Senciyo Samuel HuiZa and 22Ruzz. Articulates the network of producers sharing the rap-jazz / future funk language in Santiago de Chile, with Klaus as technical convergence point. Klaus's most extended record and the collective manifesto of the Gestosimple project.",
     },
     tracklist: [
       { n: 1, title: "Dentro De Mí", duration: "4:47" },
@@ -350,9 +350,9 @@ export const releases: Release[] = [
     cover: "https://f4.bcbits.com/img/a2824675677_10.jpg",
     description: {
       es:
-        "Single producido en Santiago de Chile entre 2022 y 2023, después de viajes en gira a Lagos, Nigeria con Newen Afrobeat. Reúne la sección de bronces de Newen completa, incluido Ecamhi en trompeta.",
+        "Single producido entre 2022 y 2023, después de los viajes en gira de Newen Afrobeat a Lagos. Reúne la sección de bronces completa de Newen —incluido Ecamhi en trompeta— sobre una base hip-hop jazz que Klaus construye desde el vocoder y la flauta. Es el cruce más explícito entre el universo afrobeat de Newen y el lenguaje neo-soul instrumental de Klaus, y uno de los primeros singles que tematiza la conexión entre ambos proyectos.",
       en:
-        "Single produced in Santiago de Chile between 2022 and 2023, after touring trips to Lagos, Nigeria with Newen Afrobeat. Brings together Newen's complete brass section, including Ecamhi on trumpet.",
+        "Single produced between 2022 and 2023, after Newen Afrobeat's touring trips to Lagos. Gathers Newen's full brass section — including Ecamhi on trumpet — over a hip-hop jazz base Klaus builds from vocoder and flute. The most explicit crossing between Newen's afrobeat universe and Klaus's instrumental neo-soul language, and one of the first singles to thematize the connection between both projects.",
     },
     credits: [
       { role: "Vocoder · alto sax", name: "Klaus B" },
@@ -384,9 +384,9 @@ export const releases: Release[] = [
     cover: "https://f4.bcbits.com/img/a4131860185_10.jpg",
     description: {
       es:
-        "Producido en Santiago de Chile, en colaboración y co-producción con Lister Rossel (Mr.Li) en Londres, MC Seven Star en Orlando y MC Racecar en París. Hip-hop, jazz fusion, neo-soul.",
+        "Single co-producido con Lister Rossel (Mr.Li, Londres), con MC Seven Star (Orlando) y MC Racecar (París) como voces invitadas. Mueve el catálogo de Klaus hacia el formato hip-hop colaborativo trans-continental: tres ciudades, tres voces, una base hecha en Santiago. Master de Sebastián Pangal y Klaus B. Anuncia la dirección del proyecto post-mixtape Memorias y consolida la red internacional alrededor del sonido neo-soul jazz de Klaus.",
       en:
-        "Produced in Santiago de Chile, in collaboration and co-produced by Lister Rossel (Mr.Li) in London, MC Seven Star in Orlando, and MC Racecar in Paris. Hip-hop, jazz fusion, neo-soul.",
+        "Single co-produced with Lister Rossel (Mr.Li, London), with MC Seven Star (Orlando) and MC Racecar (Paris) as guest vocalists. Moves Klaus's catalogue toward trans-continental collaborative hip-hop: three cities, three voices, one base made in Santiago. Mastering by Sebastián Pangal and Klaus B. Announces the project's direction post-Memorias mixtape and consolidates the international network around Klaus's neo-soul jazz sound.",
     },
     credits: [
       { role: "Flauta · vocoder · producción", name: "Klaus B" },
@@ -414,8 +414,8 @@ export const releases: Release[] = [
     format: "Single",
     cover: "https://f4.bcbits.com/img/a2828912453_10.jpg",
     description: {
-      es: "Single producido por Klaus B. Hip-hop / rap, jazz fusion, rap jazz, groove, jazz, neo-soul instrumental, nu-jazz.",
-      en: "Single produced by Klaus B. Hip-hop / rap, jazz fusion, rap jazz, groove, jazz, instrumental neo-soul, nu-jazz.",
+      es: "Single instrumental publicado a fines de 2025, semanas antes de la mixtape Memorias. Funciona como antesala: Klaus condensa en un solo track el método que la mixtape desplegará en quince —flauta funk, vocoder, beat orgánico, presencia rítmica antes que melódica. Es la entrada más sintética al lenguaje instrumental del proyecto en su versión 2025, y queda como referencia pedagógica para entender el resto del catálogo.",
+      en: "Instrumental single released in late 2025, weeks before the Memorias mixtape. Works as antechamber: Klaus condenses into one track the method the mixtape will unfold across fifteen — funk flute, vocoder, organic beat, rhythmic presence before melodic. The most synthetic entry into the project's instrumental language in its 2025 version, and stays as pedagogical reference for understanding the rest of the catalogue.",
     },
     links: [
       { label: "Bandcamp", href: "https://klausb.bandcamp.com/track/el-secreto" },
@@ -434,9 +434,9 @@ export const releases: Release[] = [
     cover: "https://f4.bcbits.com/img/a4057419649_10.jpg",
     description: {
       es:
-        "Track instrumental groovero, liderado por una flauta funk brillante que rebota sobre un beat relajado. Cuando el viento gana el poder de brillar.",
+        "Primer single solista del proyecto Klaus B, publicado en mediados de 2021. Construido con Diego Alarcón en teclados, Iván Araya en bajo y Tito Gevert en batería, define la fórmula inicial del catálogo: flauta funk sobre base orgánica, con vocoder mínimo. Es el punto de partida que las series posteriores expanden o contraen, y queda como referencia formal del sonido fundacional del proyecto en su versión 2021.",
       en:
-        "A groovy instrumental track, led by a shiny funky flute that bounces on a laid back beat; when the wind gains the power to shine.",
+        "First solo single of the Klaus B project, released mid-2021. Built with Diego Alarcón on keys, Iván Araya on bass and Tito Gevert on drums, it defines the catalogue's initial formula: funk flute over organic base, with minimal vocoder. The starting point that later series expand or contract, and stays as formal reference of the project's foundational sound in its 2021 version.",
     },
     credits: [
       { role: "Flauta · synths", name: "Klaus B" },
@@ -463,9 +463,9 @@ export const releases: Release[] = [
     cover: "https://is1-ssl.mzstatic.com/image/thumb/Music126/v4/99/23/1e/99231ed5-787f-3488-a8a6-fe9698d9e3b0/0.jpg/1000x1000bb.jpg",
     description: {
       es:
-        "Single instrumental de Klaus B publicado a fines de 2021. Pieza atmosférica que extiende la línea funk/neo-soul iniciada con Viento Radiante.",
+        "Single instrumental publicado a fines de 2021 entre Viento Radiante y De Noche. Extiende el lenguaje funk-jazz iniciado meses antes hacia un terreno más atmosférico: la flauta de Klaus opera como hilo lento sobre una base sustraída, con presencia de vocoder como contrapunto. Aparece después en la mixtape Memorias (2025) como track #10, lo que lo vuelve referencia interna recurrente del propio catálogo del proyecto.",
       en:
-        "Klaus B instrumental single released in late 2021. Atmospheric piece extending the funk/neo-soul line opened with Viento Radiante.",
+        "Instrumental single released late 2021 between Viento Radiante and De Noche. Extends the funk-jazz language opened months earlier toward more atmospheric territory: Klaus's flute operates as slow thread over a subtracted base, with vocoder presence as counterpoint. Appears later in the Memorias mixtape (2025) as track #10, making it a recurring internal reference in the project's own catalogue.",
     },
     links: [
       { label: "Apple Music", href: "https://music.apple.com/us/album/espejismos/1591949693" },
@@ -483,8 +483,8 @@ export const releases: Release[] = [
     format: "Single",
     cover: "https://f4.bcbits.com/img/a1553461504_10.jpg",
     description: {
-      es: "Single de Klaus B (2021). Hip hop, jazz, lo-fi, nu-jazz: una mezcla downtempo de raíz jazz con rap.",
-      en: "Klaus B single (2021). Hip hop, jazz, lo-fi, nu-jazz: a downtempo blend of jazz roots with rap.",
+      es: "Segundo single del proyecto Klaus B, publicado en agosto 2021. Es la entrega más temprana del lenguaje nocturno que el catálogo va a explorar durante los siguientes años: groove pausado, atmósfera densa, flauta como voz principal sin recurrir a vocalistas humanos. Junto a Viento Radiante define el método dual del proyecto —diurno/nocturno, claro/oscuro— que se sostiene como eje hasta la mixtape Memorias.",
+      en: "Second single of the Klaus B project, released August 2021. The earliest delivery of the nocturnal language the catalogue will explore over the following years: paused groove, dense atmosphere, flute as main voice without resorting to human vocalists. Together with Viento Radiante it defines the project's dual method — diurnal/nocturnal, light/dark — that holds as axis through the Memorias mixtape.",
     },
     links: [
       { label: "Bandcamp", href: "https://klausb.bandcamp.com/track/de-noche" },
@@ -529,9 +529,9 @@ export const releases: Release[] = [
     cover: "https://is1-ssl.mzstatic.com/image/thumb/Music126/v4/1d/19/c3/1d19c399-c5a2-a510-0f2d-9e83855fea82/artwork.jpg/1000x1000bb.jpg",
     description: {
       es:
-        "Aparición de Enrique Camhi (Ecamhi) como invitado en Gaviotas, single de Diego de la Noche con Felipe Montero. Trompeta sobre un beat de pop electrónico de cámara.",
+        "Aparición de Enrique Camhi (Ecamhi) como trompetista invitado en Gaviotas, single de Diego de la Noche con Felipe Montero. La trompeta de Camhi opera sobre una base de pop electrónico de cámara, demostrando la versatilidad del instrumento fuera del marco jazz/afrobeat habitual. Publicado en simultáneo con Laruz como parte de una entrega doble. Es una de las primeras apariciones documentadas de Camhi como sesionista fuera del ecosistema PHŌNÉ.",
       en:
-        "Enrique Camhi (Ecamhi) appears as guest on Gaviotas, a Diego de la Noche single with Felipe Montero. Trumpet over a chamber electronic-pop beat.",
+        "Appearance of Enrique Camhi (Ecamhi) as guest trumpeter on Gaviotas, a Diego de la Noche single with Felipe Montero. Camhi's trumpet operates over a chamber electronic-pop base, demonstrating the instrument's versatility outside the usual jazz/afrobeat frame. Released alongside Laruz as part of a double drop. One of the first documented appearances of Camhi as session player outside the PHŌNÉ ecosystem.",
     },
     links: [
       { label: "Apple Music", href: "https://music.apple.com/us/album/gaviotas-feat-felipe-montero-enrique-camhi-radio-edit/1654207363" },
@@ -549,9 +549,9 @@ export const releases: Release[] = [
     cover: "https://is1-ssl.mzstatic.com/image/thumb/Music116/v4/b0/d6/b5/b0d6b5b4-7d56-28cf-33f7-9ace20c4fc36/artwork.jpg/1000x1000bb.jpg",
     description: {
       es:
-        "Aparición de Ecamhi en Laruz, single de Diego de la Noche publicado el mismo día que Gaviotas (noviembre 2022).",
+        "Segunda aparición de Ecamhi como invitado en singles de Diego de la Noche, publicado el mismo día que Gaviotas (noviembre 2022). Camhi sostiene la trompeta como hilo melódico principal del track, lo que lo distingue del rol de adorno tímbrico habitual del instrumento en producciones similares. Cierra una entrega doble que documenta la red colaborativa de Camhi en el circuito chileno de electrónica de cámara y pop experimental.",
       en:
-        "Ecamhi appears on Laruz, a Diego de la Noche single released the same day as Gaviotas (November 2022).",
+        "Second appearance of Ecamhi as guest on Diego de la Noche singles, released the same day as Gaviotas (November 2022). Camhi sustains the trumpet as the track's main melodic thread, distinguishing him from the usual role of timbral ornament for the instrument in similar productions. Closes a double drop documenting Camhi's collaborative network in the Chilean chamber-electronics and experimental-pop circuit.",
     },
     links: [
       { label: "Apple Music", href: "https://music.apple.com/us/album/laruz-feat-enrique-camhi/1654191971" },
@@ -569,9 +569,9 @@ export const releases: Release[] = [
     cover: "https://is1-ssl.mzstatic.com/image/thumb/Music211/v4/38/6b/bb/386bbbc9-a0b9-255c-c793-66d93238cd9c/artwork.jpg/1000x1000bb.jpg",
     description: {
       es:
-        "Single co-firmado por Ugnė Danielė, Enrique Camhi y Adydo. Cruza chamber-jazz con voces e improvisación europea-sudamericana.",
+        "Single co-firmado por Ugnė Danielė (Lituania), Enrique Camhi y Adydo, publicado en agosto 2024. Cruza chamber-jazz con voces e improvisación en una colaboración transcontinental que extiende la red internacional de Camhi más allá del circuito chileno-europeo. La trompeta de Camhi opera en diálogo abierto con la voz de Danielė, sin definir jerarquía instrumental. Es uno de los pocos releases del catálogo que articula tres autores en igualdad.",
       en:
-        "Single co-signed by Ugnė Danielė, Enrique Camhi and Adydo. Crosses chamber-jazz with vocals and European–South American improvisation.",
+        "Single co-signed by Ugnė Danielė (Lithuania), Enrique Camhi and Adydo, released August 2024. Crosses chamber-jazz with vocals and improvisation in a transcontinental collaboration extending Camhi's international network beyond the Chilean-European circuit. Camhi's trumpet operates in open dialogue with Danielė's voice, without defined instrumental hierarchy. One of the few catalogue releases articulating three authors as equals.",
     },
     links: [
       { label: "Apple Music", href: "https://music.apple.com/us/album/ofrenda-de-amor/1762193381" },
@@ -589,9 +589,9 @@ export const releases: Release[] = [
     cover: "https://is1-ssl.mzstatic.com/image/thumb/Music221/v4/ce/a0/f2/cea0f2b6-47f9-8d1e-5646-a29f601424be/artwork.jpg/1000x1000bb.jpg",
     description: {
       es:
-        "Single firmado por Alejandro Camhi y Enrique Camhi. Verano electrónico con trompeta encima.",
+        "Single firmado por Alejandro Camhi y Enrique Camhi —dúo familiar— publicado en julio 2024. Es la única colaboración documentada entre ambos hermanos: electrónica estival con trompeta encima, pieza corta y sin gancho convencional, hecha para escucha de estación más que para playlist. Funciona como entrada secundaria al catálogo de Ecamhi y como documento personal del eje familiar dentro de su práctica musical.",
       en:
-        "Single signed by Alejandro Camhi and Enrique Camhi. Electronic summer with trumpet on top.",
+        "Single signed by Alejandro Camhi and Enrique Camhi —familial duo— released July 2024. The only documented collaboration between the brothers: summery electronics with trumpet on top, a short piece without conventional hook, made for seasonal listening rather than for playlist. Functions as secondary entry into the Ecamhi catalogue and as personal document of the familial axis within his musical practice.",
     },
     links: [
       { label: "Apple Music", href: "https://music.apple.com/us/album/mad-summer/1752686994" },
@@ -610,9 +610,9 @@ export const releases: Release[] = [
     cover: "https://is1-ssl.mzstatic.com/image/thumb/Music221/v4/4d/5f/c4/4d5fc454-7958-7218-cfc5-fe5922a2da7a/199502158057_cover.jpg/1000x1000bb.jpg",
     description: {
       es:
-        "Single de 4Yo4U con Enrique Camhi. Trompeta sobre electrónica contemporánea, eco del lenguaje de en viaje.",
+        "Single firmado por 4Yo4U y Enrique Camhi, publicado en agosto 2025. La trompeta de Camhi se inserta sobre una base de electrónica contemporánea con eco directo al lenguaje del EP en viaje (2024, PHŌNÉ): trompeta filtrada, sintetizadores densos, ausencia de gancho pop. Documenta el desplazamiento de Camhi hacia colaboraciones con productores más jóvenes y la expansión de su trompeta a circuitos electrónicos no jazz.",
       en:
-        "4Yo4U single featuring Enrique Camhi. Trumpet over contemporary electronics, echoing the en viaje language.",
+        "Single signed by 4Yo4U and Enrique Camhi, released August 2025. Camhi's trumpet inserts itself over a contemporary electronic base with direct echo to the language of the en viaje EP (2024, PHŌNÉ): filtered trumpet, dense synths, absence of pop hook. Documents Camhi's drift toward collaborations with younger producers and the expansion of his trumpet into non-jazz electronic circuits.",
     },
     links: [
       { label: "Apple Music", href: "https://music.apple.com/us/album/fake-money/1831169551" },
@@ -631,9 +631,9 @@ export const releases: Release[] = [
     cover: "https://is1-ssl.mzstatic.com/image/thumb/Music124/v4/4e/bf/78/4ebf78f4-a3bb-02f6-9374-436c8719d001/cover.jpg/1000x1000bb.jpg",
     description: {
       es:
-        "Single co-firmado por Enrique Camhi y Felipe Cortes. Primer registro publicado bajo el nombre Enrique Camhi previo al EP en viaje.",
+        "Single co-firmado por Enrique Camhi y Felipe Cortes, publicado en abril 2021. Es el primer registro oficial bajo el nombre Enrique Camhi, anterior al EP en viaje (2024) y a Move To (2022). Pone en marcha la línea solista del proyecto antes de que tome forma como cuerpo de obra coherente: la trompeta opera sobre una base de electrónica de cámara con Cortes como co-productor. Documento de origen del Camhi solista.",
       en:
-        "Single co-signed by Enrique Camhi and Felipe Cortes. First record released under the Enrique Camhi name prior to the en viaje EP.",
+        "Single co-signed by Enrique Camhi and Felipe Cortes, released April 2021. The first official record under the Enrique Camhi name, prior to the en viaje EP (2024) and Move To (2022). Launches the project's solo line before it takes shape as coherent body of work: trumpet operates over a chamber electronics base with Cortes as co-producer. Origin document of the solo Camhi.",
     },
   },
   {
@@ -648,9 +648,9 @@ export const releases: Release[] = [
     cover: "https://is1-ssl.mzstatic.com/image/thumb/Music112/v4/3e/11/34/3e11342c-ef83-217d-471d-cda2270ed24b/00_Cover_Art.jpg/1000x1000bb.jpg",
     description: {
       es:
-        "Single solista de Enrique Camhi (Ecamhi) publicado previo al EP inaugural en viaje. Trompeta y producción propia: precedente del lenguaje interdisciplinar del proyecto.",
+        "Single solista publicado en mayo 2022, dos años antes del EP inaugural en viaje. Es el primer trabajo firmado únicamente por Enrique Camhi sin co-autores: trompeta y producción propia en una pieza corta que ya anuncia la lógica interdisciplinar del proyecto. La estructura del track —menos canción, más cuadro sonoro— sirve como antecedente directo de en viaje, donde cuatro imágenes inspirarían cuatro piezas. Marca la consolidación de su voz solista.",
       en:
-        "Solo single by Enrique Camhi (Ecamhi), released prior to the inaugural EP en viaje. Trumpet and self-production: a precedent of the project's interdisciplinary language.",
+        "Solo single released May 2022, two years before the inaugural en viaje EP. The first work signed solely by Enrique Camhi without co-authors: trumpet and self-produced in a short piece already announcing the project's interdisciplinary logic. The track's structure —less song, more sonic painting— serves as direct precursor to en viaje, where four images would inspire four pieces. Marks the consolidation of his solo voice.",
     },
     links: [
       { label: "Apple Music", href: "https://music.apple.com/us/album/move-to/1618064796" },
@@ -940,9 +940,9 @@ export const releases: Release[] = [
     cover: "https://is1-ssl.mzstatic.com/image/thumb/Music125/v4/cd/61/ca/cd61ca54-884f-8045-cf53-78550b4b960c/0.jpg/1000x1000bb.jpg",
     description: {
       es:
-        "Single de Con.fusión en colaboración con Fat Jota. Voz como instrumento sobre beats orgánicos: hip hop, jazz y neo soul en clave de canción breve.",
+        "Single de Con.fusión en colaboración con Fat Jota, publicado en febrero 2021. La voz de Catalina Aguilera opera como instrumento sobre beats orgánicos en una pieza corta que ya muestra el método del proyecto: hip hop, jazz y neo soul cruzados sin obediencia a ninguno. Aüa es uno de los primeros singles donde se articula formalmente el lenguaje del proyecto, anterior a la entrada en producción del LP Tulpa. Marca el inicio público del catálogo.",
       en:
-        "Con.fusión single in collaboration with Fat Jota. Voice as instrument over organic beats: hip hop, jazz and neo soul as compact song-form.",
+        "Con.fusión single in collaboration with Fat Jota, released February 2021. Catalina Aguilera's voice operates as instrument over organic beats in a short piece that already shows the project's method: hip hop, jazz and neo soul crossed without obedience to any. Aüa is one of the first singles where the project's language is formally articulated, prior to the Tulpa LP entering production. Marks the public start of the catalogue.",
     },
     links: [
       { label: "Apple Music", href: "https://music.apple.com/us/album/a%C3%BCa/1565365860" },
@@ -961,9 +961,9 @@ export const releases: Release[] = [
     cover: "https://is1-ssl.mzstatic.com/image/thumb/Music113/v4/5d/ca/30/5dca302d-2a10-e04e-cfbc-4f5604f5cb67/0.jpg/1000x1000bb.jpg",
     description: {
       es:
-        "Single con Fat Jota. Beat hip hop con flow vocal mestizo entre rap, scat y melodía. Una declaración temprana del lenguaje de Con.fusión.",
+        "Single con Fat Jota publicado en julio 2020, primera entrega de la colaboración entre ambos. Beat hip hop con flow vocal de Aguilera que cruza rap, scat y melodía sin pausa entre técnicas: la voz funciona como ejercicio simultáneo de tradiciones distintas. Es la entrega más temprana del catálogo público de Con.fusión y queda como referencia formal del método que se va a desarrollar en los singles siguientes y en el LP Tulpa.",
       en:
-        "Single with Fat Jota. Hip hop beat with a vocal flow that crosses rap, scat and melody. An early statement of Con.fusión's voice.",
+        "Single with Fat Jota released July 2020, first delivery of the collaboration between both. Hip hop beat with Aguilera's vocal flow crossing rap, scat and melody without pause between techniques: voice functioning as simultaneous exercise of distinct traditions. The earliest delivery in Con.fusión's public catalogue and remains formal reference of the method to be developed in the following singles and in the Tulpa LP.",
     },
     links: [
       { label: "Apple Music", href: "https://music.apple.com/us/album/que-aburrido/1518666439" },
@@ -982,9 +982,9 @@ export const releases: Release[] = [
     cover: "https://is1-ssl.mzstatic.com/image/thumb/Music124/v4/35/52/db/3552dbb8-895c-2cfb-cbde-30cd6e80a14b/0.jpg/1000x1000bb.jpg",
     description: {
       es:
-        "Single en portugués con Ziervo. Cruza neo soul, jazz y guiños a la MPB; muestra la dimensión cinematográfica del proyecto.",
+        "Single en portugués con Ziervo, publicado en octubre 2020. Cruza neo soul, jazz y guiños a la MPB en una pieza cinematográfica que se distingue del resto del catálogo por su lengua y por su tempo más pausado. La voz de Catalina Aguilera trabaja menos como instrumento y más como narradora: hay una historia detrás del beat. Es uno de los pocos releases bilingües del proyecto y queda como puerta hacia influencias brasileñas en el repertorio.",
       en:
-        "Portuguese-language single with Ziervo. Crosses neo soul, jazz and MPB hints; shows the project's cinematic dimension.",
+        "Portuguese-language single with Ziervo, released October 2020. Crosses neo soul, jazz and MPB hints in a cinematic piece distinguishing itself from the rest of the catalogue by its language and slower tempo. Catalina Aguilera's voice works less as instrument and more as narrator: there's a story behind the beat. One of the few bilingual releases of the project and a doorway to Brazilian influences in the repertoire.",
     },
     links: [
       { label: "Apple Music", href: "https://music.apple.com/us/album/borboleta-feat-ziervo/1531907261" },
