@@ -70,7 +70,8 @@ export const releases: Release[] = [
     ],
     links: [
       { label: "Bandcamp", href: "https://officehomerecords.bandcamp.com/album/grietas-2" },
-    ],
+          { label: "Spotify", href: "https://open.spotify.com/album/7eICxMxArdEHZdkQY40n0N" },
+],
   },
   {
     slug: "newen-afrobeat-liverpool-session",
@@ -103,7 +104,8 @@ export const releases: Release[] = [
     ],
     links: [
       { label: "Bandcamp", href: "https://newenafrobeat.bandcamp.com/album/liverpool-session" },
-    ],
+          { label: "YouTube", href: "https://www.youtube.com/watch?v=yyKGWQ7RwKk" },
+],
   },
   {
     slug: "newen-afrobeat-curiche",
@@ -132,7 +134,8 @@ export const releases: Release[] = [
     ],
     links: [
       { label: "Bandcamp", href: "https://newenafrobeat.bandcamp.com/album/curiche" },
-    ],
+          { label: "Spotify", href: "https://open.spotify.com/album/6lhHBFeEds0AxMPKbVZD7U" },
+],
   },
   {
     slug: "newen-afrobeat-newen-plays-fela",
@@ -157,7 +160,8 @@ export const releases: Release[] = [
     ],
     links: [
       { label: "Bandcamp", href: "https://newenafrobeat.bandcamp.com/album/newen-plays-fela" },
-    ],
+          { label: "Spotify", href: "https://open.spotify.com/album/38wiZ5NMBVnXPLwk8dUiVL" },
+],
   },
   {
     slug: "newen-afrobeat-newen-plays-fela-vinyl-2023",
@@ -178,7 +182,8 @@ export const releases: Release[] = [
     },
     links: [
       { label: "Discogs", href: "https://www.discogs.com/release/29051536" },
-    ],
+          { label: "Bandcamp", href: "https://officehomerecords.bandcamp.com/album/newen-plays-fela" },
+],
   },
   {
     slug: "newen-afrobeat-debut",
@@ -207,7 +212,8 @@ export const releases: Release[] = [
     ],
     links: [
       { label: "Bandcamp", href: "https://newenafrobeat.bandcamp.com/album/newen-afrobeat" },
-    ],
+          { label: "Spotify", href: "https://open.spotify.com/album/7kbrxZhgajOSi6rT5o3pkC" },
+],
   },
 
   // ─────────── Klaus B ───────────
@@ -252,7 +258,8 @@ export const releases: Release[] = [
     links: [
       { label: "Apple Music", href: "https://music.apple.com/us/album/memorias-mixtape/1854040694" },
       { label: "Bandcamp", href: "https://klausb.bandcamp.com/album/memorias-mixtape" },
-    ],
+          { label: "Spotify", href: "https://open.spotify.com/album/3G6RYtdVGxDhkeVcX9aesa" },
+],
   },
   {
     slug: "klaus-b-estudios-del-maipo",
@@ -289,7 +296,8 @@ export const releases: Release[] = [
     ],
     links: [
       { label: "Bandcamp", href: "https://klausb.bandcamp.com/album/estudios-del-maipo-live-session" },
-    ],
+          { label: "Spotify", href: "https://open.spotify.com/album/7fP1wduZdnVnuOLSI9Yf1N" },
+],
   },
   {
     slug: "klaus-b-viaje-sin-tiempo",
@@ -327,7 +335,8 @@ export const releases: Release[] = [
     ],
     links: [
       { label: "Bandcamp", href: "https://klausb.bandcamp.com/album/viaje-sin-tiempo" },
-    ],
+          { label: "Spotify", href: "https://open.spotify.com/album/16r8e8DumGptUVPVXngllB" },
+],
   },
   {
     slug: "klaus-b-quisiera-entender",
@@ -360,7 +369,8 @@ export const releases: Release[] = [
     ],
     links: [
       { label: "Bandcamp", href: "https://klausb.bandcamp.com/track/quisiera-entender-feat-newen-afrobeat" },
-    ],
+          { label: "Spotify", href: "https://open.spotify.com/album/1gyghb9fmPwRUrk5ol1WrL" },
+],
   },
   {
     slug: "klaus-b-those-days-far-away",
@@ -390,7 +400,8 @@ export const releases: Release[] = [
     ],
     links: [
       { label: "Bandcamp", href: "https://klausb.bandcamp.com/track/those-days-far-away-feat-mr-li-seven-star-racecar" },
-    ],
+          { label: "Spotify", href: "https://open.spotify.com/album/2KYfzVZSsEkPsJv12YN5rN" },
+],
   },
   {
     slug: "klaus-b-el-secreto",
@@ -408,7 +419,8 @@ export const releases: Release[] = [
     },
     links: [
       { label: "Bandcamp", href: "https://klausb.bandcamp.com/track/el-secreto" },
-    ],
+          { label: "Spotify", href: "https://open.spotify.com/album/0CzojB3HQtWpEkvZnGfmo3" },
+],
   },
   {
     slug: "klaus-b-viento-radiante",
@@ -436,7 +448,8 @@ export const releases: Release[] = [
     ],
     links: [
       { label: "Bandcamp", href: "https://klausb.bandcamp.com/track/viento-radiante" },
-    ],
+          { label: "Spotify", href: "https://open.spotify.com/album/1E15jH8wgNsJXCl4ZWHTVB" },
+],
   },
   {
     slug: "klaus-b-espejismos",
@@ -456,7 +469,8 @@ export const releases: Release[] = [
     },
     links: [
       { label: "Apple Music", href: "https://music.apple.com/us/album/espejismos/1591949693" },
-    ],
+          { label: "Spotify", href: "https://open.spotify.com/album/3Yig3Xizb6XfBdNvKw11tb" },
+],
   },
   {
     slug: "klaus-b-de-noche",
@@ -474,7 +488,8 @@ export const releases: Release[] = [
     },
     links: [
       { label: "Bandcamp", href: "https://klausb.bandcamp.com/track/de-noche" },
-    ],
+          { label: "Spotify", href: "https://open.spotify.com/album/0LZBjCeS3MQkhxahbxXqMJ" },
+],
   },
 
   // ─────────── Ecamhi ───────────
@@ -580,7 +595,8 @@ export const releases: Release[] = [
     },
     links: [
       { label: "Apple Music", href: "https://music.apple.com/us/album/mad-summer/1752686994" },
-    ],
+          { label: "Spotify", href: "https://open.spotify.com/album/5oz3aK8wTsaB7BE7Po5s8i" },
+],
   },
   {
     slug: "ecamhi-fake-money",
@@ -600,7 +616,8 @@ export const releases: Release[] = [
     },
     links: [
       { label: "Apple Music", href: "https://music.apple.com/us/album/fake-money/1831169551" },
-    ],
+          { label: "Spotify", href: "https://open.spotify.com/album/0vUmk1NoVEPc0Kb4kut9iy" },
+],
   },
   {
     slug: "ecamhi-fake-love",
@@ -637,7 +654,8 @@ export const releases: Release[] = [
     },
     links: [
       { label: "Apple Music", href: "https://music.apple.com/us/album/move-to/1618064796" },
-    ],
+          { label: "Spotify", href: "https://open.spotify.com/album/79OqBRxmaAO9kKVmfQf5BV" },
+],
   },
   {
     slug: "claudio-solis-noche-oscura-del-alma",
@@ -658,7 +676,8 @@ export const releases: Release[] = [
     },
     links: [
       { label: "Apple Music", href: "https://music.apple.com/us/album/noche-oscura-del-alma/1716215340" },
-    ],
+          { label: "Spotify", href: "https://open.spotify.com/album/4gABlVNEoQvHDi6Lrsymhj" },
+],
   },
   {
     slug: "claudio-solis-apagon",
@@ -679,7 +698,8 @@ export const releases: Release[] = [
     },
     links: [
       { label: "Apple Music", href: "https://music.apple.com/us/album/apagon-single/1737220462" },
-    ],
+          { label: "Spotify", href: "https://open.spotify.com/album/4rdQjtwBjKEJBvbUBg60PB" },
+],
   },
   {
     slug: "claudio-solis-kototama-single",
@@ -699,7 +719,8 @@ export const releases: Release[] = [
     },
     links: [
       { label: "Apple Music", href: "https://music.apple.com/us/album/kototama-single/1811269979" },
-    ],
+          { label: "Spotify", href: "https://open.spotify.com/album/3xiMEtzaeGB1ZQnVdOWnsj" },
+],
   },
   {
     slug: "claudio-solis-ecamhi-mystical-healers",
@@ -720,7 +741,8 @@ export const releases: Release[] = [
     },
     links: [
       { label: "Apple Music", href: "https://music.apple.com/us/album/mystical-healers-i/1702724386" },
-    ],
+          { label: "Spotify", href: "https://open.spotify.com/album/4bZlX9R4fxnhLJkvbWQoHz" },
+],
   },
   {
     slug: "claudio-solis-ecamhi-ebs",
@@ -741,7 +763,8 @@ export const releases: Release[] = [
     },
     links: [
       { label: "Apple Music", href: "https://music.apple.com/us/album/ebs-ep/1713387572" },
-    ],
+          { label: "Spotify", href: "https://open.spotify.com/album/2AmxKOl3gKbLOInH9VSWYP" },
+],
   },
 
   // ─────────── Con.fusión ───────────
@@ -763,7 +786,8 @@ export const releases: Release[] = [
     },
     links: [
       { label: "Apple Music", href: "https://music.apple.com/us/album/a%C3%BCa/1565365860" },
-    ],
+          { label: "Spotify", href: "https://open.spotify.com/album/0GwDOXlD8aVBp5kH6HrK3U" },
+],
   },
   {
     slug: "con-fusion-que-aburrido",
@@ -783,7 +807,8 @@ export const releases: Release[] = [
     },
     links: [
       { label: "Apple Music", href: "https://music.apple.com/us/album/que-aburrido/1518666439" },
-    ],
+          { label: "Spotify", href: "https://open.spotify.com/album/5OvNVAP10yNQF4uuJPfwWC" },
+],
   },
   {
     slug: "con-fusion-borboleta",
@@ -803,7 +828,8 @@ export const releases: Release[] = [
     },
     links: [
       { label: "Apple Music", href: "https://music.apple.com/us/album/borboleta-feat-ziervo/1531907261" },
-    ],
+          { label: "Spotify", href: "https://open.spotify.com/album/54odnPn2yW5ynEhjsgZ5mk" },
+],
   },
 ];
 
