@@ -448,7 +448,21 @@
 @media print {
   @page {
     size: A4;
-    margin: 14mm 14mm 14mm 14mm;
+    margin: 14mm 14mm 20mm 14mm;
+    @bottom-center {
+      content: "PHŌNÉ RECORDS · PHONERECORDS.CL · ÑUÑOA, SANTIAGO DE CHILE";
+      font-family: ui-monospace, "Courier New", monospace;
+      font-size: 7.5pt;
+      letter-spacing: 0.25em;
+      color: rgba(0, 0, 0, 0.5);
+    }
+    @bottom-right {
+      content: counter(page) " / " counter(pages);
+      font-family: ui-monospace, "Courier New", monospace;
+      font-size: 7.5pt;
+      letter-spacing: 0.2em;
+      color: rgba(0, 0, 0, 0.5);
+    }
   }
   html, body {
     background: white !important;
@@ -492,48 +506,59 @@
     color: #000 !important;
     text-decoration: none !important;
   }
-  /* /press-kit roster: 2 artists per page, never split an artist row. */
+  /* /press-kit roster: 3 artists per page, never split an artist row,
+     and each row fills its share of the page vertically. */
   .press-roster-section {
     page-break-before: always;
     break-before: page;
   }
+  /* Hide the "Roster" heading on the roster page — the document is a
+     press kit, the reader doesn't need an extra section label. Saves
+     vertical space so 3 rows can use the full page. */
+  .press-roster-section > div:first-child {
+    display: none !important;
+  }
+  .press-roster > :not([hidden]) ~ :not([hidden]),
   .press-roster > * + * {
-    margin-top: 4mm !important; /* override space-y-12 in print */
+    margin-top: 0 !important; /* override space-y-12 in print */
   }
   .press-roster-row {
     display: grid !important;
-    grid-template-columns: 38mm 1fr !important;
-    gap: 8mm !important;
-    padding-top: 2mm !important;
-    padding-bottom: 2mm !important;
+    grid-template-columns: 50mm 1fr !important;
+    gap: 9mm !important;
+    align-items: center !important;
+    padding: 3mm 0 !important;
+    margin: 0 !important;
     border-bottom: 1px solid rgba(0,0,0,0.12) !important;
     page-break-inside: avoid;
     break-inside: avoid;
+    height: 78mm;
+    min-height: 78mm;
+    max-height: 78mm;
+    overflow: hidden;
   }
-  .press-roster-row > div:first-child {
-    grid-column: auto !important;
-  }
-  .press-roster-row > div:last-child {
-    grid-column: auto !important;
-  }
-  /* Cap the photo so it doesn't blow up a row */
+  /* Cap the photo so it always reads as a portrait, not blown up */
   .press-roster-row .relative.aspect-square {
-    max-width: 38mm;
-    max-height: 38mm;
+    width: 50mm !important;
+    height: 50mm !important;
+    max-width: 50mm;
+    max-height: 50mm;
   }
-  /* Shrink artist headings and bios in print so 2 rows fit per page */
+  /* Tighten typography so a row fits its 82mm box comfortably */
   .press-roster-row h3 {
-    font-size: 14pt !important;
-    line-height: 1.1 !important;
+    font-size: 16pt !important;
+    line-height: 1.05 !important;
   }
   .press-roster-row p {
-    font-size: 9.5pt !important;
+    font-size: 10pt !important;
     line-height: 1.4 !important;
   }
   .press-roster-row :is(.font-mono, .text-xs, .text-sm) {
     font-size: 8pt !important;
   }
-  .press-roster-row:nth-child(2n):not(:last-child) {
+  /* Force a page break after every 3rd artist (except if it's the
+     last one, which would leave a blank trailing page). */
+  .press-roster-row:nth-child(3n):not(:last-child) {
     page-break-after: always;
     break-after: page;
   }

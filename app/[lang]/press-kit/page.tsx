@@ -18,6 +18,18 @@ const ARTISTS_WITH_PHOTO = new Set([
   "ecamhi",
 ]);
 
+// Order used on the printed press kit (page 1: Newen, Klaus, Ecamhi;
+// page 2: Claudio, Con.fusión, Andrés). Independent from the homepage
+// roster order in lib/artists.ts.
+const PRESS_KIT_ORDER = [
+  "newen-afrobeat",
+  "klaus-brantmayer",
+  "ecamhi",
+  "claudio-solis",
+  "con-fusion",
+  "andres-abrigo",
+];
+
 export async function generateMetadata(
   { params }: { params: Promise<LangParams> },
 ): Promise<Metadata> {
@@ -112,7 +124,12 @@ export default async function PressKitPage({
   const c = isEs ? copy.es : copy.en;
 
   // For each artist, compute counts and pick a representative release (with cover if any).
-  const rosterRows = artists.map((a) => {
+  const orderedArtists = [...artists].sort((a, b) => {
+    const ai = PRESS_KIT_ORDER.indexOf(a.slug);
+    const bi = PRESS_KIT_ORDER.indexOf(b.slug);
+    return (ai === -1 ? 99 : ai) - (bi === -1 ? 99 : bi);
+  });
+  const rosterRows = orderedArtists.map((a) => {
     const entries = getArtistEntries(a.slug);
     const sample = entries.find((e) => e.cover) ?? entries[0];
     return {
