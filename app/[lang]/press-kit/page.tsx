@@ -4,7 +4,7 @@ import Image from "next/image";
 import { ArrowLeft } from "lucide-react";
 import { Navigation } from "@/components/landing/navigation";
 import { FooterSection } from "@/components/landing/footer-section";
-import { PrintButton } from "@/components/print-button";
+import { DownloadPdfButton } from "@/components/download-pdf-button";
 import { artists } from "@/lib/artists";
 import { getArtistEntries } from "@/lib/catalog";
 
@@ -46,7 +46,7 @@ const copy = {
     intro:
       "Sello cultural independiente con dirección autoral. Producción integral, management y curaduría de música independiente latinoamericana en diálogo con circuitos europeos y globales.",
     backHome: "Volver al inicio",
-    download: "Imprimir / Guardar PDF",
+    download: "Descargar PDF",
     sections: {
       label: "Sobre el sello",
       roster: "Roster",
@@ -76,7 +76,7 @@ const copy = {
     intro:
       "Independent cultural label with strong authorial direction. Integral production, management and curation of independent Latin American music in dialogue with European and global circuits.",
     backHome: "Back to home",
-    download: "Print / Save as PDF",
+    download: "Download PDF",
     sections: {
       label: "About the label",
       roster: "Roster",
@@ -167,7 +167,11 @@ export default async function PressKitPage({
             <ArrowLeft className="w-4 h-4 group-hover:-translate-x-1 transition-transform" />
             {c.backHome}
           </Link>
-          <PrintButton label={c.download} />
+          <DownloadPdfButton
+            label={c.download}
+            href={`/press-kits/press-kit-${lang}.pdf`}
+            filename={`phone-records-press-kit-${lang}.pdf`}
+          />
         </div>
 
         {/* Header */}

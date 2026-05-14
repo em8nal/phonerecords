@@ -6,7 +6,7 @@ import { ArrowLeft } from "lucide-react";
 import { artistSlugs, getArtist } from "@/lib/artists";
 import { getArtistEntries } from "@/lib/catalog";
 import type { Language } from "@/lib/translations";
-import { PrintButton } from "@/components/print-button";
+import { DownloadPdfButton } from "@/components/download-pdf-button";
 
 // Max releases to print in the discography section (keeps press kit ≤ 2 pages).
 // Beyond this we show a tail line directing readers to the full catalog page.
@@ -91,7 +91,7 @@ export default async function PressKitPage({
         pressKit: "PRESS KIT",
         download: "Descargar PDF",
         backToArtist: "Volver a la página del artista",
-        downloadHint: "Usa el botón de tu navegador 'Guardar como PDF' al imprimir.",
+        downloadHint: "Descarga el PDF maquetado en A4 listo para imprimir o adjuntar.",
         bio: "Biografía",
         discography: "Discografía",
         moreReleases: (n: number) =>
@@ -116,7 +116,7 @@ export default async function PressKitPage({
         pressKit: "PRESS KIT",
         download: "Download PDF",
         backToArtist: "Back to artist page",
-        downloadHint: "Use your browser's 'Save as PDF' option when printing.",
+        downloadHint: "Download the A4 PDF ready to print or attach.",
         bio: "Biography",
         discography: "Discography",
         moreReleases: (n: number) =>
@@ -157,7 +157,11 @@ export default async function PressKitPage({
         </Link>
         <div className="flex items-center gap-4">
           <span className="text-xs text-black/50 hidden sm:block">{t.downloadHint}</span>
-          <PrintButton label={t.download} />
+          <DownloadPdfButton
+            label={t.download}
+            href={`/press-kits/${slug}-${lang}.pdf`}
+            filename={`${slug}-press-kit-${lang}.pdf`}
+          />
         </div>
       </div>
 

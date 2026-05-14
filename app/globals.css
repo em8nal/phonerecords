@@ -461,6 +461,12 @@
   .press-toolbar {
     display: none !important;
   }
+  /* Kill noise overlay in print/PDF — it bloats output and adds gray haze. */
+  .noise-overlay::after,
+  .noise-overlay::before {
+    display: none !important;
+    content: none !important;
+  }
   /* When the standalone press document is rendered, take over the page. */
   .press-document {
     width: auto !important;
