@@ -27,6 +27,32 @@ function pickReleaseAction(links: { label: string; href: string }[] | undefined)
   }
   return { href: links[0].href, kind: "listen" };
 }
+
+/** Returns up to one listen action AND one buy action — both can render side by side. */
+function pickReleaseActions(
+  links: { label: string; href: string }[] | undefined,
+): { listen?: ActionLink; buy?: ActionLink } {
+  if (!links?.length) return {};
+  let listen: ActionLink | undefined;
+  let buy: ActionLink | undefined;
+  for (const l of links) {
+    const u = l.href.toLowerCase();
+    const isBuy =
+      u.includes("discogs.com/release") ||
+      u.includes("beatport.com") ||
+      u.includes("elasticstage.com");
+    const isListen =
+      u.includes("open.spotify.com") ||
+      u.includes("music.apple.com") ||
+      u.includes("bandcamp.com") ||
+      u.includes("soundcloud.com") ||
+      u.includes("tidal.com") ||
+      u.includes("youtube.com");
+    if (isBuy && !buy) buy = { href: l.href, kind: "buy" };
+    else if (isListen && !listen) listen = { href: l.href, kind: "listen" };
+  }
+  return { listen, buy };
+}
 import { SpotifyArtistEmbed } from "@/components/spotify-embed";
 import type { Language } from "@/lib/translations";
 
@@ -307,10 +333,16 @@ export default async function ArtistPage({
             <div className="border-t border-foreground/10">
               {allEntries.map((r) => {
                 const release = r.releaseSlug ? getRelease(r.releaseSlug) : undefined;
-                const richAction = pickReleaseAction(release?.links);
-                const action: ActionLink | null = richAction
-                  ?? (r.externalHref ? { href: r.externalHref, kind: r.externalKind ?? "buy" } : null);
-                const actionLabel = action ? (action.kind === "buy" ? labels.buy : labels.listen) : null;
+                const richActions = pickReleaseActions(release?.links);
+                // Compose final listen + buy. Lightweight entries (no rich record) fall back to externalHref.
+                let listenAction: ActionLink | undefined = richActions.listen;
+                let buyAction: ActionLink | undefined = richActions.buy;
+                if (!buyAction && r.externalHref && (r.externalKind ?? "buy") === "buy") {
+                  buyAction = { href: r.externalHref, kind: "buy" };
+                }
+                if (!listenAction && r.externalHref && r.externalKind === "listen") {
+                  listenAction = { href: r.externalHref, kind: "listen" };
+                }
                 const titleNode = (
                   <span className="font-display text-lg group-hover:translate-x-1 transition-transform inline-block">
                     {r.title}
@@ -338,18 +370,29 @@ export default async function ArtistPage({
                       {r.label && <div className="font-mono text-xs uppercase tracking-wider">{r.label}</div>}
                       {r.notes && <div className="mt-1">{r.notes}</div>}
                     </div>
-                    <div className="col-span-6 sm:col-span-2 self-center text-right order-2 sm:order-none">
-                      {action && actionLabel ? (
-                        <a
-                          href={action.href}
-                          target="_blank"
-                          rel="noopener noreferrer"
-                          className="inline-flex items-center gap-1 px-3 h-8 text-xs font-mono uppercase tracking-widest rounded-full bg-foreground/5 hover:bg-foreground text-foreground hover:text-background transition-colors"
-                        >
-                          {actionLabel}
-                          <ExternalLink className="w-3 h-3" />
-                        </a>
-                      ) : null}
+                    <div className="col-span-6 sm:col-span-2 self-center order-2 sm:order-none">
+                      <div className="flex flex-col sm:items-end gap-1.5">
+                        {listenAction && (
+                          <a
+                            href={listenAction.href}
+                            target="_blank"
+                            rel="noopener noreferrer"
+                            className="inline-flex items-center justify-center gap-1.5 px-3.5 h-9 text-xs font-mono font-bold uppercase tracking-widest rounded-full bg-foreground text-background hover:bg-foreground/85 transition-colors w-full sm:w-auto"
+                          >
+                            ▶ {labels.listen}
+                          </a>
+                        )}
+                        {buyAction && (
+                          <a
+                            href={buyAction.href}
+                            target="_blank"
+                            rel="noopener noreferrer"
+                            className="inline-flex items-center justify-center gap-1.5 px-3.5 h-9 text-xs font-mono font-bold uppercase tracking-widest rounded-full border border-foreground/20 text-foreground hover:bg-foreground hover:text-background transition-colors w-full sm:w-auto"
+                          >
+                            {labels.buy} <ExternalLink className="w-3 h-3" />
+                          </a>
+                        )}
+                      </div>
                     </div>
                   </div>
                 );
