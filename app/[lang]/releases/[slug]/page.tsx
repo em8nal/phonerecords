@@ -7,7 +7,18 @@ import { Navigation } from "@/components/landing/navigation";
 import { FooterSection } from "@/components/landing/footer-section";
 import { releaseSlugs, getRelease, getReleasesByArtist } from "@/lib/releases";
 import { getArtist } from "@/lib/artists";
+import { SpotifyAlbumEmbed } from "@/components/spotify-embed";
 import type { Language } from "@/lib/translations";
+
+/** Extracts the Spotify album/track id from a `links` entry that points to open.spotify.com. */
+function extractSpotifyAlbumId(links: { href: string }[] | undefined): string | null {
+  if (!links) return null;
+  for (const l of links) {
+    const m = l.href.match(/open\.spotify\.com\/(?:album|track)\/([A-Za-z0-9]{16,})/);
+    if (m) return m[1];
+  }
+  return null;
+}
 
 type ReleaseParams = { lang: string; slug: string };
 
@@ -203,6 +214,17 @@ export default async function ReleasePage({
             </aside>
           )}
         </section>
+
+        {/* Spotify player (only when release has a Spotify link) */}
+        {(() => {
+          const spotifyId = extractSpotifyAlbumId(release.links);
+          if (!spotifyId) return null;
+          return (
+            <section className="mb-20">
+              <SpotifyAlbumEmbed albumId={spotifyId} height={352} />
+            </section>
+          );
+        })()}
 
         {/* Tracklist */}
         {release.tracklist && release.tracklist.length > 0 && (
