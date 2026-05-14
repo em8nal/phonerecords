@@ -162,9 +162,6 @@ He is working on new materials that extend the interdisciplinary logic of the fi
     ],
     stats: { monthlyListeners: 3 },
     releases: [
-      { year: "2024", title: "en viaje", format: "EP · 4 tracks", label: "PHŌNÉ Records", notes: "Lanzamiento inaugural del sello" },
-      { year: "2024-09", title: "Grietas (Newen Afrobeat)", format: "LP", notes: "Trompeta + co-composición Mare Mare + co-dirección de arte" },
-      { year: "2025-11", title: "Estudios Del Maipo: Live Session (Gestosimple & Klaus B)", format: "EP en vivo", notes: "Trompeta y fluegelhorn" },
     ],
   },
   {
