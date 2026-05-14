@@ -4,7 +4,11 @@ const nextConfig = {
     ignoreBuildErrors: true,
   },
   images: {
-    unoptimized: true,
+    // Vercel image proxy serves WebP/AVIF on supported browsers and falls back
+    // to the original format. Bandcamp/Apple/Discogs/elasticstage URLs are
+    // whitelisted below and pass through unchanged at the source — only the
+    // delivery is reformatted.
+    formats: ["image/avif", "image/webp"],
     remotePatterns: [
       {
         protocol: "https",
