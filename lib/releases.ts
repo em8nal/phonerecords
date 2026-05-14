@@ -498,16 +498,17 @@ export const releases: Release[] = [
     title: "en viaje",
     artistSlug: "ecamhi",
     artistName: "Ecamhi",
-    releaseDate: "2024-01-01",
-    year: 2024,
+    // EP en producción — fecha estimada por anunciar.
+    releaseDate: "2026-12-31",
+    year: 2026,
     type: "ep",
-    format: "EP · 4 tracks",
+    format: "EP · 4 tracks · en producción",
     label: "PHŌNÉ Records",
     description: {
       es:
-        "EP debut de Ecamhi y lanzamiento inaugural del sello PHŌNÉ Records. Disco interdisciplinario donde cuatro fotografías capturadas en giras internacionales inspiraron cuatro canciones. El lanzamiento se presentó como exhibición fotográfica donde cada foto estaba acompañada de audífonos con la canción correspondiente. Imagen y sonido nacieron del mismo proceso creativo.",
+        "Próximo EP de Ecamhi y release inaugural del sello PHŌNÉ Records, actualmente en producción. El proyecto está concebido como obra interdisciplinaria: cuatro fotografías capturadas en giras internacionales inspirando cuatro composiciones, presentadas en simultáneo como exhibición fotográfica donde cada imagen va acompañada de audífonos con la pieza correspondiente. Imagen y sonido nacen del mismo proceso creativo. Voz invitada de Catalina Aguilera (Con.fusión), composición y sax de Vicente Aravena, producción y mezcla de Enrique Camhi, master de Daniel Pérez.",
       en:
-        "Ecamhi's debut EP and PHŌNÉ Records' inaugural release. Interdisciplinary album where four photographs captured on international tours inspired four songs. The launch was presented as a photo exhibition where each picture was accompanied by headphones with the corresponding song. Image and sound born from the same creative process.",
+        "Forthcoming EP from Ecamhi and the inaugural release of PHŌNÉ Records, currently in production. The project is conceived as an interdisciplinary work: four photographs captured on international tours inspiring four compositions, presented simultaneously as a photo exhibition where each image is accompanied by headphones with the corresponding piece. Image and sound born from the same creative process. Guest vocals by Catalina Aguilera (Con.fusión), composition and sax by Vicente Aravena, production and mixing by Enrique Camhi, mastering by Daniel Pérez.",
     },
     credits: [
       { role: "Voz", name: "Catalina Aguilera (Con.fusión)" },
