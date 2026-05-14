@@ -4,8 +4,13 @@ import Image from "next/image";
 import Link from "next/link";
 import { ArrowLeft } from "lucide-react";
 import { artistSlugs, getArtist } from "@/lib/artists";
+import { getArtistEntries } from "@/lib/catalog";
 import type { Language } from "@/lib/translations";
 import { PrintButton } from "@/components/print-button";
+
+// Max releases to print in the discography section (keeps press kit ≤ 2 pages).
+// Beyond this we show a tail line directing readers to the full catalog page.
+const MAX_DISCOGRAPHY_ENTRIES = 18;
 
 type PressParams = { lang: string; slug: string };
 
@@ -51,6 +56,36 @@ export default async function PressKitPage({
   const isEs = lang === "es";
   const bio = isEs ? artist.bio.es : artist.bio.en;
 
+  // Build discography: prefer curated inline `artist.releases`; fall back to
+  // catalog entries (rich + lightweight) so Solis/Ecamhi also have a section.
+  type DiscoRow = {
+    year: string;
+    title: string;
+    format?: string;
+    label?: string;
+    notes?: string;
+  };
+  const inlineReleases: DiscoRow[] = (artist.releases ?? []).map((r) => ({
+    year: r.year,
+    title: r.title,
+    format: r.format,
+    label: r.label,
+    notes: r.notes,
+  }));
+  const fallbackReleases: DiscoRow[] = inlineReleases.length
+    ? []
+    : getArtistEntries(slug).map((e) => ({
+        year: e.year,
+        title: e.title,
+        format: e.format,
+        label: e.label,
+        notes: e.notes,
+      }));
+  const allReleases = inlineReleases.length ? inlineReleases : fallbackReleases;
+  const discography = allReleases.slice(0, MAX_DISCOGRAPHY_ENTRIES);
+  const extraReleases = Math.max(0, allReleases.length - discography.length);
+  const useTwoColumnDisco = discography.length > 10;
+
   const t = isEs
     ? {
         pressKit: "PRESS KIT",
@@ -59,6 +94,8 @@ export default async function PressKitPage({
         downloadHint: "Usa el botón de tu navegador 'Guardar como PDF' al imprimir.",
         bio: "Biografía",
         discography: "Discografía",
+        moreReleases: (n: number) =>
+          `+${n} releases adicionales · catálogo completo en phonerecords.cl/es/artistas/${slug}`,
         links: "Enlaces",
         about: "Sobre PHŌNÉ Records",
         aboutBlurb:
@@ -66,11 +103,13 @@ export default async function PressKitPage({
         contact: "Contacto",
         booking: "Booking",
         press: "Prensa",
-        general: "General",
+        general: "Prensa · Booking · General",
         web: "Web",
+        instagram: "Instagram",
         bookingEU: "Booking EU",
+        location: "Sede",
         managementInfo:
-          "Para representación, booking y consultas editoriales, escribir a los contactos siguientes. Booking europeo gestionado por Ludwig Sound Booking Agency (Heidelberg, Alemania).",
+          "Booking europeo gestionado por Ludwig Sound Booking Agency (Heidelberg, Alemania). Para Latinoamérica y resto del mundo: PHŌNÉ Records.",
         generated: "Documento generado",
       }
     : {
@@ -80,6 +119,8 @@ export default async function PressKitPage({
         downloadHint: "Use your browser's 'Save as PDF' option when printing.",
         bio: "Biography",
         discography: "Discography",
+        moreReleases: (n: number) =>
+          `+${n} more releases · full catalogue at phonerecords.cl/en/artistas/${slug}`,
         links: "Links",
         about: "About PHŌNÉ Records",
         aboutBlurb:
@@ -87,11 +128,13 @@ export default async function PressKitPage({
         contact: "Contact",
         booking: "Booking",
         press: "Press",
-        general: "General",
+        general: "Press · Booking · General",
         web: "Web",
+        instagram: "Instagram",
         bookingEU: "EU Booking",
+        location: "Based in",
         managementInfo:
-          "For representation, booking and editorial inquiries, please write to the contacts below. European booking handled by Ludwig Sound Booking Agency (Heidelberg, Germany).",
+          "European booking handled by Ludwig Sound Booking Agency (Heidelberg, Germany). For Latin America and the rest of the world: PHŌNÉ Records.",
         generated: "Document generated",
       };
 
@@ -156,26 +199,33 @@ export default async function PressKitPage({
         </section>
 
         {/* Discography */}
-        {artist.releases && artist.releases.length > 0 && (
+        {discography.length > 0 && (
           <section className="press-section">
             <h2 className="press-section-title">{t.discography}</h2>
-            <table className="press-discography">
-              <tbody>
-                {artist.releases.map((r, i) => (
-                  <tr key={`${r.year}-${i}`}>
-                    <td className="press-disc-year">{r.year}</td>
-                    <td className="press-disc-title">
-                      <span className="press-disc-name">{r.title}</span>
-                      {r.format && <span className="press-disc-format">{r.format}</span>}
-                    </td>
-                    <td className="press-disc-label">
-                      {r.label && <span>{r.label}</span>}
-                      {r.notes && <span className="press-disc-notes">{r.notes}</span>}
-                    </td>
-                  </tr>
-                ))}
-              </tbody>
-            </table>
+            <ul
+              className={
+                useTwoColumnDisco
+                  ? "press-disco-list press-disco-two-col"
+                  : "press-disco-list"
+              }
+            >
+              {discography.map((r, i) => (
+                <li key={`${r.year}-${i}`} className="press-disco-item">
+                  <span className="press-disco-year">{r.year}</span>
+                  <span className="press-disco-body">
+                    <span className="press-disco-name">{r.title}</span>
+                    {(r.format || r.label) && (
+                      <span className="press-disco-meta">
+                        {[r.format, r.label].filter(Boolean).join(" · ")}
+                      </span>
+                    )}
+                  </span>
+                </li>
+              ))}
+            </ul>
+            {extraReleases > 0 && (
+              <p className="press-disco-tail">{t.moreReleases(extraReleases)}</p>
+            )}
           </section>
         )}
 
@@ -215,16 +265,24 @@ export default async function PressKitPage({
           <div className="press-label-contact">
             <div className="press-contact-grid">
               <div className="press-contact-row">
-                <span className="press-contact-label">{t.general} · {t.press} · {t.booking}</span>
-                <span className="press-contact-value">phonerecords.cl/{lang}/contacto</span>
+                <span className="press-contact-label">{t.general}</span>
+                <span className="press-contact-value">contacto@phonerecords.cl</span>
               </div>
               <div className="press-contact-row">
                 <span className="press-contact-label">{t.bookingEU}</span>
                 <span className="press-contact-value">Ludwig Sound · info@ludwigsound.com</span>
               </div>
               <div className="press-contact-row">
+                <span className="press-contact-label">{t.instagram}</span>
+                <span className="press-contact-value">@phone_records</span>
+              </div>
+              <div className="press-contact-row">
                 <span className="press-contact-label">{t.web}</span>
-                <span className="press-contact-value">https://phonerecords.cl</span>
+                <span className="press-contact-value">phonerecords.cl</span>
+              </div>
+              <div className="press-contact-row">
+                <span className="press-contact-label">{t.location}</span>
+                <span className="press-contact-value">Ñuñoa · Santiago de Chile</span>
               </div>
             </div>
             <p className="press-mgmt-note">{t.managementInfo}</p>

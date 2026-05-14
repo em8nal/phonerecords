@@ -199,9 +199,9 @@
 }
 .press-document {
   max-width: 210mm;
-  padding: 22mm 18mm 22mm 18mm;
-  font-size: 11pt;
-  line-height: 1.5;
+  padding: 18mm 16mm 18mm 16mm;
+  font-size: 10.5pt;
+  line-height: 1.45;
   color: #0a0a0a;
 }
 
@@ -211,8 +211,8 @@
   align-items: flex-start;
   justify-content: space-between;
   border-bottom: 1px solid #0a0a0a;
-  padding-bottom: 12mm;
-  margin-bottom: 12mm;
+  padding-bottom: 6mm;
+  margin-bottom: 8mm;
 }
 .press-logo-img {
   height: 32px;
@@ -235,21 +235,21 @@
 
 /* Artist title block */
 .press-artist-block {
-  margin-bottom: 14mm;
+  margin-bottom: 8mm;
 }
 .press-eyebrow {
   font-family: var(--font-jetbrains), monospace;
-  font-size: 9pt;
+  font-size: 8.5pt;
   letter-spacing: 0.18em;
   text-transform: uppercase;
   opacity: 0.6;
-  margin-bottom: 6mm;
+  margin-bottom: 3mm;
 }
 .press-artist-name {
   font-family: var(--font-fraunces), Georgia, serif;
   font-style: italic;
   font-weight: 400;
-  font-size: 48pt;
+  font-size: 38pt;
   line-height: 1;
   letter-spacing: -0.01em;
   margin: 0;
@@ -257,66 +257,78 @@
 
 /* Sections */
 .press-section {
-  margin-bottom: 12mm;
+  margin-bottom: 7mm;
 }
 .press-section-title {
   font-family: var(--font-jetbrains), monospace;
-  font-size: 9pt;
+  font-size: 8.5pt;
   font-weight: 500;
   letter-spacing: 0.22em;
   text-transform: uppercase;
   opacity: 0.55;
-  margin: 0 0 5mm 0;
+  margin: 0 0 3mm 0;
   border-top: 1px solid #0a0a0a;
-  padding-top: 4mm;
+  padding-top: 2.5mm;
 }
 
 /* Bio */
 .press-bio p {
-  margin: 0 0 4mm 0;
+  margin: 0 0 2.5mm 0;
+  font-size: 10pt;
+  line-height: 1.45;
 }
 .press-bio p:first-child {
-  font-size: 12pt;
+  font-size: 11pt;
   font-weight: 500;
 }
 
-/* Discography */
-.press-discography {
-  width: 100%;
-  border-collapse: collapse;
-  font-size: 10pt;
+/* Discography — compact flowing list */
+.press-disco-list {
+  list-style: none;
+  padding: 0;
+  margin: 0;
 }
-.press-discography td {
-  vertical-align: top;
-  padding: 3mm 0;
+.press-disco-two-col {
+  columns: 2;
+  column-gap: 8mm;
+}
+.press-disco-item {
+  display: flex;
+  gap: 4mm;
+  padding: 1.6mm 0;
   border-bottom: 1px solid rgba(10, 10, 10, 0.08);
+  font-size: 9.5pt;
+  line-height: 1.35;
+  page-break-inside: avoid;
+  break-inside: avoid;
 }
-.press-disc-year {
-  width: 22mm;
+.press-disco-year {
+  flex-shrink: 0;
+  width: 14mm;
   font-family: var(--font-jetbrains), monospace;
-  font-size: 9pt;
-  opacity: 0.6;
+  font-size: 8.5pt;
+  opacity: 0.55;
+  padding-top: 0.3mm;
 }
-.press-disc-name {
+.press-disco-body {
+  flex: 1;
+  min-width: 0;
+}
+.press-disco-name {
   display: block;
   font-weight: 500;
 }
-.press-disc-format {
+.press-disco-meta {
   display: block;
-  font-size: 9pt;
+  font-size: 8.5pt;
   opacity: 0.6;
-  margin-top: 1mm;
+  margin-top: 0.5mm;
 }
-.press-disc-label {
-  width: 60mm;
-  font-size: 9pt;
-}
-.press-disc-label span {
-  display: block;
-}
-.press-disc-notes {
+.press-disco-tail {
+  margin: 3mm 0 0 0;
+  font-size: 8.5pt;
+  font-style: italic;
   opacity: 0.65;
-  margin-top: 1mm;
 }
 
 /* Links */
@@ -324,14 +336,18 @@
   list-style: none;
   padding: 0;
   margin: 0;
+  columns: 2;
+  column-gap: 8mm;
 }
 .press-links-list li {
   display: flex;
   justify-content: space-between;
-  gap: 8mm;
-  padding: 2mm 0;
+  gap: 4mm;
+  padding: 1.4mm 0;
   border-bottom: 1px solid rgba(10, 10, 10, 0.08);
-  font-size: 10pt;
+  font-size: 9pt;
+  page-break-inside: avoid;
+  break-inside: avoid;
 }
 .press-link-label {
   font-family: var(--font-jetbrains), monospace;
@@ -348,8 +364,8 @@
 
 /* PHŌNÉ block at the bottom */
 .press-label-block {
-  margin-top: 18mm;
-  padding-top: 8mm;
+  margin-top: 10mm;
+  padding-top: 5mm;
   border-top: 2px solid #0a0a0a;
   page-break-inside: avoid;
   break-inside: avoid;
@@ -432,27 +448,42 @@
 @media print {
   @page {
     size: A4;
-    margin: 0;
+    margin: 14mm 14mm 14mm 14mm;
   }
   html, body {
     background: white !important;
     color: black !important;
+    font-size: 10.5pt;
   }
-  body * {
-    visibility: hidden;
-  }
-  .press-document, .press-document * {
-    visibility: visible;
-  }
-  .press-document {
-    position: absolute;
-    left: 0;
-    top: 0;
-    width: 210mm;
-    padding: 18mm 16mm 18mm 16mm;
-  }
+  nav,
+  footer,
   .print\:hidden,
   .press-toolbar {
     display: none !important;
+  }
+  /* When the standalone press document is rendered, take over the page. */
+  .press-document {
+    width: auto !important;
+    max-width: none !important;
+    padding: 0 !important;
+    margin: 0 !important;
+    color: #000 !important;
+  }
+  /* Don't break sections in awkward places. */
+  .press-section,
+  .press-label-block,
+  .press-discography tr,
+  .press-bio p {
+    page-break-inside: avoid;
+    break-inside: avoid;
+  }
+  /* Tighten generic main content (used by /press-kit) for print. */
+  main {
+    padding: 0 !important;
+    color: #000 !important;
+  }
+  main a {
+    color: #000 !important;
+    text-decoration: none !important;
   }
 }

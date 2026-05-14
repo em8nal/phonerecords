@@ -55,8 +55,15 @@ const copy = {
     },
     labelBody:
       "Fundado en Santiago de Chile, PHŌNÉ Records produce condiciones de existencia para la música independiente: marco editorial, dirección de arte, prensaje en vinilo y distribución digital. El sello opera como infraestructura para un roster latinoamericano —Newen Afrobeat, Claudio Solís, Ecamhi, Con.fusión, Klaus Brantmayer y Andrés Abrigo— y construye puentes editoriales con sellos europeos (OfficeHome Records, Aquarians) y agencias de booking (Ludwig Sound, Heidelberg). El catálogo abarca afrobeat, dark minimal, nu-jazz, neo-soul y composición experimental.",
-    contactBody:
-      "Para consultas de prensa, booking o trabajo con el sello, contacto vía el formulario en phonerecords.cl/es/contacto · Ñuñoa, Santiago de Chile.",
+    contactRows: [
+      { label: "Prensa · Booking · General", value: "contacto@phonerecords.cl" },
+      { label: "Booking EU", value: "Ludwig Sound — info@ludwigsound.com" },
+      { label: "Instagram", value: "@phone_records" },
+      { label: "Web", value: "phonerecords.cl" },
+      { label: "Sede", value: "Ñuñoa · Santiago de Chile" },
+    ],
+    contactNote:
+      "Booking europeo gestionado por Ludwig Sound Booking Agency (Heidelberg, Alemania). Para Latinoamérica y resto del mundo: PHŌNÉ Records.",
     individualPress: "Press kit individual:",
     seeRelease: "Ver release",
     artistInside: "artistas en el ecosistema",
@@ -78,8 +85,15 @@ const copy = {
     },
     labelBody:
       "Founded in Santiago de Chile, PHŌNÉ Records produces conditions of existence for independent music: editorial frame, art direction, vinyl pressing and digital distribution. The label operates as infrastructure for a Latin American roster —Newen Afrobeat, Claudio Solís, Ecamhi, Con.fusión, Klaus Brantmayer and Andrés Abrigo— and builds editorial bridges with European labels (OfficeHome Records, Aquarians) and booking agencies (Ludwig Sound, Heidelberg). The catalogue spans afrobeat, dark minimal, nu-jazz, neo-soul and experimental composition.",
-    contactBody:
-      "For press inquiries, booking or working with the label, contact us via the form at phonerecords.cl/en/contacto · Ñuñoa, Santiago de Chile.",
+    contactRows: [
+      { label: "Press · Booking · General", value: "contacto@phonerecords.cl" },
+      { label: "EU Booking", value: "Ludwig Sound — info@ludwigsound.com" },
+      { label: "Instagram", value: "@phone_records" },
+      { label: "Web", value: "phonerecords.cl" },
+      { label: "Based in", value: "Ñuñoa · Santiago de Chile" },
+    ],
+    contactNote:
+      "European booking handled by Ludwig Sound Booking Agency (Heidelberg, Germany). For Latin America and the rest of the world: PHŌNÉ Records.",
     individualPress: "Individual press kit:",
     seeRelease: "View release",
     artistInside: "artists in the ecosystem",
@@ -266,7 +280,20 @@ export default async function PressKitPage({
             {c.sections.contact}
           </h2>
           <div className="lg:col-span-8 text-base leading-relaxed text-foreground/90">
-            {c.contactBody}
+            <dl className="divide-y divide-foreground/10 border-y border-foreground/10">
+              {c.contactRows.map((row) => (
+                <div
+                  key={row.label}
+                  className="grid grid-cols-1 sm:grid-cols-12 gap-2 py-3"
+                >
+                  <dt className="sm:col-span-4 font-mono text-xs uppercase tracking-widest text-muted-foreground">
+                    {row.label}
+                  </dt>
+                  <dd className="sm:col-span-8 text-foreground/90">{row.value}</dd>
+                </div>
+              ))}
+            </dl>
+            <p className="mt-6 text-sm italic text-foreground/70">{c.contactNote}</p>
           </div>
         </section>
 
