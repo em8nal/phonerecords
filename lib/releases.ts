@@ -798,7 +798,8 @@ export const releases: Release[] = [
       { label: "Vinilo · Vol. II", href: "https://elasticstage.com/vyasa-discos/releases/sons-of-medusa-ii-album" },
       { label: "Vinilo · Vol. III", href: "https://elasticstage.com/vyasa-discos/releases/sons-of-medusa-iii-album" },
       { label: "Vinilo · Vol. IV", href: "https://elasticstage.com/vyasa-discos/releases/sons-of-medusa-iv-album" },
-    ],
+          { label: "Spotify", href: "https://open.spotify.com/album/2xIKlMY8lbP2Z2bmQDZtG8" },
+],
   },
   {
     slug: "claudio-solis-occvltheque",
@@ -820,7 +821,8 @@ export const releases: Release[] = [
     links: [
       { label: "Vinilo · Vol. I", href: "https://elasticstage.com/vyasa-discos/releases/occvltheque-i-album" },
       { label: "Vinilo · Vol. II", href: "https://elasticstage.com/vyasa-discos/releases/occvltheque-ii-album" },
-    ],
+          { label: "Spotify", href: "https://open.spotify.com/album/1syBPAPfXgRr6S0OjjC96b" },
+],
   },
   {
     slug: "claudio-solis-doing-without-saying",
@@ -842,7 +844,8 @@ export const releases: Release[] = [
     links: [
       { label: "Vinilo · Vol. I", href: "https://elasticstage.com/vyasa-discos/releases/doing-without-saying-album" },
       { label: "Vinilo · Vol. II", href: "https://elasticstage.com/vyasa-discos/releases/doing-without-saying-ii-album" },
-    ],
+          { label: "Spotify", href: "https://open.spotify.com/album/0T49xqjq4N3ChTLgQN7tPT" },
+],
   },
   {
     slug: "claudio-solis-nothing-but-the-truth",
@@ -866,7 +869,8 @@ export const releases: Release[] = [
       { label: "Vinilo · Vol. II", href: "https://elasticstage.com/vyasa-discos/releases/nothing-but-the-truth-ii-singleep" },
       { label: "Vinilo · Vol. III", href: "https://elasticstage.com/vyasa-discos/releases/nothing-but-the-truth-iii-singleep" },
       { label: "Vinilo · Vol. IV", href: "https://elasticstage.com/vyasa-discos/releases/nothing-but-the-truth-iv-singleep" },
-    ],
+          { label: "Spotify", href: "https://open.spotify.com/album/2WUvTJCjNXcDEnlgQkc1ET" },
+],
   },
   {
     slug: "claudio-solis-pleroma",
@@ -888,7 +892,8 @@ export const releases: Release[] = [
     links: [
       { label: "Vinilo · Vol. I", href: "https://elasticstage.com/vyasa-discos/releases/pleroma-album" },
       { label: "Vinilo · Vol. II", href: "https://elasticstage.com/vyasa-discos/releases/pleroma-ii-album" },
-    ],
+          { label: "Spotify", href: "https://open.spotify.com/album/74cMKaeAcZQzGLRIo1STGR" },
+],
   },
   {
     slug: "claudio-solis-kirtan-club",
@@ -910,7 +915,8 @@ export const releases: Release[] = [
     links: [
       { label: "Vinilo · Vol. I", href: "https://elasticstage.com/vyasa-discos/releases/kirtan-club-singleep" },
       { label: "Vinilo · Vol. II", href: "https://elasticstage.com/vyasa-discos/releases/kirtan-club-ii-singleep" },
-    ],
+          { label: "Spotify", href: "https://open.spotify.com/album/3qxD2OgTlAlkDsrPfraYRN" },
+],
   },
   {
     slug: "claudio-solis-la-puerta-abre-hacia-adentro",
@@ -932,7 +938,8 @@ export const releases: Release[] = [
     links: [
       { label: "Vinilo · Vol. I", href: "https://elasticstage.com/vyasa-discos/releases/la-puerta-abre-hacia-adentro-album" },
       { label: "Vinilo · Vol. II", href: "https://elasticstage.com/vyasa-discos/releases/la-puerta-abre-hacia-adentro-ii-singleep" },
-    ],
+          { label: "Spotify", href: "https://open.spotify.com/album/2PUTr99vvGnZ4OAws39VIl" },
+],
   },
 
   {
@@ -1064,7 +1071,8 @@ export const releases: Release[] = [
     },
     links: [
       { label: "Comprar vinilo", href: "https://elasticstage.com/vyasa-discos/releases/ciencia-oculta-singleep" },
-    ],
+          { label: "Spotify", href: "https://open.spotify.com/album/4pbguypz7RgXeR4fenvKuK" },
+],
   },
   {
     slug: "claudio-solis-kototama-vinyl",
@@ -1084,7 +1092,8 @@ export const releases: Release[] = [
     },
     links: [
       { label: "Comprar vinilo", href: "https://elasticstage.com/aquarians/releases/kototama-singleep" },
-    ],
+          { label: "Spotify", href: "https://open.spotify.com/album/3xiMEtzaeGB1ZQnVdOWnsj" },
+],
   },
   {
     slug: "claudio-solis-magical-correspondences",
@@ -1103,7 +1112,8 @@ export const releases: Release[] = [
     },
     links: [
       { label: "Comprar vinilo", href: "https://elasticstage.com/vyasa-discos/releases/magical-correspondences-album" },
-    ],
+          { label: "Spotify", href: "https://open.spotify.com/album/6OaqKILswUWNAkihelQfhd" },
+],
   },
   {
     slug: "claudio-solis-diez",
@@ -1156,7 +1166,8 @@ export const releases: Release[] = [
     },
     links: [
       { label: "Comprar vinilo", href: "https://elasticstage.com/vyasa-discos/releases/pandit-singleep" },
-    ],
+          { label: "Spotify", href: "https://open.spotify.com/album/37CelF08y1ZYSEujuMuSiw" },
+],
   },
   {
     slug: "claudio-solis-jai-jagannath",
@@ -1175,7 +1186,8 @@ export const releases: Release[] = [
     },
     links: [
       { label: "Comprar vinilo", href: "https://elasticstage.com/vyasa-discos/releases/jai-jagannath-singleep" },
-    ],
+          { label: "Spotify", href: "https://open.spotify.com/album/6QJTbdjPdR70o0JuT7sCZW" },
+],
   },
   {
     slug: "claudio-solis-5ur-002",
@@ -1224,7 +1236,8 @@ export const releases: Release[] = [
     },
     links: [
       { label: "Comprar vinilo", href: "https://elasticstage.com/vyasa-discos/releases/goura-nitai-singleep" },
-    ],
+          { label: "Spotify", href: "https://open.spotify.com/album/5XRCGnDmQVnsTvqqnW94VP" },
+],
   },
   {
     slug: "claudio-solis-devotional-service",
@@ -1243,7 +1256,8 @@ export const releases: Release[] = [
     },
     links: [
       { label: "Comprar vinilo", href: "https://elasticstage.com/vyasa-discos/releases/devotional-service-album" },
-    ],
+          { label: "Spotify", href: "https://open.spotify.com/album/0flm7iGpiK9ueZmJk7Cb3v" },
+],
   },
   {
     slug: "claudio-solis-chileans-are-playing",
@@ -1292,7 +1306,8 @@ export const releases: Release[] = [
     },
     links: [
       { label: "Comprar vinilo", href: "https://elasticstage.com/vyasa-discos/releases/vaisnava-album" },
-    ],
+          { label: "Spotify", href: "https://open.spotify.com/album/2rCZaA2BtY4w9wew7ufAf8" },
+],
   },
   {
     slug: "claudio-solis-pelican-piety",
@@ -1311,7 +1326,8 @@ export const releases: Release[] = [
     },
     links: [
       { label: "Comprar vinilo", href: "https://elasticstage.com/vyasa-discos/releases/pelican-piety-singleep" },
-    ],
+          { label: "Spotify", href: "https://open.spotify.com/album/7IVanKjFicGuxA1kiT55Lk" },
+],
   },
   {
     slug: "claudio-solis-nibbana-traxx",
@@ -1364,7 +1380,8 @@ export const releases: Release[] = [
     },
     links: [
       { label: "Comprar vinilo", href: "https://elasticstage.com/vyasa-discos/releases/lost-hierophant-album" },
-    ],
+          { label: "Spotify", href: "https://open.spotify.com/album/2xDe7j9WNLFM0UIGiqYzE3" },
+],
   },
   {
     slug: "claudio-solis-silent-weapons",
