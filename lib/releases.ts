@@ -635,6 +635,11 @@ export const releases: Release[] = [
       en:
         "Single co-signed by Enrique Camhi and Felipe Cortes, released April 2021. The first official record under the Enrique Camhi name, prior to the en viaje EP (2024) and Move To (2022). Launches the project's solo line before it takes shape as coherent body of work: trumpet operates over a chamber electronics base with Cortes as co-producer. Origin document of the solo Camhi.",
     },
+    links: [
+      { label: "Apple Music", href: "https://music.apple.com/us/album/fake-love-single/1558646526" },
+      { label: "Beatport", href: "https://www.beatport.com/track/fake-love/15063234" },
+      { label: "Tidal", href: "https://listen.tidal.com/album/177394194" },
+    ],
   },
   {
     slug: "ecamhi-move-to",
