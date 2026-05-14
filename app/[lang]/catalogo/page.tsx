@@ -41,30 +41,41 @@ export default async function CatalogoPage({
 
   const schema = {
     "@context": "https://schema.org",
-    "@type": "CollectionPage",
-    "@id": `https://phonerecords.cl/${lang}/catalogo`,
-    name: isEs ? "Catálogo PHŌNÉ Records" : "PHŌNÉ Records Catalogue",
-    inLanguage: isEs ? "es-CL" : "en-US",
-    isPartOf: { "@id": "https://phonerecords.cl/#organization" },
-    mainEntity: {
-      "@type": "ItemList",
-      numberOfItems: entries.length,
-      itemListElement: entries.slice(0, 30).map((e, i) => ({
-        "@type": "ListItem",
-        position: i + 1,
-        item: {
-          "@type": "MusicAlbum",
-          name: e.title,
-          byArtist: { "@type": "MusicGroup", name: e.artistName },
-          datePublished: e.year,
-          ...(e.label ? { recordLabel: { "@type": "Organization", name: e.label } } : {}),
-          ...(e.cover ? { image: e.cover } : {}),
-          ...(e.releaseSlug
-            ? { url: `https://phonerecords.cl/${lang}/releases/${e.releaseSlug}` }
-            : {}),
+    "@graph": [
+      {
+        "@type": "CollectionPage",
+        "@id": `https://phonerecords.cl/${lang}/catalogo`,
+        name: isEs ? "Catálogo PHŌNÉ Records" : "PHŌNÉ Records Catalogue",
+        inLanguage: isEs ? "es-CL" : "en-US",
+        isPartOf: { "@id": "https://phonerecords.cl/#organization" },
+        mainEntity: {
+          "@type": "ItemList",
+          numberOfItems: entries.length,
+          itemListElement: entries.slice(0, 30).map((e, i) => ({
+            "@type": "ListItem",
+            position: i + 1,
+            item: {
+              "@type": "MusicAlbum",
+              name: e.title,
+              byArtist: { "@type": "MusicGroup", name: e.artistName },
+              datePublished: e.year,
+              ...(e.label ? { recordLabel: { "@type": "Organization", name: e.label } } : {}),
+              ...(e.cover ? { image: e.cover } : {}),
+              ...(e.releaseSlug
+                ? { url: `https://phonerecords.cl/${lang}/releases/${e.releaseSlug}` }
+                : {}),
+            },
+          })),
         },
-      })),
-    },
+      },
+      {
+        "@type": "BreadcrumbList",
+        itemListElement: [
+          { "@type": "ListItem", position: 1, name: "PHŌNÉ Records", item: `https://phonerecords.cl/${lang}` },
+          { "@type": "ListItem", position: 2, name: isEs ? "Catálogo" : "Catalogue", item: `https://phonerecords.cl/${lang}/catalogo` },
+        ],
+      },
+    ],
   };
 
   const t = isEs

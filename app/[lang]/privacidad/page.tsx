@@ -200,13 +200,24 @@ export default async function PrivacyPage({
 
   const schema = {
     "@context": "https://schema.org",
-    "@type": "WebPage",
-    "@id": `https://phonerecords.cl/${lang}/privacidad`,
-    name: isEs ? "Política de privacidad" : "Privacy policy",
-    inLanguage: isEs ? "es-CL" : "en-US",
-    isPartOf: { "@id": "https://phonerecords.cl/#organization" },
-    dateModified: LAST_UPDATED,
-    about: { "@type": "Organization", "@id": "https://phonerecords.cl/#organization" },
+    "@graph": [
+      {
+        "@type": "WebPage",
+        "@id": `https://phonerecords.cl/${lang}/privacidad`,
+        name: isEs ? "Política de privacidad" : "Privacy policy",
+        inLanguage: isEs ? "es-CL" : "en-US",
+        isPartOf: { "@id": "https://phonerecords.cl/#organization" },
+        dateModified: LAST_UPDATED,
+        about: { "@type": "Organization", "@id": "https://phonerecords.cl/#organization" },
+      },
+      {
+        "@type": "BreadcrumbList",
+        itemListElement: [
+          { "@type": "ListItem", position: 1, name: "PHŌNÉ Records", item: `https://phonerecords.cl/${lang}` },
+          { "@type": "ListItem", position: 2, name: isEs ? "Privacidad" : "Privacy", item: `https://phonerecords.cl/${lang}/privacidad` },
+        ],
+      },
+    ],
   };
 
   return (

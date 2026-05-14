@@ -57,44 +57,53 @@ export default async function EventosPage({
         venueLabel: "Venue",
       };
 
-  // JSON-LD: one MusicEvent per scheduled date
+  // JSON-LD: one MusicEvent per scheduled date + BreadcrumbList
   const eventsSchema = {
     "@context": "https://schema.org",
-    "@graph": events.map((ev) => ({
-      "@type": "MusicEvent",
-      name: `${ev.artistName} · ${ev.venue}`,
-      startDate: ev.date,
-      eventStatus: "https://schema.org/EventScheduled",
-      eventAttendanceMode: "https://schema.org/OfflineEventAttendanceMode",
-      location: {
-        "@type": "Place",
-        name: ev.venue,
-        address: {
-          "@type": "PostalAddress",
-          addressLocality: ev.city,
-          addressCountry: ev.countryCode,
+    "@graph": [
+      ...events.map((ev) => ({
+        "@type": "MusicEvent",
+        name: `${ev.artistName} · ${ev.venue}`,
+        startDate: ev.date,
+        eventStatus: "https://schema.org/EventScheduled",
+        eventAttendanceMode: "https://schema.org/OfflineEventAttendanceMode",
+        location: {
+          "@type": "Place",
+          name: ev.venue,
+          address: {
+            "@type": "PostalAddress",
+            addressLocality: ev.city,
+            addressCountry: ev.countryCode,
+          },
         },
+        performer: {
+          "@type": "MusicGroup",
+          name: ev.artistName,
+          url: `https://phonerecords.cl/${lang}/artistas/${ev.artistSlug}`,
+        },
+        organizer: {
+          "@type": "Organization",
+          name: "PHŌNÉ Records",
+          url: "https://phonerecords.cl",
+        },
+        ...(ev.ticketsUrl
+          ? {
+              offers: {
+                "@type": "Offer",
+                url: ev.ticketsUrl,
+                availability: "https://schema.org/InStock",
+              },
+            }
+          : {}),
+      })),
+      {
+        "@type": "BreadcrumbList",
+        itemListElement: [
+          { "@type": "ListItem", position: 1, name: "PHŌNÉ Records", item: `https://phonerecords.cl/${lang}` },
+          { "@type": "ListItem", position: 2, name: isEs ? "Eventos" : "Events", item: `https://phonerecords.cl/${lang}/eventos` },
+        ],
       },
-      performer: {
-        "@type": "MusicGroup",
-        name: ev.artistName,
-        url: `https://phonerecords.cl/${lang}/artistas/${ev.artistSlug}`,
-      },
-      organizer: {
-        "@type": "Organization",
-        name: "PHŌNÉ Records",
-        url: "https://phonerecords.cl",
-      },
-      ...(ev.ticketsUrl
-        ? {
-            offers: {
-              "@type": "Offer",
-              url: ev.ticketsUrl,
-              availability: "https://schema.org/InStock",
-            },
-          }
-        : {}),
-    })),
+    ],
   };
 
   const dateFormatter = new Intl.DateTimeFormat(isEs ? "es-CL" : "en-GB", {

@@ -127,9 +127,35 @@ export default async function ManifestoPage({
 }) {
   const { lang } = await params;
   const c = lang === "es" ? copy.es : copy.en;
+  const isEs = lang === "es";
+
+  const schema = {
+    "@context": "https://schema.org",
+    "@graph": [
+      {
+        "@type": "WebPage",
+        "@id": `https://phonerecords.cl/${lang}/manifiesto`,
+        name: isEs ? "Manifiesto" : "Manifesto",
+        inLanguage: isEs ? "es-CL" : "en-US",
+        isPartOf: { "@id": "https://phonerecords.cl/#organization" },
+        about: { "@type": "Organization", "@id": "https://phonerecords.cl/#organization" },
+      },
+      {
+        "@type": "BreadcrumbList",
+        itemListElement: [
+          { "@type": "ListItem", position: 1, name: "PHŌNÉ Records", item: `https://phonerecords.cl/${lang}` },
+          { "@type": "ListItem", position: 2, name: isEs ? "Manifiesto" : "Manifesto", item: `https://phonerecords.cl/${lang}/manifiesto` },
+        ],
+      },
+    ],
+  };
 
   return (
     <main className="relative min-h-screen overflow-x-hidden noise-overlay">
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(schema) }}
+      />
       <Navigation />
 
       <article className="max-w-[1100px] mx-auto px-6 lg:px-12 pt-32 lg:pt-40 pb-24">

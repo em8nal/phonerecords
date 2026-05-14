@@ -141,6 +141,13 @@ export default async function SelloPage({
         inLanguage: isEs ? "es-CL" : "en-US",
         isPartOf: { "@id": "https://phonerecords.cl/#organization" },
       },
+      {
+        "@type": "BreadcrumbList",
+        itemListElement: [
+          { "@type": "ListItem", position: 1, name: "PHŌNÉ Records", item: `https://phonerecords.cl/${lang}` },
+          { "@type": "ListItem", position: 2, name: isEs ? "Sobre el sello" : "About the label", item: `https://phonerecords.cl/${lang}/sello` },
+        ],
+      },
     ],
   };
 

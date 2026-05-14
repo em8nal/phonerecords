@@ -63,21 +63,32 @@ export default async function ContactoPage({
 
   const schema = {
     "@context": "https://schema.org",
-    "@type": "ContactPage",
-    "@id": `https://phonerecords.cl/${lang}/contacto`,
-    name: isEs ? "Contacto" : "Contact",
-    inLanguage: isEs ? "es-CL" : "en-US",
-    isPartOf: { "@id": "https://phonerecords.cl/#organization" },
-    mainEntity: {
-      "@type": "Organization",
-      "@id": "https://phonerecords.cl/#organization",
-      name: "PHŌNÉ Records",
-      contactPoint: [
-        { "@type": "ContactPoint", contactType: "general", url: `https://phonerecords.cl/${lang}/contacto` },
-        { "@type": "ContactPoint", contactType: "booking", url: `https://phonerecords.cl/${lang}/contacto` },
-        { "@type": "ContactPoint", contactType: "press", url: `https://phonerecords.cl/${lang}/contacto` },
-      ],
-    },
+    "@graph": [
+      {
+        "@type": "ContactPage",
+        "@id": `https://phonerecords.cl/${lang}/contacto`,
+        name: isEs ? "Contacto" : "Contact",
+        inLanguage: isEs ? "es-CL" : "en-US",
+        isPartOf: { "@id": "https://phonerecords.cl/#organization" },
+        mainEntity: {
+          "@type": "Organization",
+          "@id": "https://phonerecords.cl/#organization",
+          name: "PHŌNÉ Records",
+          contactPoint: [
+            { "@type": "ContactPoint", contactType: "general", url: `https://phonerecords.cl/${lang}/contacto` },
+            { "@type": "ContactPoint", contactType: "booking", url: `https://phonerecords.cl/${lang}/contacto` },
+            { "@type": "ContactPoint", contactType: "press", url: `https://phonerecords.cl/${lang}/contacto` },
+          ],
+        },
+      },
+      {
+        "@type": "BreadcrumbList",
+        itemListElement: [
+          { "@type": "ListItem", position: 1, name: "PHŌNÉ Records", item: `https://phonerecords.cl/${lang}` },
+          { "@type": "ListItem", position: 2, name: isEs ? "Contacto" : "Contact", item: `https://phonerecords.cl/${lang}/contacto` },
+        ],
+      },
+    ],
   };
 
   return (
