@@ -767,6 +767,166 @@ export const releases: Release[] = [
 ],
   },
 
+  // ─────────── Claudio Solís — series consolidadas ───────────
+  {
+    slug: "claudio-solis-sons-of-medusa",
+    title: "Sons of Medusa I–IV",
+    artistSlug: "claudio-solis",
+    artistName: "Claudio Solis",
+    releaseDate: "2025-07-10",
+    year: 2025,
+    type: "album",
+    format: "Vinilo · 4× LP · serie",
+    label: "Vyasa Discos · Aquarians",
+    cover: "https://es-ew1-prod-assets.s3.eu-west-1.amazonaws.com/releases/f2bfccf4-b6b3-48b7-a88e-7b12641ff963/93a3251a08f142c8281fef203d70601f-og-product-image.png",
+    description: {
+      es:
+        "Obra mayor de Solís en 2025: cuatro volúmenes de vinilo prensados por Vyasa Discos y distribuidos digitalmente vía Aquarians como un álbum único de veinte tracks. La serie despliega su gramática actual de dark minimal en formato extendido — paciencia, repetición y mutación gradual — y consolida la arquitectura sonora que viene desarrollando desde Occvltheque. Cada volumen funciona como movimiento independiente dentro de una sola obra.",
+      en:
+        "Solís's major 2025 work: four vinyl volumes pressed by Vyasa Discos and distributed digitally via Aquarians as a single twenty-track album. The series unfolds his current dark-minimal grammar at extended length — patience, repetition, gradual mutation — and consolidates the sonic architecture developed since Occvltheque. Each volume functions as a movement within one piece.",
+    },
+    links: [
+      { label: "Vinilo · Vol. I", href: "https://elasticstage.com/vyasa-discos/releases/sons-of-medusa-album" },
+      { label: "Vinilo · Vol. II", href: "https://elasticstage.com/vyasa-discos/releases/sons-of-medusa-ii-album" },
+      { label: "Vinilo · Vol. III", href: "https://elasticstage.com/vyasa-discos/releases/sons-of-medusa-iii-album" },
+      { label: "Vinilo · Vol. IV", href: "https://elasticstage.com/vyasa-discos/releases/sons-of-medusa-iv-album" },
+    ],
+  },
+  {
+    slug: "claudio-solis-occvltheque",
+    title: "Occvltheque I–II",
+    artistSlug: "claudio-solis",
+    artistName: "Claudio Solis",
+    releaseDate: "2024-11-08",
+    year: 2024,
+    type: "album",
+    format: "Vinilo · 2× LP · serie",
+    label: "Aquarians / Vyasa Discos",
+    cover: "https://es-ew1-prod-assets.s3.eu-west-1.amazonaws.com/releases/0f9daafa-6ad2-4e54-b9c6-1e186117f4e5/ef1182575fcab1850d57c02ba04d00fd-og-product-image.png",
+    description: {
+      es:
+        "Doble LP que define el canon dark minimal de Solís bajo Aquarians. Diez tracks por volumen, prensados en vinilo por Vyasa Discos y publicados digitalmente como una sola unidad (AQRNS021/021B). Estructuras rítmicas despojadas, presión inmersiva en bajas frecuencias y texturas oscurecidas que privilegian la atmósfera por sobre el impacto. Es el disco que mejor articula el método de combustión lenta que Solís viene refinando desde hace una década.",
+      en:
+        "Double LP that defines Solís's dark-minimal canon under Aquarians. Ten tracks per volume, pressed on vinyl by Vyasa Discos and released digitally as a single unit (AQRNS021/021B). Stripped rhythmic structures, immersive low-frequency pressure and shadowed textures that privilege atmosphere over impact. The release that best articulates the slow-burn method Solís has been refining for a decade.",
+    },
+    links: [
+      { label: "Vinilo · Vol. I", href: "https://elasticstage.com/vyasa-discos/releases/occvltheque-i-album" },
+      { label: "Vinilo · Vol. II", href: "https://elasticstage.com/vyasa-discos/releases/occvltheque-ii-album" },
+    ],
+  },
+  {
+    slug: "claudio-solis-doing-without-saying",
+    title: "Doing Without Saying I–II",
+    artistSlug: "claudio-solis",
+    artistName: "Claudio Solis",
+    releaseDate: "2024-06-26",
+    year: 2024,
+    type: "album",
+    format: "Vinilo · 2× LP · serie",
+    label: "Vyasa Discos / Claudio Solis Series",
+    cover: "https://es-ew1-prod-assets.s3.eu-west-1.amazonaws.com/releases/7c4584d2-da7a-4c8b-ae3b-207344a44318/1bcd1dda56d6a53409dcebd5fe42b5f9-og-product-image.png",
+    description: {
+      es:
+        "Serie en dos volúmenes que pone en práctica su título: composición despojada de elementos prescindibles, ejercicio de sustracción aplicado al minimal techno. Diez tracks distribuidos en dos LPs en Vyasa Discos, con edición digital paralela en Claudio Solis Series. Hay menos elementos por compás que en cualquier otra serie suya — y la decisión es estética, no carencia. Cada track explora el umbral entre lo necesario y lo redundante.",
+      en:
+        "A two-volume series that enacts its title: composition stripped of dispensable elements, an exercise in subtraction applied to minimal techno. Ten tracks across two LPs on Vyasa Discos, with parallel digital edition on Claudio Solis Series. Fewer elements per bar than any other series of his — an aesthetic decision, not scarcity. Each track explores the threshold between what's needed and what's redundant.",
+    },
+    links: [
+      { label: "Vinilo · Vol. I", href: "https://elasticstage.com/vyasa-discos/releases/doing-without-saying-album" },
+      { label: "Vinilo · Vol. II", href: "https://elasticstage.com/vyasa-discos/releases/doing-without-saying-ii-album" },
+    ],
+  },
+  {
+    slug: "claudio-solis-nothing-but-the-truth",
+    title: "Nothing But The Truth I–IV",
+    artistSlug: "claudio-solis",
+    artistName: "Claudio Solis",
+    releaseDate: "2023-08-15",
+    year: 2023,
+    type: "ep",
+    format: "Vinilo · 4× EP · serie",
+    label: "Vyasa Discos",
+    cover: "https://es-ew1-prod-assets.s3.eu-west-1.amazonaws.com/releases/a17983dd-20a6-4682-b7ad-6f383d4e5e2c/2ac41a108f8e761bf4bbeac5e17e3c5b-og-product-image.png",
+    description: {
+      es:
+        "Cuatro EPs en vinilo que conforman la serie más larga del catálogo Vyasa Discos. Once tracks repartidos a través de un año, escritos como declaraciones cortas y directas — sin floritura ni interludio. La premisa del título se cumple en la práctica: no hay disfraz instrumental, solo el groove despojado de su funda. Es la entrada más franca al lenguaje rítmico de Solís y el puente entre su lado más espiritual (Kirtan Club) y el actual canon dark.",
+      en:
+        "Four vinyl EPs that form the longest series in the Vyasa Discos catalogue. Eleven tracks released across a year, written as short and direct statements — no ornament, no interlude. The title's premise plays out in practice: no instrumental disguise, just the groove with its cover removed. The frankest entry into Solís's rhythmic language and the bridge between his more spiritual side (Kirtan Club) and the current dark canon.",
+    },
+    links: [
+      { label: "Vinilo · Vol. Vinilo", href: "https://elasticstage.com/vyasa-discos/releases/nothing-but-the-truth-singleep" },
+      { label: "Vinilo · Vol. II", href: "https://elasticstage.com/vyasa-discos/releases/nothing-but-the-truth-ii-singleep" },
+      { label: "Vinilo · Vol. III", href: "https://elasticstage.com/vyasa-discos/releases/nothing-but-the-truth-iii-singleep" },
+      { label: "Vinilo · Vol. IV", href: "https://elasticstage.com/vyasa-discos/releases/nothing-but-the-truth-iv-singleep" },
+    ],
+  },
+  {
+    slug: "claudio-solis-pleroma",
+    title: "Pleroma I–II",
+    artistSlug: "claudio-solis",
+    artistName: "Claudio Solis",
+    releaseDate: "2022-09-15",
+    year: 2022,
+    type: "album",
+    format: "Vinilo · 2× LP · serie",
+    label: "Vyasa Discos / Claudio Solis Series",
+    cover: "https://es-ew1-prod-assets.s3.eu-west-1.amazonaws.com/releases/ae58f72e-d427-42fb-b910-d446aaa71de1/d8cd5fe8d763548170bd6b5e8ee9c8cf-og-product-image.png",
+    description: {
+      es:
+        "Pleroma —del griego, plenitud— pone en eje la idea de saturación armónica desde la economía rítmica. Dos LPs en Vyasa Discos donde Solís estira frecuencias graves hasta volverlas habitación, no decorado. Es el punto donde su lectura de la tradición minimal alemana se cruza con el espiritualismo del catálogo Kirtan; un disco para escuchar más que para pinchar, aunque opera intacto en ambas situaciones. Marca el inicio de su serie de obras largas en formato vinilo.",
+      en:
+        "Pleroma — Greek for fullness — centers harmonic saturation through rhythmic economy. Two LPs on Vyasa Discos where Solís stretches low frequencies until they become a room, not décor. The point where his reading of German minimal tradition meets the spiritualism of the Kirtan catalogue; a record for listening more than for DJing, though it operates intact in both situations. Marks the start of his long-form vinyl series.",
+    },
+    links: [
+      { label: "Vinilo · Vol. I", href: "https://elasticstage.com/vyasa-discos/releases/pleroma-album" },
+      { label: "Vinilo · Vol. II", href: "https://elasticstage.com/vyasa-discos/releases/pleroma-ii-album" },
+    ],
+  },
+  {
+    slug: "claudio-solis-kirtan-club",
+    title: "Kirtan Club I–II",
+    artistSlug: "claudio-solis",
+    artistName: "Claudio Solis",
+    releaseDate: "2021-09-15",
+    year: 2021,
+    type: "ep",
+    format: "Vinilo · 2× EP · serie",
+    label: "Vyasa Discos / Claudio Solis Series",
+    cover: "https://es-ew1-prod-assets.s3.eu-west-1.amazonaws.com/releases/9bac8b51-31d0-4c9b-8740-31032f930b05/ac1adc4719e4db83c2f8d63ef5814b41-og-product-image.png",
+    description: {
+      es:
+        "Dos EPs que llevan el lenguaje del kirtan —canto devocional hindú repetido en grupo— al club. Solís construye loops largos sobre patterns bhakti, despojando el material de literalidad religiosa para dejar el principio rítmico: la repetición como ascesis. Es el antecedente directo de Goura Nitai y Devotional Service, y la entrada explícita de la espiritualidad como método compositivo, no como tema decorativo, en su catálogo Vyasa.",
+      en:
+        "Two EPs that bring the language of kirtan —Hindu devotional chanting repeated in group— into the club. Solís builds long loops over bhakti patterns, stripping the material of religious literalness to leave the rhythmic principle: repetition as ascesis. Direct precursor to Goura Nitai and Devotional Service, and the explicit entry of spirituality as compositional method, not decorative theme, into his Vyasa catalogue.",
+    },
+    links: [
+      { label: "Vinilo · Vol. I", href: "https://elasticstage.com/vyasa-discos/releases/kirtan-club-singleep" },
+      { label: "Vinilo · Vol. II", href: "https://elasticstage.com/vyasa-discos/releases/kirtan-club-ii-singleep" },
+    ],
+  },
+  {
+    slug: "claudio-solis-la-puerta-abre-hacia-adentro",
+    title: "La Puerta Abre Hacia Adentro I–II",
+    artistSlug: "claudio-solis",
+    artistName: "Claudio Solis",
+    releaseDate: "2022-04-20",
+    year: 2022,
+    type: "album",
+    format: "Vinilo · LP + EP · serie",
+    label: "Vyasa Discos / Robot Ranch Records",
+    cover: "https://es-ew1-prod-assets.s3.eu-west-1.amazonaws.com/releases/b7561ee6-542d-4e58-a4d5-492881a192c4/e92b8d77a470c95cb41ef780eca4a77d-og-product-image.png",
+    description: {
+      es:
+        "Díptico con vol. I en LP y vol. II en EP, que toma la frase como instrucción de uso. Música compuesta hacia adentro: hipnosis lenta, sin gancho, sin propósito de pista de baile. Vyasa Discos prensa el vinilo, Robot Ranch Records administra la versión digital. Es uno de los trabajos más íntimos del catálogo de Solís y un manifiesto sin texto sobre el rol introspectivo de la música minimal — el público que escucha es el público que entra.",
+      en:
+        "Diptych with vol. I on LP and vol. II on EP, taking the phrase as an instruction manual. Music composed inwards: slow hypnosis, no hook, no dancefloor agenda. Vyasa Discos presses the vinyl, Robot Ranch Records handles digital. One of the most intimate works in Solís's catalogue and a wordless manifesto on the introspective role of minimal music — the audience that listens is the audience that enters.",
+    },
+    links: [
+      { label: "Vinilo · Vol. I", href: "https://elasticstage.com/vyasa-discos/releases/la-puerta-abre-hacia-adentro-album" },
+      { label: "Vinilo · Vol. II", href: "https://elasticstage.com/vyasa-discos/releases/la-puerta-abre-hacia-adentro-ii-singleep" },
+    ],
+  },
+
   // ─────────── Con.fusión ───────────
   {
     slug: "con-fusion-aua",
