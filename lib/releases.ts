@@ -935,6 +935,33 @@ export const releases: Release[] = [
     ],
   },
 
+  {
+    slug: "claudio-solis-hapax",
+    title: "Hapax",
+    artistSlug: "claudio-solis",
+    artistName: "Claudio Solis",
+    releaseDate: "2026-01-09",
+    year: 2026,
+    type: "ep",
+    format: "EP · 4 tracks · digital",
+    label: "Advisual Records",
+    description: {
+      es:
+        "EP de 2026 publicado en Advisual Records. Cuatro tracks —Nigredo, Estupa, Numquam Suade Mihi Vana y un remix de Nigredo por Quantifiq— que extienden el lenguaje minimal techno de Solís hacia un terreno más colaborativo. Hapax, en filología, designa una palabra que aparece una sola vez en un corpus: aquí funciona como marco para piezas pensadas como apariciones únicas. Primer release del año en un sello partner europeo, anterior a los siguientes volúmenes de Sons of Medusa.",
+      en:
+        "2026 EP released on Advisual Records. Four tracks —Nigredo, Estupa, Numquam Suade Mihi Vana and a Nigredo remix by Quantifiq— that extend Solís's minimal techno language toward more collaborative territory. Hapax, in philology, refers to a word appearing only once in a corpus: here it frames pieces conceived as singular apparitions. First release of the year on a European partner label, ahead of the next Sons of Medusa volumes.",
+    },
+    tracklist: [
+      { n: 1, title: "Nigredo", duration: "7:10" },
+      { n: 2, title: "Estupa", duration: "7:21" },
+      { n: 3, title: "Numquam Suade Mihi Vana", duration: "6:02" },
+      { n: 4, title: "Nigredo - Quantifiq Remix", duration: "7:17" },
+    ],
+    links: [
+      { label: "Spotify", href: "https://open.spotify.com/album/4LFhsU9nCExrEyBejKdpkI" },
+    ],
+  },
+
   // ─────────── Con.fusión ───────────
   {
     slug: "con-fusion-aua",
@@ -1017,6 +1044,7 @@ export const releases: Release[] = [
     },
     links: [
       { label: "Comprar vinilo", href: "https://elasticstage.com/vyasa-discos/releases/kalki-album" },
+          { label: "Spotify", href: "https://open.spotify.com/album/3JluHDIFkWMYsLggweVhKP" },
     ],
   },
   {
