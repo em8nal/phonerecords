@@ -201,13 +201,17 @@ export function CatalogGrid({
                   {r.cover ? (
                     <Image
                       src={r.cover}
-                      alt=""
+                      alt={`${r.title} — ${r.artistName} · portada`}
                       fill
                       sizes="64px"
                       className="object-cover"
                     />
                   ) : (
-                    <div className="absolute inset-0 flex items-center justify-center text-muted-foreground/40 font-display text-[10px] tracking-widest">
+                    <div
+                      className="absolute inset-0 flex items-center justify-center text-muted-foreground/40 font-display text-[10px] tracking-widest"
+                      role="img"
+                      aria-label={`${r.title} — ${r.artistName} · portada pendiente`}
+                    >
                       PHŌNÉ
                     </div>
                   )}
@@ -253,7 +257,11 @@ export function CatalogGrid({
                       className="object-cover transition-transform duration-500 group-hover:scale-[1.02]"
                     />
                   ) : (
-                    <div className="absolute inset-0 flex flex-col items-center justify-center gap-2 text-muted-foreground/40">
+                    <div
+                      className="absolute inset-0 flex flex-col items-center justify-center gap-2 text-muted-foreground/40"
+                      role="img"
+                      aria-label={`${r.title} — ${r.artistName} · portada pendiente`}
+                    >
                       <span className="font-display text-5xl tracking-widest">PHŌNÉ</span>
                       <span className="font-mono text-[10px] uppercase tracking-widest">
                         {r.artistName}

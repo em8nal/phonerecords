@@ -952,6 +952,7 @@ export const releases: Release[] = [
     type: "ep",
     format: "EP · 4 tracks · digital",
     label: "Advisual Records",
+    cover: "https://i.scdn.co/image/ab67616d00001e02b0d76bbad1a53385f0e3c5aa",
     description: {
       es:
         "EP de 2026 publicado en Advisual Records. Cuatro tracks —Nigredo, Estupa, Numquam Suade Mihi Vana y un remix de Nigredo por Quantifiq— que extienden el lenguaje minimal techno de Solís hacia un terreno más colaborativo. Hapax, en filología, designa una palabra que aparece una sola vez en un corpus: aquí funciona como marco para piezas pensadas como apariciones únicas. Primer release del año en un sello partner europeo, anterior a los siguientes volúmenes de Sons of Medusa.",
@@ -1144,6 +1145,7 @@ export const releases: Release[] = [
     type: "compilation",
     format: "Vinilo · 12\" EP 180g · Ltd",
     label: "5 Universos Records",
+    cover: "https://i.scdn.co/image/ab67616d00001e02570ebe902ff51e8b80f6820f",
     description: {
       es: "Tercera entrega de la compilación Various Artists en 12\" 180g de 5 Universos Records. Solís aporta un track y firma el mastering del prensaje completo (que extiende a todo el catálogo del sello, vinilo y digital). Sold out en su lanzamiento, queda como un artefacto físico que documenta la red minimal chilena de mediados de los 2020s, conectando productores locales con figuras europeas vía la curaduría del sello.",
       en: "Third installment of 5 Universos Records' Various Artists compilation on 180g 12\". Solís contributes a track and handles mastering of the full pressing (which extends across the label's whole catalogue, vinyl and digital). Sold out on release, it remains a physical artifact documenting the mid-2020s Chilean minimal network, connecting local producers with European figures via the label's curation.",
@@ -1199,6 +1201,7 @@ export const releases: Release[] = [
     type: "compilation",
     format: "Vinilo · 12\" EP",
     label: "5 Universos Records",
+    cover: "https://i.scdn.co/image/ab67616d00001e026c1714c5517a7a1a187e67a5",
     description: {
       es: "Segunda compilación en 12\" de 5 Universos Records, donde Solís contribuye con un track y oficia como mastering engineer del prensaje. Sold out al cierre del año, documenta el primer empuje del sello hacia la circulación internacional —el roster cruza Chile, México y Europa— y consolida el rol de Solís como puente técnico y editorial entre la escena local y los partners externos. Predecesor directo del 5UR 003 (2023).",
       en: "Second 12\" compilation from 5 Universos Records, where Solís contributes a track and serves as mastering engineer for the pressing. Sold out by year's end, it documents the label's first push towards international circulation — the roster spans Chile, Mexico and Europe — and consolidates Solís's role as technical and editorial bridge between the local scene and external partners. Direct predecessor of 5UR 003 (2023).",
@@ -1214,6 +1217,7 @@ export const releases: Release[] = [
     type: "compilation",
     format: "Vinilo · 12\" VA · Comp",
     label: "FAFO Records",
+    cover: "https://i.scdn.co/image/ab67616d00001e026c1714c5517a7a1a187e67a5",
     description: {
       es: "Compilación FAFO 011 del sello chileno FAFO Records, prensada en vinilo 12\" como Various Artists. Solís aporta un track al lineup y queda registrado como uno de los productores chilenos consolidados que el sello convoca para sus ediciones aniversarias. Sold out poco después del lanzamiento; hoy circula casi exclusivamente en mercado de segunda mano, lo que lo vuelve uno de los releases físicos más buscados del catálogo de colaboraciones externas de Solís.",
       en: "FAFO 011 compilation from Chilean label FAFO Records, pressed on 12\" vinyl as Various Artists. Solís contributes a track to the lineup and is recorded as one of the established Chilean producers the label calls in for its anniversary editions. Sold out shortly after release; today it circulates almost exclusively in second-hand markets, which makes it one of the most sought-after physical releases in Solís's external-collaboration catalogue.",
@@ -1269,6 +1273,7 @@ export const releases: Release[] = [
     type: "compilation",
     format: "Vinilo · 12\" Comp",
     label: "Agua y Sed",
+    cover: "https://i.scdn.co/image/ab67616d00001e02833a7a834253df2000c28ac8",
     description: {
       es: "Compilación 12\" de Agua y Sed (catálogo AYSLTD002) que reúne a productores chilenos bajo la curaduría histórica de Solís. Funciona como tarjeta de presentación internacional del sello: el sticker #ChileansArePlaying viene de aquí. Sold out poco después de su lanzamiento, queda como uno de los pocos vinilos del catálogo Agua y Sed —en su mayoría digital— y como documento de una escena local en plena consolidación post-pandemia.",
       en: "12\" compilation from Agua y Sed (cat AYSLTD002) gathering Chilean producers under Solís's historical curation. Functions as the label's international calling card: the #ChileansArePlaying tag originates here. Sold out shortly after release, it remains one of the few vinyls in the Agua y Sed catalogue — mostly digital — and a document of a local scene in full post-pandemic consolidation.",
@@ -1284,6 +1289,7 @@ export const releases: Release[] = [
     type: "ep",
     format: "Vinilo · 12\" EP Ltd",
     label: "P.U.N.C.H.I.S. Records",
+    cover: "https://i.scdn.co/image/ab67616d00001e02833a7a834253df2000c28ac8",
     description: {
       es: "EP en 12\" Limited del sello P.U.N.C.H.I.S. Records, con título conceptual que opera como mapa: doce salas de escape interplanetario, cada track una habitación cifrada con su propia clave rítmica. Es uno de los pocos releases de Solís fuera de su circuito propio (Vyasa, Agua y Sed, Aquarians) y muestra cómo opera bajo curaduría ajena: la materia se mantiene reconocible pero el marco la lleva hacia un experimentalismo más teatral. Sold out al lanzamiento.",
       en: "Limited 12\" EP from P.U.N.C.H.I.S. Records, with a conceptual title operating as map: twelve interplanetary escape rooms, each track an encoded chamber with its own rhythmic key. One of the few Solís releases outside his own circuit (Vyasa, Agua y Sed, Aquarians) and a window onto how he operates under external curation: the material stays recognizable but the frame pulls it toward more theatrical experimentalism. Sold out on release.",

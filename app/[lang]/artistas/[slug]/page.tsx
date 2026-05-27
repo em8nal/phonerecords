@@ -151,6 +151,9 @@ export default async function ArtistPage({
         genre: artist.genres,
         url,
         sameAs: artist.links.map((l) => l.href),
+        ...(ARTISTS_WITH_PHOTO.has(slug)
+          ? { image: `https://phonerecords.cl/artists/${slug}.jpg` }
+          : {}),
         location: {
           "@type": "Place",
           name: artist.origin,
@@ -167,6 +170,7 @@ export default async function ArtistPage({
                 name: r.title,
                 ...(r.year ? { datePublished: r.year } : {}),
                 ...(r.label ? { recordLabel: { "@type": "Organization", name: r.label } } : {}),
+                ...(r.cover ? { image: r.cover } : {}),
                 ...(r.notes ? { description: r.notes } : {}),
                 byArtist: { "@id": `${url}#artist` },
               })),
