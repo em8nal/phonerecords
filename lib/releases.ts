@@ -1345,10 +1345,14 @@ export const releases: Release[] = [
     type: "ep",
     format: "Vinilo · 12\" EP · Ed. 30",
     label: "Gilesku Records",
+    cover: "https://i.discogs.com/SqwgmWAU3ZoBtv1gRe8HC0noHDGAkOKn0ztPDD64waw/rs:fit/g:sm/q:90/h:600/w:600/czM6Ly9kaXNjb2dz/LWRhdGFiYXNlLWlt/YWdlcy9SLTE0MTA1/NzIzLTE1NjkwOTY2/NjMtNzA5MC5qcGVn.jpeg",
     description: {
       es: "EP en edición limitada de 30 copias publicado por Gilesku Records, sello francés del circuito minimal underground. Nibbana —forma pali de nirvana— marca el primer trabajo de Solís con un partner europeo prensado físicamente; el tirage corto lo vuelve uno de los discos más escasos del catálogo. Sold out al lanzamiento, hoy circula en colecciones privadas o segunda mano de alta rotación. Es el predecesor estructural de Vaisnava (2020).",
       en: "Limited edition of 30 copies released by Gilesku Records, French label from the underground minimal circuit. Nibbana — Pali form of nirvana — marks Solís's first work with a European partner pressed physically; the short run makes it one of the scarcest records in the catalogue. Sold out on release, today it circulates in private collections or high-turnover second-hand. Structural predecessor to Vaisnava (2020).",
     },
+    links: [
+      { label: "Discogs", href: "https://www.discogs.com/release/14105723-Claudio-Solis-Nibbana-Traxx" },
+    ],
   },
   {
     slug: "claudio-solis-alquimia",
