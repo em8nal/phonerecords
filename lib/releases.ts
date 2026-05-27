@@ -1034,6 +1034,48 @@ export const releases: Release[] = [
           { label: "Spotify", href: "https://open.spotify.com/album/54odnPn2yW5ynEhjsgZ5mk" },
 ],
   },
+  {
+    slug: "con-fusion-verdad",
+    title: "Verdad",
+    artistSlug: "con-fusion",
+    artistName: "Con.fusión",
+    releaseDate: "2018-08-23",
+    year: 2018,
+    type: "ep",
+    format: "EP · digital · 4 tracks",
+    cover: "https://i.scdn.co/image/ab67616d00001e02992166091b82012adf8aec5b",
+    description: {
+      es:
+        "Primer EP de Con.fusión en colaboración con el productor Fat Jota, publicado en agosto de 2018. Cuatro piezas que documentan el sonido inicial del proyecto: lo-fi hip hop con voz como instrumento, beats orgánicos y armonías heredadas del jazz. Incluye los singles Lento y Vuelo junto a sus versiones instrumentales. Es el punto de partida formal del catálogo público de Catalina Aguilera y marca el método que se expande en singles posteriores.",
+      en:
+        "First Con.fusión EP in collaboration with producer Fat Jota, released August 2018. Four pieces documenting the early sound of the project: lo-fi hip hop with voice as instrument, organic beats and harmonies inherited from jazz. Includes the singles Lento and Vuelo alongside their instrumental versions. Formal starting point of Catalina Aguilera's public catalogue and the method expanded in later singles.",
+    },
+    links: [
+      { label: "Apple Music", href: "https://music.apple.com/us/album/verdad-ep/1529684760" },
+      { label: "Spotify", href: "https://open.spotify.com/album/2NCFiQFHd6LoVwwtGjiEhk" },
+    ],
+  },
+  {
+    slug: "con-fusion-unos-besos",
+    title: "Unos Besos",
+    artistSlug: "con-fusion",
+    artistName: "Con.fusión",
+    releaseDate: "2019-06-16",
+    year: 2019,
+    type: "single",
+    format: "Single · digital",
+    cover: "https://i.scdn.co/image/ab67616d00001e02851776cb2ee384bc2c7e591a",
+    description: {
+      es:
+        "Single de Con.fusión y Fat Jota publicado en junio de 2019, entre el EP Verdad y los singles de 2020. Sigue la línea lo-fi hip hop del trabajo en conjunto: beats íntimos, voz al frente, arreglos breves. Es uno de los puentes cronológicos del catálogo: extiende la fórmula inicial antes del giro hacia Borboleta (Ziervo) y Aüa, donde el proyecto se abre a colaboradores externos.",
+      en:
+        "Con.fusión and Fat Jota single released June 2019, between the Verdad EP and the 2020 singles. Follows the lo-fi hip hop line of their joint work: intimate beats, voice up front, short arrangements. One of the chronological bridges in the catalogue: extends the initial formula before the turn towards Borboleta (Ziervo) and Aüa, where the project opens to external collaborators.",
+    },
+    links: [
+      { label: "Apple Music", href: "https://music.apple.com/us/album/unos-besos-single/1531906912" },
+      { label: "Spotify", href: "https://open.spotify.com/album/5HBrsQmZ1fpdQS6HaBfNF2" },
+    ],
+  },
   // ─────────── Claudio Solís — vinilos individuales ───────────
   {
     slug: "claudio-solis-kalki",
