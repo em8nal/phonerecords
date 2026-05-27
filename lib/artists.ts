@@ -172,7 +172,7 @@ Upcoming releases: single "Sueños" produced by ecamhi (June 2026), "Tulpa" prod
       { label: "Spotify", href: "https://open.spotify.com/artist/3LnpeMefgyavyTUTFNs5Xd" },
     ],
     releases: [
-      { year: "2024", title: "Cantas Veces", format: "Single", notes: "Disponible en plataformas" },
+      { year: "2024", title: "Cantas Veces", format: "Single", notes: "Voz: Catalina Aguilera · Composición y sax: Vicente Aravena · Producción y mezcla: Ecamhi · Master: Daniel Pérez", cover: "/releases/con-fusion-cantas-veces.jpg" },
       { year: "in production", title: "Tulpa", format: "Álbum", notes: "Tracks: Acertijo · En vez de quejarte tanto · Pisando caca a propósito" },
     ],
   },
