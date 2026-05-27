@@ -4,6 +4,7 @@ import { headers } from 'next/headers'
 import { Instrument_Sans, Instrument_Serif, JetBrains_Mono, Fraunces } from 'next/font/google'
 import { Analytics } from '@vercel/analytics/next'
 import { SpeedInsights } from '@vercel/speed-insights/next'
+import { GoogleTagManager, GoogleAnalytics } from '@next/third-parties/google'
 import './globals.css'
 
 const instrumentSans = Instrument_Sans({
@@ -40,14 +41,11 @@ export const metadata: Metadata = {
     template: '%s — PHŌNÉ Records',
   },
   description:
-    'Sello cultural independiente con dirección autoral. Roster: Newen Afrobeat, Claudio Solís, Ecamhi, Con.fusión, Klaus Brantmayer, Andrés Abrigo.',
-  keywords: [
-    'PHŌNÉ Records', 'sello chileno', 'música independiente Chile',
-    'Newen Afrobeat', 'Claudio Solís', 'Ecamhi', 'Con.fusión',
-    'Klaus Brantmayer', 'Andrés Abrigo',
-    'afrobeat Chile', 'minimal techno Chile',
-  ],
+    'Sello cultural independiente, Santiago de Chile. Roster: Newen Afrobeat, Claudio Solís, Ecamhi, Con.fusión, Klaus B, Andrés Abrigo.',
   authors: [{ name: 'PHŌNÉ Records', url: 'https://phonerecords.cl' }],
+  verification: {
+    google: 'mUTRTpRC44cVJL--psi4RCHRscBV4OGOV_UfIPHwRXU',
+  },
   alternates: {
     canonical: 'https://phonerecords.cl/es',
     languages: {
@@ -65,13 +63,14 @@ export const metadata: Metadata = {
     title: 'PHŌNÉ Records — Sello cultural independiente',
     description:
       'Producción integral de obras musicales situadas. En diálogo con circuitos europeos y latinoamericanos.',
+    images: [{ url: 'https://phonerecords.cl/es/opengraph-image', width: 1200, height: 630, alt: 'PHŌNÉ Records' }],
   },
   twitter: {
     card: 'summary_large_image',
     title: 'PHŌNÉ Records',
     description: 'Sello cultural independiente · Santiago de Chile',
+    images: ['https://phonerecords.cl/es/opengraph-image'],
   },
-  generator: 'v0.app',
 }
 
 export default async function RootLayout({
@@ -87,10 +86,12 @@ export default async function RootLayout({
 
   return (
     <html lang={locale}>
+      <GoogleTagManager gtmId="GTM-NXRBTN9P" />
       <body className={`${instrumentSans.variable} ${instrumentSerif.variable} ${jetbrainsMono.variable} ${fraunces.variable} font-sans antialiased bg-background`}>
         {children}
         <Analytics />
         <SpeedInsights />
+        <GoogleAnalytics gaId="G-EG3K77X96Y" />
       </body>
     </html>
   )

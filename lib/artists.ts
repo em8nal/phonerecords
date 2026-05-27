@@ -44,29 +44,21 @@ export const artists: Artist[] = [
     origin: "Santiago, Chile · 2009",
     bio: {
       es:
-        `Newen Afrobeat es la primera orquesta chilena de afrobeat: una formación de once músicos que toma el lenguaje fundado por Fela Kuti en Lagos y lo escribe en el sur del mundo, sin imitación y sin pose.
+        `Newen Afrobeat es una de las agrupaciones más influyentes de la escena afrobeat latinoamericana contemporánea. Formada en Santiago de Chile, la banda ha construido una propuesta que combina la herencia del afrobeat de Fela Kuti con ritmos latinoamericanos, jazz, funk y sonidos de raíz, desarrollando una identidad propia marcada por la energía en vivo, la exploración musical y un fuerte contenido social y político.
 
-Formada en Santiago en 2009, la banda atravesó una década de gestación lenta antes de viajar a Lagos a estudiar con maestros del género. Esa peregrinación marcó el quiebre entre el ejercicio de género y la voz propia: a partir de su segundo LP Curiche (2019) la banda asumió temas situados —desigualdad, migración, rol femenino, culturas indígenas— sin dejar caer la urgencia rítmica del afrobeat clásico.
+Con más de una década de trayectoria, Newen Afrobeat ha llevado su música a escenarios y festivales de América, Europa y África, consolidándose como una de las principales referencias del afrobeat fuera de Nigeria. La banda ha colaborado con figuras históricas del género como Seun Kuti y Dele Sosimi, además de desarrollar una reconocida serie de reinterpretaciones de clásicos de Fela Kuti que han alcanzado millones de reproducciones en plataformas digitales.
 
-El catálogo cuenta con cinco lanzamientos: el LP debut Newen Afrobeat (2014, Estudios del Sur), el EP Newen Plays Fela (2017) grabado con Seun Kuti, Cheick Tidiane Seck y músicos de Egypt 80, el LP Curiche (2019), el LP Grietas (OfficeHome Records, París, 2024) con featurings de Lido Pimienta, Dele Sosimi, Joe Vasconcellos y Chico César, y la sesión en vivo Liverpool Session (2025) grabada 100% análoga en Quarry, Liverpool.
+En 2026, la agrupación se encuentra preparando un nuevo álbum de estudio que marcará una nueva etapa sonora para la banda, profundizando la mezcla entre afrobeat, música latinoamericana y elementos contemporáneos de jazz, soul y electrónica. Este nuevo trabajo acompañará una nueva gira internacional por Europa y otros territorios, continuando la expansión global del proyecto.
 
-El sonido dialoga con highlife, jazz modal, funk y rare groove, pero opera desde la lectura sudamericana del trance afrobeat: secciones de bronces densas, percusiones que cruzan kpalongos, sakara, congas y batería; voces en español, inglés y yoruba. La sección ampliada —vocales, tres bronces, dos saxos, guitarras, bajo, percusiones y batería— les permite estirar piezas a 9-13 minutos sin perder pulso, una decisión estética antes que comercial.
-
-Han colaborado con Tony Allen, Seun Kuti, Femi Kuti, Cheick Tidiane Seck, Oghene Kologbo, Lido Pimienta, Joe Vasconcellos, Dele Sosimi y Chico César. Dentro del ecosistema PHŌNÉ, Ecamhi participa como trompetista histórico y co-compositor de Mare Mare, y Klaus Brantmayer firma la composición de Es la Vida; Claudio Solís diseña el arte gráfico del LP Grietas.
-
-Han girado por Chile, Brasil, Nigeria, Estados Unidos, Canadá, Reino Unido y Europa, con presentación destacada en Glastonbury. La gira Europa 2026 (agosto-septiembre) los lleva a Innsbruck, Frick, Frankfurt, Ginebra, Viena, Manchester, al Jazz Cafe de Londres y al Festival Ethnos en Nápoles, con management compartido entre PHŌNÉ Records (Chile) y Ludwig Sound Booking Agency (Heidelberg, Alemania).`,
+Próximos lanzamientos: 1 single (segundo semestre 2026), álbum 2026/2027.`,
       en:
-        `Newen Afrobeat is the first Chilean afrobeat orchestra: an eleven-piece formation that takes the language founded by Fela Kuti in Lagos and writes it from the southern hemisphere, without imitation and without pose.
+        `Newen Afrobeat is one of the most influential bands of the contemporary Latin American afrobeat scene. Formed in Santiago, Chile, the band has built a proposal that combines the legacy of Fela Kuti's afrobeat with Latin American rhythms, jazz, funk and roots sounds, developing a distinctive identity marked by live energy, musical exploration and strong social and political content.
 
-Formed in Santiago in 2009, the band went through a decade of slow gestation before traveling to Lagos to study with masters of the genre. That pilgrimage marked the break between genre exercise and self-voice: from their second LP Curiche (2019), the band took on situated themes —inequality, migration, women's roles, indigenous cultures— without letting go of classic afrobeat's rhythmic urgency.
+With more than a decade of trajectory, Newen Afrobeat has taken its music to stages and festivals across America, Europe and Africa, consolidating its position as one of the leading afrobeat references outside Nigeria. The band has collaborated with historical figures of the genre such as Seun Kuti and Dele Sosimi, and has developed a recognised series of reinterpretations of Fela Kuti classics that have reached millions of streams on digital platforms.
 
-The catalogue counts five releases: the debut LP Newen Afrobeat (2014, Estudios del Sur), the EP Newen Plays Fela (2017) recorded with Seun Kuti, Cheick Tidiane Seck and Egypt 80 musicians, the LP Curiche (2019), the LP Grietas (OfficeHome Records, Paris, 2024) featuring Lido Pimienta, Dele Sosimi, Joe Vasconcellos and Chico César, and the live session Liverpool Session (2025) recorded fully analog at Quarry, Liverpool.
+In 2026 the group is preparing a new studio album that will mark a new sonic stage for the band, deepening the mix of afrobeat, Latin American music and contemporary elements of jazz, soul and electronics. This new work will accompany a new international tour through Europe and other territories, continuing the global expansion of the project.
 
-The sound dialogues with highlife, modal jazz, funk and rare groove, but operates from a South American reading of afrobeat trance: dense brass sections, percussions crossing kpalongos, sakara, congas and drums; voices in Spanish, English and Yoruba. The expanded section —vocals, three brass, two saxophones, guitars, bass, percussion and drums— allows them to stretch pieces to 9-13 minutes without losing pulse, an aesthetic rather than a commercial decision.
-
-They have collaborated with Tony Allen, Seun Kuti, Femi Kuti, Cheick Tidiane Seck, Oghene Kologbo, Lido Pimienta, Joe Vasconcellos, Dele Sosimi and Chico César. Within the PHŌNÉ ecosystem, Ecamhi plays as historic trumpet player and co-composer of Mare Mare, and Klaus Brantmayer signs the composition of Es la Vida; Claudio Solís designs the graphic art of the LP Grietas.
-
-They have toured Chile, Brazil, Nigeria, the United States, Canada, the United Kingdom and Europe, with a notable presentation at Glastonbury. The Europe 2026 tour (August-September) takes them to Innsbruck, Frick, Frankfurt, Geneva, Vienna, Manchester, Jazz Cafe in London and Festival Ethnos in Naples, with management shared between PHŌNÉ Records (Chile) and Ludwig Sound Booking Agency (Heidelberg, Germany).`,
+Upcoming releases: 1 single (second half of 2026), album 2026/2027.`,
     },
     links: [
       { label: "Bandcamp", href: "https://newenafrobeat.bandcamp.com/music" },
@@ -131,29 +123,17 @@ His sets favour long sessions, atmosphere and narrative. He has played at Club d
     origin: "Santiago, Chile",
     bio: {
       es:
-        `Enrique Camhi —Ecamhi— es trompetista, fluegelhornista, productor y fotógrafo chileno cuyo trabajo solista habita en la zona donde imagen y sonido se alimentan mutuamente. No firma "música con fotos" ni "fotos con música": ambas vienen del mismo gesto creativo y se publican como un solo objeto.
+        `ecamhi es el proyecto solista de Enrique Camhi, trompetista, productor y compositor chileno con una trayectoria ligada a distintos proyectos relevantes de la escena musical nacional. A lo largo de los años ha trabajado como músico y creativo junto a artistas y bandas como Newen Afrobeat y La Combo Tortuga, desarrollando una identidad artística marcada por la exploración sonora y la mezcla de géneros.
 
-Prepara su primer EP, en viaje, lanzamiento inaugural del sello PHŌNÉ Records. La obra parte de un archivo de fotografías capturadas durante sus giras internacionales como trompetista de Newen Afrobeat: cada canción se enlaza a una imagen tomada en el tránsito entre países, y se concibe como un archivo sensible del cruce —compañías momentáneas, paradas breves, emociones que dejan huella. El lanzamiento se monta como exhibición no lineal con estaciones de escucha individuales: cada visitante construye su propio recorrido entre fotografía, audífonos y pieza correspondiente. La estructura curatorial —imagen como punto de partida, sonido como respuesta— funciona como declaración de método del sello.
+Bajo el nombre ecamhi, presenta una propuesta instrumental y electrónica influenciada por el beatmaking, el jazz, el hip-hop y la música experimental, combinando elementos orgánicos con producción contemporánea. Actualmente se encuentra preparando el lanzamiento de un nuevo disco, un trabajo que expande su universo musical hacia sonidos más personales, atmosféricos y cinematográficos, consolidando una nueva etapa en su carrera como artista independiente.
 
-Como sesionista, integra desde hace años la sección de bronces de Newen Afrobeat. Su trompeta aparece en los LPs Curiche (2019) y Grietas (OfficeHome Records, 2024), donde además co-compone Mare Mare junto a Martin Concha y co-dirige el arte del disco con Tom Pavez.
-
-En su trabajo solista cruza música instrumental, jazz, electrónica de cámara y montajes interdisciplinares. La trompeta funciona como hilo —tema melódico, contracanto, atmósfera difusa— sobre arreglos que privilegian el silencio y la geometría espacial. La fotografía no es paratexto: muchas piezas existen sólo en relación con la imagen que las gatilló.
-
-Es la voz orquestal cruzada del ecosistema PHŌNÉ: además de Newen, aparece como invitado en Estudios Del Maipo: Live Session de Gestosimple & Klaus B (2025) y en el single Quisiera Entender de Klaus B (2023), grabado tras los viajes a Lagos con Newen Afrobeat. La voz invitada de su EP en viaje es Catalina Aguilera (Con.fusión); el sax y co-composición son de Vicente Aravena; el master, de Daniel Pérez.
-
-Continúa activo en la formación de Newen Afrobeat con presentaciones programadas en la gira Europa 2026.`,
+Próximos lanzamientos: álbum εποχή (2026), EP "en viaje" (2027).`,
       en:
-        `Enrique Camhi —Ecamhi— is a Chilean trumpet and flugelhorn player, producer and photographer whose solo work inhabits the zone where image and sound feed each other. He doesn't sign "music with photos" or "photos with music": both come from the same creative gesture and are published as a single object.
+        `ecamhi is the solo project of Enrique Camhi, a Chilean trumpet player, producer and composer with a trajectory tied to various key projects in the national music scene. Over the years he has worked as musician and creative alongside artists and bands such as Newen Afrobeat and La Combo Tortuga, developing an artistic identity marked by sonic exploration and the mixing of genres.
 
-He is preparing his debut EP, en viaje, the inaugural release of PHŌNÉ Records. The work departs from an archive of photographs captured during his international tours as trumpet player of Newen Afrobeat: each song is linked to an image taken in the transit between countries, conceived as a sensitive archive of crossing —momentary companions, brief stops, emotions that leave a mark. The launch is staged as a non-linear exhibition with individual listening stations: each visitor builds their own path between photograph, headphones and corresponding piece. The curatorial structure —image as starting point, sound as response— operates as a methodological statement for the label.
+Under the name ecamhi, he presents an instrumental and electronic proposal influenced by beatmaking, jazz, hip-hop and experimental music, combining organic elements with contemporary production. He is currently preparing the release of a new album — a work that expands his musical universe towards more personal, atmospheric and cinematographic sounds, consolidating a new stage in his career as an independent artist.
 
-As a session player, he has been part of Newen Afrobeat's brass section for years. His trumpet appears on the LPs Curiche (2019) and Grietas (OfficeHome Records, 2024), where he also co-composes Mare Mare with Martin Concha and co-directs the album art with Tom Pavez.
-
-In his solo work he crosses instrumental music, jazz, chamber electronics and interdisciplinary stagings. The trumpet operates as a thread —melodic theme, counter-line, diffuse atmosphere— over arrangements that privilege silence and spatial geometry. Photography is not paratext: many pieces only exist in relation to the image that triggered them.
-
-He is the cross-orchestra voice of the PHŌNÉ ecosystem: besides Newen, he appears as a guest in Estudios Del Maipo: Live Session by Gestosimple & Klaus B (2025) and on the single Quisiera Entender by Klaus B (2023), recorded after the Lagos tours with Newen Afrobeat. The guest voice on his en viaje EP is Catalina Aguilera (Con.fusión); sax and co-composition are by Vicente Aravena; mastering by Daniel Pérez.
-
-He continues active in Newen Afrobeat's formation with scheduled performances on the Europe 2026 tour.`,
+Upcoming releases: album εποχή (2026), EP "en viaje" (2027).`,
     },
     links: [
       { label: "Spotify", href: "https://open.spotify.com/artist/6dUvYBGnjpf2emwATOIP4c" },
@@ -172,29 +152,21 @@ He continues active in Newen Afrobeat's formation with scheduled performances on
     stats: { monthlyListeners: 8700 },
     bio: {
       es:
-        `Con.fusión es el proyecto solista de Catalina Aguilera Martínez: una propuesta vocal que transita entre el hip hop, el jazz, el neo soul y la exploración de la voz como territorio de investigación, no como decoración.
+        `Con.fusión es el proyecto musical solista de Catalina Aguilera Martínez, una propuesta que transita entre el hip hop, el jazz y el neosoul, incorporando exploraciones vocales que van desde el canto hasta el rap y el scat. Su trayectoria comienza en colaboración con el productor Fat Jota, desarrollando un sonido cercano al lo-fi hip hop, para luego evolucionar hacia la banda Fat Lady, donde profundiza en una fusión entre neosoul y rock a partir de composiciones previas. Ha participado en espacios como Beatminds, encuentro de hip hop dirigido por el beatmaker chileno DJ Dacel, consolidando su presencia en la escena.
 
-Su trayectoria se inicia en colaboración con el productor Fat Jota, con quien desarrolla un sonido cercano al lo-fi hip hop documentado en el EP verdad. Desde ahí evoluciona hacia la banda Fat Lady, donde el lenguaje se desplaza al cruce entre neo soul y rock. Ha participado activamente en festivales y plataformas como Beatminds (junto al DJ Dacel), Furia Jazz y otros circuitos de la escena chilena de música improvisada y urbana.
+En paralelo, ha desarrollado un amplio trabajo colaborativo en la música chilena, participando en grabaciones junto a Matiah Chinaski, Pablo Joaquín (en su disco Tintinea), Búfalo Dit (en Errores irrepetibles, producido por Jenry Cancura) y siendo parte del disco Del dicho al hecho del artista Terrible. Como intérprete versátil, se ha desempeñado además como corista para proyectos como Pau, La Hipocresía Mató al Gato y actualmente en la grabación de coros para la banda Newen Afrobeat.
 
-Su single Cantas Veces se publica como anticipo del trabajo en proceso. Es además la voz invitada del EP en viaje de Ecamhi —el lanzamiento inaugural de PHŌNÉ Records—, donde aparece como vocalista en piezas que cruzan trompeta y exploración tímbrica.
+Actualmente forma parte del show en vivo de Matiah Chinaski, donde aporta una presencia femenina en una escena predominantemente masculina, integrando canto, rap e improvisación vocal. Hoy se encuentra desarrollando su primer disco de larga duración "Tulpa" solista bajo el sello PHŌNÉ Records, consolidando una propuesta artística propia dentro de la música contemporánea chilena.
 
-Su práctica vocal va del canto ortodoxo al rap, al scat y a las texturas sin palabra: la voz se trabaja como instrumento en igualdad con los bronces y la electrónica. Las composiciones combinan estructuras del hip hop —beats, samples, breakbeat— con armonías heredadas del jazz contemporáneo y atmósferas cinematográficas, en una zona donde la canción y la pieza sonora se confunden.
-
-Está en producción su primer álbum Tulpa, laboratorio intensivo de investigación y creación a cargo del productor Jenry Cancura (alias Matiah Chinaski). El trabajo cruza hip hop, jazz, neo soul y prácticas de arte sonoro, con bronces y vientos —trompetas, saxofones— en atmósferas nocturnas y cinematográficas. Como referentes explícitos del proyecto figuran Tom Waits y Lhasa de Sela. El tracklist en proceso incluye Acertijo, En vez de quejarte tanto y Pisando caca a propósito.
-
-Ha postulado a la residencia FRECUENCIAS 2026 (Burdeos, Francia, octubre 2026) para profundizar en la dimensión escénica del proyecto. PHŌNÉ acompaña la producción de Tulpa con dirección creativa, asistencia en arreglos y curaduría visual, en un proceso de formato extendido que prioriza la incubación sobre el lanzamiento apurado.`,
+Próximos lanzamientos: single "Sueños" producido por ecamhi (junio 2026), "Tulpa" producido por Jenry Cancura / Matiah Chinaski (marzo 2027).`,
       en:
-        `Con.fusión is the solo project of Catalina Aguilera Martínez: a vocal proposal moving between hip hop, jazz, neo soul and the exploration of voice as a territory of research, not as decoration.
+        `Con.fusión is the solo musical project of Catalina Aguilera Martínez, a proposal moving between hip hop, jazz and neosoul, incorporating vocal explorations that range from singing to rap and scat. Her trajectory begins in collaboration with producer Fat Jota, developing a sound close to lo-fi hip hop, later evolving towards the band Fat Lady, where she deepens a fusion between neosoul and rock from earlier compositions. She has participated in spaces such as Beatminds, the hip hop gathering led by Chilean beatmaker DJ Dacel, consolidating her presence in the scene.
 
-Her trajectory begins in collaboration with producer Fat Jota, with whom she develops a sound close to lo-fi hip hop documented in the EP verdad. From there she evolves towards the band Fat Lady, where the language shifts to the crossing of neo soul and rock. She has actively participated in festivals and platforms like Beatminds (alongside DJ Dacel), Furia Jazz and other circuits of the Chilean improvised and urban music scene.
+In parallel, she has developed extensive collaborative work in Chilean music, recording with Matiah Chinaski, Pablo Joaquín (on his album Tintinea), Búfalo Dit (on Errores irrepetibles, produced by Jenry Cancura) and as part of Del dicho al hecho by the artist Terrible. As a versatile performer, she has also worked as backing vocalist for projects such as Pau, La Hipocresía Mató al Gato, and is currently recording choir parts for Newen Afrobeat.
 
-Her single Cantas Veces is released as a preview of the work in process. She is also the guest voice on Ecamhi's en viaje EP —the inaugural release of PHŌNÉ Records— appearing as vocalist on pieces that cross trumpet and timbral exploration.
+She is currently part of Matiah Chinaski's live show, where she contributes a female presence in a predominantly male scene, integrating song, rap and vocal improvisation. Today she is developing her first full-length solo album "Tulpa" under the PHŌNÉ Records label, consolidating an artistic proposal of her own within contemporary Chilean music.
 
-Her vocal practice ranges from orthodox singing to rap, scat and wordless textures: the voice is treated as an instrument on equal footing with brass and electronics. Compositions combine hip hop structures —beats, samples, breakbeat— with harmonies inherited from contemporary jazz and cinematic atmospheres, in a zone where song and sonic piece blur into each other.
-
-Her debut album Tulpa is in production, an intensive laboratory of research and creation led by producer Jenry Cancura (alias Matiah Chinaski). The work crosses hip hop, jazz, neo soul and sound art practices, with brass and winds —trumpets, saxophones— in nocturnal and cinematic atmospheres. Tom Waits and Lhasa de Sela appear as explicit references for the project. The tracklist in progress includes Acertijo, En vez de quejarte tanto and Pisando caca a propósito.
-
-She has applied to the FRECUENCIAS 2026 residency (Bordeaux, France, October 2026) to deepen the project's stage dimension. PHŌNÉ accompanies the production of Tulpa with creative direction, arrangement assistance and visual curation, in an extended-format process that prioritises incubation over rushed release.`,
+Upcoming releases: single "Sueños" produced by ecamhi (June 2026), "Tulpa" produced by Jenry Cancura / Matiah Chinaski (March 2027).`,
     },
     links: [
       { label: "Spotify", href: "https://open.spotify.com/artist/3LnpeMefgyavyTUTFNs5Xd" },
@@ -211,29 +183,21 @@ She has applied to the FRECUENCIAS 2026 residency (Bordeaux, France, October 202
     origin: "Santiago, Chile",
     bio: {
       es:
-        `Klaus B es saxofonista, flautista y productor santiaguino. Su música cruza nu-jazz, hip-hop jazz y neo-soul instrumental con un fraseo de viento que dialoga con J Dilla, los grooves orgánicos y la espiritualidad del jazz contemporáneo.
+        `Saxofonista, flautista, compositor y productor chileno. Realizó estudios independientes y académicos, tanto doctos como populares. Ha profundizado su desarrollo musical a través de la improvisación y de la experiencia en escenarios. Actualmente forma parte estable en diversos proyectos como Newen Afrobeat, Pascuala Ilabaca y Fauna, el dúo de hip-hop Gestosimple & Klaus B, Valentina Marinkovic, Fran Ri y Camila Bañados.
 
-Activo desde 2021, su catálogo en Bandcamp acumula ocho lanzamientos que alternan instrumentales atmosféricos con producciones colaborativas. La línea solista parte con los singles Viento Radiante (2021) —flauta funk con Diego Alarcón en teclados, Iván Araya en bajo y Tito Gevert en batería— y De Noche (2021), y se profundiza con El Secreto (2025) y Those Days Far Away (2025), este último co-producido por Lister Rossel (Mr.Li, Londres) con MC Seven Star (Orlando) y MC Racecar (París).
+Su enfoque artístico y su búsqueda personal actual están estrechamente vinculados al nu jazz y a géneros contemporáneos como el funk, el neo soul y el hip-hop, en una exploración constante de un sonido moderno e innovador. Este camino se centra en la calidad interpretativa, la expresividad y la musicalidad, integrando sus influencias dentro de un lenguaje propio.
 
-La línea colaborativa converge en el dúo extendido Gestosimple & Klaus B: el LP Viaje Sin Tiempo (2024, doce tracks con featurings de Fran Ri, DJ Dacel, Valentina Marinkovic, Cidtronyck, Celeste Shaw, Wagabond, Senciyo Samuel HuiZa y 22Ruzz) y el EP en vivo Estudios Del Maipo: Live Session (2025), grabado en Cajón del Maipo con Ecamhi en trompeta. La mixtape Memorias (2025) cierra una primera etapa: quince piezas grabadas a lo largo de varios años que funcionan como archivo personal de la práctica musical.
+Ha tocado en diversos escenarios y festivales alrededor del mundo, como en Brasil, Colombia, Ecuador, Estados Unidos, Canadá, Francia, Alemania, Austria, Bélgica, Holanda, Italia, España, Portugal, Inglaterra, Suecia, Suiza, Hungría, República Checa, Polonia, Rusia y Nigeria, haciendo de estas experiencias parte fundamental de su formación y aprendizaje.
 
-Las etiquetas habituales en su catálogo —rap jazz, future jazz, future funk, neo-soul instrumental, scratching— apuntan a una sensibilidad tributaria de la escuela post-Dilla con flauta y vocoder como firmas tímbricas. Las piezas se construyen como conversación entre vientos, teclados, bajo, batería orgánica y procesamiento sutil, manteniendo siempre el groove al frente.
-
-Dentro del ecosistema PHŌNÉ aparece en el LP Grietas de Newen Afrobeat (2024) como compositor de Es la Vida; el single Quisiera Entender feat. Newen Afrobeat (2023) fue producido tras gira a Lagos con la banda y cuenta con la sección de bronces de Newen completa, incluido Ecamhi en trompeta. Afuera del sello colabora con Gestosimple, Mr.Li, Cidtronyck, DJ Dacel, Valentina Marinkovic, Camila Fuentes, José Toledo, Pablo James y Diego Toro, entre otros.
-
-Adjudicó el Fondo de la Música 2026 para desarrollar un nuevo proyecto en colaboración con PHŌNÉ Records. El plan contempla desarrollo de identidad y dirección artística, ensayos y grabación entre junio y julio de 2026, y producción paralela de piezas visuales que acompañen la música. Es la primera entrega del artista bajo el sello.`,
+Próximos lanzamientos: álbum octubre 2026.`,
       en:
-        `Klaus B is a Santiago-based saxophonist, flutist and producer. His music crosses nu-jazz, hip-hop jazz and instrumental neo-soul with a wind phrasing that dialogues with J Dilla, organic grooves and contemporary jazz spirituality.
+        `Saxophone player, flautist, composer and producer from Chile. He pursued both independent and academic studies, in classical and popular music. He has deepened his musical development through improvisation and live experience. He is currently a stable member of various projects such as Newen Afrobeat, Pascuala Ilabaca y Fauna, the hip-hop duo Gestosimple & Klaus B, Valentina Marinkovic, Fran Ri and Camila Bañados.
 
-Active since 2021, his Bandcamp catalogue counts eight releases alternating atmospheric instrumentals with collaborative productions. The solo line starts with the singles Viento Radiante (2021) —flute funk with Diego Alarcón on keys, Iván Araya on bass and Tito Gevert on drums— and De Noche (2021), and deepens with El Secreto (2025) and Those Days Far Away (2025), the latter co-produced by Lister Rossel (Mr.Li, London) with MC Seven Star (Orlando) and MC Racecar (Paris).
+His artistic focus and current personal search are closely tied to nu jazz and contemporary genres such as funk, neo soul and hip-hop, in a constant exploration of a modern and innovative sound. The path centres on interpretive quality, expressivity and musicality, integrating his influences into a personal language.
 
-The collaborative line converges in the extended duo Gestosimple & Klaus B: the LP Viaje Sin Tiempo (2024, twelve tracks with features by Fran Ri, DJ Dacel, Valentina Marinkovic, Cidtronyck, Celeste Shaw, Wagabond, Senciyo Samuel HuiZa and 22Ruzz) and the live EP Estudios Del Maipo: Live Session (2025), recorded in Cajón del Maipo with Ecamhi on trumpet. The mixtape Memorias (2025) closes a first chapter: fifteen pieces recorded over several years functioning as a personal archive of musical practice.
+He has played on stages and at festivals around the world — Brazil, Colombia, Ecuador, United States, Canada, France, Germany, Austria, Belgium, Netherlands, Italy, Spain, Portugal, England, Sweden, Switzerland, Hungary, Czech Republic, Poland, Russia and Nigeria — making these experiences a fundamental part of his formation and learning.
 
-The usual tags across his catalogue —rap jazz, future jazz, future funk, instrumental neo-soul, scratching— point to a sensibility tributary to the post-Dilla school with flute and vocoder as timbral signatures. Pieces are built as a conversation between winds, keys, bass, organic drums and subtle processing, always keeping the groove at the front.
-
-Within the PHŌNÉ ecosystem he appears on the LP Grietas by Newen Afrobeat (2024) as composer of Es la Vida; the single Quisiera Entender feat. Newen Afrobeat (2023) was produced after the Lagos tour with the band and features Newen's complete brass section, including Ecamhi on trumpet. Outside the label he collaborates with Gestosimple, Mr.Li, Cidtronyck, DJ Dacel, Valentina Marinkovic, Camila Fuentes, José Toledo, Pablo James and Diego Toro, among others.
-
-He was awarded the 2026 Fondo de la Música to develop a new project in collaboration with PHŌNÉ Records. The plan includes identity development and artistic direction, rehearsals and recording between June and July 2026, and parallel production of visual pieces accompanying the music. It will be the artist's first delivery under the label.`,
+Upcoming releases: album October 2026.`,
     },
     links: [
       { label: "Bandcamp", href: "https://klausb.bandcamp.com/music" },
@@ -260,29 +224,17 @@ He was awarded the 2026 Fondo de la Música to develop a new project in collabor
     origin: "Chile",
     bio: {
       es:
-        `Andrés Abrigo es un productor chileno cuyo trabajo se aleja de la fabricación de beats para acercarse a la composición ambient y experimental. La pieza, no la pista, es la unidad mínima de su práctica.
+        `Andrés Abrigo es realizador en cine y televisión, con una trayectoria ligada a la dirección, el montaje, la fotografía y la composición musical. Su trabajo se ha desarrollado entre el cine, las artes escénicas y la creación audiovisual, construyendo una sensibilidad marcada por la exploración atmosférica y narrativa del sonido.
 
-Sus exploraciones iniciales —documentadas en redes y SoundCloud— combinan drum machine, bajo, trompeta y pianos en piezas atmosféricas que privilegian la duración y el detalle por sobre el impacto rítmico. La etiqueta interna del proyecto, post-tempo, condensa una intención: salir de la cuadrícula del compás cerrado para componer en tiempos más abiertos.
+Actualmente inicia su proyecto musical solista, orientado hacia los lenguajes del down tempo y el post dubstep, trabajando en la creación de su primer álbum. Su propuesta se construye a partir de sintetizadores, drum machines y paisajes sonoros que dialogan con la imagen, la textura y la experimentación electrónica, dando forma a composiciones de carácter inmersivo y cinematográfico.
 
-El cuerpo de trabajo en proceso bajo PHŌNÉ Records incluye ocho stems de estudio actualmente en desarrollo —Cumbia Andino, Dos, Ensayo Ansiedad, Post Dub Jam, Sábanas, Simple, Uno y Útero— que serán curados en su primer EP.
-
-El registro se mueve entre ambient, downtempo, post-dubstep y formas híbridas que resisten clasificación neta. Atmósferas de grano fino, bajos densos, trompetas filtradas, pianos preparados y secuencias que priorizan la respiración por sobre la repetición. Cada pieza es escrita como objeto único, no como track de DJ set.
-
-El proyecto se desarrolla bajo dirección creativa de PHŌNÉ Records, con acompañamiento en ensamblaje sonoro, arreglos y dirección de arte. La conexión con el resto del roster es indirecta —comparten ecosistema antes que sesiones— y abre la posibilidad de diálogos cruzados con Ecamhi (trompeta) o Klaus B (vientos) en futuras grabaciones.
-
-El cronograma 2026 contempla esbozo de cinco temas como primer hito (agosto) y mezcla y máster proyectados para septiembre. El EP debut funcionará como carta de presentación pública del artista bajo el sello, con materiales visuales y editoriales producidos en paralelo.`,
+Próximos lanzamientos: álbum marzo 2027.`,
       en:
-        `Andrés Abrigo is a Chilean producer whose work moves away from beat-making and towards ambient and experimental composition. The piece, not the track, is the minimum unit of his practice.
+        `Andrés Abrigo is a film and television director, with a trajectory tied to direction, editing, photography and musical composition. His work has developed across cinema, performing arts and audiovisual creation, building a sensibility marked by atmospheric and narrative sonic exploration.
 
-His initial explorations —documented on social media and SoundCloud— combine drum machine, bass, trumpet and pianos in atmospheric pieces that privilege duration and detail over rhythmic impact. The project's internal tag, post-tempo, condenses an intention: to leave the grid of closed time signatures to compose in more open temporalities.
+He is currently beginning his solo musical project, oriented towards the languages of downtempo and post dubstep, working on the creation of his first album. His proposal is built from synthesisers, drum machines and soundscapes that dialogue with image, texture and electronic experimentation, giving shape to immersive, cinematographic compositions.
 
-The body of work in progress under PHŌNÉ Records includes eight studio stems currently in development —Cumbia Andino, Dos, Ensayo Ansiedad, Post Dub Jam, Sábanas, Simple, Uno and Útero— that will be curated into his debut EP.
-
-The register moves between ambient, downtempo, post-dubstep and hybrid forms resisting clean classification. Fine-grain atmospheres, dense basses, filtered trumpets, prepared pianos and sequences prioritising breathing over repetition. Each piece is written as a unique object, not as a DJ-set track.
-
-The project is developed under PHŌNÉ Records' creative direction, with support on sound assembly, arrangements and art direction. The connection with the rest of the roster is indirect —they share an ecosystem rather than sessions— and opens the possibility for cross-dialogues with Ecamhi (trumpet) or Klaus B (winds) in future recordings.
-
-The 2026 schedule contemplates sketches of five tracks as a first milestone (August) and mixing and mastering projected for September. The debut EP will function as the artist's public introduction under the label, with visual and editorial materials produced in parallel.`,
+Upcoming releases: album March 2027.`,
     },
     links: [],
     releases: [
