@@ -1265,7 +1265,7 @@ export const releases: Release[] = [
   },
   {
     slug: "claudio-solis-chileans-are-playing",
-    title: "Chileans Are Playing — VA",
+    title: "Chileans Are Playing 2 — VA",
     artistSlug: "claudio-solis",
     artistName: "Claudio Solis",
     releaseDate: "2021-07-30",
@@ -1275,8 +1275,8 @@ export const releases: Release[] = [
     label: "Agua y Sed",
     cover: "https://i.discogs.com/65_5eaMUvo7kn2fE74qBx29OgSblNVGH-o0uLyuA4Vg/rs:fit/g:sm/q:90/h:416/w:422/czM6Ly9kaXNjb2dz/LWRhdGFiYXNlLWlt/YWdlcy9SLTIwNzM4/MjA5LTE2MzUyNTk0/NzUtNzY4NC5qcGVn.jpeg",
     description: {
-      es: "Compilación 12\" de Agua y Sed (catálogo AYSLTD002) que reúne a productores chilenos bajo la curaduría histórica de Solís. Funciona como tarjeta de presentación internacional del sello: el sticker #ChileansArePlaying viene de aquí. Sold out poco después de su lanzamiento, queda como uno de los pocos vinilos del catálogo Agua y Sed —en su mayoría digital— y como documento de una escena local en plena consolidación post-pandemia.",
-      en: "12\" compilation from Agua y Sed (cat AYSLTD002) gathering Chilean producers under Solís's historical curation. Functions as the label's international calling card: the #ChileansArePlaying tag originates here. Sold out shortly after release, it remains one of the few vinyls in the Agua y Sed catalogue — mostly digital — and a document of a local scene in full post-pandemic consolidation.",
+      es: "Segunda entrega de la serie Chileans Are Playing (Agua y Sed, catálogo AYSLTD002) y única editada en vinilo 12\". Compilación que reúne a productores chilenos bajo la curaduría histórica de Solís y funciona como tarjeta de presentación internacional del sello: el sticker #ChileansArePlaying viene de aquí. Sold out poco después de su lanzamiento, queda como uno de los pocos vinilos del catálogo Agua y Sed —en su mayoría digital— y como documento de una escena local en plena consolidación post-pandemia.",
+      en: "Second installment in the Chileans Are Playing series (Agua y Sed, cat AYSLTD002) and the only one pressed on 12\" vinyl. Compilation gathering Chilean producers under Solís's historical curation — functions as the label's international calling card: the #ChileansArePlaying tag originates here. Sold out shortly after release, it remains one of the few vinyls in the Agua y Sed catalogue — mostly digital — and a document of a local scene in full post-pandemic consolidation.",
     },
   },
   {
