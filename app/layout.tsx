@@ -5,6 +5,7 @@ import { Instrument_Sans, Instrument_Serif, JetBrains_Mono, Fraunces } from 'nex
 import { Analytics } from '@vercel/analytics/next'
 import { SpeedInsights } from '@vercel/speed-insights/next'
 import { GoogleTagManager, GoogleAnalytics } from '@next/third-parties/google'
+import Script from 'next/script'
 import './globals.css'
 
 const instrumentSans = Instrument_Sans({
@@ -92,6 +93,11 @@ export default async function RootLayout({
         <Analytics />
         <SpeedInsights />
         <GoogleAnalytics gaId="G-EG3K77X96Y" />
+        <Script
+          src="https://analytics.ahrefs.com/analytics.js"
+          data-key="0TGL5CM0s/+asLNuWTfObw"
+          strategy="afterInteractive"
+        />
       </body>
     </html>
   )
