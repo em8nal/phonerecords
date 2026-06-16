@@ -76,47 +76,6 @@ Upcoming releases: 1 single (second half of 2026), album 2026/2027.`,
     stats: { spotifyFollowers: 66199, monthlyListeners: 28729, youtubeSubs: 44200 },
   },
   {
-    slug: "claudio-solis",
-    name: "Claudio Solís",
-    genres: ["Dark Minimal", "Minimal Techno"],
-    origin: "Santiago, Chile",
-    stats: { monthlyListeners: 155 },
-    bio: {
-      es:
-        `Claudio Solís es DJ, productor y curador chileno radicado en Santiago. Trabaja entre minimal techno, dark minimal y breakbeat, con énfasis en estructuras rítmicas pausadas y atmósferas extendidas.
-
-Activo desde 2009, ese año fundó el sello Agua y Sed, dedicado a la escena electrónica chilena: 195 lanzamientos y más de 300 artistas pasaron por su catálogo entre 2009 y 2022. En 2023 inició Aquarians, sello hermano enfocado en dark minimal, con artistas de Chile, Rumania, México, Estados Unidos, Australia y Nueva Zelanda. Su propio imprint Vyasa Discos prensa la mayoría de sus vinilos.
-
-Como artista cuenta con más de treinta y ocho lanzamientos en vinilo entre 2017 y 2026, distribuidos en Vyasa Discos, Aquarians, 5 Universos Records, P.U.N.C.H.I.S. Records, Gilesku Records, FAFO Records y Agua y Sed. Series principales: Sons of Medusa, Occvltheque, Doing Without Saying, Pleroma, Kirtan Club, Nothing But The Truth y La Puerta Abre Hacia Adentro. En paralelo publica digitalmente en Inwave, Advisual Records, Cavilar, Paravibe Records, Brosh Records, Robot Ranch, Nihil Sine Musica y Minimum Music Mindset, entre otros.
-
-Además del trabajo solista, hace el mastering del catálogo completo de 5 Universos Records (vinilo y digital). Firma también el diseño gráfico del LP Grietas de Newen Afrobeat (OfficeHome Records, 2024) y del LP Fiesta Groove Humo de Tercer Tipo (Ferona Discos, 2018).
-
-Dentro del ecosistema PHŌNÉ co-firma con Enrique Camhi (Ecamhi) el EP Ebs y el single Mystical Healers I (2023), y con Fco Martinez los singles Noche Oscura Del Alma (2023) y Apagón (2024).
-
-Sus sets privilegian sesiones largas, atmósfera y narrativa. Ha tocado en Club der Visionaere (Berlín), Trotamundo Festival (Ecuador) y mantiene presencia constante en circuitos minimal de Chile y Europa.`,
-      en:
-        `Claudio Solís is a Chilean DJ, producer and label curator based in Santiago. He works between minimal techno, dark minimal and breakbeat, with a focus on measured rhythmic structures and extended atmospheres.
-
-Active since 2009, that year he founded the label Agua y Sed, dedicated to the Chilean electronic scene: 195 releases and more than 300 artists passed through its catalogue between 2009 and 2022. In 2023 he started Aquarians, a sister label focused on dark minimal, with artists from Chile, Romania, Mexico, the United States, Australia and New Zealand. His own imprint Vyasa Discos presses most of his vinyls.
-
-As an artist his vinyl catalogue counts more than thirty-eight releases between 2017 and 2026, distributed on Vyasa Discos, Aquarians, 5 Universos Records, P.U.N.C.H.I.S. Records, Gilesku Records, FAFO Records and Agua y Sed. Main series: Sons of Medusa, Occvltheque, Doing Without Saying, Pleroma, Kirtan Club, Nothing But The Truth and La Puerta Abre Hacia Adentro. He also releases digitally on Inwave, Advisual Records, Cavilar, Paravibe Records, Brosh Records, Robot Ranch, Nihil Sine Musica and Minimum Music Mindset, among others.
-
-Beyond solo work, he masters the full 5 Universos Records catalogue (vinyl and digital). He also signs the graphic design for Newen Afrobeat's LP Grietas (OfficeHome Records, 2024) and for Tercer Tipo's LP Fiesta Groove Humo (Ferona Discos, 2018).
-
-Within the PHŌNÉ ecosystem he co-signs the EP Ebs and the single Mystical Healers I (2023) with Enrique Camhi (Ecamhi), and the singles Noche Oscura Del Alma (2023) and Apagón (2024) with Fco Martinez.
-
-His sets favour long sessions, atmosphere and narrative. He has played at Club der Visionaere (Berlin), Trotamundo Festival (Ecuador) and maintains a steady presence in minimal circuits in Chile and Europe.`,
-    },
-    links: [
-      { label: "Spotify", href: "https://open.spotify.com/artist/7Ldq8qyOs4jJ42cN1oD4qN" },
-      { label: "SoundCloud", href: "https://soundcloud.com/solisolisolis" },
-      { label: "Bandcamp", href: "https://claudiosolis.bandcamp.com" },
-      { label: "Instagram", href: "https://www.instagram.com/solisolisolis/" },
-    ],
-    releases: [
-    ],
-  },
-  {
     slug: "ecamhi",
     name: "Ecamhi",
     genres: ["Instrumental", "Jazz", "Interdisciplinar"],

@@ -12,7 +12,6 @@ function buildFooterLinks(lang: "es" | "en"): Record<string, FooterHref[]> {
     // Order matches translations.ts: Newen, Claudio, Ecamhi, Con.fusión
     Roster: [
       { href: `/${lang}/artistas/newen-afrobeat` },
-      { href: `/${lang}/artistas/claudio-solis` },
       { href: `/${lang}/artistas/ecamhi` },
       { href: `/${lang}/artistas/con-fusion` },
     ],

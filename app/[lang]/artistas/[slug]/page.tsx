@@ -70,7 +70,6 @@ type ArtistParams = { lang: string; slug: string };
 // Whitelist of artist slugs that have a portrait in /public/artists/<slug>.jpg.
 // Update this set when adding new photo files.
 const ARTISTS_WITH_PHOTO = new Set([
-  "claudio-solis",
   "newen-afrobeat",
   "con-fusion",
   "klaus-brantmayer",

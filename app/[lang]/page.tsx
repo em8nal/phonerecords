@@ -22,8 +22,8 @@ export async function generateMetadata(
     ? "PHŌNÉ Records — Sello cultural independiente · Santiago de Chile"
     : "PHŌNÉ Records — Independent cultural label · Santiago, Chile";
   const description = isEs
-    ? "Sello cultural independiente con dirección autoral. Roster latinoamericano en diálogo con circuitos globales: Newen Afrobeat, Claudio Solís, Ecamhi, Klaus B."
-    : "Independent cultural label from Santiago, Chile. Latin American roster in dialogue with global circuits: Newen Afrobeat, Claudio Solís, Ecamhi, Klaus B.";
+    ? "Sello cultural independiente con dirección autoral. Roster latinoamericano en diálogo con circuitos globales: Newen Afrobeat, Ecamhi, Con.fusión, Klaus B."
+    : "Independent cultural label from Santiago, Chile. Latin American roster in dialogue with global circuits: Newen Afrobeat, Ecamhi, Con.fusión, Klaus B.";
   return {
     // Use `absolute` so the layout-level title template doesn't append "— PHŌNÉ Records" twice on the home page.
     title: { absolute: title },
@@ -114,7 +114,6 @@ export default async function Home({
         ],
         member: [
           { "@type": "MusicGroup", name: "Newen Afrobeat", url: `https://phonerecords.cl/${lang}/artistas/newen-afrobeat` },
-          { "@type": "MusicGroup", name: "Claudio Solís", url: `https://phonerecords.cl/${lang}/artistas/claudio-solis` },
           { "@type": "MusicGroup", name: "Ecamhi", url: `https://phonerecords.cl/${lang}/artistas/ecamhi` },
           { "@type": "MusicGroup", name: "Con.fusión", url: `https://phonerecords.cl/${lang}/artistas/con-fusion` },
           { "@type": "MusicGroup", name: "Klaus Brantmayer", url: `https://phonerecords.cl/${lang}/artistas/klaus-brantmayer` },

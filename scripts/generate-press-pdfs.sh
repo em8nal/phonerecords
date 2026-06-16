@@ -26,7 +26,7 @@ if ! curl -fs -o /dev/null "$BASE/es"; then
   exit 1
 fi
 
-ARTISTS=(newen-afrobeat claudio-solis ecamhi con-fusion klaus-brantmayer andres-abrigo)
+ARTISTS=(newen-afrobeat ecamhi con-fusion klaus-brantmayer andres-abrigo)
 LANGS=(es en)
 
 gen() {

@@ -16,8 +16,8 @@ export async function generateMetadata(
   return {
     title: isEs ? "Catálogo" : "Catalogue",
     description: isEs
-      ? "Catálogo completo PHŌNÉ Records: discos, EPs, sesiones en vivo y singles del roster — Newen Afrobeat, Claudio Solís, Ecamhi, Con.fusión, Klaus B, Andrés Abrigo."
-      : "Complete PHŌNÉ Records catalogue: albums, EPs, live sessions and singles from the roster — Newen Afrobeat, Claudio Solís, Ecamhi, Con.fusión, Klaus B, Andrés Abrigo.",
+      ? "Catálogo completo PHŌNÉ Records: discos, EPs, sesiones en vivo y singles del roster — Newen Afrobeat, Ecamhi, Con.fusión, Klaus B, Andrés Abrigo."
+      : "Complete PHŌNÉ Records catalogue: albums, EPs, live sessions and singles from the roster — Newen Afrobeat, Ecamhi, Con.fusión, Klaus B, Andrés Abrigo.",
     alternates: {
       canonical: `https://phonerecords.cl/${lang}/catalogo`,
       languages: {

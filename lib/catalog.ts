@@ -52,20 +52,7 @@ function isVinyl(format: string): boolean {
   return /(vinilo|vinyl|12"|7"|10")/i.test(format);
 }
 
-// Per-artist curation for /catalogo. Solis publishes prolifically; on PHŌNÉ
-// catalog we only surface vinyls + roster collabs (with Ecamhi). Full digital
-// catalog stays on his /artistas/claudio-solis page.
-type CatalogRule = {
-  /** Keep entry only if it matches one of these predicates. */
-  keep?: (entry: CatalogEntry) => boolean;
-};
-
-const CATALOG_RULES: Record<string, CatalogRule> = {
-  "claudio-solis": {
-    keep: (e) =>
-      isVinyl(e.format) || e.matchArtistSlugs.includes("ecamhi"),
-  },
-};
+const CATALOG_RULES: Record<string, CatalogRule> = {};
 
 function applyCatalogRules(entries: CatalogEntry[]): CatalogEntry[] {
   return entries.filter((e) => {

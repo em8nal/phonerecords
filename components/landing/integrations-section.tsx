@@ -6,7 +6,6 @@ import { useLanguage } from "@/lib/language-context";
 
 const roster = [
   { slug: "newen-afrobeat", name: "Newen Afrobeat", genre: "Afrobeat · Afrofunk", country: "Chile / international" },
-  { slug: "claudio-solis", name: "Claudio Solís", genre: "Dark Minimal · Techno", country: "Santiago, Chile" },
   { slug: "ecamhi", name: "Ecamhi", genre: "Instrumental · Interdisciplinary", country: "Santiago, Chile" },
   { slug: "con-fusion", name: "Con.fusión", genre: "Hip hop · Jazz · Neo soul", country: "Santiago, Chile" },
   { slug: "klaus-brantmayer", name: "Klaus Brantmayer", genre: "Nu-jazz · Hip-hop jazz", country: "Santiago, Chile" },

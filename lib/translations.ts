@@ -167,14 +167,6 @@ export const translations = {
       items: [
         {
           quote:
-            "Resists spectacle. Privileges atmosphere over impact and narrative over immediacy. A discreet bridge between Latin America and the European minimal movement.",
-          author: "Claudio Solís",
-          role: "Dark Minimal · Producer",
-          company: "PHŌNÉ ROSTER",
-          metric: "27 releases · 2023–2025",
-        },
-        {
-          quote:
             "Image and sound born from the same creative process. Each photograph captured on tour inspired a song.",
           author: "Ecamhi",
           role: "Trumpet · Composer · Producer",
@@ -214,7 +206,7 @@ export const translations = {
       tagline:
         "PHŌNÉ Records · independent cultural label · Santiago de Chile · in dialogue with European and Latin American circuits.",
       links: {
-        Roster: ["Newen Afrobeat", "Claudio Solís", "Ecamhi", "Con.fusión"],
+        Roster: ["Newen Afrobeat", "Ecamhi", "Con.fusión", "Klaus B"],
         Catalogue: ["Releases", "Vinyl", "Cassette", "Digital"],
         Label: ["About", "Manifesto", "Press kit", "Contact"],
         Connect: ["Instagram", "Bandcamp", "Spotify", "YouTube"],
@@ -392,14 +384,6 @@ export const translations = {
       items: [
         {
           quote:
-            "Resiste el espectáculo. Privilegia la atmósfera por sobre el impacto y la narrativa por sobre la inmediatez. Un puente discreto entre Latinoamérica y el movimiento minimal europeo.",
-          author: "Claudio Solís",
-          role: "Dark Minimal · Productor",
-          company: "PHŌNÉ ROSTER",
-          metric: "27 releases · 2023–2025",
-        },
-        {
-          quote:
             "Imagen y sonido nacieron del mismo proceso creativo. Cada fotografía capturada en gira inspiró una canción.",
           author: "Ecamhi",
           role: "Trompeta · Compositor · Productor",
@@ -439,7 +423,7 @@ export const translations = {
       tagline:
         "PHŌNÉ Records · sello cultural independiente · Santiago de Chile · en diálogo con circuitos europeos y latinoamericanos.",
       links: {
-        Roster: ["Newen Afrobeat", "Claudio Solís", "Ecamhi", "Con.fusión"],
+        Roster: ["Newen Afrobeat", "Ecamhi", "Con.fusión", "Klaus B"],
         Catalogue: ["Releases", "Vinilo", "Cassette", "Digital"],
         Label: ["Sobre PHŌNÉ", "Manifiesto", "Press kit", "Contacto"],
         Connect: ["Instagram", "Bandcamp", "Spotify", "YouTube"],
