@@ -6,7 +6,8 @@ import Image from "next/image";
 import { useLanguage } from "@/lib/language-context";
 import { getArtistPortrait } from "@/lib/artist-media";
 
-const roster = [
+// Mismo orden y nombres que lib/artists.ts (lo vigila `pnpm test:roster`).
+export const roster = [
   { slug: "newen-afrobeat", name: "Newen Afrobeat", genre: "Afrobeat · Afrofunk", country: "Chile / international" },
   { slug: "ecamhi", name: "ecamhi", genre: "Instrumental · Interdisciplinary", country: "Santiago, Chile" },
   { slug: "con-fusion", name: "Con.fusión", genre: "Hip hop · Jazz · Neo soul", country: "Santiago, Chile" },
