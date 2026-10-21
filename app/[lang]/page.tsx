@@ -80,7 +80,7 @@ export default async function Home({
         "@id": "https://phonerecords.cl/#organization",
         name: "PHŌNÉ Records",
         url: "https://phonerecords.cl",
-        logo: "https://phonerecords.cl/phone-logo-dark.png",
+        logo: "https://phonerecords.cl/brand/phone-logotipo.png",
         description: isEs
           ? "Sello cultural independiente con dirección autoral. Producción integral, management y curaduría de música independiente latinoamericana."
           : "Independent cultural label with strong authorial direction. Integral production, management and curation of independent Latin American music.",

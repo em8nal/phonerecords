@@ -1,11 +1,11 @@
 "use client";
 
 import { useState, useEffect } from "react";
-import Image from "next/image";
 import { Button } from "@/components/ui/button";
 import { Menu, X } from "lucide-react";
 import { useLanguage } from "@/lib/language-context";
 import { LanguageSelector } from "@/components/language-selector";
+import { Logo } from "@/components/phone/logo";
 
 export function Navigation() {
   const { t, language } = useLanguage();
@@ -52,14 +52,9 @@ export function Navigation() {
           }`}
         >
           {/* Logo */}
-          <a href={home} className="flex items-center group" aria-label="PHŌNÉ Records">
-            <Image
-              src="/phone-logo-dark.png"
-              alt="PHŌNÉ Records"
-              width={2000}
-              height={2000}
-              priority
-              className={`w-auto transition-all duration-500 ${isScrolled ? "h-7" : "h-9"}`}
+          <a href={home} className="flex items-center group text-foreground">
+            <Logo
+              className={`w-auto transition-all duration-500 ${isScrolled ? "h-7" : "h-8"}`}
             />
           </a>
 

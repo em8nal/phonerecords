@@ -1,9 +1,9 @@
 "use client";
 
-import Image from "next/image";
 import { ArrowUpRight } from "lucide-react";
 import { AnimatedWave } from "./animated-wave";
 import { useLanguage } from "@/lib/language-context";
+import { Logo } from "@/components/phone/logo";
 
 type FooterHref = { href: string; external?: boolean; hasBadge?: boolean };
 
@@ -69,14 +69,8 @@ export function FooterSection() {
           <div className="grid grid-cols-2 md:grid-cols-6 gap-12 lg:gap-8">
             {/* Brand Column */}
             <div className="col-span-2">
-              <a href={`/${language}`} className="inline-flex items-center mb-6" aria-label="PHŌNÉ Records">
-                <Image
-                  src="/phone-logo-dark.png"
-                  alt="PHŌNÉ Records"
-                  width={2000}
-                  height={2000}
-                  className="h-12 w-auto"
-                />
+              <a href={`/${language}`} className="inline-flex items-center mb-6 text-foreground">
+                <Logo className="h-10 w-auto" />
               </a>
 
               <p className="text-muted-foreground leading-relaxed mb-8 max-w-xs">
