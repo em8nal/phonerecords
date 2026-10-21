@@ -50,11 +50,11 @@ const copy = {
 Siempre, sin necesidad de consentimiento:
 — Una cookie técnica llamada "phone_lang" para recordar tu preferencia de idioma (ES o EN). Esta cookie vive un año y se elimina cuando borras las cookies de tu navegador.
 — Una cookie técnica llamada "phone_consent" que guarda tu decisión sobre la analítica ("granted" si aceptas, "denied" si rechazas) para no volver a preguntarte. Misma duración.
-— Vercel Web Analytics, que cuenta visitas sin recolectar dirección IP, sin huella digital, sin cookies de seguimiento. Es agregado y anónimo.
-— Vercel Speed Insights, que mide rendimiento de carga (LCP, INP, CLS) de forma anónima.
+— Vercel Web Analytics, que cuenta visitas sin recolectar dirección IP, sin huella digital, sin cookies de seguimiento. No usa cookies.
+— Vercel Speed Insights, que mide rendimiento de carga (LCP, INP, CLS) sin cookies.
 
 Sin tu consentimiento (si rechazas o aún no decides):
-— Google Tag Manager y Google Analytics 4 se cargan igualmente, pero en modo de consentimiento (Consent Mode de Google) con el almacenamiento de analítica denegado: no guardan cookies ni identificadores de analítica y solo reciben señales básicas sin cookies (pings agregados, sin perfil de usuario).
+— Google Tag Manager y Google Analytics 4 se cargan igualmente, pero en modo de consentimiento (Consent Mode de Google) con el almacenamiento de analítica denegado: no guardan cookies ni identificadores de analítica y solo reciben datos técnicos, sin cookies ni identificadores persistentes; Google puede recibir datos técnicos como la página visitada.
 — Ahrefs Analytics no se carga.
 
 Solo con tu consentimiento (si aceptas en el banner de cookies):
@@ -70,17 +70,19 @@ Si nos escribes por el formulario de contacto (phonerecords.cl/es/contacto), con
         title: "3 · Cómo usamos los datos",
         body: `— La preferencia de idioma se usa únicamente para servir el contenido en el idioma que elegiste.
 — Tu decisión sobre cookies ("phone_consent") se usa solo para recordar si cargar o no la analítica con consentimiento.
-— Si aceptas, la analítica completa (Google Analytics 4 y Ahrefs Analytics) nos ayuda a entender qué páginas funcionan y cuáles no, para mejorar el sitio. Sin consentimiento, solo se reciben señales básicas agregadas, sin cookies ni identificadores.
-— Las analíticas anónimas de Vercel y los datos de Speed Insights se usan para medir el uso y optimizar la velocidad de carga.
+— Si aceptas, la analítica completa (Google Analytics 4 y Ahrefs Analytics) nos ayuda a entender qué páginas funcionan y cuáles no, para mejorar el sitio. Sin consentimiento, Google solo recibe datos técnicos, sin cookies ni identificadores persistentes; Google puede recibir datos técnicos como la página visitada.
+— Las analíticas de Vercel y los datos de Speed Insights se usan para medir el uso y optimizar la velocidad de carga.
 — No vendemos, alquilamos ni compartimos tus datos con terceros para marketing.`,
       },
       {
         title: "4 · Compartición con terceros",
         body: `El sitio se aloja en Vercel (vercel.com). Sus servicios procesan las solicitudes que llegan al sitio para servir las páginas. Vercel actúa como encargado de tratamiento bajo sus propios términos de privacidad (https://vercel.com/legal/privacy-policy).
 
-Google (Google Analytics 4 y Google Tag Manager; política en policies.google.com/privacy) está presente en el sitio aunque no aceptes la analítica, pero en ese caso opera en modo de consentimiento: solo recibe señales básicas sin cookies ni identificadores (pings agregados, sin perfil de usuario). Solo si aceptas, se activan las cookies e identificadores de analítica de Google Analytics 4 y se carga Ahrefs (Ahrefs Analytics; política en ahrefs.com/privacy), que recibe datos de navegación del sitio para generar estadísticas de uso.
+Google (Google Analytics 4 y Google Tag Manager; política en policies.google.com/privacy) está presente en el sitio aunque no aceptes la analítica, pero en ese caso opera en modo de consentimiento: solo recibe datos técnicos, sin cookies ni identificadores persistentes; Google puede recibir datos técnicos como la página visitada. Solo si aceptas, se activan las cookies e identificadores de analítica de Google Analytics 4 y se carga Ahrefs (Ahrefs Analytics; política en ahrefs.com/privacy), que recibe datos de navegación del sitio para generar estadísticas de uso.
 
 Los embeds de Spotify (open.spotify.com) en las páginas de artista cargan contenido directamente desde Spotify cuando interactúas con ellos. Spotify puede establecer sus propias cookies; sus términos están en spotify.com/legal/privacy-policy.
+
+Los videos de YouTube se insertan con el dominio de privacidad mejorada (youtube-nocookie.com). Al cargar el reproductor, YouTube/Google recibe datos técnicos y, si reproduces el video, puede guardar cookies o almacenamiento local. Más información en policies.google.com/privacy.
 
 No utilizamos Meta Pixel ni publicidad de terceros.`,
       },
@@ -102,7 +104,7 @@ Para ejercer cualquiera de estos derechos, escríbenos por el formulario en phon
         body: `— Cookies técnicas ("phone_lang", "phone_consent"): 1 año desde que se establecen, salvo que borres las cookies de tu navegador.
 — Cookies de analítica de Google (solo con consentimiento): la duración la define Google; puedes eliminarlas en cualquier momento borrando las cookies del sitio.
 — Correos recibidos: conservados mientras tenga sentido para mantener la conversación; máximo 5 años.
-— Datos de analíticas (Google Analytics, Ahrefs, Vercel): se usan de forma agregada; cada proveedor los retiene según sus políticas y la configuración de nuestras cuentas.`,
+— Datos de analíticas (Google Analytics, Ahrefs, Vercel): se usan en conjunto; cada proveedor los retiene según sus políticas y la configuración de nuestras cuentas.`,
       },
       {
         title: "7 · Seguridad",
@@ -140,11 +142,11 @@ PHŌNÉ Records
 Always, no consent needed:
 — A technical cookie called "phone_lang" to remember your language preference (ES or EN). This cookie lives one year and is deleted when you clear your browser cookies.
 — A technical cookie called "phone_consent" that stores your analytics decision ("granted" if you accept, "denied" if you reject) so we don't ask again. Same duration.
-— Vercel Web Analytics, which counts visits without collecting IP address, without fingerprinting, without tracking cookies. It is aggregate and anonymous.
-— Vercel Speed Insights, which measures load performance (LCP, INP, CLS) anonymously.
+— Vercel Web Analytics, which counts visits without collecting IP address, without fingerprinting, without tracking cookies. It uses no cookies.
+— Vercel Speed Insights, which measures load performance (LCP, INP, CLS) without cookies.
 
 Without your consent (if you reject or haven't decided yet):
-— Google Tag Manager and Google Analytics 4 still load, but in consent mode (Google Consent Mode) with analytics storage denied: they do not store analytics cookies or identifiers and only receive basic signals without cookies (aggregate pings, no user profile).
+— Google Tag Manager and Google Analytics 4 still load, but in consent mode (Google Consent Mode) with analytics storage denied: they do not store analytics cookies or identifiers and only receive technical data, without cookies or persistent identifiers; Google may receive technical data such as the page visited.
 — Ahrefs Analytics is not loaded.
 
 Only with your consent (if you accept in the cookie banner):
@@ -160,7 +162,7 @@ If you write to us via the contact form (phonerecords.cl/en/contacto), we keep y
         title: "3 · How we use the data",
         body: `— Language preference is used solely to serve content in the language you chose.
 — Your cookie decision ("phone_consent") is used only to remember whether to load consent-based analytics.
-— If you accept, full analytics (Google Analytics 4 and Ahrefs Analytics) help us understand which pages work and which don't, to improve the site. Without consent, only basic aggregate signals are received, with no cookies or identifiers.
+— If you accept, full analytics (Google Analytics 4 and Ahrefs Analytics) help us understand which pages work and which don't, to improve the site. Without consent, Google only receives technical data, without cookies or persistent identifiers; Google may receive technical data such as the page visited.
 — Anonymous Vercel analytics and Speed Insights data are used to measure usage and optimise load speed.
 — We do not sell, rent or share your data with third parties for marketing.`,
       },
@@ -168,9 +170,11 @@ If you write to us via the contact form (phonerecords.cl/en/contacto), we keep y
         title: "4 · Third-party sharing",
         body: `The site is hosted on Vercel (vercel.com). Their services process requests reaching the site to serve pages. Vercel acts as data processor under their own privacy terms (https://vercel.com/legal/privacy-policy).
 
-Google (Google Analytics 4 and Google Tag Manager; policy at policies.google.com/privacy) is present on the site even if you do not accept analytics, but in that case it runs in consent mode: it only receives basic signals without cookies or identifiers (aggregate pings, no user profile). Only if you accept are Google Analytics 4's analytics cookies and identifiers activated and Ahrefs (Ahrefs Analytics; policy at ahrefs.com/privacy) loaded, which receives browsing data from the site to produce usage statistics.
+Google (Google Analytics 4 and Google Tag Manager; policy at policies.google.com/privacy) is present on the site even if you do not accept analytics, but in that case it runs in consent mode: it only receives technical data, without cookies or persistent identifiers; Google may receive technical data such as the page visited. Only if you accept are Google Analytics 4's analytics cookies and identifiers activated and Ahrefs (Ahrefs Analytics; policy at ahrefs.com/privacy) loaded, which receives browsing data from the site to produce usage statistics.
 
 Spotify embeds (open.spotify.com) on artist pages load content directly from Spotify when you interact with them. Spotify may set their own cookies; their terms are at spotify.com/legal/privacy-policy.
+
+YouTube videos are embedded using the privacy-enhanced domain (youtube-nocookie.com). When the player loads, YouTube/Google receives technical data and, if you play the video, may store cookies or local storage. More information at policies.google.com/privacy.
 
 We do not use Meta Pixel or third-party advertising.`,
       },
@@ -192,7 +196,7 @@ To exercise any of these rights, write us via the form at phonerecords.cl/en/con
         body: `— Technical cookies ("phone_lang", "phone_consent"): 1 year from being set, unless you clear your browser cookies.
 — Google analytics cookies (only with consent): duration is set by Google; you can remove them at any time by clearing the site's cookies.
 — Received emails: kept while it makes sense to maintain the conversation; maximum 5 years.
-— Analytics data (Google Analytics, Ahrefs, Vercel): used in aggregate form; each provider retains it according to its own policies and our account settings.`,
+— Analytics data (Google Analytics, Ahrefs, Vercel): used in combined form; each provider retains it according to its own policies and our account settings.`,
       },
       {
         title: "7 · Security",
