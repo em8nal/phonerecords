@@ -27,8 +27,8 @@ export type CatalogEntry = {
   externalHref?: string;
   externalKind?: "buy" | "listen";
   /**
-   * True when releaseDate is a full date still in the future (00:00 America/Santiago),
-   * evaluated when the page is generated. Client components use it as the initial
+   * True when releaseDate (full or partial: "YYYY", "YYYY-MM") is still in the future
+   * (00:00 America/Santiago), evaluated when the page is generated. Client components use it as the initial
    * value of the "Próximamente" badge and then re-check the clock themselves.
    */
   upcoming: boolean;

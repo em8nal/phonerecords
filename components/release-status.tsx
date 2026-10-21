@@ -8,7 +8,7 @@
 
 import { useSyncExternalStore } from "react";
 import { ArrowUpRight } from "lucide-react";
-import { formatReleaseDay, isReleased } from "@/lib/release-date";
+import { formatReleaseLabel, isReleased } from "@/lib/release-date";
 
 const listeners = new Set<() => void>();
 let timer: ReturnType<typeof setInterval> | undefined;
@@ -66,7 +66,8 @@ export function ReleaseCta({
 }
 
 /**
- * "Próximamente · 22 de octubre" / "Coming soon · October 22". Renders nothing once
+ * "Próximamente · 22 de octubre" / "Coming soon · October 22". Partial dates keep their
+ * precision: "Próximamente · marzo 2027" / "Coming soon · 2027". Renders nothing once
  * the release date is reached. Mount it only for releases that were still upcoming
  * when the page was generated (`initialReleased === false`).
  */
@@ -82,14 +83,14 @@ export function ComingSoonBadge({
   lang: string;
   /** "inline" for the release header / list rows, "overlay" for covers in the catalogue grid. */
   variant?: "inline" | "overlay";
-  /** Append the formatted release day ("· 22 de octubre"). */
+  /** Append the formatted release date ("· 22 de octubre", "· marzo 2027", "· 2027"). */
   showDate?: boolean;
 }) {
   const released = useReleased(releaseDate, initialReleased);
   if (released) return null;
   const isEs = lang === "es";
   const word = isEs ? "Próximamente" : "Coming soon";
-  const text = showDate ? `${word} · ${formatReleaseDay(releaseDate, lang)}` : word;
+  const text = showDate ? `${word} · ${formatReleaseLabel(releaseDate, lang)}` : word;
   const base =
     "inline-flex items-center h-7 px-3 text-[11px] font-mono font-bold uppercase tracking-widest rounded-full";
   return (
