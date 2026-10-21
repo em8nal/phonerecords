@@ -6,7 +6,7 @@ import { ArrowRight } from "lucide-react";
 import { useLanguage } from "@/lib/language-context";
 
 export function HeroSection() {
-  const { t } = useLanguage();
+  const { t, language } = useLanguage();
   const [isVisible, setIsVisible] = useState(false);
   // 22-10: palabra fija (sin rotación cada 2,5 s) y sin esfera three.js:
   // menos trabajo en el hilo principal y una portada más sobria (asesoría M3).
@@ -17,7 +17,7 @@ export function HeroSection() {
   }, []);
 
   return (
-    <section className="relative min-h-screen flex flex-col justify-center overflow-hidden">
+    <section className="relative py-24 lg:py-36 flex flex-col justify-center overflow-hidden">
       {/* Subtle grid lines */}
       <div className="absolute inset-0 overflow-hidden pointer-events-none opacity-30">
         {[...Array(8)].map((_, i) => (
@@ -122,34 +122,11 @@ export function HeroSection() {
               variant="outline"
               className="h-14 px-8 text-base rounded-full border-foreground/20 hover:bg-foreground/5"
             >
-              <a href="#how-it-works">{t.hero.ctaSecondary}</a>
+              <a href={`/${language}/manifiesto`}>{t.hero.ctaSecondary}</a>
             </Button>
           </div>
         </div>
         
-      </div>
-      
-      {/* Stats marquee - full width outside container */}
-      <div 
-        className={`absolute bottom-24 left-0 right-0 transition-all duration-700 delay-500 ${
-          isVisible ? "opacity-100" : "opacity-0"
-        }`}
-      >
-        <div className="flex gap-16 marquee whitespace-nowrap">
-          {[...Array(2)].map((_, i) => (
-            <div key={i} className="flex gap-16">
-              {t.hero.stats.map((stat) => (
-                <div key={`${stat.company}-${i}`} className="flex items-baseline gap-4">
-                  <span className="text-4xl lg:text-5xl font-display">{stat.value}</span>
-                  <span className="text-sm text-muted-foreground">
-                    {stat.label}
-                    <span className="block font-mono text-xs mt-1">{stat.company}</span>
-                  </span>
-                </div>
-              ))}
-            </div>
-          ))}
-        </div>
       </div>
       
       {/* Scroll indicator */}
