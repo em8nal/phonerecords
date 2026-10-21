@@ -116,9 +116,13 @@ function buildAllEntries(): CatalogEntry[] {
   );
 }
 
-/** Entries shown on the public /catalogo page — per-artist curation applied. */
+/**
+ * Entries shown on the public /catalogo page — per-artist curation applied and
+ * only releases WITH cover art (Claudio, 21-10: the grid is visual; entries
+ * without a cover stay on the artist pages via getArtistEntries).
+ */
 export function getCatalogEntries(): CatalogEntry[] {
-  return applyCatalogRules(buildAllEntries());
+  return applyCatalogRules(buildAllEntries()).filter((e) => Boolean(e.cover));
 }
 
 /** Entries shown on an artist profile page — no curation, full discography. */
