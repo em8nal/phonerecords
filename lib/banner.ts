@@ -66,7 +66,52 @@ const LA_FUERZA_IMAGE = {
   },
 };
 
+const EN_VELA_IMAGE = {
+  desktop: "/media/rosario-lircay/en-vela-hero.jpg",
+  mobile: "/media/rosario-lircay/en-vela-hero-mobile.jpg",
+  alt: {
+    es: "Rosario Lircay, retrato nocturno en la calle",
+    en: "Rosario Lircay, night portrait on the street",
+  },
+};
+
 export const BANNER_ENTRIES: BannerEntry[] = [
+  {
+    // En Vela (Rosario Lircay) · segundo tras Destellos hasta su salida (va antes que La Fuerza por orden de estreno)
+    slug: "rosario-lircay-en-vela",
+    priority: 2,
+    artist: "Rosario Lircay",
+    title: { es: "En Vela", en: "En Vela" },
+    eyebrow: { es: "Nuevo single · 23 de octubre", en: "New single · 23 October" },
+    releaseDate: "2026-10-23",
+    startsAt: "2026-10-21T00:00:00-03:00",
+    endsAt: "2026-10-23T00:00:00-03:00",
+    image: EN_VELA_IMAGE,
+    cta: {
+      href: "https://onerpm.link/105010589210",
+      beforeRelease: { es: "Pre-save", en: "Pre-save" },
+      afterRelease: { es: "Escuchar", en: "Listen" },
+    },
+    secondaryHref: "/releases/rosario-lircay-en-vela",
+  },
+  {
+    // En Vela (Rosario Lircay) · recién publicado: tras La Fuerza y Destellos
+    slug: "rosario-lircay-en-vela",
+    priority: 2,
+    artist: "Rosario Lircay",
+    title: { es: "En Vela", en: "En Vela" },
+    eyebrow: { es: "Nuevo single · 23 de octubre", en: "New single · 23 October" },
+    releaseDate: "2026-10-23",
+    startsAt: "2026-10-23T00:00:00-03:00",
+    endsAt: "2026-11-05T00:00:00-03:00",
+    image: EN_VELA_IMAGE,
+    cta: {
+      href: "https://onerpm.link/105010589210",
+      beforeRelease: { es: "Pre-save", en: "Pre-save" },
+      afterRelease: { es: "Escuchar", en: "Listen" },
+    },
+    secondaryHref: "/releases/rosario-lircay-en-vela",
+  },
   {
     // La Fuerza (Newen) · hasta el estreno de Destellos va segundo
     slug: "newen-afrobeat-la-fuerza",
@@ -79,11 +124,11 @@ export const BANNER_ENTRIES: BannerEntry[] = [
     endsAt: "2026-10-23T00:00:00-03:00",
     image: LA_FUERZA_IMAGE,
     cta: {
-      href: "/releases/newen-afrobeat-la-fuerza",
-      beforeRelease: { es: "Ver ficha", en: "About the single" },
+      href: "https://orcd.co/npk70nb",
+      beforeRelease: { es: "Pre-save", en: "Pre-save" },
       afterRelease: { es: "Escuchar", en: "Listen" },
     },
-    secondaryHref: "/artistas/newen-afrobeat",
+    secondaryHref: "/releases/newen-afrobeat-la-fuerza",
   },
   {
     // La Fuerza (Newen) · primero hasta que salga Un Rezo (el estreno más próximo manda)
@@ -97,11 +142,11 @@ export const BANNER_ENTRIES: BannerEntry[] = [
     endsAt: "2026-11-05T00:00:00-03:00",
     image: LA_FUERZA_IMAGE,
     cta: {
-      href: "/releases/newen-afrobeat-la-fuerza",
-      beforeRelease: { es: "Ver ficha", en: "About the single" },
+      href: "https://orcd.co/npk70nb",
+      beforeRelease: { es: "Pre-save", en: "Pre-save" },
       afterRelease: { es: "Escuchar", en: "Listen" },
     },
-    secondaryHref: "/artistas/newen-afrobeat",
+    secondaryHref: "/releases/newen-afrobeat-la-fuerza",
   },
   {
     // La Fuerza (Newen) · ya publicado: segundo tras Klaus B
@@ -115,11 +160,11 @@ export const BANNER_ENTRIES: BannerEntry[] = [
     endsAt: "2026-11-30T00:00:00-03:00",
     image: LA_FUERZA_IMAGE,
     cta: {
-      href: "/releases/newen-afrobeat-la-fuerza",
-      beforeRelease: { es: "Ver ficha", en: "About the single" },
+      href: "https://orcd.co/npk70nb",
+      beforeRelease: { es: "Pre-save", en: "Pre-save" },
       afterRelease: { es: "Escuchar", en: "Listen" },
     },
-    secondaryHref: "/artistas/newen-afrobeat",
+    secondaryHref: "/releases/newen-afrobeat-la-fuerza",
   },
   {
     slug: "klaus-b-destellos-de-ti",
@@ -175,7 +220,7 @@ export const BANNER_ENTRIES: BannerEntry[] = [
   },
   {
     slug: "con-fusion-cuantas-veces",
-    priority: 2,
+    priority: 3, // 21-10: baja un puesto para dejar primero lo que está por salir
     artist: "Con.fusión",
     title: { es: "Cuántas veces", en: "Cuántas veces" },
     eyebrow: {
@@ -212,7 +257,7 @@ export const BANNER_ENTRIES: BannerEntry[] = [
     },
     releaseDate: "2026-09-12",
     startsAt: "2026-10-20T00:00:00-03:00",
-    endsAt: "2026-11-30T00:00:00-03:00",
+    endsAt: "2026-10-21T00:00:00-03:00", // retirado del carrusel el 21-10 (máx. 4 slides); sigue en el catálogo
     image: {
       desktop: "/media/con-fusion/la-banca-hero.jpg",
       mobile: "/media/con-fusion/la-banca-hero-mobile.jpg",

@@ -76,6 +76,7 @@ const ARTISTS_WITH_PHOTO = new Set([
   "con-fusion",
   "klaus-brantmayer",
   "ecamhi",
+  "rosario-lircay",
 ]);
 
 export function generateStaticParams() {

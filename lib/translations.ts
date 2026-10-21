@@ -192,7 +192,7 @@ export const translations = {
         Connect: "Connect",
       },
       links: {
-        Roster: ["Newen Afrobeat", "Klaus B", "Ecamhi", "Con.fusión", "Andrés Abrigo"],
+        Roster: ["Newen Afrobeat", "Klaus B", "Ecamhi", "Con.fusión", "Rosario Lircay", "Andrés Abrigo"],
         Catalogue: ["Releases", "Vinyl", "Cassette"],
         Label: ["About", "Manifesto"],
         Connect: ["Contact", "Press kit", "Instagram"],
@@ -394,7 +394,7 @@ export const translations = {
         Connect: "Conecta",
       },
       links: {
-        Roster: ["Newen Afrobeat", "Klaus B", "Ecamhi", "Con.fusión", "Andrés Abrigo"],
+        Roster: ["Newen Afrobeat", "Klaus B", "Ecamhi", "Con.fusión", "Rosario Lircay", "Andrés Abrigo"],
         Catalogue: ["Releases", "Vinilo", "Cassette"],
         Label: ["Sobre PHŌNÉ", "Manifiesto"],
         Connect: ["Contacto", "Press kit", "Instagram"],

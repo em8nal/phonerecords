@@ -16,6 +16,7 @@ const ARTISTS_WITH_PHOTO = new Set([
   "con-fusion",
   "klaus-brantmayer",
   "ecamhi",
+  "rosario-lircay",
 ]);
 
 // Order used on the printed press kit (page 1: Newen, Klaus, Ecamhi;
@@ -26,6 +27,7 @@ const PRESS_KIT_ORDER = [
   "klaus-brantmayer",
   "ecamhi",
   "con-fusion",
+  "rosario-lircay",
   "andres-abrigo",
 ];
 

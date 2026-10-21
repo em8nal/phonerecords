@@ -37,6 +37,45 @@ export type Release = {
 
 export const releases: Release[] = [
   {
+    slug: "rosario-lircay-en-vela",
+    title: "En Vela",
+    artistSlug: "rosario-lircay",
+    artistName: "Rosario Lircay",
+    releaseDate: "2026-10-23",
+    year: 2026,
+    type: "single",
+    format: "Single · digital",
+    label: "PHŌNÉ Records",
+    cover: "/releases/rosario-lircay-en-vela.jpg",
+    smartLink: "https://onerpm.link/105010589210",
+    description: {
+      es: `"En Vela" es el tercer adelanto de "La Piel", el álbum debut de Rosario Lircay, y su primer lanzamiento con PHŌNÉ Records: sale el viernes 23 de octubre de 2026 en todas las plataformas, con pre-save disponible desde esta ficha. La canción se apoya en un ritmo de hip hop a medio tiempo, con el teclado de Fede Rocha y el scratch de DJ Acres dibujando el fondo sobre el que la voz se debate entre lamentar y superar una pérdida amorosa.
+
+El relato parte con una frase desafiante: no importa si quieres irte, que te vaya bien. Desde ahí la cantante deja claro que quien se fue ya no es bienvenido y que volver tiene consecuencias: encontrarla con otras caricias que se parecen a las suyas. El coro insiste en que se trata de una canción de superación, pero la segunda estrofa vuelve a mirar atrás, pregunta qué nos pasó y se cierra con un cansado "ya qué más da". Ese vaivén es el centro del tema: el autoconvencimiento de quien dice haber dado vuelta la página cuando el olvido todavía no llega. Una noche en vela.
+
+Como el resto del disco, "En Vela" nació de un beat y luego fue interpretada por músicos, con la voz cantada-hablada que caracteriza esta etapa de Rosario Lircay, entre el r&b, el hip hop y el pop alternativo. "La Piel" fue producido por Fresco Fresco (Pablo Acuña y Nacho Barrientos), grabado en La Salitrera y Fresco Fresco y masterizado por Chalo G; sus adelantos anteriores fueron "ya me tienes" (abril de 2026) y "a ti" (junio de 2026).
+
+Rosario Lircay es el nombre artístico de Rosario Meléndez, cantante de la Región de Ñuble radicada en Santiago, corista estable de Alex Anwandter y ex vocalista de Mareo! y Narcisa. "En Vela" dura 2:50 y es ℗ 2026 PHŌNÉ Records, bajo licencia exclusiva a ONErpm. Los créditos completos de composición, grabación, mezcla y arte se agregarán a esta ficha cuando la artista los confirme.`,
+      en: `"En Vela" ("Sleepless") is the third single from "La Piel", Rosario Lircay's debut album, and her first release with PHŌNÉ Records: out Friday, October 23, 2026 on all platforms, with pre-save available from this page. The song rests on a mid-tempo hip hop beat, with Fede Rocha's keyboard and DJ Acres' scratching drawing the backdrop over which the voice wavers between mourning and getting over a lost love.
+
+The story opens with a defiant line: it doesn't matter if you want to leave, good luck to you. From there the singer makes it clear that the one who left is no longer welcome and that coming back has consequences: finding her with other caresses that resemble his. The chorus insists this is a song about moving on, but the second verse looks back again, asks what happened to us and closes with a tired "what does it matter now". That back-and-forth is the heart of the track: the self-persuasion of someone who claims to have turned the page while forgetting hasn't arrived yet. A sleepless night.
+
+Like the rest of the record, "En Vela" was born from a beat and then played by musicians, with the half-sung, half-spoken voice that defines this stage of Rosario Lircay, between R&B, hip hop and alternative pop. "La Piel" was produced by Fresco Fresco (Pablo Acuña and Nacho Barrientos), recorded at La Salitrera and Fresco Fresco and mastered by Chalo G; its previous singles were "ya me tienes" (April 2026) and "a ti" (June 2026).
+
+Rosario Lircay is the stage name of Rosario Meléndez, a singer from the Ñuble region based in Santiago, a permanent backing vocalist for Alex Anwandter and former lead singer of Mareo! and Narcisa. "En Vela" runs 2:50 and is ℗ 2026 PHŌNÉ Records, under exclusive license to ONErpm. Full composition, recording, mixing and artwork credits will be added to this page once the artist confirms them.`,
+    },
+    tracklist: [{ n: 1, title: "En Vela", duration: "2:50" }],
+    credits: [
+      { role: "Teclado", name: "Fede Rocha" },
+      { role: "Scratch", name: "DJ Acres" },
+      { role: "℗", name: "2026 PHŌNÉ Records, bajo licencia exclusiva a ONErpm" },
+    ],
+    links: [
+      { label: "Pre-save / Escuchar", href: "https://onerpm.link/105010589210" },
+      { label: "Apple Music", href: "https://music.apple.com/us/album/en-vela-single/6821221086" },
+    ],
+  },
+  {
     slug: "newen-afrobeat-la-fuerza",
     title: "La Fuerza",
     artistSlug: "newen-afrobeat",
@@ -47,6 +86,7 @@ export const releases: Release[] = [
     format: "Single · digital",
     label: "PHŌNÉ Records",
     cover: "/releases/newen-afrobeat-la-fuerza.jpg",
+    smartLink: "https://orcd.co/npk70nb",
     description: {
       es: `"La Fuerza" es el nuevo single de Newen Afrobeat y llega el viernes 30 de octubre de 2026, editado con PHŌNÉ Records. Es la primera canción nueva de la banda desde "Liverpool Session" (2025) y el primer adelanto de la etapa que abre su próximo álbum de estudio, el disco que el grupo prepara durante 2026 y que profundiza el cruce entre afrobeat, música latinoamericana y elementos contemporáneos de jazz, soul y electrónica. El tema dura 4:44 y se publica como single digital; en Qobuz ya puede reservarse en alta resolución (24 bits / 48 kHz) y el streaming queda disponible desde la fecha de salida.
 
@@ -54,14 +94,14 @@ Newen Afrobeat es una de las agrupaciones más influyentes de la escena afrobeat
 
 La portada de "La Fuerza" es una ilustración de paisaje andino: una montaña de cumbres nevadas sobre un desierto rojo, una laguna con flamencos y guanacos bajo un cielo violeta y un sol lleno. Ese imaginario de altura y territorio acompaña el título y anticipa el tono del single, que la banda presentará en vivo en los próximos conciertos.
 
-La grabación es ℗ 2026 Newen Afrobeat y la edición © 2026 PHŌNÉ Records. Los enlaces de escucha y pre-save se agregan en esta ficha a medida que las plataformas los publican; mientras tanto, el single puede reservarse en Qobuz desde el enlace de la sección "Escuchar". Los créditos completos de composición, grabación, mezcla, master y arte se publicarán cuando la banda los confirme.`,
+La grabación es ℗ 2026 Newen Afrobeat y la edición © 2026 PHŌNÉ Records. El pre-save ya está disponible desde el enlace de la sección "Escuchar", donde también puede reservarse en Qobuz en alta resolución. Los créditos completos de composición, grabación, mezcla, master y arte se publicarán cuando la banda los confirme.`,
       en: `"La Fuerza" ("The Force") is the new single by Newen Afrobeat, out Friday, October 30, 2026 on PHŌNÉ Records. It is the band's first new song since "Liverpool Session" (2025) and the first taste of the stage opened by their next studio album, the record the group is preparing through 2026, which deepens the crossing of afrobeat, Latin American music and contemporary elements of jazz, soul and electronics. The track runs 4:44 and is released as a digital single; on Qobuz it can already be pre-ordered in high resolution (24-bit / 48 kHz), with streaming available from release day.
 
 Newen Afrobeat is one of the most influential bands of the Latin American afrobeat scene. Formed in Santiago, Chile in 2009, it was the country's first afrobeat band and in more than fifteen years has taken its music to stages and festivals across the Americas, Europe and Africa. Its discography includes the debut album "Newen Afrobeat" (2014), "Newen Plays Fela" (2017, with Seun Kuti, Cheick Tidiane Seck and members of Egypt 80), "Curiche" (2019), the album "Grietas" (2024, with Lido Pimienta, Dele Sosimi, Joe Vasconcellos and Chico César) and "Liverpool Session" (2025), recorded entirely on analog equipment.
 
 The cover of "La Fuerza" is an illustrated Andean landscape: a snow-capped mountain over a red desert, a lagoon with flamingos and guanacos under a violet sky and a full sun. That imagery of altitude and territory matches the title and sets the tone of the single, which the band will present live at its upcoming concerts.
 
-The recording is ℗ 2026 Newen Afrobeat and the release © 2026 PHŌNÉ Records. Listening and pre-save links are added to this page as the platforms publish them; in the meantime the single can be pre-ordered on Qobuz through the link in the "Listen" section. Full composition, recording, mixing, mastering and artwork credits will be published once the band confirms them.`,
+The recording is ℗ 2026 Newen Afrobeat and the release © 2026 PHŌNÉ Records. The pre-save is now available through the link in the "Listen" section, where it can also be pre-ordered on Qobuz in high resolution. Full composition, recording, mixing, mastering and artwork credits will be published once the band confirms them.`,
     },
     tracklist: [{ n: 1, title: "La Fuerza", duration: "4:44" }],
     credits: [
@@ -69,6 +109,7 @@ The recording is ℗ 2026 Newen Afrobeat and the release © 2026 PHŌNÉ Records
       { role: "©", name: "2026 PHŌNÉ Records" },
     ],
     links: [
+      { label: "Pre-save / Escuchar", href: "https://orcd.co/npk70nb" },
       { label: "Qobuz (reserva · hi-res)", href: "https://www.qobuz.com/us-en/album/la-fuerza-newen-afrobeat/rkxyy8xslgx0o" },
       { label: "Spotify (artista)", href: "https://open.spotify.com/artist/0PTJ848ulShbjTx2yqaAlb" },
     ],
@@ -112,6 +153,7 @@ The recording is ℗ 2026 Newen Afrobeat and the release © 2026 PHŌNÉ Records
     ],
     links: [
       { label: "Bandcamp", href: "https://officehomerecords.bandcamp.com/album/grietas-2" },
+      { label: "Discogs", href: "https://www.discogs.com/release/35010053-Newen-Afrobeat-Grietas" },
           { label: "Spotify", href: "https://open.spotify.com/album/7eICxMxArdEHZdkQY40n0N" },
 ],
   },
