@@ -137,8 +137,14 @@ export function ReleaseHero({ release, lang, initialReleased }: Props) {
 
             {/* CTA blanco sobre foto (§3.2); ReleaseCta trae target, rel, sr-only y el flip Pre-save → Escuchar. */}
             {ctaHref && (
-              <div className="mt-8 [&>a]:bg-white [&>a]:text-black [&>a:hover]:bg-white/90 [&>a:focus-visible]:outline-none [&>a:focus-visible]:ring-2 [&>a:focus-visible]:ring-white [&>a:focus-visible]:ring-offset-2 [&>a:focus-visible]:ring-offset-black">
-                <ReleaseCta href={ctaHref} releaseDate={release.releaseDate} initialReleased={initialReleased} lang={lang} />
+              <div className="mt-8">
+                <ReleaseCta
+                  href={ctaHref}
+                  releaseDate={release.releaseDate}
+                  initialReleased={initialReleased}
+                  lang={lang}
+                  className={`bg-white text-black hover:bg-white/90 ${FOCUS_DARK}`}
+                />
               </div>
             )}
           </div>

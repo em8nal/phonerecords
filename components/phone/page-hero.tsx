@@ -17,6 +17,8 @@ type PageHeroProps = {
   className?: string;
   /** Tamaño del h1; por defecto el de las demás páginas (text-5xl / lg:text-8xl). */
   titleClassName?: string;
+  /** object-position de la foto (clases Tailwind). Por defecto 30 % móvil / 35 % escritorio. */
+  imagePosition?: string;
 };
 
 const DESKTOP = { width: 2560, height: 1440 } as const; // 16:9
@@ -40,6 +42,7 @@ export function PageHero({
   size = "default",
   className = "",
   titleClassName = "text-5xl lg:text-8xl",
+  imagePosition = "object-[50%_30%] md:object-[50%_35%]",
 }: PageHeroProps) {
   const alt = image.alt[lang];
   const common = {
@@ -62,7 +65,7 @@ export function PageHero({
           <img
             {...mobile}
             alt={alt}
-            className="absolute inset-0 h-full w-full object-cover object-[50%_30%] md:object-[50%_35%]"
+            className={`absolute inset-0 h-full w-full object-cover ${imagePosition}`}
           />
         </picture>
 

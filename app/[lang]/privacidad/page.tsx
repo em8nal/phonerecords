@@ -80,7 +80,7 @@ Si nos escribes por el formulario de contacto (phonerecords.cl/es/contacto), con
 
 Google (Google Analytics 4 y Google Tag Manager; política en policies.google.com/privacy) está presente en el sitio aunque no aceptes la analítica, pero en ese caso opera en modo de consentimiento: solo recibe datos técnicos, sin cookies ni identificadores persistentes; Google puede recibir datos técnicos como la página visitada. Solo si aceptas, se activan las cookies e identificadores de analítica de Google Analytics 4 y se carga Ahrefs (Ahrefs Analytics; política en ahrefs.com/privacy), que recibe datos de navegación del sitio para generar estadísticas de uso.
 
-Los embeds de Spotify (open.spotify.com) en las páginas de artista cargan contenido directamente desde Spotify cuando interactúas con ellos. Spotify puede establecer sus propias cookies; sus términos están en spotify.com/legal/privacy-policy.
+Los embeds de Spotify (open.spotify.com) en las fichas de artista y de lanzamiento cargan contenido directamente desde Spotify cuando interactúas con ellos. Spotify puede establecer sus propias cookies; sus términos están en spotify.com/legal/privacy-policy.
 
 Los videos de YouTube se insertan con el dominio de privacidad mejorada (youtube-nocookie.com). Al cargar el reproductor, YouTube/Google recibe datos técnicos y, si reproduces el video, puede guardar cookies o almacenamiento local. Más información en policies.google.com/privacy. Los reproductores se cargan solo cuando pulsas reproducir.
 
@@ -190,7 +190,7 @@ If you write to us via the contact form (phonerecords.cl/en/contacto), we keep y
 
 Google (Google Analytics 4 and Google Tag Manager; policy at policies.google.com/privacy) is present on the site even if you do not accept analytics, but in that case it runs in consent mode: it only receives technical data, without cookies or persistent identifiers; Google may receive technical data such as the page visited. Only if you accept are Google Analytics 4's analytics cookies and identifiers activated and Ahrefs (Ahrefs Analytics; policy at ahrefs.com/privacy) loaded, which receives browsing data from the site to produce usage statistics.
 
-Spotify embeds (open.spotify.com) on artist pages load content directly from Spotify when you interact with them. Spotify may set their own cookies; their terms are at spotify.com/legal/privacy-policy.
+Spotify embeds (open.spotify.com) on artist and release pages load content directly from Spotify when you interact with them. Spotify may set their own cookies; their terms are at spotify.com/legal/privacy-policy.
 
 YouTube videos are embedded using the privacy-enhanced domain (youtube-nocookie.com). When the player loads, YouTube/Google receives technical data and, if you play the video, may store cookies or local storage. More information at policies.google.com/privacy. Players load only when you press play.
 

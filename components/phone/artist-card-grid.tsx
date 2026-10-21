@@ -3,6 +3,7 @@ import Link from "next/link";
 import { artists } from "@/lib/artists";
 import { getArtistPortrait } from "@/lib/artist-media";
 import type { Language } from "@/lib/translations";
+import { GridFillers, lgColsClass, pickLgCols } from "@/components/phone/grid-fillers";
 
 type Props = {
   lang: Language;
@@ -28,6 +29,7 @@ export function ArtistCardGrid({ lang, excludeSlug }: Props) {
   const others = artists.filter((a) => a.slug !== excludeSlug);
   if (others.length === 0) return null;
   const t = copy[lang];
+  const cols = pickLgCols(others.length);
 
   return (
     <section aria-labelledby="other-artists-heading" className="border-t border-foreground/10">
@@ -44,7 +46,7 @@ export function ArtistCardGrid({ lang, excludeSlug }: Props) {
           </Link>
         </div>
 
-        <div className="grid grid-cols-2 lg:grid-cols-4 gap-px bg-foreground/10 border border-foreground/10">
+        <div className={`grid grid-cols-2 ${lgColsClass(cols)} gap-px bg-foreground/10 border border-foreground/10`}>
           {others.map((a) => {
             const portrait = getArtistPortrait(a.slug);
             return (
@@ -80,6 +82,7 @@ export function ArtistCardGrid({ lang, excludeSlug }: Props) {
               </Link>
             );
           })}
+          <GridFillers count={others.length} cols={cols} />
         </div>
       </div>
     </section>

@@ -28,7 +28,7 @@ export function trackPlayFacade(provider: FacadeProvider, id: string): void {
 
 /** Anillo de foco: --ring (#C72A09, rojo PHŌNÉ) con offset del color de fondo. */
 export const FACADE_FOCUS =
-  "focus-visible:outline-none focus-visible:ring-[3px] focus-visible:ring-ring focus-visible:ring-offset-2 focus-visible:ring-offset-background";
+  "focus-visible:outline-2 focus-visible:outline-transparent focus-visible:ring-[3px] focus-visible:ring-ring focus-visible:ring-offset-2 focus-visible:ring-offset-background";
 
 /** Aviso de carga de terceros; el botón lo referencia con aria-describedby. */
 export function FacadeNotice({ id, children }: { id: string; children: ReactNode }): ReactElement {

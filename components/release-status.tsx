@@ -9,6 +9,7 @@
 import { useSyncExternalStore } from "react";
 import { ArrowUpRight } from "lucide-react";
 import { formatReleaseLabel, isReleased } from "@/lib/release-date";
+import { cn } from "@/lib/utils";
 
 const listeners = new Set<() => void>();
 let timer: ReturnType<typeof setInterval> | undefined;
@@ -42,11 +43,14 @@ export function ReleaseCta({
   releaseDate,
   initialReleased,
   lang,
+  className,
 }: {
   href: string;
   releaseDate: string;
   initialReleased: boolean;
   lang: string;
+  /** Clases extra (p. ej. variante blanca sobre foto); se fusionan con tailwind-merge. */
+  className?: string;
 }) {
   const released = useReleased(releaseDate, initialReleased);
   const isEs = lang === "es";
@@ -57,7 +61,10 @@ export function ReleaseCta({
       target="_blank"
       rel="noopener"
       data-state={released ? "released" : "presave"}
-      className="inline-flex items-center justify-center gap-2 px-8 h-12 text-sm font-mono font-bold uppercase tracking-widest rounded-full bg-foreground text-background hover:bg-foreground/90 transition-colors"
+      className={cn(
+        "inline-flex items-center justify-center gap-2 px-8 h-12 text-sm font-mono font-bold uppercase tracking-widest rounded-full bg-foreground text-background hover:bg-foreground/90 transition-colors",
+        className,
+      )}
     >
       {label}
       <span className="sr-only">{isEs ? " (se abre en pestaña nueva)" : " (opens in new tab)"}</span>

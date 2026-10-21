@@ -4,6 +4,7 @@ import { ArrowUpRight } from "lucide-react";
 import { getCatalogEntries } from "@/lib/catalog";
 import { ComingSoonBadge } from "@/components/release-status";
 import type { Language } from "@/lib/translations";
+import { GridFillers } from "@/components/phone/grid-fillers";
 
 type Props = {
   lang: Language;
@@ -118,6 +119,7 @@ export function ReleaseCardGrid({ lang, currentSlug, artistSlug, limit = 4 }: Pr
               </Link>
             );
           })}
+          <GridFillers count={picks.length} cols={4} />
         </div>
       </div>
     </section>

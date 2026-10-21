@@ -16,8 +16,8 @@ export async function generateMetadata(
   return {
     title: isEs ? "Sobre el sello" : "About the label",
     description: isEs
-      ? "PHŌNÉ Records: sello cultural independiente con dirección autoral. Producción, management, booking y curaduría desde Santiago de Chile, en diálogo con Europa y Latinoamérica."
-      : "PHŌNÉ Records: independent cultural label with authorial direction. Production, management, booking and curation from Santiago, Chile, in dialogue with Europe and Latin America.",
+      ? "PHŌNÉ Records: sello discográfico, management y producción musical en Santiago de Chile. Seis artistas, ediciones en vinilo y digital, giras entre Chile y Europa."
+      : "PHŌNÉ Records: record label, management and music production in Santiago, Chile. Six artists, vinyl and digital releases, tours between Chile and Europe.",
     alternates: {
       canonical: `https://phonerecords.cl/${lang}/sello`,
       languages: {
@@ -267,6 +267,7 @@ export default async function SelloPage({
         }}
         title={c.headline}
         eyebrow={c.eyebrow}
+        imagePosition="object-[50%_30%] md:object-[50%_5%]"
         lang={lang === "es" ? "es" : "en"}
       />
 
