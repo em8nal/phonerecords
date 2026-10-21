@@ -9,7 +9,7 @@ const MIN_FILL_MS = 2000;
 const inputSchema = z.object({
   email: z.string().trim().max(200),
   lang: z.enum(["es", "en"]),
-  source: z.enum(["contacto", "home"]),
+  source: z.enum(["contacto", "home", "footer"]),
   // honeypot: debe venir vacío
   website: z.string().max(200).optional().default(""),
   // epoch ms del render del formulario
