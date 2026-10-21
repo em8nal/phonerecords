@@ -19,7 +19,7 @@ type YouTubeEmbedProps = {
   title: string;
   /** Opcional: si no viene, sale de useLanguage() (requiere LanguageProvider). */
   lang?: FacadeLang;
-  /** `sizes` de la miniatura; por defecto la columna de 8/12 de la ficha de release. */
+  /** `sizes` de la miniatura; por defecto la columna de 8/12 de la ficha de release (≈700 px desde 1200 px). */
   sizes?: string;
 };
 
@@ -33,7 +33,7 @@ export function YouTubeEmbed({
   youtubeId,
   title,
   lang,
-  sizes = "(min-width: 1200px) 736px, (min-width: 1024px) 62vw, 100vw",
+  sizes = "(min-width: 1200px) 700px, (min-width: 1024px) 62vw, 100vw",
 }: YouTubeEmbedProps) {
   const copy = facadeCopy[useFacadeLang(lang)];
   const [playing, setPlaying] = useState(false);

@@ -59,7 +59,7 @@ export function ArtistCardGrid({ lang, excludeSlug }: Props) {
                   {portrait ? (
                     <Image
                       src={portrait}
-                      alt={a.name}
+                      alt=""
                       fill
                       sizes="(min-width: 1400px) 330px, (min-width: 1024px) 25vw, 50vw"
                       className="object-cover grayscale transition-transform duration-500 motion-safe:group-hover:scale-[1.02]"

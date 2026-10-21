@@ -85,7 +85,7 @@ export function IntegrationsSection() {
                   {portrait ? (
                     <Image
                       src={portrait}
-                      alt={artist.name}
+                      alt=""
                       fill
                       sizes="(min-width: 1400px) 360px, (min-width: 768px) 33vw, 50vw"
                       className="object-cover grayscale"
