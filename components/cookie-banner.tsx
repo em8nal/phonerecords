@@ -1,86 +1,72 @@
-"use client";
+import Link from "next/link";
 
-import { useEffect, useState } from "react";
-import { X } from "lucide-react";
-import { useLanguage } from "@/lib/language-context";
+type Props = {
+  lang: "es" | "en";
+  onAccept: () => void;
+  onReject: () => void;
+};
 
-const COOKIE_NAME = "phone_cookie_consent";
-const COOKIE_MAX_AGE = 60 * 60 * 24 * 365; // one year
+// Texts live here (ES/EN by `lang`), not in lib/translations.ts.
+const COPY = {
+  es: {
+    label: "Consentimiento de cookies",
+    text:
+      "Usamos analítica (Google Analytics vía Tag Manager, Ahrefs y Vercel) para entender cómo se usa el sitio. Si rechazas, no se guardan cookies ni identificadores de analítica; Google solo recibe señales básicas anónimas.",
+    more: "Política de privacidad",
+    accept: "Aceptar",
+    reject: "Rechazar",
+  },
+  en: {
+    label: "Cookie consent",
+    text:
+      "We use analytics (Google Analytics via Tag Manager, Ahrefs and Vercel) to understand how the site is used. If you reject, no analytics cookies or identifiers are stored; Google only receives basic anonymous signals.",
+    more: "Privacy policy",
+    accept: "Accept",
+    reject: "Reject",
+  },
+} as const;
 
-function hasConsent(): boolean {
-  if (typeof document === "undefined") return true; // SSR: skip banner
-  return document.cookie.split("; ").some((c) => c.startsWith(`${COOKIE_NAME}=`));
-}
-
-function setConsent() {
-  document.cookie = `${COOKIE_NAME}=1; max-age=${COOKIE_MAX_AGE}; path=/; samesite=lax`;
-}
-
-export function CookieBanner() {
-  const { language } = useLanguage();
-  const [visible, setVisible] = useState(false);
-
-  useEffect(() => {
-    // Avoid SSR flicker: only show on client after we've checked the cookie.
-    if (!hasConsent()) setVisible(true);
-  }, []);
-
-  if (!visible) return null;
-
-  const isEs = language === "es";
-  const c = isEs
-    ? {
-        text:
-          "Usamos cookies estrictamente necesarias para recordar tu preferencia de idioma. Analíticas anónimas de Vercel ayudan a medir uso y rendimiento; no recopilamos datos personales identificables.",
-        more: "Más en política de privacidad",
-        accept: "Entendido",
-        dismiss: "Cerrar",
-      }
-    : {
-        text:
-          "We use strictly necessary cookies to remember your language preference. Anonymous Vercel analytics help us measure usage and performance; we do not collect personally identifiable data.",
-        more: "More in our privacy policy",
-        accept: "Got it",
-        dismiss: "Dismiss",
-      };
-
-  const dismiss = () => {
-    setConsent();
-    setVisible(false);
-  };
+/**
+ * Presentational consent banner. Rendered by ConsentManager only while the
+ * visitor has no phone_consent decision. Accept and Reject carry the same
+ * size/weight on purpose (refusing must be as easy as accepting).
+ */
+export function CookieBanner({ lang, onAccept, onReject }: Props) {
+  const c = COPY[lang];
 
   return (
     <div
       role="region"
-      aria-label="cookie consent"
+      aria-label={c.label}
       className="fixed bottom-4 left-4 right-4 z-[60] md:left-auto md:right-4 md:max-w-md print:hidden"
     >
       <div className="bg-background/95 backdrop-blur-xl border border-foreground/15 rounded-2xl shadow-lg p-5 lg:p-6">
-        <button
-          type="button"
-          onClick={dismiss}
-          className="absolute top-3 right-3 p-1 text-muted-foreground hover:text-foreground transition-colors"
-          aria-label={c.dismiss}
-        >
-          <X className="w-4 h-4" />
-        </button>
-        <p className="text-sm text-foreground/85 leading-relaxed pr-6">
+        <p className="text-sm text-foreground/85 leading-relaxed">
           {c.text}{" "}
-          <a
-            href={`/${language}/privacidad`}
+          <Link
+            href={`/${lang}/privacidad`}
             className="underline underline-offset-4 hover:text-foreground transition-colors"
           >
             {c.more}
-          </a>
+          </Link>
           .
         </p>
-        <button
-          type="button"
-          onClick={dismiss}
-          className="mt-4 inline-flex items-center px-5 h-9 text-sm rounded-full bg-foreground text-background hover:bg-foreground/90 transition-colors"
-        >
-          {c.accept}
-        </button>
+        <div className="mt-4 flex flex-wrap gap-3">
+          <button
+            type="button"
+            onClick={onAccept}
+            className="inline-flex items-center px-5 h-9 text-sm rounded-full border border-foreground bg-foreground text-background hover:bg-foreground/90 transition-colors"
+          >
+            {c.accept}
+          </button>
+          <button
+            type="button"
+            onClick={onReject}
+            className="inline-flex items-center px-5 h-9 text-sm rounded-full border border-foreground/40 text-foreground hover:bg-foreground/10 transition-colors"
+          >
+            {c.reject}
+          </button>
+        </div>
       </div>
     </div>
   );

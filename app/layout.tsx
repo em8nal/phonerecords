@@ -1,11 +1,13 @@
 import React from "react"
 import type { Metadata, Viewport } from 'next'
-import { headers } from 'next/headers'
+import { cookies, headers } from 'next/headers'
 import { Instrument_Sans, Instrument_Serif, JetBrains_Mono, Fraunces } from 'next/font/google'
 import { Analytics } from '@vercel/analytics/next'
 import { SpeedInsights } from '@vercel/speed-insights/next'
 import { GoogleTagManager, GoogleAnalytics } from '@next/third-parties/google'
-import Script from 'next/script'
+import { ConsentDefaultScript } from '@/components/consent/consent-default-script'
+import { ConsentManager } from '@/components/consent/consent-manager'
+import { CONSENT_COOKIE, parseConsent } from '@/components/consent/consent-cookie'
 import './globals.css'
 
 const instrumentSans = Instrument_Sans({
@@ -64,6 +66,8 @@ export const metadata: Metadata = {
     title: 'PHŌNÉ Records — Sello cultural independiente',
     description:
       'Producción integral de obras musicales situadas. En diálogo con circuitos europeos y latinoamericanos.',
+    // Safety net: /es/opengraph-image exists (app/[lang]/opengraph-image.tsx).
+    // Pages under /[lang] get their own locale-specific file-based image.
     images: [{ url: 'https://phonerecords.cl/es/opengraph-image', width: 1200, height: 630, alt: 'PHŌNÉ Records' }],
   },
   twitter: {
@@ -85,19 +89,27 @@ export default async function RootLayout({
   const h = await headers()
   const locale = h.get('x-phone-locale') === 'en' ? 'en' : 'es'
 
+  // Consent decision (phone_consent=granted|denied). Read on the server so the
+  // banner is never rendered when a decision already exists (no flicker, and it
+  // can't become the LCP element for returning visitors).
+  const consent = parseConsent((await cookies()).get(CONSENT_COOKIE)?.value)
+
   return (
     <html lang={locale}>
+      <head>
+        {/* Consent Mode v2 defaults: must be the first script, before GTM/GA4. */}
+        <ConsentDefaultScript />
+      </head>
       <GoogleTagManager gtmId="GTM-NXRBTN9P" />
       <body className={`${instrumentSans.variable} ${instrumentSerif.variable} ${jetbrainsMono.variable} ${fraunces.variable} font-sans antialiased bg-background`}>
         {children}
+        {/* Vercel Analytics / Speed Insights are cookieless: no consent needed. */}
         <Analytics />
         <SpeedInsights />
+        {/* GTM + GA4 stay (team decision) but are governed by Consent Mode above. */}
         <GoogleAnalytics gaId="G-EG3K77X96Y" />
-        <Script
-          src="https://analytics.ahrefs.com/analytics.js"
-          data-key="0TGL5CM0s/+asLNuWTfObw"
-          strategy="afterInteractive"
-        />
+        {/* Banner (only while undecided) + Ahrefs Analytics (only after "granted"). */}
+        <ConsentManager lang={locale} initialDecision={consent} />
       </body>
     </html>
   )
