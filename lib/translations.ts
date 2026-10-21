@@ -8,6 +8,10 @@ export const translations = {
       signIn: "Press",
       startCreating: "Booking",
     },
+    // Release banner (portada). Los textos por lanzamiento viven en lib/banner.ts
+    banner: {
+      viewRelease: "View release",
+    },
     // Hero
     hero: {
       eyebrow: "An independent cultural label · Santiago, Chile",
@@ -170,6 +174,10 @@ export const translations = {
       developers: "Eventos",
       signIn: "Prensa",
       startCreating: "Booking",
+    },
+    // Banner de lanzamiento (portada). Los textos por lanzamiento viven en lib/banner.ts
+    banner: {
+      viewRelease: "Ver ficha",
     },
     // Hero
     hero: {

@@ -9,6 +9,13 @@ import { DevelopersSection } from "@/components/landing/developers-section";
 import { TestimonialsSection } from "@/components/landing/testimonials-section";
 import { CtaSection } from "@/components/landing/cta-section";
 import { FooterSection } from "@/components/landing/footer-section";
+import { ReleaseBanner } from "@/components/phone/release-banner";
+
+// El banner de lanzamiento rota por fecha (Pre-save → Escuchar a las 00:00 de
+// Santiago y relevo entre lanzamientos) sin redeploy. Hoy el root layout lee
+// headers() y la ruta se renderiza por request (fecha siempre exacta); si algún
+// día pasa a estática, este revalidate la regenera cada 5 minutos.
+export const revalidate = 300;
 
 type LangParams = { lang: string };
 
@@ -45,7 +52,7 @@ export async function generateMetadata(
       alternateLocale: isEs ? ["en_US"] : ["es_CL"],
       images: [
         {
-          url: "/opengraph-image",
+          url: `https://phonerecords.cl/${lang}/opengraph-image`,
           width: 1200,
           height: 630,
           alt: "PHŌNÉ Records",
@@ -56,7 +63,7 @@ export async function generateMetadata(
       card: "summary_large_image",
       title: "PHŌNÉ Records",
       description,
-      images: ["/opengraph-image"],
+      images: [`https://phonerecords.cl/${lang}/opengraph-image`],
     },
   };
 }
@@ -137,6 +144,7 @@ export default async function Home({
         dangerouslySetInnerHTML={{ __html: JSON.stringify(labelSchema) }}
       />
       <Navigation />
+      <ReleaseBanner lang={lang === "en" ? "en" : "es"} />
       <HeroSection />
       <IntegrationsSection />
       <FeaturesSection />
