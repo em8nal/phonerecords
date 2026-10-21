@@ -40,17 +40,6 @@ export function proxy(request: NextRequest) {
     return NextResponse.next();
   }
 
-  // /<lang>/opengraph-image and /<lang>/twitter-image use generateImageMetadata
-  // (locale-specific alt), so Next serves them at .../<name>/home (HOME_OG_ID in
-  // lib/og/home-image.tsx; not imported here to keep next/og out of the proxy
-  // bundle). Keep the plain URLs (hardcoded in metadata) working with an
-  // internal rewrite, no redirect.
-  if (/^\/(es|en)\/(opengraph-image|twitter-image)$/.test(pathname)) {
-    const url = request.nextUrl.clone();
-    url.pathname = `${pathname}/home`;
-    return NextResponse.rewrite(url);
-  }
-
   // Already prefixed with a known locale → propagate the locale to layout via header
   for (const l of LOCALES) {
     if (pathname === `/${l}` || pathname.startsWith(`/${l}/`)) {

@@ -4,28 +4,6 @@ export const HOME_OG_SIZE = { width: 1200, height: 630 } as const;
 
 export type HomeOgLang = "es" | "en";
 
-/** Alt text of the site-wide OG/Twitter card, per locale. */
-export const HOME_OG_ALT: Record<HomeOgLang, string> = {
-  es: "PHŌNÉ Records — Sello cultural independiente · Santiago de Chile",
-  en: "PHŌNÉ Records — Independent cultural label · Santiago de Chile",
-};
-
-/** Id used by generateImageMetadata in app/[lang]/{opengraph,twitter}-image.tsx. */
-export const HOME_OG_ID = "home";
-
-/** Image metadata (locale-specific alt) for generateImageMetadata. */
-export function homeOgImageMetadata(lang: string) {
-  const l: HomeOgLang = lang === "en" ? "en" : "es";
-  return [
-    {
-      id: HOME_OG_ID,
-      alt: HOME_OG_ALT[l],
-      size: HOME_OG_SIZE,
-      contentType: "image/png",
-    },
-  ];
-}
-
 const FOOTER: Record<HomeOgLang | "both", string> = {
   es: "Sello cultural independiente",
   en: "Independent cultural label",
