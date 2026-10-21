@@ -201,7 +201,7 @@ export default async function SelloPage({
         "@id": "https://phonerecords.cl/#organization",
         name: "PHŌNÉ Records",
         url: "https://phonerecords.cl",
-        logo: "https://phonerecords.cl/phone-logo-dark.png",
+        logo: "https://phonerecords.cl/brand/phone-logotipo.png",
         foundingLocation: { "@type": "Place", name: "Santiago, Chile" },
         address: {
           "@type": "PostalAddress",
@@ -209,11 +209,8 @@ export default async function SelloPage({
           addressRegion: "Región Metropolitana",
           addressCountry: "CL",
         },
-        sameAs: [
-          "https://www.instagram.com/phone_records/",
-          "https://newenafrobeat.bandcamp.com/music",
-          "https://open.spotify.com/artist/0PTJ848ulShbjTx2yqaAlb",
-        ],
+        // Solo canales del sello: Bandcamp/Spotify son de Newen Afrobeat.
+        sameAs: ["https://www.instagram.com/phone_records/"],
       },
       {
         "@type": "AboutPage",

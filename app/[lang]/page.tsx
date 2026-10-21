@@ -6,10 +6,16 @@ import { FeaturesSection } from "@/components/landing/features-section";
 import { HowItWorksSection } from "@/components/landing/how-it-works-section";
 import { MetricsSection } from "@/components/landing/metrics-section";
 import { DevelopersSection } from "@/components/landing/developers-section";
-import { PricingSection } from "@/components/landing/pricing-section";
 import { TestimonialsSection } from "@/components/landing/testimonials-section";
 import { CtaSection } from "@/components/landing/cta-section";
 import { FooterSection } from "@/components/landing/footer-section";
+import { ReleaseBanner } from "@/components/phone/release-banner";
+
+// El banner de lanzamiento rota por fecha (Pre-save → Escuchar a las 00:00 de
+// Santiago y relevo entre lanzamientos) sin redeploy. Hoy el root layout lee
+// headers() y la ruta se renderiza por request (fecha siempre exacta); si algún
+// día pasa a estática, este revalidate la regenera cada 5 minutos.
+export const revalidate = 300;
 
 type LangParams = { lang: string };
 
@@ -46,7 +52,7 @@ export async function generateMetadata(
       alternateLocale: isEs ? ["en_US"] : ["es_CL"],
       images: [
         {
-          url: "/opengraph-image",
+          url: `https://phonerecords.cl/${lang}/opengraph-image`,
           width: 1200,
           height: 630,
           alt: "PHŌNÉ Records",
@@ -57,7 +63,7 @@ export async function generateMetadata(
       card: "summary_large_image",
       title: "PHŌNÉ Records",
       description,
-      images: ["/opengraph-image"],
+      images: [`https://phonerecords.cl/${lang}/opengraph-image`],
     },
   };
 }
@@ -80,7 +86,7 @@ export default async function Home({
         "@id": "https://phonerecords.cl/#organization",
         name: "PHŌNÉ Records",
         url: "https://phonerecords.cl",
-        logo: "https://phonerecords.cl/phone-logo-dark.png",
+        logo: "https://phonerecords.cl/brand/phone-logotipo.png",
         description: isEs
           ? "Sello cultural independiente con dirección autoral. Producción integral, management y curaduría de música independiente latinoamericana."
           : "Independent cultural label with strong authorial direction. Integral production, management and curation of independent Latin American music.",
@@ -94,12 +100,8 @@ export default async function Home({
             addressCountry: "CL",
           },
         },
-        sameAs: [
-          "https://www.instagram.com/phone_records/",
-          "https://newenafrobeat.bandcamp.com/music",
-          "https://open.spotify.com/artist/0PTJ848ulShbjTx2yqaAlb",
-          "https://www.youtube.com/channel/UCTHMwr5NTvQ0MWbq0nbeP-w",
-        ],
+        // Solo canales del sello: Bandcamp/Spotify/YouTube son de Newen Afrobeat.
+        sameAs: ["https://www.instagram.com/phone_records/"],
         contactPoint: [
           {
             "@type": "ContactPoint",
@@ -138,13 +140,13 @@ export default async function Home({
         dangerouslySetInnerHTML={{ __html: JSON.stringify(labelSchema) }}
       />
       <Navigation />
+      <ReleaseBanner lang={lang === "en" ? "en" : "es"} />
       <HeroSection />
       <IntegrationsSection />
       <FeaturesSection />
       <HowItWorksSection />
       <MetricsSection />
       <DevelopersSection />
-      <PricingSection />
       <TestimonialsSection />
       <CtaSection />
       <FooterSection />
