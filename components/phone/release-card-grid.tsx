@@ -79,7 +79,7 @@ export function ReleaseCardGrid({ lang, currentSlug, artistSlug, limit = 4 }: Pr
                       src={e.cover}
                       alt={`${e.title} — ${e.artistName}`}
                       fill
-                      sizes="(min-width: 1024px) 25vw, 50vw"
+                      sizes="(min-width: 1400px) 330px, (min-width: 1024px) 25vw, 50vw"
                       className="object-cover transition-transform duration-500 motion-safe:group-hover:scale-[1.02]"
                     />
                   ) : (
@@ -97,14 +97,13 @@ export function ReleaseCardGrid({ lang, currentSlug, artistSlug, limit = 4 }: Pr
                   <h3 className="font-display text-lg lg:text-xl tracking-tight">
                     {e.title}
                     {external && (
-                      <>
-                        <span className="sr-only"> {t.newTab}</span>
-                        <ArrowUpRight className="ml-1 inline-block w-3 h-3 align-baseline opacity-60" aria-hidden />
-                      </>
+                      <ArrowUpRight className="ml-1 inline-block w-3 h-3 align-baseline opacity-60" aria-hidden />
                     )}
                   </h3>
                   <p className="mt-1 text-xs text-muted-foreground">{e.artistName}</p>
                   <p className="mt-2 font-mono text-xs uppercase tracking-widest text-muted-foreground">{e.year}</p>
+                  {/* Fuera del h3: entra en el nombre accesible del enlace sin ensuciar la lista de encabezados */}
+                  {external && <span className="sr-only"> {t.newTab}</span>}
                 </div>
               </>
             );

@@ -297,7 +297,7 @@ export default async function ArtistPage({
                   src={portrait}
                   alt={isEs ? `${artist.name}, retrato` : `${artist.name}, portrait`}
                   fill
-                  sizes="(min-width: 1024px) 30vw, 320px"
+                  sizes="(min-width: 1200px) 330px, (min-width: 1024px) 30vw, 320px"
                   className="object-cover"
                 />
               </figure>

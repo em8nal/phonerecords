@@ -3,7 +3,8 @@
 // el bundle cliente (roster de portada) y los scripts de verificación con node.
 //
 // Heros: public/media/<artista>/*-hero.jpg (2560×1440) y *-hero-mobile.jpg (1200×1500).
-// Retratos: public/artists/<slug>.jpg (640×640, B/N vía CSS donde la regla lo pide).
+// Retratos: public/artists/<slug>.jpg (640 px de alto; con-fusion es 535×640 y
+// `object-cover` recorta al cuadrado). B/N vía CSS donde la regla lo pide.
 
 export type Localized = { es: string; en: string };
 

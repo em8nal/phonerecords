@@ -87,7 +87,7 @@ export function IntegrationsSection() {
                       src={portrait}
                       alt={artist.name}
                       fill
-                      sizes="(min-width: 768px) 33vw, 50vw"
+                      sizes="(min-width: 1400px) 360px, (min-width: 768px) 33vw, 50vw"
                       className="object-cover grayscale"
                     />
                   ) : (
@@ -102,7 +102,7 @@ export function IntegrationsSection() {
                 <div className="font-mono text-xs text-muted-foreground mb-6">
                   {String(i + 1).padStart(2, "0")}
                 </div>
-                <h3 className="text-xl md:text-2xl font-display tracking-tight mb-3 group-hover:translate-x-1 transition-transform">
+                <h3 className="text-xl md:text-2xl font-display tracking-tight mb-3 motion-safe:group-hover:translate-x-1 transition-transform">
                   {artist.name}
                 </h3>
                 <p className="text-sm text-foreground/70 mb-2">{artist.genre}</p>
