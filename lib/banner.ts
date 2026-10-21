@@ -234,8 +234,8 @@ export const BANNER_ENTRIES: BannerEntry[] = [
       desktop: "/media/con-fusion/cuantas-veces-hero.jpg",
       mobile: "/media/con-fusion/cuantas-veces-hero-mobile.jpg",
       alt: {
-        es: "Con.fusión, retrato en blanco y negro",
-        en: "Con.fusión, black and white portrait",
+        es: "Con.fusión (Catalina Aguilera) en una azotea de Santiago, cielo cubierto y edificios al fondo; foto en blanco y negro",
+        en: "Con.fusión (Catalina Aguilera) on a Santiago rooftop, overcast sky and buildings behind; black-and-white photo",
       },
     },
     cta: {

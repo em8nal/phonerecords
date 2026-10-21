@@ -42,8 +42,8 @@ const copy = {
         caption: "Klaus B · sesión de grabación",
       },
       confusion: {
-        alt: "La vocalista de Con.fusión se recuesta sobre una baranda con los ojos cerrados, un muro de ladrillos detrás; foto en blanco y negro",
-        caption: "Con.fusión · sesión Cuántas veces",
+        alt: "Con.fusión (Catalina Aguilera) sonríe con la mano alzada en una azotea de Santiago, edificios al fondo; foto en blanco y negro",
+        caption: "Con.fusión · sesión en azotea, agosto 2026",
       },
     },
     modes: {
@@ -128,8 +128,8 @@ const copy = {
         caption: "Klaus B · recording session",
       },
       confusion: {
-        alt: "Con.fusión's vocalist leans back on a railing with her eyes closed, a brick wall behind her; black-and-white photo",
-        caption: "Con.fusión · Cuántas veces session",
+        alt: "Con.fusión (Catalina Aguilera) smiles with her hand raised on a Santiago rooftop, buildings behind; black-and-white photo",
+        caption: "Con.fusión · rooftop session, August 2026",
       },
     },
     modes: {

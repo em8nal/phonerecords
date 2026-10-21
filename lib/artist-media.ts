@@ -3,8 +3,7 @@
 // el bundle cliente (roster de portada) y los scripts de verificación con node.
 //
 // Heros: public/media/<artista>/*-hero.jpg (2560×1440) y *-hero-mobile.jpg (1200×1500).
-// Retratos: public/artists/<slug>.jpg (640 px de alto; con-fusion es 535×640 y
-// `object-cover` recorta al cuadrado). B/N vía CSS donde la regla lo pide.
+// Retratos: public/artists/<slug>.jpg (640×640). B/N vía CSS donde la regla lo pide.
 
 export type Localized = { es: string; en: string };
 
@@ -31,8 +30,8 @@ export const ARTIST_HERO: Record<string, ArtistHero> = {
     desktop: "/media/con-fusion/cuantas-veces-hero.jpg",
     mobile: "/media/con-fusion/cuantas-veces-hero-mobile.jpg",
     alt: {
-      es: "Con.fusión (Catalina Aguilera) con los ojos cerrados en la sesión de Cuántas veces; foto en blanco y negro",
-      en: "Con.fusión (Catalina Aguilera) with her eyes closed at the Cuántas veces session; black-and-white photo",
+      es: "Con.fusión (Catalina Aguilera) en una azotea de Santiago, cielo cubierto y edificios al fondo; foto en blanco y negro",
+      en: "Con.fusión (Catalina Aguilera) on a Santiago rooftop, overcast sky and buildings behind; black-and-white photo",
     },
   },
   ecamhi: {
