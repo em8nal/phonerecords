@@ -593,9 +593,9 @@ On this single, Klaus B is credited with composition, saxophone, flute and produ
     label: "PHŌNÉ Records",
     description: {
       es:
-        "Próximo EP de Ecamhi y release inaugural del sello PHŌNÉ Records, actualmente en producción. El proyecto está concebido como obra interdisciplinaria: cuatro fotografías capturadas en giras internacionales inspirando cuatro composiciones, presentadas en simultáneo como exhibición fotográfica donde cada imagen va acompañada de audífonos con la pieza correspondiente. Imagen y sonido nacen del mismo proceso creativo.",
+        "Próximo EP de ecamhi, previsto para 2027 y actualmente en producción. Se concibe a partir de las fotografías de las giras con Newen Afrobeat: cada foto se convierte en una canción, hasta completar cuatro piezas. El proyecto está pensado para presentarse junto a una exposición fotográfica, donde cada imagen va acompañada de audífonos con la pieza correspondiente. Imagen y sonido nacen del mismo proceso creativo.",
       en:
-        "Forthcoming EP from Ecamhi and the inaugural release of PHŌNÉ Records, currently in production. The project is conceived as an interdisciplinary work: four photographs captured on international tours inspiring four compositions, presented simultaneously as a photo exhibition where each image is accompanied by headphones with the corresponding piece. Image and sound born from the same creative process.",
+        "Forthcoming EP from ecamhi, planned for 2027 and currently in production. It is conceived from photographs of the tours with Newen Afrobeat: each photo becomes a song, until four pieces are complete. The project is designed to be presented alongside a photo exhibition, where each image comes with headphones playing the corresponding piece. Image and sound come from the same creative process.",
     },
   },
   {
@@ -734,9 +734,9 @@ On this single, Klaus B is credited with composition, saxophone, flute and produ
     cover: "https://is1-ssl.mzstatic.com/image/thumb/Music112/v4/3e/11/34/3e11342c-ef83-217d-471d-cda2270ed24b/00_Cover_Art.jpg/1000x1000bb.jpg",
     description: {
       es:
-        "Single solista publicado en mayo 2022, dos años antes del EP inaugural en viaje. Es el primer trabajo firmado únicamente por Enrique Camhi sin co-autores: trompeta y producción propia en una pieza corta que ya anuncia la lógica interdisciplinar del proyecto. La estructura del track —menos canción, más cuadro sonoro— sirve como antecedente directo de en viaje, donde cuatro imágenes inspirarían cuatro piezas. Marca la consolidación de su voz solista.",
+        "Single solista publicado en mayo 2022, años antes del EP en viaje. Es el primer trabajo firmado únicamente por Enrique Camhi sin co-autores: trompeta y producción propia en una pieza corta que ya anuncia la lógica interdisciplinar del proyecto. La estructura del track —menos canción, más cuadro sonoro— sirve como antecedente directo de en viaje, donde cuatro imágenes inspirarían cuatro piezas. Marca la consolidación de su voz solista.",
       en:
-        "Solo single released May 2022, two years before the inaugural en viaje EP. The first work signed solely by Enrique Camhi without co-authors: trumpet and self-produced in a short piece already announcing the project's interdisciplinary logic. The track's structure —less song, more sonic painting— serves as direct precursor to en viaje, where four images would inspire four pieces. Marks the consolidation of his solo voice.",
+        "Solo single released May 2022, years before the en viaje EP. The first work signed solely by Enrique Camhi without co-authors: trumpet and self-produced in a short piece already announcing the project's interdisciplinary logic. The track's structure —less song, more sonic painting— serves as direct precursor to en viaje, where four images would inspire four pieces. Marks the consolidation of his solo voice.",
     },
     links: [
       { label: "Apple Music", href: "https://music.apple.com/us/album/move-to/1618064796" },
