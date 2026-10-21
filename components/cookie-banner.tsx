@@ -11,7 +11,7 @@ const COPY = {
   es: {
     label: "Consentimiento de cookies",
     text:
-      "Usamos analítica (Google Analytics vía Tag Manager, Ahrefs y Vercel) para entender cómo se usa el sitio. Si rechazas, no se guardan cookies ni identificadores de analítica; Google solo recibe señales básicas anónimas.",
+      "Usamos analítica (Google Analytics vía Tag Manager, Ahrefs y Vercel) para entender cómo se usa el sitio. Si rechazas, no se guardan cookies ni identificadores de analítica; Google puede recibir datos técnicos como la página visitada, sin cookies ni identificadores persistentes. La medición de Vercel no usa cookies y funciona siempre.",
     more: "Política de privacidad",
     accept: "Aceptar",
     reject: "Rechazar",
@@ -19,7 +19,7 @@ const COPY = {
   en: {
     label: "Cookie consent",
     text:
-      "We use analytics (Google Analytics via Tag Manager, Ahrefs and Vercel) to understand how the site is used. If you reject, no analytics cookies or identifiers are stored; Google only receives basic anonymous signals.",
+      "We use analytics (Google Analytics via Tag Manager, Ahrefs and Vercel) to understand how the site is used. If you reject, no analytics cookies or identifiers are stored; Google may receive technical data such as the page visited, without cookies or persistent identifiers. Vercel measurement uses no cookies and always runs.",
     more: "Privacy policy",
     accept: "Accept",
     reject: "Reject",

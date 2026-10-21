@@ -63,7 +63,7 @@ async function resolveCover(cover: string | undefined): Promise<string | undefin
     const origin = process.env.VERCEL_URL
       ? `https://${process.env.VERCEL_URL}`
       : `http://localhost:${process.env.PORT ?? 3000}`;
-    const res = await fetch(new URL(cover, origin));
+    const res = await fetch(new URL(cover, origin), { signal: AbortSignal.timeout(3000) });
     const type = res.headers.get("content-type")?.split(";")[0].trim() ?? "";
     if (!res.ok || !type.startsWith("image/")) return undefined;
     return `data:${type};base64,${Buffer.from(await res.arrayBuffer()).toString("base64")}`;

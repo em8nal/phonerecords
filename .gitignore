@@ -29,3 +29,8 @@ next-env.d.ts
 
 # macos
 .DS_Store
+# local tooling
+.superpowers/
+.claude/worktrees/
+graphify-out/
+AGENTS.md

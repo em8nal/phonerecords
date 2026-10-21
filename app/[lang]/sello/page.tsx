@@ -97,7 +97,6 @@ const copy = {
     legal: {
       title: "Datos legales",
       lines: [
-        "Representante legal: Enrique Ariel Camhi Ibarlucea",
         "Domicilio: Ñuñoa, Región Metropolitana, Chile",
       ],
     },
@@ -174,7 +173,6 @@ const copy = {
     legal: {
       title: "Legal information",
       lines: [
-        "Legal representative: Enrique Ariel Camhi Ibarlucea",
         "Address: Ñuñoa, Región Metropolitana, Chile",
       ],
     },
