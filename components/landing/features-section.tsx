@@ -1,6 +1,7 @@
 "use client";
 
 import { useEffect, useRef, useState } from "react";
+import { getImageProps } from "next/image";
 import { useLanguage } from "@/lib/language-context";
 
 // Un visual por servicio, en el mismo orden que `t.features.items`:
@@ -9,6 +10,15 @@ import { useLanguage } from "@/lib/language-context";
 // 03 Producción · Sonido + Imagen → visor fotográfico con forma de onda
 // 04 Giras & Booking → ruta entre ciudades con marcador en movimiento
 const visuals = ["vinyl", "management", "production", "touring"];
+
+// Fondo decorativo del bloque (regla de la portada: imagen OSCURA → elementos CLAROS).
+// Escenario de la sesión La Banca de Con.fusión (26.JPEG: manos sobre la tornamesa, humo, sin caras),
+// en B/N. Archivos en public/media/home/.
+const BG_DESKTOP = { src: "/media/home/servicios-bg.jpg", width: 2560, height: 1440 } as const; // 16:9
+const BG_MOBILE = { src: "/media/home/servicios-bg-mobile.jpg", width: 1200, height: 1500 } as const; // 4:5
+// Relleno "hueco" de los visuales SVG (satélites, pin, marcador): debe ser el color del fondo del
+// bloque, no el --background global (que es claro). #0a0a0a = bg-neutral-950.
+const VISUAL_STYLE = { "--visual-bg": "#0a0a0a" } as React.CSSProperties;
 
 /** true salvo que el sistema pida menos movimiento (prefers-reduced-motion). */
 function usePrefersMotion() {
@@ -125,7 +135,7 @@ function ManagementVisual({ motion }: VisualProps) {
           {sats.map((s, i) => (
             <g key={i}>
               <line x1="0" y1="0" x2={s.x} y2={s.y} stroke="currentColor" strokeWidth="1" opacity="0.25" />
-              <circle cx={s.x} cy={s.y} r="7" fill="var(--background, #fff)" stroke="currentColor" strokeWidth="2" />
+              <circle cx={s.x} cy={s.y} r="7" fill="var(--visual-bg, #fff)" stroke="currentColor" strokeWidth="2" />
             </g>
           ))}
         </g>
@@ -208,15 +218,15 @@ function TouringVisual({ motion }: VisualProps) {
       {/* Pin de destino */}
       <g transform="translate(172 54)">
         <path d="M 0 -30 C -9 -30, -13 -22, -13 -16 C -13 -8, 0 0, 0 0 C 0 0, 13 -8, 13 -16 C 13 -22, 9 -30, 0 -30 Z" fill="currentColor" />
-        <circle cy="-17" r="4" fill="var(--background, #fff)" />
+        <circle cy="-17" r="4" fill="var(--visual-bg, #fff)" />
       </g>
       {/* Marcador en movimiento */}
       {motion ? (
-        <circle r="5" fill="currentColor" stroke="var(--background, #fff)" strokeWidth="2">
+        <circle r="5" fill="currentColor" stroke="var(--visual-bg, #fff)" strokeWidth="2">
           <animateMotion dur="5s" repeatCount="indefinite" path={route} keyPoints="0;1" keyTimes="0;1" calcMode="linear" />
         </circle>
       ) : (
-        <circle cx="72" cy="92" r="5" fill="currentColor" stroke="var(--background, #fff)" strokeWidth="2" />
+        <circle cx="72" cy="92" r="5" fill="currentColor" stroke="var(--visual-bg, #fff)" strokeWidth="2" />
       )}
     </svg>
   );
@@ -262,10 +272,10 @@ function FeatureCard({ feature, index, visual }: { feature: { number: string; ti
       }`}
       style={{ transitionDelay: `${index * 100}ms` }}
     >
-      <div className="flex flex-col lg:flex-row gap-8 lg:gap-16 py-12 lg:py-20 border-b border-foreground/10">
+      <div className="flex flex-col lg:flex-row gap-8 lg:gap-16 py-12 lg:py-20 border-b border-white/10">
         {/* Number */}
         <div className="shrink-0">
-          <span className="font-mono text-sm text-muted-foreground">{feature.number}</span>
+          <span className="font-mono text-sm text-white/70">{feature.number}</span>
         </div>
         
         {/* Content */}
@@ -274,14 +284,14 @@ function FeatureCard({ feature, index, visual }: { feature: { number: string; ti
             <h3 className="text-3xl lg:text-4xl font-display mb-4 group-hover:translate-x-2 transition-transform duration-500">
               {feature.title}
             </h3>
-            <p className="text-lg text-muted-foreground leading-relaxed">
+            <p className="text-lg text-white/70 leading-relaxed">
               {feature.description}
             </p>
           </div>
-          
+
           {/* Visual */}
           <div className="flex justify-center lg:justify-end">
-            <div className="w-48 h-40 text-foreground">
+            <div className="w-48 h-40 text-white" style={VISUAL_STYLE}>
               <AnimatedVisual type={visual} />
             </div>
           </div>
@@ -308,27 +318,56 @@ export function FeaturesSection() {
     return () => observer.disconnect();
   }, []);
 
+  // Art direction como en PageHero: <source> para >= 768px; el <img> es la versión móvil 4:5.
+  // Decorativa (alt="") y bajo el pliegue: carga diferida (lazy), sin prioridad de carga.
+  const { props: bgDesktop } = getImageProps({ ...BG_DESKTOP, alt: "", sizes: "100vw", loading: "lazy" });
+  const { props: bgMobile } = getImageProps({ ...BG_MOBILE, alt: "", sizes: "100vw", loading: "lazy" });
+
   return (
     <section
       id="features"
       ref={sectionRef}
-      className="relative py-24 lg:py-32"
+      aria-labelledby="features-heading"
+      className="relative isolate overflow-hidden bg-neutral-950 text-white py-24 lg:py-32"
     >
+      {/* Fondo decorativo: foto B/N + velo negro + fundido a neutral-950. Cubre la cabecera y la primera
+          tarjeta (≤ 120svh / 1100 px); las demás tarjetas van sobre negro sólido. Si la imagen no carga
+          queda bg-neutral-950 (blanco 19,8:1; blanco/70 9,7:1). */}
+      <div
+        aria-hidden="true"
+        className="absolute inset-x-0 top-0 -z-10 h-[120svh] max-h-[1100px]"
+      >
+        <picture>
+          <source media="(min-width: 768px)" srcSet={bgDesktop.srcSet} sizes="100vw" />
+          {/* eslint-disable-next-line @next/next/no-img-element, jsx-a11y/alt-text */}
+          <img
+            {...bgMobile}
+            alt=""
+            className="absolute inset-0 h-full w-full object-cover object-[50%_50%] md:object-left"
+          />
+        </picture>
+        {/* Velo negro 65 %: con 60 % el blanco/70 baja a 4,1:1 sobre los brillos del plato (gris 0,93);
+            con 65 % queda en 4,76:1 en el peor bloque medido y ≈9,5:1 sobre el gris medio. */}
+        <div className="absolute inset-0 bg-black/65" />
+        <div className="absolute inset-x-0 bottom-0 h-1/3 bg-gradient-to-b from-transparent to-neutral-950" />
+      </div>
+
       <div className="max-w-[1400px] mx-auto px-6 lg:px-12">
         {/* Header */}
         <div className="mb-16 lg:mb-24">
-          <span className="inline-flex items-center gap-3 text-sm font-mono text-muted-foreground mb-6">
-            <span className="w-8 h-px bg-foreground/30" />
+          <span className="inline-flex items-center gap-3 text-sm font-mono text-white/70 mb-6">
+            <span className="w-8 h-px bg-white/30" />
             {t.features.eyebrow}
           </span>
           <h2
+            id="features-heading"
             className={`text-4xl lg:text-6xl font-display tracking-tight transition-all duration-700 ${
               isVisible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-4"
             }`}
           >
             {t.features.headline1}
             <br />
-            <span className="text-muted-foreground">{t.features.headline2}</span>
+            <span className="text-white/70">{t.features.headline2}</span>
           </h2>
         </div>
 
