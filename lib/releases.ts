@@ -29,6 +29,10 @@ export type Release = {
   cover?: string;
   /** Co-credited roster artists; release appears under their filter too. */
   featuredArtistSlugs?: string[];
+  /** Pre-save / listen smart link (e.g. ONErpm). Drives the primary button on the release page. */
+  smartLink?: string;
+  /** Official video, embedded under the description (YouTube id only). */
+  video?: { youtubeId: string; title: string };
 };
 
 export const releases: Release[] = [
@@ -218,6 +222,88 @@ export const releases: Release[] = [
   },
 
   // ─────────── Klaus B ───────────
+  {
+    slug: "klaus-b-un-rezo",
+    title: "Un Rezo",
+    artistSlug: "klaus-brantmayer",
+    artistName: "Klaus B",
+    releaseDate: "2026-11-05",
+    year: 2026,
+    type: "single",
+    format: "Single · digital",
+    label: "PHŌNÉ Records",
+    cover: "/releases/klaus-b-un-rezo.jpg",
+    smartLink: "https://onerpm.link/106214256083",
+    description: {
+      es: `"Un Rezo" es el segundo single de Klaus B y sale el jueves 5 de noviembre de 2026, dos semanas después de "Destellos de ti". Es el segundo adelanto de "Una Cuota De Caos", el álbum que se publica el viernes 20 de noviembre de 2026, y cuenta con videoclip oficial.
+
+La canción es nu jazz futurista de carácter espiritual y devocional. La flauta y el trombón se apoyan en una batería con inercia que no deja que la pieza se detenga. El resultado es un tema moderno, inspirador y emocional. El título, "Un Rezo", ya anticipa ese espíritu devocional, aunque el sonido mire hacia adelante: es música de hoy, con la vista puesta en el futuro.
+
+Si "Destellos de ti" abrió el ciclo con un tema emotivo e íntimo, de saxofón, trombón y banda, "Un Rezo" muestra otra cara de Klaus B dentro del mismo universo: aquí la flauta y el trombón dan forma a un carácter más espiritual y devocional. Ambos singles descansan sobre la batería, con reminiscencias de drum and bass en el primero y con inercia en el segundo, y juntos arman un primer retrato de "Una Cuota De Caos".
+
+Klaus B es integrante de Newen Afrobeat y de la banda de Pascuala Ilabaca, y su música propia fusiona hip hop, jazz, neo soul, funk y ritmos afro-latinoamericanos. En "Un Rezo" firma la composición y la producción, además del saxofón y la flauta que figuran en los créditos del single.
+
+El álbum llega después de "Viaje Sin Tiempo" (2024), disco hecho junto a Gestosimple, y de "Memorias: Mixtape" (2025). Detrás del lanzamiento está PHŌNÉ Records, que lo acompaña en difusión y prensa, con distribución de ONErpm. "Un Rezo" ocupa el centro del calendario: queda entre el primer single (22 de octubre) y el álbum completo (20 de noviembre), a quince días de este último, que cierra el ciclo.`,
+      en: `"Un Rezo" is the second single from Klaus B, out on Thursday, November 5, 2026, two weeks after "Destellos de ti". It is the second single from "Una Cuota De Caos", the album coming out on Friday, November 20, 2026, and it has an official music video.
+
+The song is futuristic nu jazz with a spiritual, devotional character. Flute and trombone rest on drums with an inertia that never lets the piece stand still. The result is a modern, inspiring and emotional track. The title, "Un Rezo" ("A Prayer"), already hints at that devotional spirit, even though the sound looks ahead: it is music of today, with its eyes on the future.
+
+If "Destellos de ti" opened the cycle with an emotional, intimate track of saxophone, trombone and band, "Un Rezo" shows another side of Klaus B within the same universe: here flute and trombone shape a more spiritual, devotional character. Both singles rest on the drums, with echoes of drum and bass in the first and a driving inertia in the second, and together they sketch a first portrait of "Una Cuota De Caos".
+
+Klaus B is a member of Newen Afrobeat and of Pascuala Ilabaca's band, and his own music fuses hip hop, jazz, neo soul, funk and Afro-Latin American rhythms. On "Un Rezo" he is credited with composition and production, as well as the saxophone and flute listed in the single's credits.
+
+The album follows "Viaje Sin Tiempo" (2024), a record made together with Gestosimple, and "Memorias: Mixtape" (2025). PHŌNÉ Records stands behind the release, supporting it with promotion and press, with distribution by ONErpm. "Un Rezo" sits at the center of the calendar: it falls between the first single (October 22) and the full album (November 20), fifteen days before the latter, which closes the cycle.`,
+    },
+    credits: [
+      { role: "Composición, saxofón, flauta, producción", name: "Klaus B" },
+      { role: "Sello, difusión y prensa", name: "PHŌNÉ Records" },
+      { role: "Distribución", name: "ONErpm" },
+    ],
+    links: [{ label: "Pre-save / Escuchar", href: "https://onerpm.link/106214256083" }],
+  },
+  {
+    slug: "klaus-b-destellos-de-ti",
+    title: "Destellos de ti",
+    artistSlug: "klaus-brantmayer",
+    artistName: "Klaus B",
+    releaseDate: "2026-10-22",
+    year: 2026,
+    type: "single",
+    format: "Single · digital",
+    label: "PHŌNÉ Records",
+    cover: "/releases/klaus-b-destellos-de-ti.jpg",
+    smartLink: "https://onerpm.link/102211016130",
+    description: {
+      es: `"Destellos de ti" es el nuevo single de Klaus B y sale el jueves 22 de octubre de 2026. Es el primer adelanto de "Una Cuota De Caos", el álbum del saxofonista, flautista, compositor y productor chileno, y cuenta con videoclip oficial.
+
+Lo que suena es nu jazz moderno y futurista. El saxofón y el trombón se encuentran con una banda, y todo descansa sobre una batería con reminiscencias de drum and bass que le da impulso a la canción. Es un tema emotivo e íntimo, pero con mucha potencia y presencia sonora: la emoción y la contundencia conviven en el mismo espacio, sin que una le quite lugar a la otra.
+
+Con este single comienza un ciclo de tres lanzamientos que se despliega en menos de un mes. "Destellos de ti" abre el camino el 22 de octubre; dos semanas después, el jueves 5 de noviembre de 2026, llega el segundo single, "Un Rezo"; y quince días más tarde, el viernes 20 de noviembre de 2026, se publica el álbum completo, "Una Cuota De Caos". Ser el primero de la serie le da a este tema un lugar especial: es la primera puerta de entrada al disco y permite seguir el ciclo en el orden en que se publica.
+
+El single tiene además videoclip oficial, igual que el segundo adelanto, "Un Rezo": los dos primeros pasos del ciclo cuentan con imagen propia, además del sonido.
+
+Klaus B llega a este lanzamiento con dos trabajos recientes: el álbum "Viaje Sin Tiempo" (2024), hecho junto a Gestosimple, y "Memorias: Mixtape" (2025). Su música mezcla hip hop, jazz, neo soul y funk con ritmos afro-latinoamericanos, y "Destellos de ti" lleva ese cruce hacia un nu jazz moderno y futurista, con una batería de herencia drum and bass.
+
+En este single, Klaus B firma la composición, el saxofón, la flauta y la producción. PHŌNÉ Records, sello cultural independiente de Santiago de Chile, respalda el lanzamiento con difusión y prensa, y la distribución está a cargo de ONErpm. Dentro del catálogo 2026 del sello, "Destellos de ti" llega tres semanas después de "Cuántas veces", el single de Con.fusión con el que PHŌNÉ Records abre ese catálogo.`,
+      en: `"Destellos de ti" is the new single from Klaus B, out on Thursday, October 22, 2026. It is the first single from "Una Cuota De Caos", the album by the Chilean saxophonist, flautist, composer and producer, and it has an official music video.
+
+What you hear is modern, futuristic nu jazz. Saxophone and trombone meet a band, and everything rests on drums with echoes of drum and bass that give the song its drive. It is an emotional, intimate piece with real power and sonic presence: feeling and force share the same space without either one taking room from the other.
+
+With this single, a cycle of three releases begins, unfolding in less than a month. "Destellos de ti" opens the way on October 22; two weeks later, on Thursday, November 5, 2026, the second single, "Un Rezo", arrives; and fifteen days after that, on Friday, November 20, 2026, the full album, "Una Cuota De Caos", is released. Being first in the series gives this track a special place: it is the first way into the record and lets you follow the cycle in the order it is published.
+
+The single also has an official music video, just like the second single, "Un Rezo": the first two steps of the cycle come with their own visuals as well as their sound.
+
+Klaus B arrives at this release with two recent works: the album "Viaje Sin Tiempo" (2024), made together with Gestosimple, and "Memorias: Mixtape" (2025). His music blends hip hop, jazz, neo soul and funk with Afro-Latin American rhythms, and "Destellos de ti" takes that crossing toward a modern, futuristic nu jazz, with drums that carry a drum and bass heritage.
+
+On this single, Klaus B is credited with composition, saxophone, flute and production. PHŌNÉ Records, an independent cultural label from Santiago, Chile, backs the release with promotion and press, and distribution is handled by ONErpm. Within the label's 2026 catalogue, "Destellos de ti" arrives three weeks after "Cuántas veces", the Con.fusión single with which PHŌNÉ Records opens that catalogue.`,
+    },
+    credits: [
+      { role: "Composición, saxofón, flauta, producción", name: "Klaus B" },
+      { role: "Sello, difusión y prensa", name: "PHŌNÉ Records" },
+      { role: "Distribución", name: "ONErpm" },
+    ],
+    links: [{ label: "Pre-save / Escuchar", href: "https://onerpm.link/102211016130" }],
+  },
   {
     slug: "klaus-b-memorias-mixtape",
     title: "Memorias: Mixtape",
@@ -500,25 +586,17 @@ export const releases: Release[] = [
     title: "en viaje",
     artistSlug: "ecamhi",
     artistName: "Ecamhi",
-    // EP en producción — fecha estimada por anunciar.
-    releaseDate: "2026-12-31",
-    year: 2026,
+    releaseDate: "2027",
+    year: 2027,
     type: "ep",
     format: "EP · 4 tracks · en producción",
     label: "PHŌNÉ Records",
     description: {
       es:
-        "Próximo EP de Ecamhi y release inaugural del sello PHŌNÉ Records, actualmente en producción. El proyecto está concebido como obra interdisciplinaria: cuatro fotografías capturadas en giras internacionales inspirando cuatro composiciones, presentadas en simultáneo como exhibición fotográfica donde cada imagen va acompañada de audífonos con la pieza correspondiente. Imagen y sonido nacen del mismo proceso creativo. Voz invitada de Catalina Aguilera (Con.fusión), composición y sax de Vicente Aravena, producción y mezcla de Enrique Camhi, master de Daniel Pérez.",
+        "Próximo EP de ecamhi, previsto para 2027 y actualmente en producción. Se concibe a partir de las fotografías de las giras con Newen Afrobeat: cada foto se convierte en una canción, hasta completar cuatro piezas. El proyecto está pensado para presentarse junto a una exposición fotográfica, donde cada imagen va acompañada de audífonos con la pieza correspondiente. Imagen y sonido nacen del mismo proceso creativo.",
       en:
-        "Forthcoming EP from Ecamhi and the inaugural release of PHŌNÉ Records, currently in production. The project is conceived as an interdisciplinary work: four photographs captured on international tours inspiring four compositions, presented simultaneously as a photo exhibition where each image is accompanied by headphones with the corresponding piece. Image and sound born from the same creative process. Guest vocals by Catalina Aguilera (Con.fusión), composition and sax by Vicente Aravena, production and mixing by Enrique Camhi, mastering by Daniel Pérez.",
+        "Forthcoming EP from ecamhi, planned for 2027 and currently in production. It is conceived from photographs of the tours with Newen Afrobeat: each photo becomes a song, until four pieces are complete. The project is designed to be presented alongside a photo exhibition, where each image comes with headphones playing the corresponding piece. Image and sound come from the same creative process.",
     },
-    credits: [
-      { role: "Voz", name: "Catalina Aguilera (Con.fusión)" },
-      { role: "Composición y sax", name: "Vicente Aravena" },
-      { role: "Producción", name: "Enrique Camhi" },
-      { role: "Mezcla", name: "Enrique Camhi" },
-      { role: "Master", name: "Daniel Pérez" },
-    ],
   },
   {
     slug: "ecamhi-gaviotas",
@@ -656,9 +734,9 @@ export const releases: Release[] = [
     cover: "https://is1-ssl.mzstatic.com/image/thumb/Music112/v4/3e/11/34/3e11342c-ef83-217d-471d-cda2270ed24b/00_Cover_Art.jpg/1000x1000bb.jpg",
     description: {
       es:
-        "Single solista publicado en mayo 2022, dos años antes del EP inaugural en viaje. Es el primer trabajo firmado únicamente por Enrique Camhi sin co-autores: trompeta y producción propia en una pieza corta que ya anuncia la lógica interdisciplinar del proyecto. La estructura del track —menos canción, más cuadro sonoro— sirve como antecedente directo de en viaje, donde cuatro imágenes inspirarían cuatro piezas. Marca la consolidación de su voz solista.",
+        "Single solista publicado en mayo 2022, años antes del EP en viaje. Es el primer trabajo firmado únicamente por Enrique Camhi sin co-autores: trompeta y producción propia en una pieza corta que ya anuncia la lógica interdisciplinar del proyecto. La estructura del track —menos canción, más cuadro sonoro— sirve como antecedente directo de en viaje, donde cuatro imágenes inspirarían cuatro piezas. Marca la consolidación de su voz solista.",
       en:
-        "Solo single released May 2022, two years before the inaugural en viaje EP. The first work signed solely by Enrique Camhi without co-authors: trumpet and self-produced in a short piece already announcing the project's interdisciplinary logic. The track's structure —less song, more sonic painting— serves as direct precursor to en viaje, where four images would inspire four pieces. Marks the consolidation of his solo voice.",
+        "Solo single released May 2022, years before the en viaje EP. The first work signed solely by Enrique Camhi without co-authors: trumpet and self-produced in a short piece already announcing the project's interdisciplinary logic. The track's structure —less song, more sonic painting— serves as direct precursor to en viaje, where four images would inspire four pieces. Marks the consolidation of his solo voice.",
     },
     links: [
       { label: "Apple Music", href: "https://music.apple.com/us/album/move-to/1618064796" },
@@ -667,6 +745,51 @@ export const releases: Release[] = [
   },
 
   // ─────────── Con.fusión ───────────
+  {
+    slug: "con-fusion-cuantas-veces",
+    title: "Cuántas veces",
+    artistSlug: "con-fusion",
+    artistName: "Con.fusión",
+    featuredArtistSlugs: ["ecamhi"],
+    releaseDate: "2026-10-01",
+    year: 2026,
+    type: "single",
+    format: "Single · digital",
+    label: "PHŌNÉ Records",
+    cover: "/releases/con-fusion-cuantas-veces.jpg",
+    video: { youtubeId: "lPXsqrH4SU4", title: "Cuántas veces - Con.fusión ft. NuVee (prod. ecamhi)" },
+    description: {
+      es: `"Cuántas veces" es el single con el que PHŌNÉ Records abre su catálogo 2026, y una declaración de lo que viene. Con.fusión, la voz que fusiona hip hop, jazz y neosoul, se encuentra con el saxofón de NuVee sobre una producción de ecamhi que trabaja el espacio como un instrumento más. Los sonidos aparecen, se alejan y se envuelven unos en otros, y la voz está tratada de una forma poco habitual: estirada, desplazada, puesta en lugares donde no se la espera. El resultado es una canción de sensibilidad indie, envolvente y atmosférica, donde el saxo y la voz conversan en vez de competir.
+
+"Cuántas veces" habla de todo lo que sucede dentro de un sueño: miles de realidades paralelas que se repiten una y otra vez. La producción traduce esa idea al sonido, con capas que vuelven, se duplican y se desplazan como escenas de un sueño que no termina. Su valor está en el cruce: el oficio vocal de una intérprete con formación en jazz, puesto al servicio de una producción que se arriesga.
+
+"Cuántas veces" marca el inicio de un camino de lanzamientos de Con.fusión rumbo a "Tulpa", su primer álbum solista, que prepara junto a Matiah Chinaski. Es la fusión urbana chilena sonando desde un lugar propio.
+
+Con.fusión es el proyecto solista de Catalina Aguilera, una propuesta que transita entre el hip hop, el jazz y el neosoul, con exploraciones vocales que van del canto al rap y el scat. El single se publicó el 1 de octubre de 2026 y su videoclip oficial, estrenado en YouTube el 28 de septiembre, se puede ver completo en esta misma página, justo debajo de esta descripción. La composición y la letra son de Con.fusión (Catalina Aguilera) y NuVee, y el saxofón es de NuVee. La producción y la mezcla son de ecamhi, también parte del roster de PHŌNÉ Records, y el master es de DJ Pérez. El video, el montaje y el color son de Bárbara Lafuente; la foto fija, de Andrés Abrigo, y el diseño gráfico, de Daniel Torres. En las plataformas el tema figura como "Cuántas Veces (feat. Ecamhi & NuVee)", dura 3:29 y puede escucharse en Apple Music desde el enlace de la sección "Escuchar" de esta ficha. La grabación es ℗ PHŌNÉ Records, bajo licencia exclusiva a ONErpm.`,
+      en: `"Cuántas veces" is the single with which PHŌNÉ Records opens its 2026 catalogue, and a statement of what is coming. Con.fusión, the voice that fuses hip hop, jazz and neosoul, meets NuVee's saxophone over a production by ecamhi that treats space as one more instrument. Sounds appear, drift away and wrap around one another, and the voice is treated in an unusual way: stretched, displaced, placed where you would not expect it. The result is an enveloping, atmospheric song with an indie sensibility, where the sax and the voice converse instead of competing.
+
+"Cuántas veces" ("How many times") is about everything that happens inside a dream: thousands of parallel realities that repeat over and over. The production translates that idea into sound, with layers that return, double and shift like scenes from a dream that never ends. Its value lies in the crossing: the vocal craft of a performer trained in jazz, put at the service of a production that takes risks.
+
+"Cuántas veces" marks the beginning of a path of Con.fusión releases leading to "Tulpa", her first solo album, which she is preparing together with Matiah Chinaski. It is Chilean urban fusion sounding from a place of its own.
+
+Con.fusión is the solo project of Catalina Aguilera, a proposal that moves between hip hop, jazz and neosoul, with vocal explorations that range from singing to rap and scat. The single was released on October 1, 2026, and its official music video, premiered on YouTube on September 28, can be watched in full on this very page, right below this description. Composition and lyrics are by Con.fusión (Catalina Aguilera) and NuVee, and the saxophone is played by NuVee. Production and mixing are by ecamhi, also part of the PHŌNÉ Records roster, and the master is by DJ Pérez. Video, editing and color are by Bárbara Lafuente; still photography is by Andrés Abrigo, and graphic design by Daniel Torres. On streaming platforms the track is listed as "Cuántas Veces (feat. Ecamhi & NuVee)", runs 3:29 and can be heard on Apple Music through the link in the "Listen" section of this page. The recording is ℗ PHŌNÉ Records, released under exclusive license to ONErpm.`,
+    },
+    tracklist: [{ n: 1, title: "Cuántas Veces (feat. Ecamhi & NuVee)", duration: "3:29" }],
+    credits: [
+      { role: "Composición y letra", name: "Con.fusión (Catalina Aguilera) y NuVee" },
+      { role: "Saxofón", name: "NuVee" },
+      { role: "Producción y mezcla", name: "ecamhi" },
+      { role: "Master", name: "DJ Pérez" },
+      { role: "Video, montaje y color", name: "Bárbara Lafuente" },
+      { role: "Foto fija", name: "Andrés Abrigo" },
+      { role: "Diseño gráfico", name: "Daniel Torres" },
+      { role: "℗", name: "PHŌNÉ Records, bajo licencia exclusiva a ONErpm" },
+    ],
+    links: [
+      { label: "YouTube", href: "https://www.youtube.com/watch?v=lPXsqrH4SU4" },
+      { label: "Apple Music", href: "https://music.apple.com/us/album/cu%C3%A1ntas-veces-feat-ecamhi-nuvee/6810767171" },
+    ],
+  },
   {
     slug: "con-fusion-aua",
     title: "Aüa",

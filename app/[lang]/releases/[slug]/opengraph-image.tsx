@@ -1,3 +1,5 @@
+import { readFile } from "node:fs/promises";
+import path from "node:path";
 import { ImageResponse } from "next/og";
 import { getRelease } from "@/lib/releases";
 
@@ -26,6 +28,50 @@ async function loadFraunces(text: string): Promise<ArrayBuffer | null> {
   return fetch(match[1]).then((r) => r.arrayBuffer());
 }
 
+const IMAGE_MIME: Record<string, string> = {
+  ".jpg": "image/jpeg",
+  ".jpeg": "image/jpeg",
+  ".png": "image/png",
+  ".webp": "image/webp",
+};
+
+// next/og can only fetch absolute image URLs, so covers stored in /public
+// ("/releases/….jpg") are inlined as data URIs instead:
+//   1. read the file from disk (public/ is traced into the function bundle via
+//      outputFileTracingIncludes in next.config.mjs);
+//   2. if that fails, fetch it from a fixed origin (VERCEL_URL or localhost);
+//   3. if that fails too, return undefined and the banner shows the PHŌNÉ
+//      placeholder instead of answering 500.
+// Remote covers (https://…) are returned untouched.
+async function resolveCover(cover: string | undefined): Promise<string | undefined> {
+  if (!cover || !cover.startsWith("/")) return cover;
+
+  const publicDir = path.join(process.cwd(), "public");
+  const filePath = path.join(publicDir, cover);
+  const mime = IMAGE_MIME[path.extname(cover).toLowerCase()];
+
+  if (mime && filePath.startsWith(publicDir + path.sep)) {
+    try {
+      const data = await readFile(filePath);
+      return `data:${mime};base64,${data.toString("base64")}`;
+    } catch {
+      // fall through to the HTTP fallback
+    }
+  }
+
+  try {
+    const origin = process.env.VERCEL_URL
+      ? `https://${process.env.VERCEL_URL}`
+      : `http://localhost:${process.env.PORT ?? 3000}`;
+    const res = await fetch(new URL(cover, origin));
+    const type = res.headers.get("content-type")?.split(";")[0].trim() ?? "";
+    if (!res.ok || !type.startsWith("image/")) return undefined;
+    return `data:${type};base64,${Buffer.from(await res.arrayBuffer()).toString("base64")}`;
+  } catch {
+    return undefined;
+  }
+}
+
 export default async function OG({ params }: { params: Promise<Params> }) {
   const { slug } = await params;
   const release = getRelease(slug);
@@ -34,7 +80,7 @@ export default async function OG({ params }: { params: Promise<Params> }) {
   const artist = release?.artistName ?? "";
   const label = release?.label ?? "";
   const year = release?.year ? String(release.year) : "";
-  const cover = release?.cover;
+  const cover = await resolveCover(release?.cover);
 
   // Glyph subsetting: gather every character that will be rendered so Google
   // Fonts can return a slim TTF.

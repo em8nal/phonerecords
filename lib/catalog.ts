@@ -6,6 +6,7 @@
 
 import { releases } from "./releases";
 import { artists } from "./artists";
+import { isUpcoming } from "./release-date";
 
 export type CatalogEntry = {
   key: string;
@@ -25,6 +26,12 @@ export type CatalogEntry = {
   /** External storefront/streaming URL for lightweight entries (no detail page). */
   externalHref?: string;
   externalKind?: "buy" | "listen";
+  /**
+   * True when releaseDate (full or partial: "YYYY", "YYYY-MM") is still in the future
+   * (00:00 America/Santiago), evaluated when the page is generated. Client components use it as the initial
+   * value of the "Próximamente" badge and then re-check the clock themselves.
+   */
+  upcoming: boolean;
 };
 
 function slugify(s: string) {
@@ -77,6 +84,7 @@ function buildAllEntries(): CatalogEntry[] {
     label: r.label,
     cover: r.cover,
     releaseSlug: r.slug,
+    upcoming: isUpcoming(r.releaseDate),
   }));
 
   const seen = new Set(rich.map((r) => `${r.artistSlug}::${r.title.toLowerCase()}`));
@@ -99,6 +107,7 @@ function buildAllEntries(): CatalogEntry[] {
         releaseSlug: undefined,
         externalHref: r.href,
         externalKind: r.hrefKind ?? (r.href ? "buy" : undefined),
+        upcoming: isUpcoming(normalizeDateForSort(r.year)),
       })),
   );
 

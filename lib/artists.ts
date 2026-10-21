@@ -117,7 +117,7 @@ En paralelo, ha desarrollado un amplio trabajo colaborativo en la música chilen
 
 Actualmente forma parte del show en vivo de Matiah Chinaski, donde aporta una presencia femenina en una escena predominantemente masculina, integrando canto, rap e improvisación vocal. Hoy se encuentra desarrollando su primer disco de larga duración "Tulpa" solista bajo el sello PHŌNÉ Records, consolidando una propuesta artística propia dentro de la música contemporánea chilena.
 
-Próximos lanzamientos: single "Sueños" producido por ecamhi (junio 2026), "Tulpa" producido por Jenry Cancura / Matiah Chinaski (marzo 2027).`,
+Último lanzamiento: "Cuántas veces" (octubre 2026), single que abre el catálogo 2026 del sello. Próximo: "Tulpa", su primer álbum solista, producido por Matiah Chinaski (2027).`,
       en:
         `Con.fusión is the solo musical project of Catalina Aguilera Martínez, a proposal moving between hip hop, jazz and neosoul, incorporating vocal explorations that range from singing to rap and scat. Her trajectory begins in collaboration with producer Fat Jota, developing a sound close to lo-fi hip hop, later evolving towards the band Fat Lady, where she deepens a fusion between neosoul and rock from earlier compositions. She has participated in spaces such as Beatminds, the hip hop gathering led by Chilean beatmaker DJ Dacel, consolidating her presence in the scene.
 
@@ -125,19 +125,18 @@ In parallel, she has developed extensive collaborative work in Chilean music, re
 
 She is currently part of Matiah Chinaski's live show, where she contributes a female presence in a predominantly male scene, integrating song, rap and vocal improvisation. Today she is developing her first full-length solo album "Tulpa" under the PHŌNÉ Records label, consolidating an artistic proposal of her own within contemporary Chilean music.
 
-Upcoming releases: single "Sueños" produced by ecamhi (June 2026), "Tulpa" produced by Jenry Cancura / Matiah Chinaski (March 2027).`,
+Latest release: "Cuántas veces" (October 2026), the single that opens the label's 2026 catalogue. Next: "Tulpa", her first solo album, produced by Matiah Chinaski (2027).`,
     },
     links: [
       { label: "Spotify", href: "https://open.spotify.com/artist/3LnpeMefgyavyTUTFNs5Xd" },
     ],
     releases: [
-      { year: "2024", title: "Cantas Veces", format: "Single", notes: "Voz: Catalina Aguilera · Composición y sax: Vicente Aravena · Producción y mezcla: Ecamhi · Master: Daniel Pérez", cover: "/releases/con-fusion-cantas-veces.jpg" },
       { year: "in production", title: "Tulpa", format: "Álbum", notes: "Tracks: Acertijo · En vez de quejarte tanto · Pisando caca a propósito" },
     ],
   },
   {
     slug: "klaus-brantmayer",
-    name: "Klaus Brantmayer",
+    name: "Klaus B",
     genres: ["Nu-jazz", "Hip-hop jazz", "Rap jazz", "Neo-soul"],
     origin: "Santiago, Chile",
     bio: {
@@ -148,7 +147,7 @@ Su enfoque artístico y su búsqueda personal actual están estrechamente vincul
 
 Ha tocado en diversos escenarios y festivales alrededor del mundo, como en Brasil, Colombia, Ecuador, Estados Unidos, Canadá, Francia, Alemania, Austria, Bélgica, Holanda, Italia, España, Portugal, Inglaterra, Suecia, Suiza, Hungría, República Checa, Polonia, Rusia y Nigeria, haciendo de estas experiencias parte fundamental de su formación y aprendizaje.
 
-Próximos lanzamientos: álbum octubre 2026.`,
+Próximos lanzamientos: "Destellos de ti" (22 de octubre de 2026), "Un Rezo" (5 de noviembre de 2026) y el álbum "Una Cuota De Caos" (20 de noviembre de 2026).`,
       en:
         `Saxophone player, flautist, composer and producer from Chile. He pursued both independent and academic studies, in classical and popular music. He has deepened his musical development through improvisation and live experience. He is currently a stable member of various projects such as Newen Afrobeat, Pascuala Ilabaca y Fauna, the hip-hop duo Gestosimple & Klaus B, Valentina Marinkovic, Fran Ri and Camila Bañados.
 
@@ -156,7 +155,7 @@ His artistic focus and current personal search are closely tied to nu jazz and c
 
 He has played on stages and at festivals around the world — Brazil, Colombia, Ecuador, United States, Canada, France, Germany, Austria, Belgium, Netherlands, Italy, Spain, Portugal, England, Sweden, Switzerland, Hungary, Czech Republic, Poland, Russia and Nigeria — making these experiences a fundamental part of his formation and learning.
 
-Upcoming releases: album October 2026.`,
+Upcoming releases: "Destellos de ti" (October 22, 2026), "Un Rezo" (November 5, 2026) and the album "Una Cuota De Caos" (November 20, 2026).`,
     },
     links: [
       { label: "Bandcamp", href: "https://klausb.bandcamp.com/music" },

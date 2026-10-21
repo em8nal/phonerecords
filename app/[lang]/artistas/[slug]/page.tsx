@@ -48,6 +48,7 @@ function pickReleaseActions(
       u.includes("bandcamp.com") ||
       u.includes("soundcloud.com") ||
       u.includes("tidal.com") ||
+      u.includes("onerpm.link") ||
       u.includes("youtube.com");
     if (isBuy && !buy) buy = { href: l.href, kind: "buy" };
     else if (isListen && !listen) listen = { href: l.href, kind: "listen" };

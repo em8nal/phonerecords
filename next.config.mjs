@@ -3,6 +3,11 @@ const nextConfig = {
   typescript: {
     ignoreBuildErrors: true,
   },
+  // The release OG banner reads cover files from public/releases at request
+  // time (fs), so make sure they are traced into that function's bundle.
+  outputFileTracingIncludes: {
+    "/[lang]/releases/[slug]/opengraph-image": ["./public/releases/**"],
+  },
   images: {
     // Vercel image proxy serves WebP/AVIF on supported browsers and falls back
     // to the original format. Bandcamp/Apple/Discogs/elasticstage URLs are
