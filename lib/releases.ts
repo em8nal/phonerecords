@@ -79,7 +79,7 @@ The recording is ℗ 2026 Newen Afrobeat and the release © 2026 PHŌNÉ Records
     title: "Grietas",
     artistSlug: "newen-afrobeat",
     artistName: "Newen Afrobeat",
-    featuredArtistSlugs: ["ecamhi", "klaus-brantmayer", "claudio-solis"],
+    featuredArtistSlugs: ["ecamhi", "klaus-brantmayer"],
     releaseDate: "2024-09-25",
     year: 2024,
     type: "album",

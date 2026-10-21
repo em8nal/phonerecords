@@ -142,6 +142,8 @@ export function getCatalogArtists() {
     }
   }
   return Array.from(counts.entries())
-    .map(([slug, count]) => ({ slug, name: nameBySlug.get(slug) ?? slug, count }))
+    // Solo artistas con ficha propia: colaboradores sin perfil no son filtro.
+    .filter(([slug]) => nameBySlug.has(slug))
+    .map(([slug, count]) => ({ slug, name: nameBySlug.get(slug)!, count }))
     .sort((a, b) => b.count - a.count);
 }
