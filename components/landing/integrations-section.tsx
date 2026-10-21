@@ -38,12 +38,14 @@ export function IntegrationsSection() {
         headline1: "Cinco proyectos.",
         headline2: "Una línea editorial.",
         description: "Artistas acompañados con representación integral en Chile y en circuitos europeos y latinoamericanos.",
+        tile: { eyebrow: "Catálogo PHŌNÉ", headline: "Discos, sesiones en vivo y archivo del sello.", cta: "Ver el catálogo" },
       }
     : {
         eyebrow: "Roster",
         headline1: "Five projects.",
         headline2: "One editorial line.",
         description: "Artists supported with integral representation across Chile and European / Latin American circuits.",
+        tile: { eyebrow: "PHŌNÉ catalogue", headline: "Records, live sessions and the label's archive.", cta: "View the catalogue" },
       };
 
   return (
@@ -112,11 +114,33 @@ export function IntegrationsSection() {
               </Link>
             );
           })}
-          {/* Rellenos: la última fila no muestra el gris del gap (2 columnas en móvil, 3 desde md) */}
-          {Array.from({ length: (2 - (roster.length % 2)) % 2 }, (_, i) => (
+          {/* Celda final: tarjeta del sello hacia el catálogo. Con 5 artistas completa la grilla
+              (6 = 2×3 en móvil = 3×2 desde md); con otro número, los rellenos de abajo cierran la fila. */}
+          <Link
+            href={`/${language}/catalogo`}
+            className={`group flex flex-col justify-between gap-10 bg-foreground p-4 text-background transition-all duration-500 md:p-8 lg:p-10 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-inset focus-visible:ring-brand ${
+              isVisible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-4"
+            }`}
+            style={{ transitionDelay: isVisible ? `${roster.length * 60}ms` : "0ms" }}
+          >
+            <span className="font-mono text-xs uppercase tracking-wider text-background/60">{copy.tile.eyebrow}</span>
+            <span className="block">
+              <span className="mb-6 block font-display text-xl tracking-tight text-balance md:text-2xl lg:text-3xl">
+                {copy.tile.headline}
+              </span>
+              <span className="inline-flex items-center gap-2 font-mono text-xs uppercase tracking-widest">
+                {copy.tile.cta}
+                <span aria-hidden="true" className="text-brand motion-safe:transition-transform motion-safe:group-hover:translate-x-1">
+                  →
+                </span>
+              </span>
+            </span>
+          </Link>
+          {/* Rellenos (solo si artistas + tarjeta no completan la última fila: 2 columnas en móvil, 3 desde md) */}
+          {Array.from({ length: (2 - ((roster.length + 1) % 2)) % 2 }, (_, i) => (
             <div key={`m${i}`} aria-hidden="true" className="bg-background md:hidden" />
           ))}
-          {Array.from({ length: (3 - (roster.length % 3)) % 3 }, (_, i) => (
+          {Array.from({ length: (3 - ((roster.length + 1) % 3)) % 3 }, (_, i) => (
             <div key={`d${i}`} aria-hidden="true" className="hidden bg-background md:block" />
           ))}
         </div>
