@@ -383,7 +383,12 @@ export default async function ArtistPage({
             <h2 className="font-mono text-xs text-muted-foreground uppercase tracking-widest mb-6">
               {labels.listenSpotify}
             </h2>
-            <SpotifyArtistEmbed artistId={spotifyArtistId} />
+            <SpotifyArtistEmbed
+              artistId={spotifyArtistId}
+              cover={portrait ?? undefined}
+              coverAlt={artist.name}
+              title={artist.name}
+            />
           </section>
         )}
 

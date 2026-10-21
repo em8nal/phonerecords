@@ -98,7 +98,6 @@ Upcoming releases: album εποχή (2026), EP "en viaje" (2027).`,
     links: [
       { label: "Spotify", href: "https://open.spotify.com/artist/6dUvYBGnjpf2emwATOIP4c" },
       { label: "Apple Music", href: "https://music.apple.com/us/artist/ecamhi/1654191972" },
-      { label: "YouTube", href: "https://www.youtube.com/channel/UCZrXTZr4jRWnaac5sc99rog" },
       { label: "SoundCloud", href: "https://soundcloud.com/enrique-camhi" },
       { label: "Instagram", href: "https://www.instagram.com/ecamhi/" },
     ],

@@ -22,12 +22,18 @@ export const ARTIST_HERO: Record<string, ArtistHero> = {
   "klaus-brantmayer": {
     desktop: "/media/klaus-b/destellos-hero.jpg",
     mobile: "/media/klaus-b/destellos-hero-mobile.jpg",
-    alt: { es: "Klaus B, retrato en blanco y negro", en: "Klaus B, black and white portrait" },
+    alt: {
+      es: "Klaus B toca la flauta traversa con audífonos y los ojos cerrados frente a un micrófono de estudio; foto en blanco y negro",
+      en: "Klaus B plays the flute wearing headphones, eyes closed, in front of a studio microphone; black-and-white photo",
+    },
   },
   "con-fusion": {
     desktop: "/media/con-fusion/cuantas-veces-hero.jpg",
     mobile: "/media/con-fusion/cuantas-veces-hero-mobile.jpg",
-    alt: { es: "Con.fusión, retrato en blanco y negro", en: "Con.fusión, black and white portrait" },
+    alt: {
+      es: "Con.fusión (Catalina Aguilera) con los ojos cerrados en la sesión de Cuántas veces; foto en blanco y negro",
+      en: "Con.fusión (Catalina Aguilera) with her eyes closed at the Cuántas veces session; black-and-white photo",
+    },
   },
   ecamhi: {
     desktop: "/media/ecamhi/ecamhi-hero.jpg",

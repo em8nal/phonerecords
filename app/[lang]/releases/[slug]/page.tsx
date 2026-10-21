@@ -244,7 +244,13 @@ export default async function ReleasePage({
           if (!spotifyId) return null;
           return (
             <section className="mb-20">
-              <SpotifyAlbumEmbed albumId={spotifyId} height={352} />
+              <SpotifyAlbumEmbed
+                albumId={spotifyId}
+                height={352}
+                cover={release.cover}
+                coverAlt={`${release.title} — ${release.artistName}`}
+                title={release.title}
+              />
             </section>
           );
         })()}
