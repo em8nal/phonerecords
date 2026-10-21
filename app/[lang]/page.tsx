@@ -118,7 +118,7 @@ export default async function Home({
           { "@type": "MusicGroup", name: "Newen Afrobeat", url: `https://phonerecords.cl/${lang}/artistas/newen-afrobeat` },
           { "@type": "MusicGroup", name: "Ecamhi", url: `https://phonerecords.cl/${lang}/artistas/ecamhi` },
           { "@type": "MusicGroup", name: "Con.fusión", url: `https://phonerecords.cl/${lang}/artistas/con-fusion` },
-          { "@type": "MusicGroup", name: "Klaus Brantmayer", url: `https://phonerecords.cl/${lang}/artistas/klaus-brantmayer` },
+          { "@type": "MusicGroup", name: "Klaus B", url: `https://phonerecords.cl/${lang}/artistas/klaus-brantmayer` },
           { "@type": "MusicGroup", name: "Andrés Abrigo", url: `https://phonerecords.cl/${lang}/artistas/andres-abrigo` },
         ],
       },

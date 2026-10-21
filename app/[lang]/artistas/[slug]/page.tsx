@@ -8,6 +8,7 @@ import { FooterSection } from "@/components/landing/footer-section";
 import { artistSlugs, getArtist } from "@/lib/artists";
 import { getArtistEntries } from "@/lib/catalog";
 import { getRelease } from "@/lib/releases";
+import { isUpcoming } from "@/lib/release-date";
 
 type ActionLink = { href: string; kind: "listen" | "buy" };
 
@@ -424,7 +425,7 @@ export default async function ArtistPage({
                             rel="noopener noreferrer"
                             className="inline-flex items-center justify-center gap-1.5 px-3.5 h-9 text-xs font-mono font-bold uppercase tracking-widest rounded-full bg-foreground text-background hover:bg-foreground/85 transition-colors w-full sm:w-auto"
                           >
-                            ▶ {labels.listen}
+                            ▶ {listenAction.href.includes("onerpm.link") && isUpcoming(r.releaseDate) ? "Pre-save" : labels.listen}
                           </a>
                         )}
                         {buyAction && (

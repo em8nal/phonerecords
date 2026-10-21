@@ -60,6 +60,7 @@ export function ReleaseCta({
       className="inline-flex items-center justify-center gap-2 px-8 h-12 text-sm font-mono font-bold uppercase tracking-widest rounded-full bg-foreground text-background hover:bg-foreground/90 transition-colors"
     >
       {label}
+      <span className="sr-only">{isEs ? " (se abre en pestaña nueva)" : " (opens in new tab)"}</span>
       <ArrowUpRight className="w-4 h-4" aria-hidden />
     </a>
   );
