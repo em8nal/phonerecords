@@ -1,15 +1,14 @@
 import type { Metadata } from "next";
 import { notFound } from "next/navigation";
 import Link from "next/link";
-import Image from "next/image";
-import { ArrowLeft, ArrowUpRight, ExternalLink } from "lucide-react";
+import { ArrowLeft, ExternalLink } from "lucide-react";
 import { Navigation } from "@/components/landing/navigation";
 import { FooterSection } from "@/components/landing/footer-section";
-import { releaseSlugs, getRelease, getReleasesByArtist } from "@/lib/releases";
-import { getArtist } from "@/lib/artists";
+import { releaseSlugs, getRelease } from "@/lib/releases";
 import { SpotifyAlbumEmbed } from "@/components/spotify-embed";
 import { YouTubeEmbed } from "@/components/youtube-embed";
-import { ReleaseCta, ComingSoonBadge } from "@/components/release-status";
+import { ReleaseHero } from "@/components/phone/release-hero";
+import { ReleaseCardGrid } from "@/components/phone/release-card-grid";
 import { isReleased } from "@/lib/release-date";
 import type { Language } from "@/lib/translations";
 
@@ -97,14 +96,11 @@ export default async function ReleasePage({
     .filter(Boolean);
   // Server-side answer, used for SSR/hydration; the client components re-check the clock.
   const initiallyReleased = isReleased(release.releaseDate);
-  const artist = getArtist(release.artistSlug);
-  const otherReleases = getReleasesByArtist(release.artistSlug)
-    .filter((r) => r.slug !== release.slug)
-    .slice(0, 3);
+  const uiLang: Language = isEs ? "es" : "en";
 
   const labels = isEs
-    ? { back: "Volver al catálogo", tracklist: "Tracklist", credits: "Créditos", links: "Escuchar", releaseDate: initiallyReleased ? "Fecha" : "Fecha de lanzamiento", format: "Formato", label: "Sello", more: "Más de", track: "Track" }
-    : { back: "Back to catalogue", tracklist: "Tracklist", credits: "Credits", links: "Listen", releaseDate: initiallyReleased ? "Released" : "Release date", format: "Format", label: "Label", more: "More from", track: "Track" };
+    ? { back: "Volver al catálogo", tracklist: "Tracklist", credits: "Créditos", links: "Escuchar", releaseDate: initiallyReleased ? "Fecha" : "Fecha de lanzamiento", format: "Formato", label: "Sello", track: "Track" }
+    : { back: "Back to catalogue", tracklist: "Tracklist", credits: "Credits", links: "Listen", releaseDate: initiallyReleased ? "Released" : "Release date", format: "Format", label: "Label", track: "Track" };
 
   // JSON-LD MusicAlbum schema
   const url = `https://phonerecords.cl/${lang}/releases/${slug}`;
@@ -160,7 +156,10 @@ export default async function ReleasePage({
       />
       <Navigation />
 
-      <article className="max-w-[1200px] mx-auto px-6 lg:px-12 pt-32 lg:pt-40 pb-24">
+      {/* Hero: portada desenfocada de fondo, portada nítida, h1, badge y CTA primario */}
+      <ReleaseHero release={release} lang={uiLang} initialReleased={initiallyReleased} />
+
+      <article className="max-w-[1200px] mx-auto px-6 lg:px-12 pt-12 lg:pt-16 pb-24">
         <Link
           href={`/${lang}/catalogo`}
           className="inline-flex items-center gap-2 text-sm text-muted-foreground hover:text-foreground transition-colors mb-12 group"
@@ -169,56 +168,12 @@ export default async function ReleasePage({
           {labels.back}
         </Link>
 
-        {/* Cover + Header */}
-        <header className="grid lg:grid-cols-12 gap-10 lg:gap-16 mb-16 lg:mb-24 items-start">
-          {release.cover && (
-            <div className="lg:col-span-5">
-              <div className="relative aspect-square overflow-hidden border border-foreground/10 bg-foreground/5">
-                <Image
-                  src={release.cover}
-                  alt={`${release.title} — ${release.artistName}`}
-                  fill
-                  sizes="(min-width: 1024px) 40vw, 100vw"
-                  priority
-                  className="object-cover"
-                />
-              </div>
-            </div>
-          )}
-          <div className={release.cover ? "lg:col-span-7" : "lg:col-span-12"}>
-            {!initiallyReleased && (
-              <div className="mb-6">
-                <ComingSoonBadge
-                  releaseDate={release.releaseDate}
-                  initialReleased={initiallyReleased}
-                  lang={lang}
-                />
-              </div>
-            )}
-            <Link
-              href={`/${lang}/artistas/${release.artistSlug}`}
-              className="font-mono text-xs text-muted-foreground tracking-widest uppercase mb-6 inline-block hover:text-foreground transition-colors"
-            >
-              {release.artistName}
-            </Link>
-            <h1 className="text-4xl lg:text-7xl font-display tracking-tight leading-[0.9] mb-8">
-              {release.title}
-            </h1>
-            <div className="flex flex-wrap gap-x-8 gap-y-2 text-sm font-mono text-muted-foreground uppercase tracking-widest">
-              <span>{labels.releaseDate}: {release.releaseDate}</span>
-              <span>{labels.format}: {release.format}</span>
-              {release.label && <span>{labels.label}: {release.label}</span>}
-            </div>
-            {release.smartLink && (
-              <div className="mt-10">
-                <ReleaseCta
-                  href={release.smartLink}
-                  releaseDate={release.releaseDate}
-                  initialReleased={initiallyReleased}
-                  lang={lang}
-                />
-              </div>
-            )}
+        {/* Meta: la portada, el h1, el badge y el CTA viven en el hero (una sola portada grande) */}
+        <header className="mb-12 lg:mb-16">
+          <div className="flex flex-wrap gap-x-8 gap-y-2 text-sm font-mono text-muted-foreground uppercase tracking-widest">
+            <span>{labels.releaseDate}: {release.releaseDate}</span>
+            <span>{labels.format}: {release.format}</span>
+            {release.label && <span>{labels.label}: {release.label}</span>}
           </div>
         </header>
 
@@ -335,29 +290,10 @@ export default async function ReleasePage({
           </section>
         )}
 
-        {/* More from artist */}
-        {otherReleases.length > 0 && artist && (
-          <section className="pt-12 border-t border-foreground/10">
-            <h2 className="font-mono text-xs uppercase tracking-widest text-muted-foreground mb-8">
-              {labels.more} {artist.name}
-            </h2>
-            <div className="grid grid-cols-1 md:grid-cols-3 gap-px bg-foreground/10 border border-foreground/10">
-              {otherReleases.map((r) => (
-                <Link
-                  key={r.slug}
-                  href={`/${lang}/releases/${r.slug}`}
-                  className="group bg-background p-6 hover:bg-foreground/[0.02] transition-colors"
-                >
-                  <div className="font-mono text-xs text-muted-foreground mb-3">{r.releaseDate.slice(0, 7)}</div>
-                  <div className="text-lg font-display tracking-tight group-hover:translate-x-1 transition-transform">{r.title}</div>
-                  <div className="text-xs text-muted-foreground mt-1">{r.format}</div>
-                  <ArrowUpRight className="w-4 h-4 mt-3 opacity-50 group-hover:opacity-100 transition-opacity" />
-                </Link>
-              ))}
-            </div>
-          </section>
-        )}
       </article>
+
+      {/* Grilla de cierre: mismo artista primero, luego los más recientes (plan §5.7.5) */}
+      <ReleaseCardGrid lang={uiLang} currentSlug={release.slug} artistSlug={release.artistSlug} />
 
       <FooterSection />
     </main>
