@@ -275,7 +275,7 @@ function FeatureCard({ feature, index, visual }: { feature: { number: string; ti
       <div className="flex flex-col lg:flex-row gap-8 lg:gap-16 py-12 lg:py-20 border-b border-white/10">
         {/* Number */}
         <div className="shrink-0">
-          <span className="font-mono text-sm text-white/70">{feature.number}</span>
+          <span className="font-mono text-sm text-white/80">{feature.number}</span>
         </div>
         
         {/* Content */}
@@ -284,7 +284,7 @@ function FeatureCard({ feature, index, visual }: { feature: { number: string; ti
             <h3 className="text-3xl lg:text-4xl font-display mb-4 group-hover:translate-x-2 transition-transform duration-500">
               {feature.title}
             </h3>
-            <p className="text-lg text-white/70 leading-relaxed">
+            <p className="text-lg text-white/80 leading-relaxed">
               {feature.description}
             </p>
           </div>
@@ -328,17 +328,17 @@ export function FeaturesSection() {
       id="features"
       ref={sectionRef}
       aria-labelledby="features-heading"
-      className="relative isolate overflow-hidden bg-neutral-950 text-white py-24 lg:py-32"
+      className="relative isolate overflow-hidden bg-neutral-950 text-white py-24 lg:py-32 print:bg-white print:text-black"
     >
       {/* Fondo decorativo: foto B/N + velo negro + fundido a neutral-950. Cubre la cabecera y la primera
           tarjeta (≤ 120svh / 1100 px); las demás tarjetas van sobre negro sólido. Si la imagen no carga
           queda bg-neutral-950 (blanco 19,8:1; blanco/70 9,7:1). */}
       <div
         aria-hidden="true"
-        className="absolute inset-x-0 top-0 -z-10 h-[120svh] max-h-[1100px]"
+        className="absolute inset-x-0 top-0 -z-10 h-reach max-h-[1100px] print:hidden"
       >
         <picture>
-          <source media="(min-width: 768px)" srcSet={bgDesktop.srcSet} sizes="100vw" />
+          <source media="(min-width: 768px)" srcSet={bgDesktop.srcSet} sizes="(min-width: 2560px) 2560px, 100vw" />
           {/* eslint-disable-next-line @next/next/no-img-element, jsx-a11y/alt-text */}
           <img
             {...bgMobile}
@@ -355,7 +355,7 @@ export function FeaturesSection() {
       <div className="max-w-[1400px] mx-auto px-6 lg:px-12">
         {/* Header */}
         <div className="mb-16 lg:mb-24">
-          <span className="inline-flex items-center gap-3 text-sm font-mono text-white/70 mb-6">
+          <span className="inline-flex items-center gap-3 text-sm font-mono text-white/80 mb-6">
             <span className="w-8 h-px bg-white/30" />
             {t.features.eyebrow}
           </span>
@@ -367,7 +367,7 @@ export function FeaturesSection() {
           >
             {t.features.headline1}
             <br />
-            <span className="text-white/70">{t.features.headline2}</span>
+            <span className="text-white/80">{t.features.headline2}</span>
           </h2>
         </div>
 

@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useTransition } from "react";
+import { useEffect, useState, useTransition } from "react";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { z } from "zod";
@@ -88,6 +88,7 @@ export function ContactForm({ lang }: { lang: Lang }) {
     register,
     handleSubmit,
     reset,
+    setValue,
     formState: { errors },
   } = useForm<FormValues>({
     resolver: zodResolver(formSchema),
@@ -100,6 +101,14 @@ export function ContactForm({ lang }: { lang: Lang }) {
       newsletter: false,
     },
   });
+
+  // ?topic=booking (enlace "Booking" del footer y del menú) preselecciona el asunto sin exigir Suspense.
+  useEffect(() => {
+    const wanted = new URLSearchParams(window.location.search).get("topic");
+    if (wanted && (topicValues as readonly string[]).includes(wanted)) {
+      setValue("topic", wanted as (typeof topicValues)[number]);
+    }
+  }, [setValue]);
 
   const onSubmit = (values: FormValues) => {
     startTransition(async () => {

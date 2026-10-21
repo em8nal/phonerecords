@@ -569,3 +569,9 @@
     break-before: page;
   }
 }
+
+/* Alto del fondo decorativo de Servicios: 120 % del viewport, con respaldo para navegadores sin svh. */
+.h-reach {
+  height: 120vh;
+  height: 120svh;
+}

@@ -28,7 +28,7 @@ export function FooterSection() {
   const columns: ReadonlyArray<{ key: string; title: string; links: ReadonlyArray<FooterLink> }> = [
     { key: "artists", title: t.footer.columns.artists, links: t.footer.links.artists },
     { key: "label", title: t.footer.columns.label, links: t.footer.links.label },
-    { key: "catalogue", title: t.footer.columns.catalogue, links: t.footer.links.catalogue },
+    { key: "contact", title: t.footer.columns.contact, links: t.footer.links.contact },
   ];
 
   return (
@@ -75,7 +75,7 @@ export function FooterSection() {
           })}
 
           {/* Newsletter: formulario compacto + redes del sello */}
-          <div className="col-span-2 md:col-span-1 lg:col-span-3">
+          <section aria-labelledby="footer-newsletter" className="col-span-2 md:col-span-1 lg:col-span-3">
             <h3 id="footer-newsletter" className="text-base font-medium mb-3">
               {t.footer.columns.newsletter}
             </h3>
@@ -96,7 +96,7 @@ export function FooterSection() {
                 </li>
               ))}
             </ul>
-          </div>
+          </section>
         </div>
 
         {/* Barra inferior */}

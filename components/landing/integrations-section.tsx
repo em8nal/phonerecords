@@ -35,13 +35,13 @@ export function IntegrationsSection() {
   const copy = language === "es"
     ? {
         eyebrow: "Roster",
-        headline1: "Seis proyectos.",
+        headline1: "Cinco proyectos.",
         headline2: "Una línea editorial.",
         description: "Artistas acompañados con representación integral en Chile y en circuitos europeos y latinoamericanos.",
       }
     : {
         eyebrow: "Roster",
-        headline1: "Six projects.",
+        headline1: "Five projects.",
         headline2: "One editorial line.",
         description: "Artists supported with integral representation across Chile and European / Latin American circuits.",
       };
@@ -112,6 +112,13 @@ export function IntegrationsSection() {
               </Link>
             );
           })}
+          {/* Rellenos: la última fila no muestra el gris del gap (2 columnas en móvil, 3 desde md) */}
+          {Array.from({ length: (2 - (roster.length % 2)) % 2 }, (_, i) => (
+            <div key={`m${i}`} aria-hidden="true" className="bg-background md:hidden" />
+          ))}
+          {Array.from({ length: (3 - (roster.length % 3)) % 3 }, (_, i) => (
+            <div key={`d${i}`} aria-hidden="true" className="hidden bg-background md:block" />
+          ))}
         </div>
       </div>
     </section>

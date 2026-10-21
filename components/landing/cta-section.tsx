@@ -42,7 +42,7 @@ export function CtaSection() {
       {/* Foto detrás de toda la sección + velo hueso 60 %. Si la imagen no carga queda bg-background. */}
       <div aria-hidden="true" className="absolute inset-0 -z-10">
         <picture>
-          <source media="(min-width: 768px)" srcSet={bgDesktop.srcSet} sizes="100vw" />
+          <source media="(min-width: 768px)" srcSet={bgDesktop.srcSet} sizes="(min-width: 2560px) 2560px, 100vw" />
           {/* eslint-disable-next-line @next/next/no-img-element, jsx-a11y/alt-text */}
           <img
             {...bgMobile}
@@ -54,10 +54,10 @@ export function CtaSection() {
       </div>
 
       {/* Móvil: franja de foto (cielo y azoteas) sobre el panel. Escritorio: panel a la izquierda, foto a la derecha. */}
-      <div className="max-w-[1400px] mx-auto px-6 lg:px-12 pt-56 md:pt-0">
+      <div className="max-w-[1400px] mx-auto px-6 lg:px-12 pt-40 md:pt-0">
         {/* Panel hueso 90 %: text-muted-foreground conserva AA aunque debajo haya negro puro (4,94:1). */}
         <div
-          className={`relative border border-foreground bg-background/90 lg:max-w-2xl 2xl:max-w-3xl transition-all duration-1000 ${
+          className={`relative border border-foreground bg-background/90 md:max-w-2xl 2xl:max-w-3xl transition-all duration-1000 ${
             isVisible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-8"
           }`}
         >

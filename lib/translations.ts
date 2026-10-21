@@ -190,28 +190,28 @@ export const translations = {
       columns: {
         artists: "Artists",
         label: "Label",
-        catalogue: "Catalogue",
+        contact: "Contact",
         newsletter: "Newsletter",
       },
       links: {
         artists: [
           { label: "Newen Afrobeat", href: "/artistas/newen-afrobeat" },
-          { label: "Klaus B", href: "/artistas/klaus-brantmayer" },
           { label: "ecamhi", href: "/artistas/ecamhi" },
           { label: "Con.fusión", href: "/artistas/con-fusion" },
+          { label: "Klaus B", href: "/artistas/klaus-brantmayer" },
           { label: "Rosario Lircay", href: "/artistas/rosario-lircay" },
         ],
         label: [
           { label: "About PHŌNÉ", href: "/sello" },
           { label: "Manifesto", href: "/manifiesto" },
           { label: "Services", href: "#features" },
-          { label: "Events", href: "/eventos" },
-          { label: "Press", href: "/press-kit" },
-        ],
-        catalogue: [
           { label: "Releases", href: "/catalogo" },
+          { label: "Events", href: "/eventos" },
+        ],
+        contact: [
+          { label: "Contact", href: "/contacto" },
+          { label: "Booking", href: "/contacto?topic=booking" },
           { label: "Press kit", href: "/press-kit" },
-          { label: "Booking", href: "/contacto" },
         ],
       },
       newsletterBlurb: "Releases and shows, before anyone else.",
@@ -410,28 +410,28 @@ export const translations = {
       columns: {
         artists: "Artistas",
         label: "Sello",
-        catalogue: "Catálogo",
+        contact: "Contacto",
         newsletter: "Newsletter",
       },
       links: {
         artists: [
           { label: "Newen Afrobeat", href: "/artistas/newen-afrobeat" },
-          { label: "Klaus B", href: "/artistas/klaus-brantmayer" },
           { label: "ecamhi", href: "/artistas/ecamhi" },
           { label: "Con.fusión", href: "/artistas/con-fusion" },
+          { label: "Klaus B", href: "/artistas/klaus-brantmayer" },
           { label: "Rosario Lircay", href: "/artistas/rosario-lircay" },
         ],
         label: [
           { label: "Sobre PHŌNÉ", href: "/sello" },
           { label: "Manifiesto", href: "/manifiesto" },
           { label: "Servicios", href: "#features" },
-          { label: "Eventos", href: "/eventos" },
-          { label: "Prensa", href: "/press-kit" },
-        ],
-        catalogue: [
           { label: "Lanzamientos", href: "/catalogo" },
+          { label: "Eventos", href: "/eventos" },
+        ],
+        contact: [
+          { label: "Contacto", href: "/contacto" },
+          { label: "Booking", href: "/contacto?topic=booking" },
           { label: "Press kit", href: "/press-kit" },
-          { label: "Booking", href: "/contacto" },
         ],
       },
       newsletterBlurb: "Lanzamientos y conciertos, antes que nadie.",

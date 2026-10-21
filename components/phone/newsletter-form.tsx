@@ -108,8 +108,8 @@ export function NewsletterForm({ lang, source, variant = "default", className }:
           aria-describedby={hasMsg ? msgId : undefined}
           className={
             compact
-              ? "w-full min-w-0 bg-transparent border border-foreground/15 rounded-full px-4 h-11 text-base text-foreground placeholder:text-muted-foreground focus:outline-none focus:border-foreground/40 transition-colors"
-              : "flex-1 min-w-0 bg-transparent border border-foreground/15 rounded-full px-5 h-12 text-base text-foreground placeholder:text-muted-foreground focus:outline-none focus:border-foreground/40 transition-colors"
+              ? "w-full min-w-0 bg-transparent border border-foreground/15 rounded-full px-4 h-11 text-base text-foreground placeholder:text-muted-foreground focus:outline-none focus:border-foreground/40 focus-visible:ring-2 focus-visible:ring-brand focus-visible:ring-offset-2 focus-visible:ring-offset-background transition-colors"
+              : "flex-1 min-w-0 bg-transparent border border-foreground/15 rounded-full px-5 h-12 text-base text-foreground placeholder:text-muted-foreground focus:outline-none focus:border-foreground/40 focus-visible:ring-2 focus-visible:ring-brand focus-visible:ring-offset-2 focus-visible:ring-offset-background transition-colors"
           }
         />
         <button
@@ -128,7 +128,7 @@ export function NewsletterForm({ lang, source, variant = "default", className }:
       <p
         className={
           compact
-            ? "text-[11px] text-muted-foreground mt-2 leading-snug"
+            ? "text-xs text-muted-foreground mt-2 leading-snug"
             : "text-xs text-muted-foreground mt-3 leading-relaxed"
         }
       >

@@ -2,8 +2,7 @@
 //   (node --import ./scripts/ts-resolve-hook.mjs scripts/test-roster.mjs)
 // Fuente de verdad: `artists` de lib/artists.ts. Comprueba que:
 //   1. footer ES y EN (translations.footer.links.artists) enlazan exactamente a los mismos
-//      artistas, con los mismos `name`, sin repetidos (el orden del footer lo fija el brief,
-//      así que aquí se exige el conjunto, no la secuencia).
+//      artistas, con los mismos `name` y en la misma secuencia (una sola fuente de orden).
 //   2. ES y EN del footer tienen la misma secuencia entre sí.
 //   3. components/landing/integrations-section.tsx exporta `roster` y su secuencia
 //      (slug + name) es exactamente la de `artists`.
@@ -38,8 +37,8 @@ for (const lang of ["es", "en"]) {
     name: l.label,
   }));
   report(
-    `footer ${lang} = artists (mismo conjunto de slugs y mismos nombres)`,
-    sameSet(footer[lang]),
+    `footer ${lang} = artists (misma secuencia de slugs y mismos nombres)`,
+    sameSet(footer[lang]) && JSON.stringify(footer[lang]) === JSON.stringify(expected),
     footer[lang].map((g) => g.slug).join(" > "),
   );
 }
