@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import Link from "next/link";
+import Image from "next/image";
 import { ArrowLeft, ArrowUpRight } from "lucide-react";
 import { Navigation } from "@/components/landing/navigation";
 import { PageHero } from "@/components/phone/page-hero";
@@ -31,10 +32,20 @@ export async function generateMetadata(
 const copy = {
   es: {
     eyebrow: "Sobre PHŌNÉ",
-    headline: "Sello cultural\nindependiente.",
+    headline: "Un lugar donde\nla música queda.",
     intro:
-      "PHŌNÉ Records produce condiciones de existencia para la música independiente: no sólo discos, sino contextos, archivo y trayectorias sostenidas en el tiempo. Operamos como empresa cultural con corazón de atelier desde Santiago de Chile, en diálogo con circuitos europeos vía Ludwig Sound Booking Agency (Heidelberg, Alemania).",
+      "PHŌNÉ Records es un sello discográfico, una oficina de management y una productora musical con base en Ñuñoa, Santiago de Chile. Trabajamos con seis artistas: Newen Afrobeat, Klaus B, ecamhi, Con.fusión, Rosario Lircay y Andrés Abrigo. Editamos en vinilo y digital, y gestionamos giras entre Chile y Europa.",
     backHome: "Volver al inicio",
+    figures: {
+      klaus: {
+        alt: "Klaus B toca la flauta traversa con audífonos y los ojos cerrados frente a un micrófono de estudio; foto en blanco y negro",
+        caption: "Klaus B · sesión de grabación",
+      },
+      confusion: {
+        alt: "La vocalista de Con.fusión se recuesta sobre una baranda con los ojos cerrados, un muro de ladrillos detrás; foto en blanco y negro",
+        caption: "Con.fusión · sesión Cuántas veces",
+      },
+    },
     modes: {
       title: "Modos de producción",
       lede:
@@ -107,10 +118,20 @@ const copy = {
   },
   en: {
     eyebrow: "About PHŌNÉ",
-    headline: "Independent\ncultural label.",
+    headline: "A place where\nmusic stays.",
     intro:
-      "PHŌNÉ Records produces conditions of existence for independent music: not only records, but contexts, archive and trajectories sustained over time. We operate as a cultural enterprise with the heart of an atelier from Santiago de Chile, in dialogue with European circuits via Ludwig Sound Booking Agency (Heidelberg, Germany).",
+      "PHŌNÉ Records is a record label, a management office and a music production company based in Ñuñoa, Santiago, Chile. We work with six artists: Newen Afrobeat, Klaus B, ecamhi, Con.fusión, Rosario Lircay and Andrés Abrigo. We release on vinyl and digital, and we manage tours between Chile and Europe.",
     backHome: "Back to home",
+    figures: {
+      klaus: {
+        alt: "Klaus B plays the flute wearing headphones, eyes closed, in front of a studio microphone; black-and-white photo",
+        caption: "Klaus B · recording session",
+      },
+      confusion: {
+        alt: "Con.fusión's vocalist leans back on a railing with her eyes closed, a brick wall behind her; black-and-white photo",
+        caption: "Con.fusión · Cuántas veces session",
+      },
+    },
     modes: {
       title: "Modes of production",
       lede:
@@ -237,9 +258,12 @@ export default async function SelloPage({
       <Navigation />
       <PageHero
         image={{
-          desktop: "/media/ecamhi/ecamhi-hero.jpg",
-          mobile: "/media/ecamhi/ecamhi-hero-mobile.jpg",
-          alt: { es: "ecamhi tocando trompeta frente a una proyección", en: "ecamhi playing trumpet in front of a projection" },
+          desktop: "/media/sello/sello-hero.jpg",
+          mobile: "/media/sello/sello-hero-mobile.jpg",
+          alt: {
+            es: "Con.fusión e invitados en la sesión La Banca: tres personas alrededor de una banca de plaza en un escenario oscuro, dos sentadas con micrófonos y una de pie detrás; foto en blanco y negro",
+            en: "Con.fusión and guests at the La Banca session: three people around a park bench on a dark stage, two seated with microphones and one standing behind; black-and-white photo",
+          },
         }}
         title={c.headline}
         eyebrow={c.eyebrow}
@@ -285,6 +309,21 @@ export default async function SelloPage({
           </div>
         </section>
 
+        <figure className="mb-20 lg:mb-28">
+          <div className="relative aspect-video overflow-hidden border border-foreground/10 bg-foreground/5">
+            <Image
+              src="/media/klaus-b/destellos-hero.jpg"
+              alt={c.figures.klaus.alt}
+              fill
+              sizes="(min-width: 1200px) 1104px, (min-width: 1024px) calc(100vw - 96px), calc(100vw - 48px)"
+              className="object-cover"
+            />
+          </div>
+          <figcaption className="mt-3 font-mono text-xs uppercase tracking-widest text-muted-foreground">
+            {c.figures.klaus.caption}
+          </figcaption>
+        </figure>
+
         {/* Position / criteria */}
         <section className="mb-20 lg:mb-28">
           <h2 className="text-3xl lg:text-5xl font-display tracking-tight mb-6">
@@ -312,6 +351,21 @@ export default async function SelloPage({
             ))}
           </div>
         </section>
+
+        <figure className="mb-20 lg:mb-28">
+          <div className="relative aspect-video overflow-hidden border border-foreground/10 bg-foreground/5">
+            <Image
+              src="/media/con-fusion/cuantas-veces-hero.jpg"
+              alt={c.figures.confusion.alt}
+              fill
+              sizes="(min-width: 1200px) 1104px, (min-width: 1024px) calc(100vw - 96px), calc(100vw - 48px)"
+              className="object-cover"
+            />
+          </div>
+          <figcaption className="mt-3 font-mono text-xs uppercase tracking-widest text-muted-foreground">
+            {c.figures.confusion.caption}
+          </figcaption>
+        </figure>
 
         {/* Services */}
         <section className="mb-20 lg:mb-28">

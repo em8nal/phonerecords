@@ -82,7 +82,7 @@ Google (Google Analytics 4 y Google Tag Manager; política en policies.google.co
 
 Los embeds de Spotify (open.spotify.com) en las páginas de artista cargan contenido directamente desde Spotify cuando interactúas con ellos. Spotify puede establecer sus propias cookies; sus términos están en spotify.com/legal/privacy-policy.
 
-Los videos de YouTube se insertan con el dominio de privacidad mejorada (youtube-nocookie.com). Al cargar el reproductor, YouTube/Google recibe datos técnicos y, si reproduces el video, puede guardar cookies o almacenamiento local. Más información en policies.google.com/privacy.
+Los videos de YouTube se insertan con el dominio de privacidad mejorada (youtube-nocookie.com). Al cargar el reproductor, YouTube/Google recibe datos técnicos y, si reproduces el video, puede guardar cookies o almacenamiento local. Más información en policies.google.com/privacy. Los reproductores se cargan solo cuando pulsas reproducir.
 
 No utilizamos Meta Pixel ni publicidad de terceros.`,
       },
@@ -192,7 +192,7 @@ Google (Google Analytics 4 and Google Tag Manager; policy at policies.google.com
 
 Spotify embeds (open.spotify.com) on artist pages load content directly from Spotify when you interact with them. Spotify may set their own cookies; their terms are at spotify.com/legal/privacy-policy.
 
-YouTube videos are embedded using the privacy-enhanced domain (youtube-nocookie.com). When the player loads, YouTube/Google receives technical data and, if you play the video, may store cookies or local storage. More information at policies.google.com/privacy.
+YouTube videos are embedded using the privacy-enhanced domain (youtube-nocookie.com). When the player loads, YouTube/Google receives technical data and, if you play the video, may store cookies or local storage. More information at policies.google.com/privacy. Players load only when you press play.
 
 We do not use Meta Pixel or third-party advertising.`,
       },
