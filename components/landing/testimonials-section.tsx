@@ -88,6 +88,9 @@ export function TestimonialsSection() {
               {t.testimonials.items.map((_, idx) => (
                 <button
                   key={idx}
+                  type="button"
+                  aria-label={`${idx + 1} / ${t.testimonials.items.length}`}
+                  aria-current={idx === activeIndex ? "true" : undefined}
                   onClick={() => {
                     setIsAnimating(true);
                     setTimeout(() => {
@@ -95,7 +98,7 @@ export function TestimonialsSection() {
                       setIsAnimating(false);
                     }, 300);
                   }}
-                  className={`h-2 transition-all duration-300 ${
+                  className={`relative h-2 transition-all duration-300 before:absolute before:-inset-3 before:content-[''] ${
                     idx === activeIndex
                       ? "w-8 bg-foreground"
                       : "w-2 bg-foreground/20 hover:bg-foreground/40"

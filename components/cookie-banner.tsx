@@ -11,16 +11,16 @@ const COPY = {
   es: {
     label: "Consentimiento de cookies",
     text:
-      "Usamos analítica (Google Analytics vía Tag Manager, Ahrefs y Vercel) para entender cómo se usa el sitio. Si rechazas, no se guardan cookies ni identificadores de analítica; Google puede recibir datos técnicos como la página visitada, sin cookies ni identificadores persistentes. La medición de Vercel no usa cookies y funciona siempre.",
-    more: "Política de privacidad",
+      "Usamos analítica (Google, Ahrefs y Vercel) para saber qué se escucha y se lee aquí. Si rechazas, no se guardan cookies de medición.",
+    more: "Privacidad",
     accept: "Aceptar",
     reject: "Rechazar",
   },
   en: {
     label: "Cookie consent",
     text:
-      "We use analytics (Google Analytics via Tag Manager, Ahrefs and Vercel) to understand how the site is used. If you reject, no analytics cookies or identifiers are stored; Google may receive technical data such as the page visited, without cookies or persistent identifiers. Vercel measurement uses no cookies and always runs.",
-    more: "Privacy policy",
+      "We use analytics (Google, Ahrefs and Vercel) to learn what gets played and read here. If you decline, no measurement cookies are stored.",
+    more: "Privacy",
     accept: "Accept",
     reject: "Reject",
   },
@@ -38,10 +38,11 @@ export function CookieBanner({ lang, onAccept, onReject }: Props) {
     <div
       role="region"
       aria-label={c.label}
-      className="fixed bottom-4 left-4 right-4 z-[60] md:left-auto md:right-4 md:max-w-md print:hidden"
+      className="fixed bottom-2 left-2 right-2 z-[60] md:bottom-4 md:left-auto md:right-4 md:max-w-sm print:hidden"
     >
-      <div className="bg-background/95 backdrop-blur-xl border border-foreground/15 rounded-2xl shadow-lg p-5 lg:p-6">
-        <p className="text-sm text-foreground/85 leading-relaxed">
+      {/* Compacto a propósito (≈20 palabras): en móvil no debe tapar el CTA del hero. */}
+      <div className="bg-background/95 backdrop-blur-xl border border-foreground/15 rounded-xl shadow-lg px-4 py-3 md:p-4">
+        <p className="text-xs md:text-sm text-foreground/85 leading-snug">
           {c.text}{" "}
           <Link
             href={`/${lang}/privacidad`}
@@ -51,18 +52,18 @@ export function CookieBanner({ lang, onAccept, onReject }: Props) {
           </Link>
           .
         </p>
-        <div className="mt-4 flex flex-wrap gap-3">
+        <div className="mt-2.5 flex flex-wrap gap-2">
           <button
             type="button"
             onClick={onAccept}
-            className="inline-flex items-center px-5 h-9 text-sm rounded-full border border-foreground bg-foreground text-background hover:bg-foreground/90 transition-colors"
+            className="inline-flex items-center px-4 h-8 text-xs md:text-sm rounded-full border border-foreground bg-foreground text-background hover:bg-foreground/90 transition-colors"
           >
             {c.accept}
           </button>
           <button
             type="button"
             onClick={onReject}
-            className="inline-flex items-center px-5 h-9 text-sm rounded-full border border-foreground/40 text-foreground hover:bg-foreground/10 transition-colors"
+            className="inline-flex items-center px-4 h-8 text-xs md:text-sm rounded-full border border-foreground/40 text-foreground hover:bg-foreground/10 transition-colors"
           >
             {c.reject}
           </button>

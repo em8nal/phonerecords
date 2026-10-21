@@ -89,7 +89,7 @@ function BannerSlide({ banner, lang, now, titleId, first }: BannerSlideProps) {
         className="absolute inset-x-0 bottom-0 hidden h-1/2 bg-gradient-to-t from-black/60 to-transparent md:block"
       />
 
-      <div className="relative z-10 mx-auto flex h-full max-w-[1400px] items-end px-6 pb-10 lg:px-12 lg:pb-16">
+      <div className="relative z-10 mx-auto flex h-full max-w-[1400px] items-end px-6 pb-28 md:pb-10 lg:px-12 lg:pb-16">
         <div className="max-w-3xl">
           {banner.eyebrow && (
             <p className="mb-4 inline-flex items-center gap-3 font-mono text-sm uppercase tracking-[0.1em] text-white/85 md:text-base md:tracking-[0.18em]">

@@ -23,7 +23,8 @@ type BannerCarouselProps = {
   };
 };
 
-const AUTOPLAY_MS = 7000;
+// 8 s por slide: tiempo prudente para leer eyebrow + título + CTA (pedido de Claudio 21-10; asesoría ≥7 s). Bucle infinito.
+const AUTOPLAY_MS = 8000;
 const SWIPE_PX = 50;
 
 const CONTROL_FOCUS =
