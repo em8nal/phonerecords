@@ -115,7 +115,25 @@ Para ejercer cualquiera de estos derechos, escríbenos por el formulario en phon
         body: `Si actualizamos esta política, la nueva versión se publicará en esta misma URL con la fecha de "Última actualización" modificada. Cambios sustanciales se anunciarán en el aviso de cookies del sitio durante al menos 30 días.`,
       },
       {
-        title: "9 · Contacto",
+        title: "9 · Newsletter",
+        body: `Si te suscribes al newsletter (desde el bloque "Newsletter" de phonerecords.cl/es/contacto, desde la portada o marcando la casilla opcional del formulario de contacto), guardamos:
+— Tu correo electrónico.
+— Tu idioma (ES o EN) y el origen de la suscripción (portada, contacto o formulario de contacto).
+— La fecha de tu consentimiento y el texto exacto que aceptaste.
+— Un hash (huella irreversible) de tu dirección IP combinado con una sal que cambia cada día. No guardamos tu IP.
+
+Finalidad: enviarte novedades de PHŌNÉ Records (lanzamientos, conciertos, journal). No usamos estos datos para otra cosa ni los compartimos con terceros para marketing.
+
+Base legal: tu consentimiento, que puedes retirar en cualquier momento.
+
+Cómo darte de baja: responde a cualquier correo del newsletter pidiendo la baja, o escríbenos por el formulario de phonerecords.cl/es/contacto. La baja automática con un enlace en cada correo llegará más adelante.
+
+Proveedor de envío: por definir. Hoy no enviamos newsletters con ningún proveedor externo; cuando elijamos uno, actualizaremos esta sección antes de usarlo. Los datos se almacenan en una base de datos Postgres alojada en Neon (a través de Vercel).
+
+Retención: mientras estés suscrito. Si te das de baja, conservamos tu correo marcado como "dado de baja" para no volver a escribirte, hasta que pidas su eliminación.`,
+      },
+      {
+        title: "10 · Contacto",
         body: `Para cualquier consulta sobre privacidad o protección de datos:
 
 phonerecords.cl/es/contacto
@@ -207,7 +225,25 @@ To exercise any of these rights, write us via the form at phonerecords.cl/en/con
         body: `If we update this policy, the new version will be published at this same URL with the "Last updated" date modified. Substantial changes will be announced in the site's cookie notice for at least 30 days.`,
       },
       {
-        title: "9 · Contact",
+        title: "9 · Newsletter",
+        body: `If you subscribe to the newsletter (from the "Newsletter" block at phonerecords.cl/en/contacto, from the home page, or by ticking the optional box in the contact form), we store:
+— Your email address.
+— Your language (ES or EN) and the source of the subscription (home page, contact page or contact form).
+— The date of your consent and the exact text you accepted.
+— A hash (irreversible fingerprint) of your IP address combined with a salt that changes daily. We do not store your IP.
+
+Purpose: sending you PHŌNÉ Records news (releases, concerts, journal). We do not use this data for anything else nor share it with third parties for marketing.
+
+Legal basis: your consent, which you can withdraw at any time.
+
+How to unsubscribe: reply to any newsletter email asking to be removed, or write to us via the form at phonerecords.cl/en/contacto. Automatic unsubscribe with a link in every email will come later.
+
+Sending provider: to be decided. Today we do not send newsletters through any external provider; when we choose one, we will update this section before using it. The data is stored in a Postgres database hosted on Neon (through Vercel).
+
+Retention: while you remain subscribed. If you unsubscribe, we keep your email flagged as "unsubscribed" so we don't write to you again, until you ask for its deletion.`,
+      },
+      {
+        title: "10 · Contact",
         body: `For any inquiry about privacy or data protection:
 
 phonerecords.cl/en/contacto

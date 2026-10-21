@@ -159,6 +159,30 @@ export const translations = {
       ctaPrimary: "Subscribe to newsletter",
       noCreditCard: "We never share your email.",
     },
+    newsletter: {
+      title: "Newsletter",
+      description:
+        "New releases, concerts and journal entries from PHŌNÉ, by email. Nothing else.",
+      emailLabel: "Email",
+      emailPlaceholder: "you@email.com",
+      submit: "Subscribe",
+      submitting: "Subscribing…",
+      // Exact phrase stored as consent when using the standalone form.
+      consent:
+        "I agree to receive the PHŌNÉ Records newsletter by email. I can unsubscribe at any time.",
+      // Checkbox in the contact form (also stored as consent text).
+      checkbox:
+        "I want to receive PHŌNÉ news by email (releases, concerts, journal)",
+      checkboxNote:
+        "Optional. We store your email, language and consent date. Details in our",
+      privacyLink: "privacy policy",
+      success: "Thanks! You're subscribed.",
+      already: "This email is already subscribed.",
+      reactivated: "Welcome back! Your subscription is active again.",
+      errorInvalid: "Enter a valid email address.",
+      errorUnavailable:
+        "We couldn't complete your subscription. Please try again in a few minutes.",
+    },
     // Footer
     footer: {
       tagline:
@@ -338,6 +362,30 @@ export const translations = {
         "Suscríbete al newsletter de PHŌNÉ para nuevos lanzamientos, fechas de gira, listening sessions y drops editoriales ocasionales.",
       ctaPrimary: "Suscribirme al newsletter",
       noCreditCard: "Nunca compartimos tu email.",
+    },
+    newsletter: {
+      title: "Newsletter",
+      description:
+        "Lanzamientos, conciertos y entradas del journal de PHŌNÉ, por correo. Nada más.",
+      emailLabel: "Email",
+      emailPlaceholder: "tu@email.com",
+      submit: "Suscribirme",
+      submitting: "Suscribiendo…",
+      // Frase exacta que se guarda como consentimiento en el formulario independiente.
+      consent:
+        "Acepto recibir el newsletter de PHŌNÉ Records por correo. Puedo darme de baja cuando quiera.",
+      // Checkbox del formulario de contacto (también se guarda como consentimiento).
+      checkbox:
+        "Quiero recibir novedades de PHŌNÉ por correo (lanzamientos, conciertos, journal)",
+      checkboxNote:
+        "Opcional. Guardamos tu correo, idioma y fecha de consentimiento. Detalles en nuestra",
+      privacyLink: "política de privacidad",
+      success: "¡Gracias! Quedaste suscrito.",
+      already: "Este correo ya está suscrito.",
+      reactivated: "¡Qué bueno verte de vuelta! Tu suscripción está activa otra vez.",
+      errorInvalid: "Ingresa un correo válido.",
+      errorUnavailable:
+        "No pudimos completar la suscripción. Intenta de nuevo en unos minutos.",
     },
     // Footer
     footer: {

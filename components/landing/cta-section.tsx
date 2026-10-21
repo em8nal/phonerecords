@@ -1,13 +1,12 @@
 "use client";
 
 import { useEffect, useRef, useState } from "react";
-import { Button } from "@/components/ui/button";
-import { ArrowRight } from "lucide-react";
 import { AnimatedTetrahedron } from "./animated-tetrahedron";
+import { NewsletterForm } from "@/components/phone/newsletter-form";
 import { useLanguage } from "@/lib/language-context";
 
 export function CtaSection() {
-  const { t } = useLanguage();
+  const { t, language } = useLanguage();
   const [isVisible, setIsVisible] = useState(false);
   const sectionRef = useRef<HTMLDivElement>(null);
   const [mousePosition, setMousePosition] = useState({ x: 0, y: 0 });
@@ -63,15 +62,11 @@ export function CtaSection() {
                   {t.cta.description}
                 </p>
 
-                <div className="flex flex-col sm:flex-row items-start gap-4">
-                  <Button
-                    size="lg"
-                    className="bg-foreground hover:bg-foreground/90 text-background px-8 h-14 text-base rounded-full group"
-                  >
-                    {t.cta.ctaPrimary}
-                    <ArrowRight className="w-4 h-4 ml-2 transition-transform group-hover:translate-x-1" />
-                  </Button>
-                </div>
+                <NewsletterForm
+                  lang={language === "en" ? "en" : "es"}
+                  source="home"
+                  className="max-w-xl"
+                />
 
                 <p className="text-sm text-muted-foreground mt-8 font-mono">
                   {t.cta.noCreditCard}
