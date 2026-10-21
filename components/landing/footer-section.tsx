@@ -1,6 +1,5 @@
 "use client";
 
-import { AnimatedWave } from "./animated-wave";
 import { useLanguage } from "@/lib/language-context";
 import { Logo } from "@/components/phone/logo";
 
@@ -23,16 +22,19 @@ function buildFooterLinks(lang: "es" | "en"): Record<string, FooterHref[]> {
       { href: `/${lang}/catalogo` },
       { href: `/${lang}/catalogo` },
     ],
-    // Order matches: About PHŌNÉ, Manifesto
+    // Order matches: About PHŌNÉ, Manifesto, Events
     Label: [
       { href: `/${lang}/sello` },
       { href: `/${lang}/manifiesto` },
+      { href: `/${lang}/eventos` },
     ],
-    // Order matches: Contact, Press kit, Instagram (del sello)
+    // Order matches: Contact, Booking, Press kit, Instagram, YouTube (del sello)
     Connect: [
+      { href: `/${lang}/contacto` },
       { href: `/${lang}/contacto` },
       { href: `/${lang}/press-kit` },
       { href: "https://www.instagram.com/phone_records/", external: true },
+      { href: "https://www.youtube.com/@phone_records", external: true },
     ],
   };
 }
@@ -50,11 +52,6 @@ export function FooterSection() {
 
   return (
     <footer className="relative border-t border-foreground/10">
-      {/* Animated wave background */}
-      <div className="absolute inset-0 h-64 opacity-20 pointer-events-none overflow-hidden">
-        <AnimatedWave />
-      </div>
-
       <div className="relative z-10 max-w-[1400px] mx-auto px-6 lg:px-12">
         {/* Main Footer */}
         <div className="py-16 lg:py-24">
@@ -102,12 +99,7 @@ export function FooterSection() {
             {t.footer.copyright}
           </p>
 
-          <div className="flex items-center gap-4 text-base text-muted-foreground">
-            <span className="flex items-center gap-2">
-              <span className="w-2 h-2 rounded-full bg-green-500" />
-              {t.footer.systemStatus}
-            </span>
-          </div>
+          <p className="text-base text-muted-foreground">Santiago de Chile</p>
         </div>
       </div>
     </footer>

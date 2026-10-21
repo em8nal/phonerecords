@@ -5,8 +5,9 @@ export const translations = {
       features: "Services",
       howItWorks: "Manifesto",
       developers: "Events",
+      label: "Label",
       signIn: "Press",
-      startCreating: "Booking",
+      startCreating: "Newsletter",
     },
     // Release banner (portada). Los textos por lanzamiento viven en lib/banner.ts
     banner: {
@@ -194,8 +195,8 @@ export const translations = {
       links: {
         Roster: ["Newen Afrobeat", "Klaus B", "Ecamhi", "Con.fusión", "Rosario Lircay", "Andrés Abrigo"],
         Catalogue: ["Releases", "Vinyl", "Cassette"],
-        Label: ["About", "Manifesto"],
-        Connect: ["Contact", "Press kit", "Instagram"],
+        Label: ["About", "Manifesto", "Events"],
+        Connect: ["Contact", "Booking", "Press kit", "Instagram", "YouTube"],
       },
       copyright: "© 2026 PHŌNÉ Records. All rights reserved.",
       systemStatus: "Active · Santiago de Chile",
@@ -207,8 +208,9 @@ export const translations = {
       features: "Servicios",
       howItWorks: "Manifiesto",
       developers: "Eventos",
+      label: "Sello",
       signIn: "Prensa",
-      startCreating: "Booking",
+      startCreating: "Newsletter",
     },
     // Banner de lanzamiento (portada). Los textos por lanzamiento viven en lib/banner.ts
     banner: {
@@ -395,9 +397,9 @@ export const translations = {
       },
       links: {
         Roster: ["Newen Afrobeat", "Klaus B", "Ecamhi", "Con.fusión", "Rosario Lircay", "Andrés Abrigo"],
-        Catalogue: ["Releases", "Vinilo", "Cassette"],
-        Label: ["Sobre PHŌNÉ", "Manifiesto"],
-        Connect: ["Contacto", "Press kit", "Instagram"],
+        Catalogue: ["Lanzamientos", "Vinilo", "Cassette"],
+        Label: ["Sobre PHŌNÉ", "Manifiesto", "Eventos"],
+        Connect: ["Contacto", "Booking", "Press kit", "Instagram", "YouTube"],
       },
       copyright: "© 2026 PHŌNÉ Records. Todos los derechos reservados.",
       systemStatus: "Activo · Santiago de Chile",

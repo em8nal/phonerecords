@@ -12,16 +12,20 @@ export function Navigation() {
   const [isScrolled, setIsScrolled] = useState(false);
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
 
-  // Real route links go to dedicated pages; Roster anchors to the home grid.
+  // Menú honesto (22-10): cada ítem va a su destino real. Eventos salió del menú
+  // (sigue en el footer); Booking vive en Servicios, fichas y footer; el botón
+  // destacado es la suscripción al newsletter.
   const home = `/${language}`;
   const isEs = language === "es";
   const navLinks = [
     { name: "Roster", href: `${home}#roster` },
     { name: isEs ? "Catálogo" : "Catalogue", href: `${home}/catalogo` },
-    { name: t.nav.developers, href: `${home}/eventos` },
+    { name: t.nav.features, href: `${home}#features` },
     { name: t.nav.howItWorks, href: `${home}/manifiesto` },
-    { name: t.nav.features, href: `${home}/sello` },
+    { name: t.nav.label, href: `${home}/sello` },
   ];
+  const pressHref = `${home}/press-kit`;
+  const newsletterHref = `${home}/contacto#newsletter-heading`;
 
   useEffect(() => {
     const handleScroll = () => {
@@ -76,7 +80,7 @@ export function Navigation() {
           <div className="hidden md:flex items-center gap-4">
             <LanguageSelector />
             <a
-              href={`/${language}/contacto`}
+              href={pressHref}
               className={`text-foreground/70 hover:text-foreground transition-all duration-500 ${isScrolled ? "text-xs" : "text-sm"}`}
             >
               {t.nav.signIn}
@@ -86,7 +90,7 @@ export function Navigation() {
               size="sm"
               className={`bg-foreground hover:bg-foreground/90 text-background rounded-full transition-all duration-500 ${isScrolled ? "px-4 h-8 text-xs" : "px-6"}`}
             >
-              <a href={`/${language}/contacto`}>{t.nav.startCreating}</a>
+              <a href={newsletterHref}>{t.nav.startCreating}</a>
             </Button>
           </div>
 
@@ -154,14 +158,14 @@ export function Navigation() {
               className="flex-1 rounded-full h-14 text-base"
               onClick={() => setIsMobileMenuOpen(false)}
             >
-              <a href={`/${language}/contacto`}>{t.nav.signIn}</a>
+              <a href={pressHref}>{t.nav.signIn}</a>
             </Button>
             <Button
               asChild
               className="flex-1 bg-foreground text-background rounded-full h-14 text-base"
               onClick={() => setIsMobileMenuOpen(false)}
             >
-              <a href={`/${language}/contacto`}>{t.nav.startCreating}</a>
+              <a href={newsletterHref}>{t.nav.startCreating}</a>
             </Button>
           </div>
         </div>
