@@ -1,3 +1,4 @@
+import { headers } from "next/headers";
 import { ImageResponse } from "next/og";
 import { getRelease } from "@/lib/releases";
 
@@ -26,6 +27,26 @@ async function loadFraunces(text: string): Promise<ArrayBuffer | null> {
   return fetch(match[1]).then((r) => r.arrayBuffer());
 }
 
+// next/og can only fetch absolute image URLs. Covers stored in /public
+// ("/releases/….jpg") are fetched from the origin serving this request (prod,
+// preview or localhost) and inlined as a data URI. If that fails, the banner
+// falls back to the PHŌNÉ placeholder instead of returning a 500.
+async function resolveCover(cover: string | undefined): Promise<string | undefined> {
+  if (!cover || !cover.startsWith("/")) return cover;
+  try {
+    const h = await headers();
+    const host = h.get("x-forwarded-host") ?? h.get("host");
+    const proto = h.get("x-forwarded-proto") ?? (host?.startsWith("localhost") ? "http" : "https");
+    const origin = host ? `${proto}://${host}` : "https://phonerecords.cl";
+    const res = await fetch(new URL(cover, origin));
+    if (!res.ok) return undefined;
+    const type = res.headers.get("content-type") ?? "image/jpeg";
+    return `data:${type};base64,${Buffer.from(await res.arrayBuffer()).toString("base64")}`;
+  } catch {
+    return undefined;
+  }
+}
+
 export default async function OG({ params }: { params: Promise<Params> }) {
   const { slug } = await params;
   const release = getRelease(slug);
@@ -34,7 +55,7 @@ export default async function OG({ params }: { params: Promise<Params> }) {
   const artist = release?.artistName ?? "";
   const label = release?.label ?? "";
   const year = release?.year ? String(release.year) : "";
-  const cover = release?.cover;
+  const cover = await resolveCover(release?.cover);
 
   // Glyph subsetting: gather every character that will be rendered so Google
   // Fonts can return a slim TTF.
