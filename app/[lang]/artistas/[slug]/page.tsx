@@ -98,6 +98,9 @@ export async function generateMetadata(
   if (!artist) return { title: "Artista no encontrado" };
   const isEs = lang === "es";
   const desc = trimToLength(isEs ? artist.bio.es : artist.bio.en, 158);
+  // Same URL for og:image and twitter:image (the ./opengraph-image route of this
+  // segment). Set explicitly on both so the two tags can't diverge.
+  const ogImage = `https://phonerecords.cl/${lang}/artistas/${slug}/opengraph-image`;
   return {
     title: artist.name,
     description: desc,
@@ -116,13 +119,15 @@ export async function generateMetadata(
       description: desc,
       url: `https://phonerecords.cl/${lang}/artistas/${slug}`,
       locale: isEs ? "es_CL" : "en_US",
+      images: [
+        { url: ogImage, width: 1200, height: 630, alt: `${artist.name} — PHŌNÉ Records` },
+      ],
     },
     twitter: {
       card: "summary_large_image",
       title: `${artist.name} — PHŌNÉ Records`,
       description: desc,
-      // Same card as og:image (file-based ./opengraph-image route of this segment).
-      images: [`https://phonerecords.cl/${lang}/artistas/${slug}/opengraph-image`],
+      images: [ogImage],
     },
   };
 }

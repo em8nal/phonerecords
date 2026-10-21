@@ -1,14 +1,15 @@
-import { renderHomeOg } from "@/lib/og/home-image";
+import { renderHomeOg, homeOgImageMetadata } from "@/lib/og/home-image";
 
 // Same card as ./opengraph-image so twitter:image matches og:image per locale.
-export const alt = "PHŌNÉ Records — Sello cultural independiente · Santiago de Chile";
-export const size = { width: 1200, height: 630 };
-export const contentType = "image/png";
-
-export const dynamicParams = false;
-
-export function generateStaticParams() {
-  return [{ lang: "es" }, { lang: "en" }];
+// Locale-specific alt via generateImageMetadata; served at /<lang>/twitter-image/<id>
+// (the plain /<lang>/twitter-image URL is rewritten to it in proxy.ts).
+export async function generateImageMetadata({
+  params,
+}: {
+  params: Promise<{ lang: string }>;
+}) {
+  const { lang } = await params;
+  return homeOgImageMetadata(lang);
 }
 
 export default async function TwitterImage({

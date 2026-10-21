@@ -22,8 +22,6 @@ export default async function LangLayout({
   return (
     <LanguageProvider initialLanguage={lang as Language}>
       {children}
-      {/* Cookie banner / consent now live in the root layout (app/layout.tsx),
-          next to the trackers they govern. */}
     </LanguageProvider>
   );
 }

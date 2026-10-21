@@ -1,14 +1,16 @@
-import { renderHomeOg } from "@/lib/og/home-image";
+import { renderHomeOg, homeOgImageMetadata } from "@/lib/og/home-image";
 
-export const alt = "PHŌNÉ Records — Sello cultural independiente · Santiago de Chile";
-export const size = { width: 1200, height: 630 };
-export const contentType = "image/png";
-
-// Only /es and /en exist; anything else 404s instead of rendering.
-export const dynamicParams = false;
-
-export function generateStaticParams() {
-  return [{ lang: "es" }, { lang: "en" }];
+// `alt` depends on the locale, so it can't be a static export. Next then serves
+// the image at /<lang>/opengraph-image/<id>; proxy.ts rewrites the plain
+// /<lang>/opengraph-image URL to it (referenced from the layout and the home page).
+// Only /es and /en reach this route: proxy.ts redirects other first segments.
+export async function generateImageMetadata({
+  params,
+}: {
+  params: Promise<{ lang: string }>;
+}) {
+  const { lang } = await params;
+  return homeOgImageMetadata(lang);
 }
 
 export default async function OG({
