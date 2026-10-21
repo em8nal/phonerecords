@@ -9,6 +9,9 @@ import { artistSlugs, getArtist } from "@/lib/artists";
 import { getArtistEntries } from "@/lib/catalog";
 import { getRelease } from "@/lib/releases";
 import { isUpcoming } from "@/lib/release-date";
+import { PageHero } from "@/components/phone/page-hero";
+import { ArtistCardGrid } from "@/components/phone/artist-card-grid";
+import { getArtistHero, getArtistPortrait } from "@/lib/artist-media";
 
 type ActionLink = { href: string; kind: "listen" | "buy" };
 
@@ -68,16 +71,6 @@ function extractSpotifyArtistId(links: { href: string }[]): string | null {
 
 
 type ArtistParams = { lang: string; slug: string };
-
-// Whitelist of artist slugs that have a portrait in /public/artists/<slug>.jpg.
-// Update this set when adding new photo files.
-const ARTISTS_WITH_PHOTO = new Set([
-  "newen-afrobeat",
-  "con-fusion",
-  "klaus-brantmayer",
-  "ecamhi",
-  "rosario-lircay",
-]);
 
 export function generateStaticParams() {
   const langs: Language[] = ["es", "en"];
@@ -154,6 +147,10 @@ export default async function ArtistPage({
   const spotifyArtistId = extractSpotifyArtistId(artist.links);
   // Full discography for the profile (rich + lightweight unioned, no /catalogo curation).
   const allEntries = getArtistEntries(slug);
+  const uiLang: Language = isEs ? "es" : "en";
+  // Hero ancho (null para artistas sin foto de hero) y retrato cuadrado (null si no hay).
+  const hero = getArtistHero(slug);
+  const portrait = getArtistPortrait(slug);
 
   // Schema.org JSON-LD: MusicGroup + BreadcrumbList for rich snippets.
   const schema = {
@@ -167,9 +164,7 @@ export default async function ArtistPage({
         genre: artist.genres,
         url,
         sameAs: artist.links.map((l) => l.href),
-        ...(ARTISTS_WITH_PHOTO.has(slug)
-          ? { image: `https://phonerecords.cl/artists/${slug}.jpg` }
-          : {}),
+        ...(portrait ? { image: `https://phonerecords.cl${portrait}` } : {}),
         location: {
           "@type": "Place",
           name: artist.origin,
@@ -227,7 +222,14 @@ export default async function ArtistPage({
       />
       <Navigation />
 
-      <article className="max-w-[1200px] mx-auto px-6 lg:px-12 pt-32 lg:pt-40 pb-24">
+      {/* Hero fotográfico ancho: contiene el h1 (nombre) y el eyebrow (géneros) */}
+      {hero && (
+        <PageHero image={hero} title={artist.name} eyebrow={artist.genres.join(" · ")} lang={uiLang} />
+      )}
+
+      <article
+        className={`max-w-[1200px] mx-auto px-6 lg:px-12 pb-24 ${hero ? "pt-12 lg:pt-16" : "pt-32 lg:pt-40"}`}
+      >
         {/* Back link */}
         <Link
           href={`/${lang}#roster`}
@@ -237,34 +239,43 @@ export default async function ArtistPage({
           {labels.back}
         </Link>
 
-        {/* Header */}
-        <header className={`mb-16 lg:mb-24 ${ARTISTS_WITH_PHOTO.has(slug) ? "grid lg:grid-cols-12 gap-8 lg:gap-12 items-end" : ""}`}>
-          <div className={ARTISTS_WITH_PHOTO.has(slug) ? "lg:col-span-7 order-2 lg:order-1" : ""}>
-            <div className="font-mono text-xs text-muted-foreground tracking-widest uppercase mb-6">
-              {labels.genre} · {artist.genres.join(" · ")}
-            </div>
-            <h1 className="text-5xl lg:text-8xl font-display tracking-tight leading-[0.9] mb-8">
-              {artist.name}
-            </h1>
-            <div className="font-mono text-sm text-muted-foreground">
+        {/* Header: con hero, el nombre y los géneros ya van sobre la foto (h1 del PageHero) */}
+        {hero ? (
+          <header className="mb-12 lg:mb-16">
+            <p className="font-mono text-sm text-muted-foreground">
               {labels.origin} · {artist.origin}
-            </div>
-          </div>
-          {ARTISTS_WITH_PHOTO.has(slug) && (
-            <div className="lg:col-span-5 order-1 lg:order-2">
-              <div className="relative aspect-square bg-foreground/5 rounded overflow-hidden">
-                <Image
-                  src={`/artists/${slug}.jpg`}
-                  alt={artist.name}
-                  fill
-                  sizes="(min-width: 1024px) 40vw, 100vw"
-                  className="object-cover"
-                  priority
-                />
+            </p>
+          </header>
+        ) : (
+          <header className={`mb-16 lg:mb-24 ${portrait ? "grid lg:grid-cols-12 gap-8 lg:gap-12 items-end" : ""}`}>
+            <div className={portrait ? "lg:col-span-7 order-2 lg:order-1" : ""}>
+              <div className="font-mono text-xs text-muted-foreground tracking-widest uppercase mb-6">
+                {labels.genre} · {artist.genres.join(" · ")}
+              </div>
+              <h1 className="text-5xl lg:text-8xl font-display tracking-tight leading-[0.9] mb-8">
+                {artist.name}
+              </h1>
+              <div className="font-mono text-sm text-muted-foreground">
+                {labels.origin} · {artist.origin}
               </div>
             </div>
-          )}
-        </header>
+            {portrait && (
+              <div className="lg:col-span-5 order-1 lg:order-2">
+                <div className="relative aspect-square bg-foreground/5 rounded overflow-hidden">
+                  {/* Sin hero, el retrato es el LCP de la página */}
+                  <Image
+                    src={portrait}
+                    alt={artist.name}
+                    fill
+                    sizes="(min-width: 1024px) 40vw, 100vw"
+                    className="object-cover"
+                    priority
+                  />
+                </div>
+              </div>
+            )}
+          </header>
+        )}
 
         {/* Bio */}
         <section className="grid lg:grid-cols-12 gap-12 lg:gap-16 mb-20">
@@ -278,6 +289,19 @@ export default async function ArtistPage({
 
           {/* Sidebar: links + stats */}
           <aside className="lg:col-span-4 space-y-10">
+            {/* Con hero, el retrato cuadrado baja al aside como ficha junto a métricas y enlaces
+                (en Newen es la única foto real de la banda: su hero es el arte del single). */}
+            {hero && portrait && (
+              <figure className="relative aspect-square w-full max-w-xs lg:max-w-none overflow-hidden rounded bg-foreground/5">
+                <Image
+                  src={portrait}
+                  alt={isEs ? `${artist.name}, retrato` : `${artist.name}, portrait`}
+                  fill
+                  sizes="(min-width: 1024px) 30vw, 320px"
+                  className="object-cover"
+                />
+              </figure>
+            )}
             {artist.stats && (
               <div>
                 <h3 className="font-mono text-xs text-muted-foreground uppercase tracking-widest mb-4">
@@ -448,6 +472,9 @@ export default async function ArtistPage({
           </section>
         ) : null}
       </article>
+
+      {/* Grilla de cierre: los demás artistas del roster (plan §5.7.5) */}
+      <ArtistCardGrid lang={uiLang} excludeSlug={slug} />
 
       <FooterSection />
     </main>
