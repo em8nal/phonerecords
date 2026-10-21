@@ -100,12 +100,8 @@ export default async function Home({
             addressCountry: "CL",
           },
         },
-        sameAs: [
-          "https://www.instagram.com/phone_records/",
-          "https://newenafrobeat.bandcamp.com/music",
-          "https://open.spotify.com/artist/0PTJ848ulShbjTx2yqaAlb",
-          "https://www.youtube.com/channel/UCTHMwr5NTvQ0MWbq0nbeP-w",
-        ],
+        // Solo canales del sello: Bandcamp/Spotify/YouTube son de Newen Afrobeat.
+        sameAs: ["https://www.instagram.com/phone_records/"],
         contactPoint: [
           {
             "@type": "ContactPoint",
