@@ -110,10 +110,19 @@ export async function generateMetadata(
       },
     },
     openGraph: {
+      type: "profile",
+      siteName: "PHŌNÉ Records",
       title: `${artist.name} — PHŌNÉ Records`,
       description: desc,
       url: `https://phonerecords.cl/${lang}/artistas/${slug}`,
       locale: isEs ? "es_CL" : "en_US",
+    },
+    twitter: {
+      card: "summary_large_image",
+      title: `${artist.name} — PHŌNÉ Records`,
+      description: desc,
+      // Same card as og:image (file-based ./opengraph-image route of this segment).
+      images: [`https://phonerecords.cl/${lang}/artistas/${slug}/opengraph-image`],
     },
   };
 }
