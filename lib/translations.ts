@@ -128,7 +128,7 @@ export const translations = {
         {
           quote:
             "Image and sound born from the same creative process. Each photograph captured on tour inspired a song.",
-          author: "Ecamhi",
+          author: "ecamhi",
           role: "Trumpet · Composer · Producer",
           company: "PHŌNÉ ROSTER",
           metric: "EP en viaje · 2024",
@@ -193,7 +193,7 @@ export const translations = {
         Connect: "Connect",
       },
       links: {
-        Roster: ["Newen Afrobeat", "Klaus B", "Ecamhi", "Con.fusión", "Rosario Lircay", "Andrés Abrigo"],
+        Roster: ["Newen Afrobeat", "Klaus B", "ecamhi", "Con.fusión", "Rosario Lircay"],
         Catalogue: ["Releases", "Vinyl", "Cassette"],
         Label: ["About", "Manifesto", "Events"],
         Connect: ["Contact", "Booking", "Press kit", "Instagram", "YouTube"],
@@ -331,7 +331,7 @@ export const translations = {
         {
           quote:
             "Imagen y sonido nacieron del mismo proceso creativo. Cada fotografía capturada en gira inspiró una canción.",
-          author: "Ecamhi",
+          author: "ecamhi",
           role: "Trompeta · Compositor · Productor",
           company: "PHŌNÉ ROSTER",
           metric: "EP en viaje · 2024",
@@ -396,7 +396,7 @@ export const translations = {
         Connect: "Conecta",
       },
       links: {
-        Roster: ["Newen Afrobeat", "Klaus B", "Ecamhi", "Con.fusión", "Rosario Lircay", "Andrés Abrigo"],
+        Roster: ["Newen Afrobeat", "Klaus B", "ecamhi", "Con.fusión", "Rosario Lircay"],
         Catalogue: ["Lanzamientos", "Vinilo", "Cassette"],
         Label: ["Sobre PHŌNÉ", "Manifiesto", "Eventos"],
         Connect: ["Contacto", "Booking", "Press kit", "Instagram", "YouTube"],

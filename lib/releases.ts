@@ -130,9 +130,9 @@ The recording is ℗ 2026 Newen Afrobeat and the release © 2026 PHŌNÉ Records
     cover: "https://f4.bcbits.com/img/a1399189381_10.jpg",
     description: {
       es:
-        "Cuarto LP de Newen Afrobeat, grabado en Santuario Sónico (Santiago, abril 2022) con producción general de Sebastián Crooker, mezcla de Fran 'Antena' Infante y master de Carlos Barros. El disco articula a cuatro artistas del roster PHŌNÉ: Ecamhi (trompeta + co-composición de Mare Mare + co-dirección de arte con Tom Pavez), Klaus Brantmayer (composición de Es la Vida), y Claudio Solís (diseño gráfico). Featurings de Lido Pimienta, Dele Sosimi, Joe Vasconcellos y Chico César.",
+        "Cuarto LP de Newen Afrobeat, grabado en Santuario Sónico (Santiago, abril 2022) con producción general de Sebastián Crooker, mezcla de Fran 'Antena' Infante y master de Carlos Barros. El disco articula a cuatro artistas del roster PHŌNÉ: ecamhi (trompeta + co-composición de Mare Mare + co-dirección de arte con Tom Pavez), Klaus Brantmayer (composición de Es la Vida), y Claudio Solís (diseño gráfico). Featurings de Lido Pimienta, Dele Sosimi, Joe Vasconcellos y Chico César.",
       en:
-        "Newen Afrobeat's fourth LP, recorded at Santuario Sónico (Santiago, April 2022) with general production by Sebastián Crooker, mixing by Fran 'Antena' Infante and mastering by Carlos Barros. The album articulates four PHŌNÉ roster artists: Ecamhi (trumpet + co-composition of Mare Mare + co-art direction with Tom Pavez), Klaus Brantmayer (composer of Es la Vida), and Claudio Solís (graphic design). Featurings by Lido Pimienta, Dele Sosimi, Joe Vasconcellos and Chico César.",
+        "Newen Afrobeat's fourth LP, recorded at Santuario Sónico (Santiago, April 2022) with general production by Sebastián Crooker, mixing by Fran 'Antena' Infante and mastering by Carlos Barros. The album articulates four PHŌNÉ roster artists: ecamhi (trumpet + co-composition of Mare Mare + co-art direction with Tom Pavez), Klaus Brantmayer (composer of Es la Vida), and Claudio Solís (graphic design). Featurings by Lido Pimienta, Dele Sosimi, Joe Vasconcellos and Chico César.",
     },
     tracklist: [
       { n: 1, title: "Grietas", duration: "5:13", composer: "Fran Ri", guests: ["Lido Pimienta"] },
@@ -146,7 +146,7 @@ The recording is ℗ 2026 Newen Afrobeat and the release © 2026 PHŌNÉ Records
       { role: "Producción general", name: "Sebastián Crooker" },
       { role: "Mezcla", name: "Fran 'Antena' Infante" },
       { role: "Master", name: "Carlos Barros" },
-      { role: "Dirección de arte", name: "Tom Pavez + Ecamhi" },
+      { role: "Dirección de arte", name: "Tom Pavez + ecamhi" },
       { role: "Cover art", name: "Matías Lasen" },
       { role: "Diseño gráfico", name: "Claudio Solís" },
       { role: "Producción ejecutiva", name: "Martín Canessa, Lichens Family" },
@@ -204,9 +204,9 @@ The recording is ℗ 2026 Newen Afrobeat and the release © 2026 PHŌNÉ Records
     cover: "https://f4.bcbits.com/img/a2154521327_10.jpg",
     description: {
       es:
-        "Segundo álbum de larga duración. Documenta la exploración continua del afrobeat y los viajes a Lagos, Nigeria para estudiar con maestros del género. Tematiza desigualdad, migración, rol femenino, culturas indígenas. Grabado, mezclado y masterizado en Santuario Sónico, Santiago de Chile. Participaciones de Oghene Kologbo, Enrique Camhi (Ecamhi) y Diego Alarcón.",
+        "Segundo álbum de larga duración. Documenta la exploración continua del afrobeat y los viajes a Lagos, Nigeria para estudiar con maestros del género. Tematiza desigualdad, migración, rol femenino, culturas indígenas. Grabado, mezclado y masterizado en Santuario Sónico, Santiago de Chile. Participaciones de Oghene Kologbo, Enrique Camhi (ecamhi) y Diego Alarcón.",
       en:
-        "Second full-length album. Documents the continued exploration of afrobeat music and travels to Lagos, Nigeria to study with masters of the genre. Themes: inequality, migration, women's roles, indigenous cultures. Recorded, mixed and mastered at Santuario Sónico, Santiago, Chile. Participations by Oghene Kologbo, Enrique Camhi (Ecamhi) and Diego Alarcón.",
+        "Second full-length album. Documents the continued exploration of afrobeat music and travels to Lagos, Nigeria to study with masters of the genre. Themes: inequality, migration, women's roles, indigenous cultures. Recorded, mixed and mastered at Santuario Sónico, Santiago, Chile. Participations by Oghene Kologbo, Enrique Camhi (ecamhi) and Diego Alarcón.",
     },
     tracklist: [
       { n: 1, title: "Vuela junto a mi", duration: "6:35" },
@@ -441,9 +441,9 @@ On this single, Klaus B is credited with composition, saxophone, flute and produ
     cover: "https://f4.bcbits.com/img/a0583641197_10.jpg",
     description: {
       es:
-        "EP en vivo del dúo Gestosimple & Klaus B grabado en Cajón del Maipo, con Enrique Camhi en trompeta como invitado. Tres tracks que cruzan future jazz y hip-hop instrumental en formato sesión cerrada: nada de la artificialidad del estudio, todo el aire del lugar. Es uno de los pocos registros en vivo del catálogo de Klaus y el más reciente puente formal entre su proyecto y el de Ecamhi dentro del ecosistema PHŌNÉ.",
+        "EP en vivo del dúo Gestosimple & Klaus B grabado en Cajón del Maipo, con Enrique Camhi en trompeta como invitado. Tres tracks que cruzan future jazz y hip-hop instrumental en formato sesión cerrada: nada de la artificialidad del estudio, todo el aire del lugar. Es uno de los pocos registros en vivo del catálogo de Klaus y el más reciente puente formal entre su proyecto y el de ecamhi dentro del ecosistema PHŌNÉ.",
       en:
-        "Live EP by the duo Gestosimple & Klaus B recorded in Cajón del Maipo, with Enrique Camhi as guest on trumpet. Three tracks crossing future jazz and instrumental hip-hop in closed-session format: none of the studio's artifice, all the air of the place. One of the few live records in Klaus's catalogue and the most recent formal bridge between his project and Ecamhi's within the PHŌNÉ ecosystem.",
+        "Live EP by the duo Gestosimple & Klaus B recorded in Cajón del Maipo, with Enrique Camhi as guest on trumpet. Three tracks crossing future jazz and instrumental hip-hop in closed-session format: none of the studio's artifice, all the air of the place. One of the few live records in Klaus's catalogue and the most recent formal bridge between his project and ecamhi's within the PHŌNÉ ecosystem.",
     },
     tracklist: [
       { n: 1, title: "Intro: Thank You Jay Dee", duration: "1:08" },
@@ -454,7 +454,7 @@ On this single, Klaus B is credited with composition, saxophone, flute and produ
       { role: "Producción · alto sax · flauta", name: "Klaus B" },
       { role: "Rap", name: "Gestosimple" },
       { role: "Scratch", name: "DJ Dacel" },
-      { role: "Trompeta · fluegelhorn", name: "Ecamhi" },
+      { role: "Trompeta · fluegelhorn", name: "ecamhi" },
       { role: "Teclados", name: "Felamusic" },
       { role: "Guitarra eléctrica", name: "José Toledo" },
       { role: "Bajo", name: "Pancho Ruiz" },
@@ -518,15 +518,15 @@ On this single, Klaus B is credited with composition, saxophone, flute and produ
     cover: "https://f4.bcbits.com/img/a2824675677_10.jpg",
     description: {
       es:
-        "Single producido entre 2022 y 2023, después de los viajes en gira de Newen Afrobeat a Lagos. Reúne la sección de bronces completa de Newen —incluido Ecamhi en trompeta— sobre una base hip-hop jazz que Klaus construye desde el vocoder y la flauta. Es el cruce más explícito entre el universo afrobeat de Newen y el lenguaje neo-soul instrumental de Klaus, y uno de los primeros singles que tematiza la conexión entre ambos proyectos.",
+        "Single producido entre 2022 y 2023, después de los viajes en gira de Newen Afrobeat a Lagos. Reúne la sección de bronces completa de Newen —incluido ecamhi en trompeta— sobre una base hip-hop jazz que Klaus construye desde el vocoder y la flauta. Es el cruce más explícito entre el universo afrobeat de Newen y el lenguaje neo-soul instrumental de Klaus, y uno de los primeros singles que tematiza la conexión entre ambos proyectos.",
       en:
-        "Single produced between 2022 and 2023, after Newen Afrobeat's touring trips to Lagos. Gathers Newen's full brass section — including Ecamhi on trumpet — over a hip-hop jazz base Klaus builds from vocoder and flute. The most explicit crossing between Newen's afrobeat universe and Klaus's instrumental neo-soul language, and one of the first singles to thematize the connection between both projects.",
+        "Single produced between 2022 and 2023, after Newen Afrobeat's touring trips to Lagos. Gathers Newen's full brass section — including ecamhi on trumpet — over a hip-hop jazz base Klaus builds from vocoder and flute. The most explicit crossing between Newen's afrobeat universe and Klaus's instrumental neo-soul language, and one of the first singles to thematize the connection between both projects.",
     },
     credits: [
       { role: "Vocoder · alto sax", name: "Klaus B" },
       { role: "Voz principal", name: "Fran Ri" },
       { role: "Coros", name: "Camila Fuentes, Fran Castro, Maca Rozic" },
-      { role: "Trompeta", name: "Enrique Camhi (Ecamhi), Diego González, Maururu Sánchez" },
+      { role: "Trompeta", name: "Enrique Camhi (ecamhi), Diego González, Maururu Sánchez" },
       { role: "Tenor sax", name: "Marcelo Morales" },
       { role: "Baritone sax", name: "Aldo Gómez" },
       { role: "Guitarra eléctrica", name: "Sebastián Crooker, Martín Concha" },
@@ -660,12 +660,12 @@ On this single, Klaus B is credited with composition, saxophone, flute and produ
 ],
   },
 
-  // ─────────── Ecamhi ───────────
+  // ─────────── ecamhi ───────────
   {
     slug: "ecamhi-en-viaje",
     title: "en viaje",
     artistSlug: "ecamhi",
-    artistName: "Ecamhi",
+    artistName: "ecamhi",
     releaseDate: "2027",
     year: 2027,
     type: "ep",
@@ -690,9 +690,9 @@ On this single, Klaus B is credited with composition, saxophone, flute and produ
     cover: "https://is1-ssl.mzstatic.com/image/thumb/Music126/v4/1d/19/c3/1d19c399-c5a2-a510-0f2d-9e83855fea82/artwork.jpg/1000x1000bb.jpg",
     description: {
       es:
-        "Aparición de Enrique Camhi (Ecamhi) como trompetista invitado en Gaviotas, single de Diego de la Noche con Felipe Montero. La trompeta de Camhi opera sobre una base de pop electrónico de cámara, demostrando la versatilidad del instrumento fuera del marco jazz/afrobeat habitual. Publicado en simultáneo con Laruz como parte de una entrega doble. Es una de las primeras apariciones documentadas de Camhi como sesionista fuera del ecosistema PHŌNÉ.",
+        "Aparición de Enrique Camhi (ecamhi) como trompetista invitado en Gaviotas, single de Diego de la Noche con Felipe Montero. La trompeta de Camhi opera sobre una base de pop electrónico de cámara, demostrando la versatilidad del instrumento fuera del marco jazz/afrobeat habitual. Publicado en simultáneo con Laruz como parte de una entrega doble. Es una de las primeras apariciones documentadas de Camhi como sesionista fuera del ecosistema PHŌNÉ.",
       en:
-        "Appearance of Enrique Camhi (Ecamhi) as guest trumpeter on Gaviotas, a Diego de la Noche single with Felipe Montero. Camhi's trumpet operates over a chamber electronic-pop base, demonstrating the instrument's versatility outside the usual jazz/afrobeat frame. Released alongside Laruz as part of a double drop. One of the first documented appearances of Camhi as session player outside the PHŌNÉ ecosystem.",
+        "Appearance of Enrique Camhi (ecamhi) as guest trumpeter on Gaviotas, a Diego de la Noche single with Felipe Montero. Camhi's trumpet operates over a chamber electronic-pop base, demonstrating the instrument's versatility outside the usual jazz/afrobeat frame. Released alongside Laruz as part of a double drop. One of the first documented appearances of Camhi as session player outside the PHŌNÉ ecosystem.",
     },
     links: [
       { label: "Apple Music", href: "https://music.apple.com/us/album/gaviotas-feat-felipe-montero-enrique-camhi-radio-edit/1654207363" },
@@ -710,9 +710,9 @@ On this single, Klaus B is credited with composition, saxophone, flute and produ
     cover: "https://is1-ssl.mzstatic.com/image/thumb/Music116/v4/b0/d6/b5/b0d6b5b4-7d56-28cf-33f7-9ace20c4fc36/artwork.jpg/1000x1000bb.jpg",
     description: {
       es:
-        "Segunda aparición de Ecamhi como invitado en singles de Diego de la Noche, publicado el mismo día que Gaviotas (noviembre 2022). Camhi sostiene la trompeta como hilo melódico principal del track, lo que lo distingue del rol de adorno tímbrico habitual del instrumento en producciones similares. Cierra una entrega doble que documenta la red colaborativa de Camhi en el circuito chileno de electrónica de cámara y pop experimental.",
+        "Segunda aparición de ecamhi como invitado en singles de Diego de la Noche, publicado el mismo día que Gaviotas (noviembre 2022). Camhi sostiene la trompeta como hilo melódico principal del track, lo que lo distingue del rol de adorno tímbrico habitual del instrumento en producciones similares. Cierra una entrega doble que documenta la red colaborativa de Camhi en el circuito chileno de electrónica de cámara y pop experimental.",
       en:
-        "Second appearance of Ecamhi as guest on Diego de la Noche singles, released the same day as Gaviotas (November 2022). Camhi sustains the trumpet as the track's main melodic thread, distinguishing him from the usual role of timbral ornament for the instrument in similar productions. Closes a double drop documenting Camhi's collaborative network in the Chilean chamber-electronics and experimental-pop circuit.",
+        "Second appearance of ecamhi as guest on Diego de la Noche singles, released the same day as Gaviotas (November 2022). Camhi sustains the trumpet as the track's main melodic thread, distinguishing him from the usual role of timbral ornament for the instrument in similar productions. Closes a double drop documenting Camhi's collaborative network in the Chilean chamber-electronics and experimental-pop circuit.",
     },
     links: [
       { label: "Apple Music", href: "https://music.apple.com/us/album/laruz-feat-enrique-camhi/1654191971" },
@@ -750,9 +750,9 @@ On this single, Klaus B is credited with composition, saxophone, flute and produ
     cover: "https://is1-ssl.mzstatic.com/image/thumb/Music221/v4/ce/a0/f2/cea0f2b6-47f9-8d1e-5646-a29f601424be/artwork.jpg/1000x1000bb.jpg",
     description: {
       es:
-        "Single firmado por Alejandro Camhi y Enrique Camhi —dúo familiar— publicado en julio 2024. Es la única colaboración documentada entre ambos hermanos: electrónica estival con trompeta encima, pieza corta y sin gancho convencional, hecha para escucha de estación más que para playlist. Funciona como entrada secundaria al catálogo de Ecamhi y como documento personal del eje familiar dentro de su práctica musical.",
+        "Single firmado por Alejandro Camhi y Enrique Camhi —dúo familiar— publicado en julio 2024. Es la única colaboración documentada entre ambos hermanos: electrónica estival con trompeta encima, pieza corta y sin gancho convencional, hecha para escucha de estación más que para playlist. Funciona como entrada secundaria al catálogo de ecamhi y como documento personal del eje familiar dentro de su práctica musical.",
       en:
-        "Single signed by Alejandro Camhi and Enrique Camhi —familial duo— released July 2024. The only documented collaboration between the brothers: summery electronics with trumpet on top, a short piece without conventional hook, made for seasonal listening rather than for playlist. Functions as secondary entry into the Ecamhi catalogue and as personal document of the familial axis within his musical practice.",
+        "Single signed by Alejandro Camhi and Enrique Camhi —familial duo— released July 2024. The only documented collaboration between the brothers: summery electronics with trumpet on top, a short piece without conventional hook, made for seasonal listening rather than for playlist. Functions as secondary entry into the ecamhi catalogue and as personal document of the familial axis within his musical practice.",
     },
     links: [
       { label: "Apple Music", href: "https://music.apple.com/us/album/mad-summer/1752686994" },

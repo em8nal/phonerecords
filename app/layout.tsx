@@ -44,7 +44,7 @@ export const metadata: Metadata = {
     template: '%s — PHŌNÉ Records',
   },
   description:
-    'Sello cultural independiente, Santiago de Chile. Roster: Newen Afrobeat, Ecamhi, Con.fusión, Klaus B, Andrés Abrigo.',
+    'Sello cultural independiente, Santiago de Chile. Roster: Newen Afrobeat, Klaus B, ecamhi, Con.fusión y Rosario Lircay.',
   authors: [{ name: 'PHŌNÉ Records', url: 'https://phonerecords.cl' }],
   verification: {
     google: 'mUTRTpRC44cVJL--psi4RCHRscBV4OGOV_UfIPHwRXU',

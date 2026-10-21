@@ -16,8 +16,8 @@ export async function generateMetadata(
   return {
     title: isEs ? "Sobre el sello" : "About the label",
     description: isEs
-      ? "PHŌNÉ Records: sello discográfico, management y producción musical en Santiago de Chile. Seis artistas, ediciones en vinilo y digital, giras entre Chile y Europa."
-      : "PHŌNÉ Records: record label, management and music production in Santiago, Chile. Six artists, vinyl and digital releases, tours between Chile and Europe.",
+      ? "PHŌNÉ Records: sello discográfico, management y producción musical en Santiago de Chile. Cinco artistas, ediciones en vinilo y digital, giras entre Chile y Europa."
+      : "PHŌNÉ Records: record label, management and music production in Santiago, Chile. Five artists, vinyl and digital releases, tours between Chile and Europe.",
     alternates: {
       canonical: `https://phonerecords.cl/${lang}/sello`,
       languages: {
@@ -34,7 +34,7 @@ const copy = {
     eyebrow: "Sobre PHŌNÉ",
     headline: "Un lugar donde\nla música queda.",
     intro:
-      "PHŌNÉ Records es un sello discográfico, una oficina de management y una productora musical con base en Ñuñoa, Santiago de Chile. Trabajamos con seis artistas: Newen Afrobeat, Klaus B, ecamhi, Con.fusión, Rosario Lircay y Andrés Abrigo. Editamos en vinilo y digital, y gestionamos giras entre Chile y Europa.",
+      "PHŌNÉ Records es un sello discográfico, una oficina de management y una productora musical con base en Ñuñoa, Santiago de Chile. Trabajamos con cinco artistas: Newen Afrobeat, Klaus B, ecamhi, Con.fusión y Rosario Lircay. Editamos en vinilo y digital, y gestionamos giras entre Chile y Europa.",
     backHome: "Volver al inicio",
     figures: {
       klaus: {
@@ -120,7 +120,7 @@ const copy = {
     eyebrow: "About PHŌNÉ",
     headline: "A place where\nmusic stays.",
     intro:
-      "PHŌNÉ Records is a record label, a management office and a music production company based in Ñuñoa, Santiago, Chile. We work with six artists: Newen Afrobeat, Klaus B, ecamhi, Con.fusión, Rosario Lircay and Andrés Abrigo. We release on vinyl and digital, and we manage tours between Chile and Europe.",
+      "PHŌNÉ Records is a record label, a management office and a music production company based in Ñuñoa, Santiago, Chile. We work with five artists: Newen Afrobeat, Klaus B, ecamhi, Con.fusión and Rosario Lircay. We release on vinyl and digital, and we manage tours between Chile and Europe.",
     backHome: "Back to home",
     figures: {
       klaus: {

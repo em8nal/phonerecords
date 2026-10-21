@@ -78,7 +78,7 @@ In 2026 the group is preparing a new studio album that will mark a new sonic sta
   },
   {
     slug: "ecamhi",
-    name: "Ecamhi",
+    name: "ecamhi",
     genres: ["Instrumental", "Jazz", "Interdisciplinar"],
     origin: "Santiago, Chile",
     bio: {
@@ -211,30 +211,6 @@ Her debut album, "La Piel", gathers ten short songs born from beats and then pla
       { year: "2026-06", title: "a ti", format: "Single · digital", label: "seda.wav", cover: "https://is1-ssl.mzstatic.com/image/thumb/Music221/v4/18/8c/c1/188cc1b3-279c-abff-6810-5054fb6627d0/artwork.jpg/600x600bb.jpg", href: "https://music.apple.com/us/album/a-ti-single/6780959605", hrefKind: "listen" },
       { year: "2026-04", title: "ya me tienes", format: "Single · digital", label: "seda.wav", notes: "Producción: Fresco Fresco · batería Pablo Trangol (La Salitrera) · master Chalo G", cover: "https://is1-ssl.mzstatic.com/image/thumb/Music221/v4/37/d9/2d/37d92df1-40f3-1a96-72c2-9f26a0212133/artwork.jpg/600x600bb.jpg", href: "https://music.apple.com/us/album/ya-me-tienes-single/1885689900", hrefKind: "listen" },
       { year: "2020-10", title: "Nina", format: "Single · digital", label: "Fat Jota", cover: "https://is1-ssl.mzstatic.com/image/thumb/Music124/v4/c2/b4/ba/c2b4ba5c-a2f7-6655-c76c-46e3bc19512f/0.jpg/600x600bb.jpg", href: "https://music.apple.com/us/album/nina-single/1530783846", hrefKind: "listen" },
-    ],
-  },
-  {
-    slug: "andres-abrigo",
-    name: "Andrés Abrigo",
-    genres: ["Ambient", "Downtempo", "Post-tempo"],
-    origin: "Chile",
-    bio: {
-      es:
-        `Andrés Abrigo es realizador en cine y televisión, con una trayectoria ligada a la dirección, el montaje, la fotografía y la composición musical. Su trabajo se ha desarrollado entre el cine, las artes escénicas y la creación audiovisual, construyendo una sensibilidad marcada por la exploración atmosférica y narrativa del sonido.
-
-Actualmente inicia su proyecto musical solista, orientado hacia los lenguajes del down tempo y el post dubstep, trabajando en la creación de su primer álbum. Su propuesta se construye a partir de sintetizadores, drum machines y paisajes sonoros que dialogan con la imagen, la textura y la experimentación electrónica, dando forma a composiciones de carácter inmersivo y cinematográfico.
-
-Próximos lanzamientos: álbum marzo 2027.`,
-      en:
-        `Andrés Abrigo is a film and television director, with a trajectory tied to direction, editing, photography and musical composition. His work has developed across cinema, performing arts and audiovisual creation, building a sensibility marked by atmospheric and narrative sonic exploration.
-
-He is currently beginning his solo musical project, oriented towards the languages of downtempo and post dubstep, working on the creation of his first album. His proposal is built from synthesisers, drum machines and soundscapes that dialogue with image, texture and electronic experimentation, giving shape to immersive, cinematographic compositions.
-
-Upcoming releases: album March 2027.`,
-    },
-    links: [],
-    releases: [
-      { year: "2026 (in process)", title: "Primer EP", format: "EP", label: "PHŌNÉ Records", notes: "8 stems en desarrollo: Cumbia Andino, Ensayo Ansiedad, Post Dub Jam, Útero" },
     ],
   },
 ];

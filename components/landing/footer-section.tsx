@@ -7,14 +7,13 @@ type FooterHref = { href: string; external?: boolean };
 
 function buildFooterLinks(lang: "es" | "en"): Record<string, FooterHref[]> {
   return {
-    // Order matches translations.ts: Newen, Klaus B, Ecamhi, Con.fusión, Rosario Lircay, Andrés Abrigo
+    // Order matches translations.ts: Newen, Klaus B, ecamhi, Con.fusión, Rosario Lircay
     Roster: [
       { href: `/${lang}/artistas/newen-afrobeat` },
       { href: `/${lang}/artistas/klaus-brantmayer` },
       { href: `/${lang}/artistas/ecamhi` },
       { href: `/${lang}/artistas/con-fusion` },
       { href: `/${lang}/artistas/rosario-lircay` },
-      { href: `/${lang}/artistas/andres-abrigo` },
     ],
     // Order matches: Releases, Vinilo/Vinyl, Cassette
     Catalogue: [

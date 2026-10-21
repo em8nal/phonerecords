@@ -1,5 +1,12 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {
+  async redirects() {
+    return [
+      // Andrés Abrigo salió del roster (21-10-2026): sus URLs van al roster y al press kit.
+      { source: "/:lang(es|en)/artistas/andres-abrigo", destination: "/:lang#roster", permanent: true },
+      { source: "/press/:lang(es|en)/andres-abrigo", destination: "/:lang/press-kit", permanent: true },
+    ];
+  },
   typescript: {
     ignoreBuildErrors: true,
   },

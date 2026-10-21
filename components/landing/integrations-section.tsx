@@ -8,11 +8,10 @@ import { getArtistPortrait } from "@/lib/artist-media";
 
 const roster = [
   { slug: "newen-afrobeat", name: "Newen Afrobeat", genre: "Afrobeat · Afrofunk", country: "Chile / international" },
-  { slug: "ecamhi", name: "Ecamhi", genre: "Instrumental · Interdisciplinary", country: "Santiago, Chile" },
+  { slug: "ecamhi", name: "ecamhi", genre: "Instrumental · Interdisciplinary", country: "Santiago, Chile" },
   { slug: "con-fusion", name: "Con.fusión", genre: "Hip hop · Jazz · Neo soul", country: "Santiago, Chile" },
   { slug: "klaus-brantmayer", name: "Klaus B", genre: "Nu-jazz · Hip-hop jazz", country: "Santiago, Chile" },
   { slug: "rosario-lircay", name: "Rosario Lircay", genre: "R&B · Pop alternativo", country: "Ñuble · Santiago, Chile" },
-  { slug: "andres-abrigo", name: "Andrés Abrigo", genre: "Ambient · Post-tempo", country: "Chile" },
 ];
 
 export function IntegrationsSection() {

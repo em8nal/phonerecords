@@ -59,7 +59,7 @@ export const ARTIST_HERO: Record<string, ArtistHero> = {
   },
 };
 
-/** Hero del artista o `null` si no tiene (p. ej. andres-abrigo). */
+/** Hero del artista o `null` si no tiene. */
 export function getArtistHero(slug: string): ArtistHero | null {
   return ARTIST_HERO[slug] ?? null;
 }

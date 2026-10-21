@@ -12,7 +12,7 @@ import { ARTIST_PORTRAIT } from "@/lib/artist-media";
 
 type LangParams = { lang: string };
 
-// Order used on the printed press kit (page 1: Newen, Klaus, Ecamhi;
+// Order used on the printed press kit (page 1: Newen, Klaus, ecamhi;
 // page 2: Claudio, Con.fusión, Andrés). Independent from the homepage
 // roster order in lib/artists.ts.
 const PRESS_KIT_ORDER = [
@@ -21,7 +21,6 @@ const PRESS_KIT_ORDER = [
   "ecamhi",
   "con-fusion",
   "rosario-lircay",
-  "andres-abrigo",
 ];
 
 export async function generateMetadata(
@@ -60,7 +59,7 @@ const copy = {
       contact: "Contacto",
     },
     labelBody:
-      "Fundado en Santiago de Chile, PHŌNÉ Records produce condiciones de existencia para la música independiente: marco editorial, dirección de arte, prensaje en vinilo y distribución digital. El sello opera como infraestructura para un roster latinoamericano —Newen Afrobeat, Ecamhi, Con.fusión, Klaus B y Andrés Abrigo— y construye puentes editoriales con sellos europeos (OfficeHome Records, Aquarians) y agencias de booking (Ludwig Sound, Heidelberg). El catálogo abarca afrobeat, dark minimal, nu-jazz, neo-soul y composición experimental.",
+      "Fundado en Santiago de Chile, PHŌNÉ Records produce condiciones de existencia para la música independiente: marco editorial, dirección de arte, prensaje en vinilo y distribución digital. El sello opera como infraestructura para un roster latinoamericano —Newen Afrobeat, Klaus B, ecamhi, Con.fusión y Rosario Lircay— y construye puentes editoriales con sellos europeos (OfficeHome Records, Aquarians) y agencias de booking (Ludwig Sound, Heidelberg). El catálogo abarca afrobeat, dark minimal, nu-jazz, neo-soul y composición experimental.",
     contactRows: [
       { label: "Prensa · Booking · General", value: "contacto@phonerecords.cl" },
       { label: "Booking EU", value: "Ludwig Sound — info@ludwigsound.com" },
@@ -90,7 +89,7 @@ const copy = {
       contact: "Contact",
     },
     labelBody:
-      "Founded in Santiago de Chile, PHŌNÉ Records produces conditions of existence for independent music: editorial frame, art direction, vinyl pressing and digital distribution. The label operates as infrastructure for a Latin American roster —Newen Afrobeat, Ecamhi, Con.fusión, Klaus B and Andrés Abrigo— and builds editorial bridges with European labels (OfficeHome Records, Aquarians) and booking agencies (Ludwig Sound, Heidelberg). The catalogue spans afrobeat, dark minimal, nu-jazz, neo-soul and experimental composition.",
+      "Founded in Santiago de Chile, PHŌNÉ Records produces conditions of existence for independent music: editorial frame, art direction, vinyl pressing and digital distribution. The label operates as infrastructure for a Latin American roster —Newen Afrobeat, Klaus B, ecamhi, Con.fusión and Rosario Lircay— and builds editorial bridges with European labels (OfficeHome Records, Aquarians) and booking agencies (Ludwig Sound, Heidelberg). The catalogue spans afrobeat, dark minimal, nu-jazz, neo-soul and experimental composition.",
     contactRows: [
       { label: "Press · Booking · General", value: "contacto@phonerecords.cl" },
       { label: "EU Booking", value: "Ludwig Sound — info@ludwigsound.com" },
