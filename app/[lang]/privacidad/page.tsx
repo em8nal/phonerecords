@@ -50,7 +50,7 @@ const copy = {
 Siempre, sin necesidad de consentimiento:
 — Una cookie técnica llamada "phone_lang" para recordar tu preferencia de idioma (ES o EN). Esta cookie vive un año y se elimina cuando borras las cookies de tu navegador.
 — Una cookie técnica llamada "phone_consent" que guarda tu decisión sobre la analítica ("granted" si aceptas, "denied" si rechazas) para no volver a preguntarte. Misma duración.
-— Vercel Web Analytics, que cuenta visitas sin recolectar dirección IP, sin huella digital, sin cookies de seguimiento. No usa cookies.
+— Vercel Web Analytics, que cuenta visitas sin almacenar la dirección IP, sin huella digital, sin cookies de seguimiento. No usa cookies.
 — Vercel Speed Insights, que mide rendimiento de carga (LCP, INP, CLS) sin cookies.
 
 Sin tu consentimiento (si rechazas o aún no decides):
@@ -142,7 +142,7 @@ PHŌNÉ Records
 Always, no consent needed:
 — A technical cookie called "phone_lang" to remember your language preference (ES or EN). This cookie lives one year and is deleted when you clear your browser cookies.
 — A technical cookie called "phone_consent" that stores your analytics decision ("granted" if you accept, "denied" if you reject) so we don't ask again. Same duration.
-— Vercel Web Analytics, which counts visits without collecting IP address, without fingerprinting, without tracking cookies. It uses no cookies.
+— Vercel Web Analytics, which counts visits without storing the IP address, without fingerprinting, without tracking cookies. It uses no cookies.
 — Vercel Speed Insights, which measures load performance (LCP, INP, CLS) without cookies.
 
 Without your consent (if you reject or haven't decided yet):
