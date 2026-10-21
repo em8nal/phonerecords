@@ -104,7 +104,7 @@ export function NewsletterForm({ lang, source, className }: Props) {
         <button
           type="submit"
           disabled={isPending}
-          className="inline-flex items-center justify-center px-8 h-12 text-sm rounded-full bg-foreground text-background hover:bg-foreground/90 disabled:opacity-60 transition-colors"
+          className="inline-flex items-center justify-center px-8 h-12 text-sm rounded-full bg-brand text-white hover:bg-brand/90 disabled:opacity-60 transition-colors"
         >
           {isPending ? n.submitting : n.submit}
         </button>

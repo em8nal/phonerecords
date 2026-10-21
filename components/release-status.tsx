@@ -99,8 +99,8 @@ export function ComingSoonBadge({
       data-coming-soon
       className={
         variant === "overlay"
-          ? `${base} absolute top-3 left-3 z-10 bg-foreground text-background shadow-sm`
-          : `${base} border border-foreground/30 text-foreground`
+          ? `${base} absolute top-3 left-3 z-10 bg-brand text-white shadow-sm`
+          : `${base} border border-brand/60 text-brand`
       }
     >
       {text}

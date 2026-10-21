@@ -1,43 +1,23 @@
 "use client";
 
 import { useEffect, useState } from "react";
-import dynamic from "next/dynamic";
 import { Button } from "@/components/ui/button";
 import { ArrowRight } from "lucide-react";
 import { useLanguage } from "@/lib/language-context";
 
-// Three.js bundle (~280KB gzipped) is the LCP killer of the hero.
-// Defer it until after first paint: SSR off + dynamic import means the
-// rest of the hero renders immediately and the sphere fades in once the
-// chunk loads on the client.
-const AnimatedSphere = dynamic(
-  () => import("./animated-sphere").then((m) => m.AnimatedSphere),
-  { ssr: false, loading: () => null }
-);
-
 export function HeroSection() {
   const { t } = useLanguage();
   const [isVisible, setIsVisible] = useState(false);
-  const [wordIndex, setWordIndex] = useState(0);
+  // 22-10: palabra fija (sin rotación cada 2,5 s) y sin esfera three.js:
+  // menos trabajo en el hilo principal y una portada más sobria (asesoría M3).
+  const wordIndex = 0;
 
   useEffect(() => {
     setIsVisible(true);
   }, []);
 
-  useEffect(() => {
-    const interval = setInterval(() => {
-      setWordIndex((prev) => (prev + 1) % t.hero.words.length);
-    }, 2500);
-    return () => clearInterval(interval);
-  }, [t.hero.words.length]);
-
   return (
     <section className="relative min-h-screen flex flex-col justify-center overflow-hidden">
-      {/* Animated sphere background */}
-      <div className="absolute right-0 top-1/2 -translate-y-1/2 w-[600px] h-[600px] lg:w-[800px] lg:h-[800px] opacity-40 pointer-events-none">
-        <AnimatedSphere />
-      </div>
-      
       {/* Subtle grid lines */}
       <div className="absolute inset-0 overflow-hidden pointer-events-none opacity-30">
         {[...Array(8)].map((_, i) => (
