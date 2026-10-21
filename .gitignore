@@ -34,3 +34,6 @@ next-env.d.ts
 .claude/worktrees/
 graphify-out/
 AGENTS.md
+
+# índice de código (codebase-memory MCP)
+.codebase-memory/
