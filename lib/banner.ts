@@ -42,8 +42,9 @@ const IMAGE = {
   desktop: "/media/klaus-b/destellos-hero.jpg",
   mobile: "/media/klaus-b/destellos-hero-mobile.jpg",
   alt: {
-    es: "Klaus B con flauta, retrato en blanco y negro",
-    en: "Klaus B with flute, black and white portrait",
+    // Neutro a propósito: la foto desktop lleva flauta y la móvil saxofón.
+    es: "Klaus B, retrato en blanco y negro",
+    en: "Klaus B, black and white portrait",
   },
 } as const;
 

@@ -11,6 +11,9 @@ export const translations = {
     // Release banner (portada). Los textos por lanzamiento viven en lib/banner.ts
     banner: {
       viewRelease: "View release",
+      // {title} se reemplaza por el título del lanzamiento (aria-label del link)
+      viewReleaseOf: "View release: {title}",
+      opensInNewTab: "(opens in new tab)",
     },
     // Hero
     hero: {
@@ -178,6 +181,9 @@ export const translations = {
     // Banner de lanzamiento (portada). Los textos por lanzamiento viven en lib/banner.ts
     banner: {
       viewRelease: "Ver ficha",
+      // {title} se reemplaza por el título del lanzamiento (aria-label del link)
+      viewReleaseOf: "Ver ficha de {title}",
+      opensInNewTab: "(se abre en pestaña nueva)",
     },
     // Hero
     hero: {

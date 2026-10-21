@@ -13,6 +13,10 @@ type ReleaseBannerProps = {
 const DESKTOP = { width: 2560, height: 1440 } as const; // 16:9
 const MOBILE = { width: 1200, height: 1500 } as const; // 4:5
 
+// Foco visible sobre la foto (el anillo por defecto del Button es poco visible sobre imagen oscura).
+const FOCUS_RING =
+  "focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white focus-visible:ring-offset-2 focus-visible:ring-offset-black";
+
 /**
  * Banner de lanzamiento a todo el ancho, justo después del menú.
  * Server component: elige la entrada activa por fecha (lib/banner.ts) y el
@@ -49,15 +53,14 @@ export function ReleaseBanner({ lang, now = new Date() }: ReleaseBannerProps) {
       // pt-20 = altura del menú fijo: el menú queda sobre el fondo claro y el banner empieza debajo.
       className="relative bg-background pt-20"
     >
-      <div className="relative h-[85vh] md:h-[70vh] min-h-[480px] max-h-[820px] w-full overflow-hidden bg-neutral-950 text-white">
+      <div className="relative h-[85svh] md:h-[70svh] min-h-[480px] max-h-[820px] w-full overflow-hidden bg-neutral-950 text-white">
         <picture>
           <source media="(min-width: 768px)" srcSet={desktop.srcSet} sizes="100vw" />
           {/* eslint-disable-next-line @next/next/no-img-element, jsx-a11y/alt-text */}
           <img
             {...mobile}
             alt={alt}
-            // scale-105 en móvil: recorta el marco negro del escaneo de la foto 4:5.
-            className="absolute inset-0 h-full w-full scale-105 object-cover object-[50%_30%] md:scale-100 md:object-[50%_35%]"
+            className="absolute inset-0 h-full w-full object-cover object-[50%_30%] md:object-[50%_35%]"
           />
         </picture>
 
@@ -74,7 +77,7 @@ export function ReleaseBanner({ lang, now = new Date() }: ReleaseBannerProps) {
         <div className="relative z-10 mx-auto flex h-full max-w-[1400px] items-end px-6 pb-10 lg:px-12 lg:pb-16">
           <div className="max-w-3xl">
             {banner.eyebrow && (
-              <p className="mb-4 inline-flex items-center gap-3 font-mono text-[13px] uppercase tracking-[0.14em] text-white/85 md:text-base md:tracking-[0.18em]">
+              <p className="mb-4 inline-flex items-center gap-3 font-mono text-sm uppercase tracking-[0.1em] text-white/85 md:text-base md:tracking-[0.18em]">
                 <span className="h-px w-8 bg-white/50" aria-hidden="true" />
                 {banner.eyebrow[lang]}
               </p>
@@ -92,20 +95,22 @@ export function ReleaseBanner({ lang, now = new Date() }: ReleaseBannerProps) {
               <Button
                 asChild
                 size="lg"
-                className="h-14 rounded-full bg-white px-8 text-base text-black hover:bg-white/90"
+                className={`h-14 rounded-full bg-white px-8 text-base text-black hover:bg-white/90 ${FOCUS_RING}`}
               >
                 <a
                   href={ctaHref}
                   {...(external && { target: "_blank", rel: "noopener" })}
                 >
                   {ctaLabel}
+                  {external && <span className="sr-only"> {t.opensInNewTab}</span>}
                   {external ? <ArrowUpRight className="ml-1" /> : <ArrowRight className="ml-1" />}
                 </a>
               </Button>
 
               <a
                 href={secondaryHref}
-                className="text-base text-white underline underline-offset-8 decoration-white/40 transition-colors hover:decoration-white"
+                aria-label={t.viewReleaseOf.replace("{title}", banner.title[lang])}
+                className={`rounded-sm text-base text-white underline underline-offset-8 decoration-white/40 transition-colors hover:decoration-white ${FOCUS_RING}`}
               >
                 {t.viewRelease}
               </a>
