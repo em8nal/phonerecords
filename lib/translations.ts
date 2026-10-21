@@ -182,24 +182,42 @@ export const translations = {
       errorUnavailable:
         "We couldn't complete your subscription. Please try again in a few minutes.",
     },
-    // Footer
+    // Footer. Los href van sin /${lang}: footer-section.tsx antepone el idioma.
+    // links.artists debe coincidir con lib/artists.ts (lo vigila `pnpm test:roster`).
     footer: {
       tagline:
         "PHŌNÉ Records · independent cultural label · Santiago de Chile · in dialogue with European and Latin American circuits.",
       columns: {
-        Roster: "Roster",
-        Catalogue: "Catalogue",
-        Label: "Label",
-        Connect: "Connect",
+        artists: "Artists",
+        label: "Label",
+        catalogue: "Catalogue",
+        newsletter: "Newsletter",
       },
       links: {
-        Roster: ["Newen Afrobeat", "Klaus B", "ecamhi", "Con.fusión", "Rosario Lircay"],
-        Catalogue: ["Releases", "Vinyl", "Cassette"],
-        Label: ["About", "Manifesto", "Events"],
-        Connect: ["Contact", "Booking", "Press kit", "Instagram", "YouTube"],
+        artists: [
+          { label: "Newen Afrobeat", href: "/artistas/newen-afrobeat" },
+          { label: "Klaus B", href: "/artistas/klaus-brantmayer" },
+          { label: "ecamhi", href: "/artistas/ecamhi" },
+          { label: "Con.fusión", href: "/artistas/con-fusion" },
+          { label: "Rosario Lircay", href: "/artistas/rosario-lircay" },
+        ],
+        label: [
+          { label: "About PHŌNÉ", href: "/sello" },
+          { label: "Manifesto", href: "/manifiesto" },
+          { label: "Services", href: "#features" },
+          { label: "Events", href: "/eventos" },
+          { label: "Press", href: "/press-kit" },
+        ],
+        catalogue: [
+          { label: "Releases", href: "/catalogo" },
+          { label: "Press kit", href: "/press-kit" },
+          { label: "Booking", href: "/contacto" },
+        ],
       },
+      newsletterBlurb: "Releases and shows, before anyone else.",
+      socialLabel: "Label social media",
+      opensInNewTab: "(opens in new tab)",
       copyright: "© 2026 PHŌNÉ Records. All rights reserved.",
-      systemStatus: "Active · Santiago de Chile",
     },
   },
   es: {
@@ -385,24 +403,41 @@ export const translations = {
       errorUnavailable:
         "No pudimos completar la suscripción. Intenta de nuevo en unos minutos.",
     },
-    // Footer
+    // Footer. Misma forma que en `en` (el tipo Translations sale de `en`).
     footer: {
       tagline:
         "PHŌNÉ Records · sello cultural independiente · Santiago de Chile · en diálogo con circuitos europeos y latinoamericanos.",
       columns: {
-        Roster: "Roster",
-        Catalogue: "Catálogo",
-        Label: "Sello",
-        Connect: "Conecta",
+        artists: "Artistas",
+        label: "Sello",
+        catalogue: "Catálogo",
+        newsletter: "Newsletter",
       },
       links: {
-        Roster: ["Newen Afrobeat", "Klaus B", "ecamhi", "Con.fusión", "Rosario Lircay"],
-        Catalogue: ["Lanzamientos", "Vinilo", "Cassette"],
-        Label: ["Sobre PHŌNÉ", "Manifiesto", "Eventos"],
-        Connect: ["Contacto", "Booking", "Press kit", "Instagram", "YouTube"],
+        artists: [
+          { label: "Newen Afrobeat", href: "/artistas/newen-afrobeat" },
+          { label: "Klaus B", href: "/artistas/klaus-brantmayer" },
+          { label: "ecamhi", href: "/artistas/ecamhi" },
+          { label: "Con.fusión", href: "/artistas/con-fusion" },
+          { label: "Rosario Lircay", href: "/artistas/rosario-lircay" },
+        ],
+        label: [
+          { label: "Sobre PHŌNÉ", href: "/sello" },
+          { label: "Manifiesto", href: "/manifiesto" },
+          { label: "Servicios", href: "#features" },
+          { label: "Eventos", href: "/eventos" },
+          { label: "Prensa", href: "/press-kit" },
+        ],
+        catalogue: [
+          { label: "Lanzamientos", href: "/catalogo" },
+          { label: "Press kit", href: "/press-kit" },
+          { label: "Booking", href: "/contacto" },
+        ],
       },
+      newsletterBlurb: "Lanzamientos y conciertos, antes que nadie.",
+      socialLabel: "Redes del sello",
+      opensInNewTab: "(se abre en pestaña nueva)",
       copyright: "© 2026 PHŌNÉ Records. Todos los derechos reservados.",
-      systemStatus: "Activo · Santiago de Chile",
     },
   },
 } as const;
