@@ -36,6 +36,43 @@ export type Release = {
 };
 
 export const releases: Release[] = [
+  {
+    slug: "newen-afrobeat-la-fuerza",
+    title: "La Fuerza",
+    artistSlug: "newen-afrobeat",
+    artistName: "Newen Afrobeat",
+    releaseDate: "2026-10-30",
+    year: 2026,
+    type: "single",
+    format: "Single · digital",
+    label: "PHŌNÉ Records",
+    cover: "/releases/newen-afrobeat-la-fuerza.jpg",
+    description: {
+      es: `"La Fuerza" es el nuevo single de Newen Afrobeat y llega el viernes 30 de octubre de 2026, editado con PHŌNÉ Records. Es la primera canción nueva de la banda desde "Liverpool Session" (2025) y el primer adelanto de la etapa que abre su próximo álbum de estudio, el disco que el grupo prepara durante 2026 y que profundiza el cruce entre afrobeat, música latinoamericana y elementos contemporáneos de jazz, soul y electrónica. El tema dura 4:44 y se publica como single digital; en Qobuz ya puede reservarse en alta resolución (24 bits / 48 kHz) y el streaming queda disponible desde la fecha de salida.
+
+Newen Afrobeat es una de las agrupaciones más influyentes de la escena afrobeat latinoamericana. Formada en Santiago de Chile en 2009, fue la primera banda de afrobeat del país y en más de quince años ha llevado su música a escenarios y festivales de América, Europa y África. Su discografía incluye el disco debut "Newen Afrobeat" (2014), "Newen Plays Fela" (2017, con Seun Kuti, Cheick Tidiane Seck y músicos de Egypt 80), "Curiche" (2019), el álbum "Grietas" (2024, con Lido Pimienta, Dele Sosimi, Joe Vasconcellos y Chico César) y "Liverpool Session" (2025), grabado de forma íntegramente análoga.
+
+La portada de "La Fuerza" es una ilustración de paisaje andino: una montaña de cumbres nevadas sobre un desierto rojo, una laguna con flamencos y guanacos bajo un cielo violeta y un sol lleno. Ese imaginario de altura y territorio acompaña el título y anticipa el tono del single, que la banda presentará en vivo en los próximos conciertos.
+
+La grabación es ℗ 2026 Newen Afrobeat y la edición © 2026 PHŌNÉ Records. Los enlaces de escucha y pre-save se agregan en esta ficha a medida que las plataformas los publican; mientras tanto, el single puede reservarse en Qobuz desde el enlace de la sección "Escuchar". Los créditos completos de composición, grabación, mezcla, master y arte se publicarán cuando la banda los confirme.`,
+      en: `"La Fuerza" ("The Force") is the new single by Newen Afrobeat, out Friday, October 30, 2026 on PHŌNÉ Records. It is the band's first new song since "Liverpool Session" (2025) and the first taste of the stage opened by their next studio album, the record the group is preparing through 2026, which deepens the crossing of afrobeat, Latin American music and contemporary elements of jazz, soul and electronics. The track runs 4:44 and is released as a digital single; on Qobuz it can already be pre-ordered in high resolution (24-bit / 48 kHz), with streaming available from release day.
+
+Newen Afrobeat is one of the most influential bands of the Latin American afrobeat scene. Formed in Santiago, Chile in 2009, it was the country's first afrobeat band and in more than fifteen years has taken its music to stages and festivals across the Americas, Europe and Africa. Its discography includes the debut album "Newen Afrobeat" (2014), "Newen Plays Fela" (2017, with Seun Kuti, Cheick Tidiane Seck and members of Egypt 80), "Curiche" (2019), the album "Grietas" (2024, with Lido Pimienta, Dele Sosimi, Joe Vasconcellos and Chico César) and "Liverpool Session" (2025), recorded entirely on analog equipment.
+
+The cover of "La Fuerza" is an illustrated Andean landscape: a snow-capped mountain over a red desert, a lagoon with flamingos and guanacos under a violet sky and a full sun. That imagery of altitude and territory matches the title and sets the tone of the single, which the band will present live at its upcoming concerts.
+
+The recording is ℗ 2026 Newen Afrobeat and the release © 2026 PHŌNÉ Records. Listening and pre-save links are added to this page as the platforms publish them; in the meantime the single can be pre-ordered on Qobuz through the link in the "Listen" section. Full composition, recording, mixing, mastering and artwork credits will be published once the band confirms them.`,
+    },
+    tracklist: [{ n: 1, title: "La Fuerza", duration: "4:44" }],
+    credits: [
+      { role: "℗", name: "2026 Newen Afrobeat" },
+      { role: "©", name: "2026 PHŌNÉ Records" },
+    ],
+    links: [
+      { label: "Qobuz (reserva · hi-res)", href: "https://www.qobuz.com/us-en/album/la-fuerza-newen-afrobeat/rkxyy8xslgx0o" },
+      { label: "Spotify (artista)", href: "https://open.spotify.com/artist/0PTJ848ulShbjTx2yqaAlb" },
+    ],
+  },
   // ─────────── Newen Afrobeat ───────────
   {
     slug: "newen-afrobeat-grietas",

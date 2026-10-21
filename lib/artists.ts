@@ -50,7 +50,7 @@ Con más de una década de trayectoria, Newen Afrobeat ha llevado su música a e
 
 En 2026, la agrupación se encuentra preparando un nuevo álbum de estudio que marcará una nueva etapa sonora para la banda, profundizando la mezcla entre afrobeat, música latinoamericana y elementos contemporáneos de jazz, soul y electrónica. Este nuevo trabajo acompañará una nueva gira internacional por Europa y otros territorios, continuando la expansión global del proyecto.
 
-Próximos lanzamientos: 1 single (segundo semestre 2026), álbum 2026/2027.`,
+Lanzamientos 2026 con PHŌNÉ Records: single "La Fuerza" (30 de octubre de 2026); nuevo álbum de estudio 2026/2027.`,
       en:
         `Newen Afrobeat is one of the most influential bands of the contemporary Latin American afrobeat scene. Formed in Santiago, Chile, the band has built a proposal that combines the legacy of Fela Kuti's afrobeat with Latin American rhythms, jazz, funk and roots sounds, developing a distinctive identity marked by live energy, musical exploration and strong social and political content.
 
@@ -58,7 +58,7 @@ With more than a decade of trajectory, Newen Afrobeat has taken its music to sta
 
 In 2026 the group is preparing a new studio album that will mark a new sonic stage for the band, deepening the mix of afrobeat, Latin American music and contemporary elements of jazz, soul and electronics. This new work will accompany a new international tour through Europe and other territories, continuing the global expansion of the project.
 
-Upcoming releases: 1 single (second half of 2026), album 2026/2027.`,
+2026 releases with PHŌNÉ Records: single "La Fuerza" (October 30, 2026); new studio album 2026/2027.`,
     },
     links: [
       { label: "Bandcamp", href: "https://newenafrobeat.bandcamp.com/music" },

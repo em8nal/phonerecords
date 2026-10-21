@@ -56,7 +56,71 @@ const IMAGE = {
   },
 } as const;
 
+// Portada provisional como hero (la banda aún no envía foto; X17). Arte oficial del single.
+const LA_FUERZA_IMAGE = {
+  desktop: "/media/newen-afrobeat/la-fuerza-hero.jpg",
+  mobile: "/media/newen-afrobeat/la-fuerza-hero-mobile.jpg",
+  alt: {
+    es: "Portada de La Fuerza: ilustración de una montaña nevada, un desierto rojo y una laguna con flamencos",
+    en: "La Fuerza cover art: illustration of a snow-capped mountain, a red desert and a lagoon with flamingos",
+  },
+};
+
 export const BANNER_ENTRIES: BannerEntry[] = [
+  {
+    // La Fuerza (Newen) · hasta el estreno de Destellos va segundo
+    slug: "newen-afrobeat-la-fuerza",
+    priority: 2,
+    artist: "Newen Afrobeat",
+    title: { es: "La Fuerza", en: "La Fuerza" },
+    eyebrow: { es: "Nuevo single · 30 de octubre", en: "New single · 30 October" },
+    releaseDate: "2026-10-30",
+    startsAt: "2026-10-21T00:00:00-03:00",
+    endsAt: "2026-10-23T00:00:00-03:00",
+    image: LA_FUERZA_IMAGE,
+    cta: {
+      href: "/releases/newen-afrobeat-la-fuerza",
+      beforeRelease: { es: "Ver ficha", en: "About the single" },
+      afterRelease: { es: "Escuchar", en: "Listen" },
+    },
+    secondaryHref: "/artistas/newen-afrobeat",
+  },
+  {
+    // La Fuerza (Newen) · primero hasta que salga Un Rezo (el estreno más próximo manda)
+    slug: "newen-afrobeat-la-fuerza",
+    priority: 1,
+    artist: "Newen Afrobeat",
+    title: { es: "La Fuerza", en: "La Fuerza" },
+    eyebrow: { es: "Nuevo single · 30 de octubre", en: "New single · 30 October" },
+    releaseDate: "2026-10-30",
+    startsAt: "2026-10-23T00:00:00-03:00",
+    endsAt: "2026-11-05T00:00:00-03:00",
+    image: LA_FUERZA_IMAGE,
+    cta: {
+      href: "/releases/newen-afrobeat-la-fuerza",
+      beforeRelease: { es: "Ver ficha", en: "About the single" },
+      afterRelease: { es: "Escuchar", en: "Listen" },
+    },
+    secondaryHref: "/artistas/newen-afrobeat",
+  },
+  {
+    // La Fuerza (Newen) · ya publicado: segundo tras Klaus B
+    slug: "newen-afrobeat-la-fuerza",
+    priority: 2,
+    artist: "Newen Afrobeat",
+    title: { es: "La Fuerza", en: "La Fuerza" },
+    eyebrow: { es: "Nuevo single · 30 de octubre", en: "New single · 30 October" },
+    releaseDate: "2026-10-30",
+    startsAt: "2026-11-05T00:00:00-03:00",
+    endsAt: "2026-11-30T00:00:00-03:00",
+    image: LA_FUERZA_IMAGE,
+    cta: {
+      href: "/releases/newen-afrobeat-la-fuerza",
+      beforeRelease: { es: "Ver ficha", en: "About the single" },
+      afterRelease: { es: "Escuchar", en: "Listen" },
+    },
+    secondaryHref: "/artistas/newen-afrobeat",
+  },
   {
     slug: "klaus-b-destellos-de-ti",
     priority: 1,
