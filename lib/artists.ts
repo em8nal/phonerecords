@@ -147,7 +147,7 @@ Su enfoque artístico y su búsqueda personal actual están estrechamente vincul
 
 Ha tocado en diversos escenarios y festivales alrededor del mundo, como en Brasil, Colombia, Ecuador, Estados Unidos, Canadá, Francia, Alemania, Austria, Bélgica, Holanda, Italia, España, Portugal, Inglaterra, Suecia, Suiza, Hungría, República Checa, Polonia, Rusia y Nigeria, haciendo de estas experiencias parte fundamental de su formación y aprendizaje.
 
-Próximos lanzamientos: "Destellos de ti" (22 de octubre de 2026), "Un Rezo" (5 de noviembre de 2026) y el álbum "Una Cuota De Caos" (20 de noviembre de 2026).`,
+Ciclo de lanzamientos 2026 con PHŌNÉ Records: "Destellos de ti" (22 de octubre de 2026), "Un Rezo" (5 de noviembre de 2026) y el álbum "Una Cuota De Caos" (20 de noviembre de 2026).`,
       en:
         `Saxophone player, flautist, composer and producer from Chile. He pursued both independent and academic studies, in classical and popular music. He has deepened his musical development through improvisation and live experience. He is currently a stable member of various projects such as Newen Afrobeat, Pascuala Ilabaca y Fauna, the hip-hop duo Gestosimple & Klaus B, Valentina Marinkovic, Fran Ri and Camila Bañados.
 
@@ -155,7 +155,7 @@ His artistic focus and current personal search are closely tied to nu jazz and c
 
 He has played on stages and at festivals around the world — Brazil, Colombia, Ecuador, United States, Canada, France, Germany, Austria, Belgium, Netherlands, Italy, Spain, Portugal, England, Sweden, Switzerland, Hungary, Czech Republic, Poland, Russia and Nigeria — making these experiences a fundamental part of his formation and learning.
 
-Upcoming releases: "Destellos de ti" (October 22, 2026), "Un Rezo" (November 5, 2026) and the album "Una Cuota De Caos" (November 20, 2026).`,
+2026 release cycle with PHŌNÉ Records: "Destellos de ti" (October 22, 2026), "Un Rezo" (November 5, 2026) and the album "Una Cuota De Caos" (November 20, 2026).`,
     },
     links: [
       { label: "Bandcamp", href: "https://klausb.bandcamp.com/music" },

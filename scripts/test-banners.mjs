@@ -1,4 +1,4 @@
-// Prueba de ventanas del carrusel: node scripts/test-banners.mjs
+// Prueba de ventanas del carrusel: pnpm test:banners  (node --import ./scripts/ts-resolve-hook.mjs scripts/test-banners.mjs)
 import { getActiveBanners } from "../lib/banner.ts";
 
 const cases = [

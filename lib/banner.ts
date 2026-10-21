@@ -7,8 +7,10 @@
  * Para agregar un lanzamiento: añadir una entrada a BANNER_ENTRIES con su
  * `priority` (1 = primero en el carrusel).
  *
- * Este módulo no importa nada, para poder probarse con `node` directamente.
+ * Prueba: `pnpm test:banners` (usa scripts/ts-resolve-hook.mjs para resolver `./release-date`).
  */
+
+import { isReleased as isReleasedOn } from "./release-date";
 
 export type Localized = { es: string; en: string };
 
@@ -165,26 +167,12 @@ export const BANNER_ENTRIES: BannerEntry[] = [
   },
 ];
 
-const SANTIAGO_TZ = "America/Santiago";
-
-/** Fecha calendario ("YYYY-MM-DD") de `now` en hora de Chile. */
-export function santiagoDate(now: Date): string {
-  // en-CA formatea como YYYY-MM-DD
-  return new Intl.DateTimeFormat("en-CA", {
-    timeZone: SANTIAGO_TZ,
-    year: "numeric",
-    month: "2-digit",
-    day: "2-digit",
-  }).format(now);
-}
-
 /**
  * El lanzamiento se considera cumplido desde las 00:00 (America/Santiago) del
- * `releaseDate`. Se compara la fecha calendario en Santiago, así el cambio de
- * horario de verano de Chile no desplaza el momento del cambio.
+ * `releaseDate`. Delegado a `lib/release-date.ts` (única fuente de la regla).
  */
 export function isReleased(entry: Pick<BannerEntry, "releaseDate">, now: Date = new Date()): boolean {
-  return santiagoDate(now) >= entry.releaseDate;
+  return isReleasedOn(entry.releaseDate, now.getTime());
 }
 
 /** Todas las entradas activas en `now`, por prioridad y luego la más reciente primero. */

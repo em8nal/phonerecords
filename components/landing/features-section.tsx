@@ -3,219 +3,238 @@
 import { useEffect, useRef, useState } from "react";
 import { useLanguage } from "@/lib/language-context";
 
-const visuals = ["deploy", "ai", "collab", "security"];
+// Un visual por servicio, en el mismo orden que `t.features.items`:
+// 01 Sello · Vinilo + Digital → vinilo girando + barras digitales
+// 02 Management de artistas → núcleo (artista) con tres satélites en órbita
+// 03 Producción · Sonido + Imagen → visor fotográfico con forma de onda
+// 04 Giras & Booking → ruta entre ciudades con marcador en movimiento
+const visuals = ["vinyl", "management", "production", "touring"];
 
-function DeployVisual() {
+/** true salvo que el sistema pida menos movimiento (prefers-reduced-motion). */
+function usePrefersMotion() {
+  const [motion, setMotion] = useState(true);
+  useEffect(() => {
+    const mq = window.matchMedia("(prefers-reduced-motion: reduce)");
+    const update = () => setMotion(!mq.matches);
+    update();
+    mq.addEventListener("change", update);
+    return () => mq.removeEventListener("change", update);
+  }, []);
+  return motion;
+}
+
+type VisualProps = { motion: boolean };
+
+const svgProps = {
+  viewBox: "0 0 200 160",
+  className: "w-full h-full",
+  "aria-hidden": true,
+  focusable: false,
+} as const;
+
+function VinylVisual({ motion }: VisualProps) {
+  const grooves = [46, 40, 34, 28];
+  const bars = [
+    { x: 150, from: 92, to: 58, dur: "1.1s" },
+    { x: 162, from: 84, to: 48, dur: "0.9s" },
+    { x: 174, from: 96, to: 66, dur: "1.3s" },
+    { x: 186, from: 88, to: 54, dur: "1.0s" },
+  ];
   return (
-    <svg viewBox="0 0 200 160" className="w-full h-full">
-      <defs>
-        <clipPath id="deployClip">
-          <rect x="30" y="20" width="140" height="120" rx="4" />
-        </clipPath>
-      </defs>
-      
-      {/* Container */}
-      <rect x="30" y="20" width="140" height="120" rx="4" fill="none" stroke="currentColor" strokeWidth="2" />
-      
-      {/* Animated bars */}
-      <g clipPath="url(#deployClip)">
-        {[0, 1, 2, 3, 4, 5].map((i) => (
-          <rect
-            key={i}
-            x="40"
-            y={35 + i * 16}
-            width="120"
-            height="10"
-            rx="2"
-            fill="currentColor"
-            opacity="0.15"
-          >
-            <animate
-              attributeName="opacity"
-              values="0.15;0.8;0.15"
-              dur="2s"
-              begin={`${i * 0.15}s`}
+    <svg {...svgProps}>
+      {/* Vinilo */}
+      <g transform="translate(78 80)">
+        <circle r="56" fill="currentColor" opacity="0.06" />
+        <circle r="56" fill="none" stroke="currentColor" strokeWidth="2" />
+        <g>
+          {motion && (
+            <animateTransform
+              attributeName="transform"
+              type="rotate"
+              from="0"
+              to="360"
+              dur="6s"
               repeatCount="indefinite"
             />
-            <animate
-              attributeName="width"
-              values="20;120;20"
-              dur="2s"
-              begin={`${i * 0.15}s`}
-              repeatCount="indefinite"
-            />
-          </rect>
-        ))}
+          )}
+          {grooves.map((r) => (
+            <circle key={r} r={r} fill="none" stroke="currentColor" strokeWidth="1" opacity="0.35" />
+          ))}
+          {/* Etiqueta central con agujero */}
+          <circle r="17" fill="none" stroke="currentColor" strokeWidth="8" opacity="0.9" />
+          {/* Marca para percibir el giro */}
+          <rect x="-1.5" y="-23" width="3" height="10" rx="1" fill="currentColor" opacity="0.6" />
+        </g>
       </g>
-      
-      {/* Progress indicator */}
-      <circle cx="100" cy="155" r="3" fill="currentColor" opacity="0.3">
-        <animate attributeName="opacity" values="0.3;1;0.3" dur="1s" repeatCount="indefinite" />
-      </circle>
+      {/* Digital: barras de nivel */}
+      {bars.map((b) => (
+        <line
+          key={b.x}
+          x1={b.x}
+          x2={b.x}
+          y1={b.from}
+          y2="112"
+          stroke="currentColor"
+          strokeWidth="6"
+          strokeLinecap="round"
+          opacity="0.8"
+        >
+          {motion && (
+            <animate
+              attributeName="y1"
+              values={`${b.from};${b.to};${b.from}`}
+              dur={b.dur}
+              repeatCount="indefinite"
+            />
+          )}
+        </line>
+      ))}
     </svg>
   );
 }
 
-function AIVisual() {
+function ManagementVisual({ motion }: VisualProps) {
+  const radius = 48;
+  const sats = [0, 120, 240].map((deg) => {
+    const a = (deg * Math.PI) / 180;
+    return { x: Math.cos(a) * radius, y: Math.sin(a) * radius };
+  });
   return (
-    <svg viewBox="0 0 200 160" className="w-full h-full">
-      {/* Central node */}
-      <circle cx="100" cy="80" r="12" fill="currentColor">
-        <animate attributeName="r" values="12;14;12" dur="2s" repeatCount="indefinite" />
-      </circle>
-      
-      {/* Orbiting nodes */}
-      {[0, 1, 2, 3, 4, 5].map((i) => {
-        const angle = (i * 60) * (Math.PI / 180);
-        const radius = 50;
-        return (
-          <g key={i}>
-            {/* Connection line */}
-            <line
-              x1="100"
-              y1="80"
-              x2={100 + Math.cos(angle) * radius}
-              y2={80 + Math.sin(angle) * radius}
-              stroke="currentColor"
-              strokeWidth="1"
-              opacity="0.3"
-            >
-              <animate
-                attributeName="opacity"
-                values="0.3;0.8;0.3"
-                dur="2s"
-                begin={`${i * 0.3}s`}
-                repeatCount="indefinite"
-              />
-            </line>
-            
-            {/* Outer node */}
-            <circle
-              cx={100 + Math.cos(angle) * radius}
-              cy={80 + Math.sin(angle) * radius}
-              r="6"
-              fill="none"
-              stroke="currentColor"
-              strokeWidth="2"
-            >
-              <animate
-                attributeName="r"
-                values="6;8;6"
-                dur="2s"
-                begin={`${i * 0.3}s`}
-                repeatCount="indefinite"
-              />
-            </circle>
-          </g>
-        );
-      })}
-      
-      {/* Pulse rings */}
-      <circle cx="100" cy="80" r="30" fill="none" stroke="currentColor" strokeWidth="1" opacity="0">
-        <animate attributeName="r" values="20;60" dur="2s" repeatCount="indefinite" />
-        <animate attributeName="opacity" values="0.5;0" dur="2s" repeatCount="indefinite" />
-      </circle>
-    </svg>
-  );
-}
-
-function CollabVisual() {
-  return (
-    <svg viewBox="0 0 200 160" className="w-full h-full">
-      {/* User A */}
-      <g>
-        <rect x="30" y="50" width="50" height="60" rx="4" fill="none" stroke="currentColor" strokeWidth="2" />
-        <text x="55" y="85" textAnchor="middle" fontSize="20" fontFamily="monospace" fill="currentColor">A</text>
-        <circle cx="55" cy="35" r="12" fill="none" stroke="currentColor" strokeWidth="2" />
-      </g>
-      
-      {/* User B */}
-      <g>
-        <rect x="120" y="50" width="50" height="60" rx="4" fill="none" stroke="currentColor" strokeWidth="2" />
-        <text x="145" y="85" textAnchor="middle" fontSize="20" fontFamily="monospace" fill="currentColor">B</text>
-        <circle cx="145" cy="35" r="12" fill="none" stroke="currentColor" strokeWidth="2" />
-      </g>
-      
-      {/* Connection */}
-      <line x1="80" y1="80" x2="120" y2="80" stroke="currentColor" strokeWidth="2" strokeDasharray="4 4">
-        <animate attributeName="stroke-dashoffset" values="0;-8" dur="0.5s" repeatCount="indefinite" />
-      </line>
-      
-      {/* Data packet */}
-      <circle r="4" fill="currentColor">
-        <animateMotion dur="1.5s" repeatCount="indefinite">
-          <mpath href="#dataPath" />
-        </animateMotion>
-      </circle>
-      <path id="dataPath" d="M 80 80 L 120 80" fill="none" />
-      
-      {/* Sync indicator */}
-      <g transform="translate(100, 130)">
-        <circle r="6" fill="none" stroke="currentColor" strokeWidth="2">
-          <animate attributeName="r" values="6;10;6" dur="1s" repeatCount="indefinite" />
-          <animate attributeName="opacity" values="1;0.3;1" dur="1s" repeatCount="indefinite" />
+    <svg {...svgProps}>
+      <g transform="translate(100 80)">
+        {/* Órbita */}
+        <circle r={radius} fill="none" stroke="currentColor" strokeWidth="1" strokeDasharray="3 6" opacity="0.5" />
+        {/* Núcleo: el proyecto artístico */}
+        <circle r="11" fill="currentColor" />
+        <circle r="11" fill="none" stroke="currentColor" strokeWidth="1" opacity="0">
+          {motion && <animate attributeName="r" values="11;30" dur="2.4s" repeatCount="indefinite" />}
+          {motion && <animate attributeName="opacity" values="0.5;0" dur="2.4s" repeatCount="indefinite" />}
         </circle>
+        {/* Satélites: booking, estrategia, finanzas */}
+        <g>
+          {motion && (
+            <animateTransform
+              attributeName="transform"
+              type="rotate"
+              from="0"
+              to="360"
+              dur="14s"
+              repeatCount="indefinite"
+            />
+          )}
+          {sats.map((s, i) => (
+            <g key={i}>
+              <line x1="0" y1="0" x2={s.x} y2={s.y} stroke="currentColor" strokeWidth="1" opacity="0.25" />
+              <circle cx={s.x} cy={s.y} r="7" fill="var(--background, #fff)" stroke="currentColor" strokeWidth="2" />
+            </g>
+          ))}
+        </g>
       </g>
     </svg>
   );
 }
 
-function SecurityVisual() {
+function ProductionVisual({ motion }: VisualProps) {
+  const bars = [52, 68, 84, 100, 116, 132, 148].map((x, i) => ({
+    x,
+    base: [14, 26, 40, 54, 40, 26, 14][i],
+    peak: [30, 48, 64, 78, 60, 44, 28][i],
+    dur: `${1 + (i % 3) * 0.25}s`,
+  }));
   return (
-    <svg viewBox="0 0 200 160" className="w-full h-full">
-      {/* Shield */}
-      <path
-        d="M 100 20 L 150 40 L 150 90 Q 150 130 100 145 Q 50 130 50 90 L 50 40 Z"
-        fill="none"
-        stroke="currentColor"
-        strokeWidth="2"
-      />
-      
-      {/* Inner shield */}
-      <path
-        d="M 100 35 L 135 50 L 135 85 Q 135 115 100 128 Q 65 115 65 85 L 65 50 Z"
-        fill="currentColor"
-        opacity="0.1"
-      >
-        <animate attributeName="opacity" values="0.1;0.2;0.1" dur="2s" repeatCount="indefinite" />
-      </path>
-      
-      {/* Lock icon */}
-      <rect x="85" y="70" width="30" height="25" rx="3" fill="currentColor" />
-      <path
-        d="M 90 70 L 90 60 Q 90 50 100 50 Q 110 50 110 60 L 110 70"
-        fill="none"
-        stroke="currentColor"
-        strokeWidth="3"
-        strokeLinecap="round"
-      />
-      
-      {/* Keyhole */}
-      <circle cx="100" cy="80" r="4" fill="white" />
-      <rect x="98" y="82" width="4" height="8" fill="white" />
-      
-      {/* Scan lines */}
-      <line x1="60" y1="60" x2="140" y2="60" stroke="currentColor" strokeWidth="1" opacity="0">
-        <animate attributeName="y1" values="40;120;40" dur="3s" repeatCount="indefinite" />
-        <animate attributeName="y2" values="40;120;40" dur="3s" repeatCount="indefinite" />
-        <animate attributeName="opacity" values="0;0.5;0" dur="3s" repeatCount="indefinite" />
-      </line>
+    <svg {...svgProps}>
+      {/* Visor: cuatro esquinas */}
+      <g fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round">
+        <path d="M 34 44 L 34 26 L 52 26" />
+        <path d="M 148 26 L 166 26 L 166 44" />
+        <path d="M 166 116 L 166 134 L 148 134" />
+        <path d="M 52 134 L 34 134 L 34 116" />
+      </g>
+      {/* Punto de grabación */}
+      <circle cx="154" cy="40" r="3.5" fill="currentColor">
+        {motion && <animate attributeName="opacity" values="1;0.2;1" dur="1.4s" repeatCount="indefinite" />}
+      </circle>
+      {/* Forma de onda */}
+      {bars.map((b) => (
+        <line
+          key={b.x}
+          x1={b.x}
+          x2={b.x}
+          y1={80 - b.base / 2}
+          y2={80 + b.base / 2}
+          stroke="currentColor"
+          strokeWidth="5"
+          strokeLinecap="round"
+          opacity="0.85"
+        >
+          {motion && (
+            <>
+              <animate attributeName="y1" values={`${80 - b.base / 2};${80 - b.peak / 2};${80 - b.base / 2}`} dur={b.dur} repeatCount="indefinite" />
+              <animate attributeName="y2" values={`${80 + b.base / 2};${80 + b.peak / 2};${80 + b.base / 2}`} dur={b.dur} repeatCount="indefinite" />
+            </>
+          )}
+        </line>
+      ))}
+    </svg>
+  );
+}
+
+function TouringVisual({ motion }: VisualProps) {
+  const route = "M 28 112 C 50 50, 82 130, 110 72 S 150 36, 172 54";
+  const cities = [
+    { x: 28, y: 112 },
+    { x: 72, y: 92 },
+    { x: 110, y: 72 },
+    { x: 172, y: 54 },
+  ];
+  return (
+    <svg {...svgProps}>
+      {/* Ruta */}
+      <path d={route} fill="none" stroke="currentColor" strokeWidth="1.5" strokeDasharray="4 5" opacity="0.45" />
+      {/* Ciudades */}
+      {cities.map((c, i) => (
+        <g key={i}>
+          <circle cx={c.x} cy={c.y} r="4" fill="currentColor" />
+          <circle cx={c.x} cy={c.y} r="4" fill="none" stroke="currentColor" strokeWidth="1" opacity="0">
+            {motion && (
+              <>
+                <animate attributeName="r" values="4;14" dur="2.8s" begin={`${i * 0.7}s`} repeatCount="indefinite" />
+                <animate attributeName="opacity" values="0.6;0" dur="2.8s" begin={`${i * 0.7}s`} repeatCount="indefinite" />
+              </>
+            )}
+          </circle>
+        </g>
+      ))}
+      {/* Pin de destino */}
+      <g transform="translate(172 54)">
+        <path d="M 0 -30 C -9 -30, -13 -22, -13 -16 C -13 -8, 0 0, 0 0 C 0 0, 13 -8, 13 -16 C 13 -22, 9 -30, 0 -30 Z" fill="currentColor" />
+        <circle cy="-17" r="4" fill="var(--background, #fff)" />
+      </g>
+      {/* Marcador en movimiento */}
+      {motion ? (
+        <circle r="5" fill="currentColor" stroke="var(--background, #fff)" strokeWidth="2">
+          <animateMotion dur="5s" repeatCount="indefinite" path={route} keyPoints="0;1" keyTimes="0;1" calcMode="linear" />
+        </circle>
+      ) : (
+        <circle cx="72" cy="92" r="5" fill="currentColor" stroke="var(--background, #fff)" strokeWidth="2" />
+      )}
     </svg>
   );
 }
 
 function AnimatedVisual({ type }: { type: string }) {
+  const motion = usePrefersMotion();
   switch (type) {
-    case "deploy":
-      return <DeployVisual />;
-    case "ai":
-      return <AIVisual />;
-    case "collab":
-      return <CollabVisual />;
-    case "security":
-      return <SecurityVisual />;
+    case "vinyl":
+      return <VinylVisual motion={motion} />;
+    case "management":
+      return <ManagementVisual motion={motion} />;
+    case "production":
+      return <ProductionVisual motion={motion} />;
+    case "touring":
+      return <TouringVisual motion={motion} />;
     default:
-      return <DeployVisual />;
+      return <VinylVisual motion={motion} />;
   }
 }
 

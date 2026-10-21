@@ -3,6 +3,7 @@
   "version": "0.1.0",
   "private": true,
   "scripts": {
+    "test:banners": "node --import ./scripts/ts-resolve-hook.mjs scripts/test-banners.mjs",
     "build": "next build",
     "dev": "next dev",
     "lint": "eslint .",

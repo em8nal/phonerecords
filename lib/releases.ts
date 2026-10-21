@@ -235,7 +235,7 @@ export const releases: Release[] = [
     cover: "/releases/klaus-b-un-rezo.jpg",
     smartLink: "https://onerpm.link/106214256083",
     description: {
-      es: `"Un Rezo" es el segundo single de Klaus B y sale el jueves 5 de noviembre de 2026, dos semanas después de "Destellos de ti". Es el segundo adelanto de "Una Cuota De Caos", el álbum que se publica el viernes 20 de noviembre de 2026, y cuenta con videoclip oficial.
+      es: `"Un Rezo" es el segundo single de Klaus B, con fecha de lanzamiento el jueves 5 de noviembre de 2026, dos semanas después de "Destellos de ti". Es el segundo adelanto de "Una Cuota De Caos", el álbum que se publica el viernes 20 de noviembre de 2026, y cuenta con videoclip oficial.
 
 La canción es nu jazz futurista de carácter espiritual y devocional. La flauta y el trombón se apoyan en una batería con inercia que no deja que la pieza se detenga. El resultado es un tema moderno, inspirador y emocional. El título, "Un Rezo", ya anticipa ese espíritu devocional, aunque el sonido mire hacia adelante: es música de hoy, con la vista puesta en el futuro.
 
@@ -244,7 +244,7 @@ Si "Destellos de ti" abrió el ciclo con un tema emotivo e íntimo, de saxofón,
 Klaus B es integrante de Newen Afrobeat y de la banda de Pascuala Ilabaca, y su música propia fusiona hip hop, jazz, neo soul, funk y ritmos afro-latinoamericanos. En "Un Rezo" firma la composición y la producción, además del saxofón y la flauta que figuran en los créditos del single.
 
 El álbum llega después de "Viaje Sin Tiempo" (2024), disco hecho junto a Gestosimple, y de "Memorias: Mixtape" (2025). Detrás del lanzamiento está PHŌNÉ Records, que lo acompaña en difusión y prensa, con distribución de ONErpm. "Un Rezo" ocupa el centro del calendario: queda entre el primer single (22 de octubre) y el álbum completo (20 de noviembre), a quince días de este último, que cierra el ciclo.`,
-      en: `"Un Rezo" is the second single from Klaus B, out on Thursday, November 5, 2026, two weeks after "Destellos de ti". It is the second single from "Una Cuota De Caos", the album coming out on Friday, November 20, 2026, and it has an official music video.
+      en: `"Un Rezo" is the second single from Klaus B, with release date Thursday, November 5, 2026, two weeks after "Destellos de ti". It is the second single from "Una Cuota De Caos", the album coming out on Friday, November 20, 2026, and it has an official music video.
 
 The song is futuristic nu jazz with a spiritual, devotional character. Flute and trombone rest on drums with an inertia that never lets the piece stand still. The result is a modern, inspiring and emotional track. The title, "Un Rezo" ("A Prayer"), already hints at that devotional spirit, even though the sound looks ahead: it is music of today, with its eyes on the future.
 
@@ -274,7 +274,7 @@ The album follows "Viaje Sin Tiempo" (2024), a record made together with Gestosi
     cover: "/releases/klaus-b-destellos-de-ti.jpg",
     smartLink: "https://onerpm.link/102211016130",
     description: {
-      es: `"Destellos de ti" es el nuevo single de Klaus B y sale el jueves 22 de octubre de 2026. Es el primer adelanto de "Una Cuota De Caos", el álbum del saxofonista, flautista, compositor y productor chileno, y cuenta con videoclip oficial.
+      es: `"Destellos de ti" es el nuevo single de Klaus B, con fecha de lanzamiento el jueves 22 de octubre de 2026. Es el primer adelanto de "Una Cuota De Caos", el álbum del saxofonista, flautista, compositor y productor chileno, y cuenta con videoclip oficial.
 
 Lo que suena es nu jazz moderno y futurista. El saxofón y el trombón se encuentran con una banda, y todo descansa sobre una batería con reminiscencias de drum and bass que le da impulso a la canción. Es un tema emotivo e íntimo, pero con mucha potencia y presencia sonora: la emoción y la contundencia conviven en el mismo espacio, sin que una le quite lugar a la otra.
 
@@ -285,7 +285,7 @@ El single tiene además videoclip oficial, igual que el segundo adelanto, "Un Re
 Klaus B llega a este lanzamiento con dos trabajos recientes: el álbum "Viaje Sin Tiempo" (2024), hecho junto a Gestosimple, y "Memorias: Mixtape" (2025). Su música mezcla hip hop, jazz, neo soul y funk con ritmos afro-latinoamericanos, y "Destellos de ti" lleva ese cruce hacia un nu jazz moderno y futurista, con una batería de herencia drum and bass.
 
 En este single, Klaus B firma la composición, el saxofón, la flauta y la producción. PHŌNÉ Records, sello cultural independiente de Santiago de Chile, respalda el lanzamiento con difusión y prensa, y la distribución está a cargo de ONErpm. Dentro del catálogo 2026 del sello, "Destellos de ti" llega tres semanas después de "Cuántas veces", el single de Con.fusión con el que PHŌNÉ Records abre ese catálogo.`,
-      en: `"Destellos de ti" is the new single from Klaus B, out on Thursday, October 22, 2026. It is the first single from "Una Cuota De Caos", the album by the Chilean saxophonist, flautist, composer and producer, and it has an official music video.
+      en: `"Destellos de ti" is the new single from Klaus B, with release date Thursday, October 22, 2026. It is the first single from "Una Cuota De Caos", the album by the Chilean saxophonist, flautist, composer and producer, and it has an official music video.
 
 What you hear is modern, futuristic nu jazz. Saxophone and trombone meet a band, and everything rests on drums with echoes of drum and bass that give the song its drive. It is an emotional, intimate piece with real power and sonic presence: feeling and force share the same space without either one taking room from the other.
 
