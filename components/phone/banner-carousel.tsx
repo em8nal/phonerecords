@@ -6,8 +6,11 @@ import { ChevronLeft, ChevronRight, Pause, Play } from "lucide-react";
 type BannerCarouselProps = {
   /** Clases de la caja de altura fija (la misma del banner simple). */
   frameClassName: string;
-  /** Cada slide viene ya renderizado por el servidor (todos están en el HTML). */
-  slides: { id: string; node: ReactNode }[];
+  /**
+   * Cada slide viene renderizado por el servidor. `node` (textos) está en el HTML;
+   * `media` (imagen de los slides 1+) se monta en el cliente tras hidratar.
+   */
+  slides: { id: string; node: ReactNode; media?: ReactNode }[];
   labels: {
     region: string;
     slide: string;
@@ -40,8 +43,12 @@ export function BannerCarousel({ frameClassName, slides, labels }: BannerCarouse
   const [userPaused, setUserPaused] = useState(false);
   const [hovered, setHovered] = useState(false);
   const [focused, setFocused] = useState(false);
+  const [mounted, setMounted] = useState(false);
   const touchX = useRef<number | null>(null);
   const regionRef = useRef<HTMLElement>(null);
+
+  // Tras hidratar (el LCP ya pintó el slide 0) se montan las imágenes diferidas.
+  useEffect(() => setMounted(true), []);
 
   useEffect(() => {
     const mq = window.matchMedia("(prefers-reduced-motion: reduce)");
@@ -83,9 +90,18 @@ export function BannerCarousel({ frameClassName, slides, labels }: BannerCarouse
       // pt-20 = altura del menú fijo: el menú queda sobre el fondo claro y el banner empieza debajo.
       className="relative bg-background pt-20"
       onKeyDown={onKeyDown}
-      onMouseEnter={() => setHovered(true)}
-      onMouseLeave={() => setHovered(false)}
-      onFocus={() => setFocused(true)}
+      // Hover solo con mouse/lápiz: en táctil no hay "salir", la pausa quedaría pegada.
+      onPointerEnter={(e) => {
+        if (e.pointerType !== "touch") setHovered(true);
+      }}
+      onPointerLeave={(e) => {
+        if (e.pointerType !== "touch") setHovered(false);
+      }}
+      // Pausa por foco solo si es foco visible (teclado); un clic con mouse/touch en
+      // flechas o puntos no debe frenar el autoplay.
+      onFocus={(e) => {
+        if ((e.target as HTMLElement).matches(":focus-visible")) setFocused(true);
+      }}
       onBlur={(e) => {
         if (!regionRef.current?.contains(e.relatedTarget as Node | null)) setFocused(false);
       }}
@@ -125,6 +141,8 @@ export function BannerCarousel({ frameClassName, slides, labels }: BannerCarouse
                     : "pointer-events-none z-0 opacity-0 duration-300"
                 }`}
               >
+                {/* Imagen de los slides 1+: no está en el SSR, se monta tras hidratar. */}
+                {mounted && slide.media}
                 {slide.node}
               </div>
             );

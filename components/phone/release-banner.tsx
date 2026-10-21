@@ -31,7 +31,33 @@ type BannerSlideProps = {
   first: boolean;
 };
 
-/** Contenido de un banner (imagen, overlay, textos y CTAs). Server component. */
+/** Imagen del banner con art direction. Server component. */
+function BannerPicture({ banner, lang, first }: { banner: BannerEntry; lang: Language; first: boolean }) {
+  const alt = banner.image.alt[lang];
+  const common = {
+    alt,
+    sizes: "100vw",
+    loading: first ? ("eager" as const) : ("lazy" as const),
+    fetchPriority: first ? ("high" as const) : ("low" as const),
+  };
+  // <source> solo para >= 768px (16:9); el <img> es la versión 4:5 de móvil.
+  // El navegador descarga una sola.
+  const { props: desktop } = getImageProps({ ...common, src: banner.image.desktop, ...DESKTOP });
+  const { props: mobile } = getImageProps({ ...common, src: banner.image.mobile, ...MOBILE });
+  return (
+    <picture>
+      <source media="(min-width: 768px)" srcSet={desktop.srcSet} sizes="100vw" />
+      {/* eslint-disable-next-line @next/next/no-img-element, jsx-a11y/alt-text */}
+      <img
+        {...mobile}
+        alt={alt}
+        className="absolute inset-0 h-full w-full object-cover object-[50%_30%] md:object-[50%_35%]"
+      />
+    </picture>
+  );
+}
+
+/** Contenido de un banner (imagen solo si `first`, overlay, textos y CTAs). Server component. */
 function BannerSlide({ banner, lang, now, titleId, first }: BannerSlideProps) {
   const t = translations[lang].banner;
   const released = isReleased(banner, now);
@@ -48,29 +74,10 @@ function BannerSlide({ banner, lang, now, titleId, first }: BannerSlideProps) {
     ? t.viewArtistOf.replace("{artist}", banner.artist)
     : t.viewReleaseOf.replace("{title}", banner.title[lang]);
 
-  const alt = banner.image.alt[lang];
-  const common = {
-    alt,
-    sizes: "100vw",
-    loading: first ? ("eager" as const) : ("lazy" as const),
-    fetchPriority: first ? ("high" as const) : ("low" as const),
-  };
-  // Art direction: <source> solo para >= 768px (16:9); el <img> es la versión
-  // 4:5 de móvil. El navegador descarga una sola.
-  const { props: desktop } = getImageProps({ ...common, src: banner.image.desktop, ...DESKTOP });
-  const { props: mobile } = getImageProps({ ...common, src: banner.image.mobile, ...MOBILE });
-
   return (
     <>
-      <picture>
-        <source media="(min-width: 768px)" srcSet={desktop.srcSet} sizes="100vw" />
-        {/* eslint-disable-next-line @next/next/no-img-element, jsx-a11y/alt-text */}
-        <img
-          {...mobile}
-          alt={alt}
-          className="absolute inset-0 h-full w-full object-cover object-[50%_30%] md:object-[50%_35%]"
-        />
-      </picture>
+      {/* Solo el primer slide trae la imagen en el HTML; las de los demás las monta el carrusel. */}
+      {first && <BannerPicture banner={banner} lang={lang} first />}
 
       {/* Overlay para legibilidad del texto */}
       <div
@@ -179,6 +186,8 @@ export function ReleaseBanner({ lang, now = new Date() }: ReleaseBannerProps) {
             first={i === 0}
           />
         ),
+        // Imagen diferida: el carrusel la monta tras hidratar (slides 1+).
+        media: i === 0 ? null : <BannerPicture banner={banner} lang={lang} first={false} />,
       }))}
     />
   );
