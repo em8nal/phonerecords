@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import Link from "next/link";
 import { ArrowLeft } from "lucide-react";
 import { Navigation } from "@/components/landing/navigation";
+import { PageHero } from "@/components/phone/page-hero";
 import { FooterSection } from "@/components/landing/footer-section";
 import { getUpcomingEvents } from "@/lib/events";
 
@@ -119,8 +120,18 @@ export default async function EventosPage({
         dangerouslySetInnerHTML={{ __html: JSON.stringify(eventsSchema) }}
       />
       <Navigation />
+      <PageHero
+        image={{
+          desktop: "/media/con-fusion/la-banca-hero.jpg",
+          mobile: "/media/con-fusion/la-banca-hero-mobile.jpg",
+          alt: { es: "Con.fusión y artistas invitados en la sesión La Banca", en: "Con.fusión and guest artists at the La Banca session" },
+        }}
+        title={t.headline}
+        eyebrow={t.eyebrow}
+        lang={lang === "es" ? "es" : "en"}
+      />
 
-      <article className="max-w-[1100px] mx-auto px-6 lg:px-12 pt-32 lg:pt-40 pb-24">
+      <article className="max-w-[1100px] mx-auto px-6 lg:px-12 pt-12 lg:pt-16 pb-24">
         <Link
           href={`/${lang}`}
           className="inline-flex items-center gap-2 text-sm text-muted-foreground hover:text-foreground transition-colors mb-12 group"
@@ -130,13 +141,6 @@ export default async function EventosPage({
         </Link>
 
         <header className="mb-16 lg:mb-24 max-w-3xl">
-          <span className="inline-flex items-center gap-3 text-sm font-mono text-muted-foreground mb-8">
-            <span className="w-8 h-px bg-foreground/30" />
-            {t.eyebrow}
-          </span>
-          <h1 className="text-5xl lg:text-8xl font-display tracking-tight leading-[0.95] whitespace-pre-line mb-10">
-            {t.headline}
-          </h1>
           <p className="text-xl text-foreground/85 leading-relaxed">{t.intro}</p>
         </header>
 

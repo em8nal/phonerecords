@@ -3,6 +3,7 @@ import Link from "next/link";
 import Image from "next/image";
 import { ArrowLeft } from "lucide-react";
 import { Navigation } from "@/components/landing/navigation";
+import { PageHero } from "@/components/phone/page-hero";
 import { FooterSection } from "@/components/landing/footer-section";
 import { DownloadPdfButton } from "@/components/download-pdf-button";
 import { artists } from "@/lib/artists";
@@ -172,8 +173,19 @@ export default async function PressKitPage({
         dangerouslySetInnerHTML={{ __html: JSON.stringify(schema) }}
       />
       <Navigation />
+      <PageHero
+        image={{
+          desktop: "/media/ecamhi/ecamhi-hero.jpg",
+          mobile: "/media/ecamhi/ecamhi-hero-mobile.jpg",
+          alt: { es: "ecamhi tocando trompeta frente a una proyección", en: "ecamhi playing trumpet in front of a projection" },
+        }}
+        title={c.headline}
+        eyebrow={c.eyebrow}
+        lang={lang === "es" ? "es" : "en"}
+        titleClassName="text-5xl lg:text-7xl"
+      />
 
-      <article className="max-w-[1100px] mx-auto px-6 lg:px-12 pt-32 lg:pt-40 pb-24 print:pt-8">
+      <article className="max-w-[1100px] mx-auto px-6 lg:px-12 pt-12 lg:pt-16 pb-24 print:pt-8">
         <div className="flex items-center justify-between mb-12 print:hidden">
           <Link
             href={`/${lang}`}
@@ -191,13 +203,6 @@ export default async function PressKitPage({
 
         {/* Header */}
         <header className="mb-16 lg:mb-20 max-w-3xl">
-          <span className="inline-flex items-center gap-3 text-sm font-mono text-muted-foreground mb-8">
-            <span className="w-8 h-px bg-foreground/30" />
-            {c.eyebrow}
-          </span>
-          <h1 className="text-5xl lg:text-7xl font-display tracking-tight leading-[0.95] mb-10">
-            {c.headline}
-          </h1>
           <p className="text-lg lg:text-xl text-foreground/85 leading-relaxed">
             {c.intro}
           </p>

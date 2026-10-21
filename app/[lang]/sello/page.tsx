@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import Link from "next/link";
 import { ArrowLeft, ArrowUpRight } from "lucide-react";
 import { Navigation } from "@/components/landing/navigation";
+import { PageHero } from "@/components/phone/page-hero";
 import { FooterSection } from "@/components/landing/footer-section";
 
 type LangParams = { lang: string };
@@ -236,8 +237,18 @@ export default async function SelloPage({
         dangerouslySetInnerHTML={{ __html: JSON.stringify(schema) }}
       />
       <Navigation />
+      <PageHero
+        image={{
+          desktop: "/media/ecamhi/ecamhi-hero.jpg",
+          mobile: "/media/ecamhi/ecamhi-hero-mobile.jpg",
+          alt: { es: "ecamhi tocando trompeta frente a una proyección", en: "ecamhi playing trumpet in front of a projection" },
+        }}
+        title={c.headline}
+        eyebrow={c.eyebrow}
+        lang={lang === "es" ? "es" : "en"}
+      />
 
-      <article className="max-w-[1200px] mx-auto px-6 lg:px-12 pt-32 lg:pt-40 pb-24">
+      <article className="max-w-[1200px] mx-auto px-6 lg:px-12 pt-12 lg:pt-16 pb-24">
         <Link
           href={`/${lang}`}
           className="inline-flex items-center gap-2 text-sm text-muted-foreground hover:text-foreground transition-colors mb-12 group"
@@ -247,14 +258,7 @@ export default async function SelloPage({
         </Link>
 
         <header className="mb-20 lg:mb-28">
-          <span className="inline-flex items-center gap-3 text-sm font-mono text-muted-foreground mb-8">
-            <span className="w-8 h-px bg-foreground/30" />
-            {c.eyebrow}
-          </span>
-          <h1 className="text-5xl lg:text-8xl font-display tracking-tight leading-[0.95] whitespace-pre-line">
-            {c.headline}
-          </h1>
-          <p className="mt-12 text-xl lg:text-2xl text-foreground/85 leading-relaxed max-w-3xl">
+          <p className="text-xl lg:text-2xl text-foreground/85 leading-relaxed max-w-3xl">
             {c.intro}
           </p>
         </header>
