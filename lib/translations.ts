@@ -133,27 +133,31 @@ export const translations = {
         },
       ],
     },
-    // CTA → Newsletter / Open Signal
+    // CTA → Newsletter
     cta: {
       headline1: "Independent music",
       headline2: "as a long-term practice.",
       description:
         "Join the PHŌNÉ newsletter for new releases, tour dates, listening sessions and the occasional editorial drop.",
       ctaPrimary: "Subscribe to newsletter",
-      ctaSecondary: "PHŌNÉ Open Signal",
       noCreditCard: "We never share your email.",
     },
     // Footer
     footer: {
       tagline:
         "PHŌNÉ Records · independent cultural label · Santiago de Chile · in dialogue with European and Latin American circuits.",
-      links: {
-        Roster: ["Newen Afrobeat", "Ecamhi", "Con.fusión", "Klaus B"],
-        Catalogue: ["Releases", "Vinyl", "Cassette", "Digital"],
-        Label: ["About", "Manifesto", "Press kit", "Contact"],
-        Connect: ["Instagram", "Bandcamp", "Spotify", "YouTube"],
+      columns: {
+        Roster: "Roster",
+        Catalogue: "Catalogue",
+        Label: "Label",
+        Connect: "Connect",
       },
-      hiring: "Open Signal",
+      links: {
+        Roster: ["Newen Afrobeat", "Klaus B", "Ecamhi", "Con.fusión", "Andrés Abrigo"],
+        Catalogue: ["Releases", "Vinyl", "Cassette"],
+        Label: ["About", "Manifesto"],
+        Connect: ["Contact", "Press kit", "Instagram"],
+      },
       copyright: "© 2026 PHŌNÉ Records. All rights reserved.",
       systemStatus: "Active · Santiago de Chile",
     },
@@ -292,27 +296,31 @@ export const translations = {
         },
       ],
     },
-    // CTA → Newsletter / Open Signal
+    // CTA → Newsletter
     cta: {
       headline1: "Música independiente",
       headline2: "como práctica de largo plazo.",
       description:
         "Suscríbete al newsletter de PHŌNÉ para nuevos lanzamientos, fechas de gira, listening sessions y drops editoriales ocasionales.",
       ctaPrimary: "Suscribirme al newsletter",
-      ctaSecondary: "PHŌNÉ Open Signal",
       noCreditCard: "Nunca compartimos tu email.",
     },
     // Footer
     footer: {
       tagline:
         "PHŌNÉ Records · sello cultural independiente · Santiago de Chile · en diálogo con circuitos europeos y latinoamericanos.",
-      links: {
-        Roster: ["Newen Afrobeat", "Ecamhi", "Con.fusión", "Klaus B"],
-        Catalogue: ["Releases", "Vinilo", "Cassette", "Digital"],
-        Label: ["Sobre PHŌNÉ", "Manifiesto", "Press kit", "Contacto"],
-        Connect: ["Instagram", "Bandcamp", "Spotify", "YouTube"],
+      columns: {
+        Roster: "Roster",
+        Catalogue: "Catálogo",
+        Label: "Sello",
+        Connect: "Conecta",
       },
-      hiring: "Open Signal",
+      links: {
+        Roster: ["Newen Afrobeat", "Klaus B", "Ecamhi", "Con.fusión", "Andrés Abrigo"],
+        Catalogue: ["Releases", "Vinilo", "Cassette"],
+        Label: ["Sobre PHŌNÉ", "Manifiesto"],
+        Connect: ["Contacto", "Press kit", "Instagram"],
+      },
       copyright: "© 2026 PHŌNÉ Records. Todos los derechos reservados.",
       systemStatus: "Activo · Santiago de Chile",
     },
