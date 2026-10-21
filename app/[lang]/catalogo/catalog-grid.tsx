@@ -5,6 +5,7 @@ import { useRouter, useSearchParams, usePathname } from "next/navigation";
 import Link from "next/link";
 import Image from "next/image";
 import type { CatalogEntry } from "@/lib/catalog";
+import { ComingSoonBadge } from "@/components/release-status";
 
 type ArtistChip = { slug: string; name: string; count: number };
 
@@ -223,6 +224,16 @@ export function CatalogGrid({
                   <div className="text-xs text-muted-foreground truncate">
                     {r.artistName}
                   </div>
+                  {r.upcoming && (
+                    <div className="mt-1">
+                      <ComingSoonBadge
+                        releaseDate={r.releaseDate}
+                        initialReleased={!r.upcoming}
+                        lang={lang}
+                        showDate={false}
+                      />
+                    </div>
+                  )}
                 </div>
                 <div className="col-span-3 sm:col-span-2 font-mono text-xs uppercase tracking-widest text-muted-foreground truncate">
                   {dateLabel}
@@ -248,6 +259,15 @@ export function CatalogGrid({
                 className="group block bg-background hover:bg-foreground/[0.02] transition-colors"
               >
                 <div className="relative aspect-square overflow-hidden bg-foreground/5">
+                  {r.upcoming && (
+                    <ComingSoonBadge
+                      releaseDate={r.releaseDate}
+                      initialReleased={!r.upcoming}
+                      lang={lang}
+                      variant="overlay"
+                      showDate={false}
+                    />
+                  )}
                   {r.cover ? (
                     <Image
                       src={r.cover}
