@@ -5,7 +5,6 @@ export const translations = {
       features: "Services",
       howItWorks: "Manifesto",
       developers: "Events",
-      pricing: "Shop",
       signIn: "Press",
       startCreating: "Booking",
     },
@@ -102,63 +101,6 @@ export const translations = {
       readDocs: "Full tour calendar",
       viewGithub: "Booking inquiries",
     },
-    // Pricing → Shop
-    pricing: {
-      eyebrow: "Shop",
-      headline1: "Vinyl, cassette,",
-      headline2: "and printed matter.",
-      description:
-        "Independent music as a physical object. Limited editions, hand-finished sleeves and merch designed in-house.",
-      monthly: "In stock",
-      annual: "Pre-order",
-      save: "Limited edition",
-      perMonth: " CLP",
-      custom: "Sold out",
-      mostPopular: "Featured",
-      plans: [
-        {
-          name: "Vinyl LP",
-          description: "12\" black vinyl · gatefold sleeve",
-          features: [
-            "Newen Afrobeat — Grietas",
-            "Edition of 500",
-            "180g pressing",
-            "Includes digital download",
-            "Ships from Santiago",
-          ],
-          cta: "Add to cart",
-        },
-        {
-          name: "Cassette",
-          description: "Pro-dubbed · printed J-card",
-          features: [
-            "Ecamhi — en viaje",
-            "Klaus B — Memorias (mixtape)",
-            "Edition of 100",
-            "Riso-printed inserts",
-            "Includes digital download",
-            "Limited stock",
-          ],
-          cta: "Add to cart",
-        },
-        {
-          name: "Merch",
-          description: "Apparel and printed matter",
-          features: [
-            "T-shirts · S/M/L/XL",
-            "Caps · one size",
-            "Posters A2",
-            "Tote bags",
-            "Stickers",
-            "Bundle discounts",
-            "Worldwide shipping",
-          ],
-          cta: "View collection",
-        },
-      ],
-      bottomNote: "All physical orders include high-quality digital files. Worldwide shipping from Chile.",
-      compareFeatures: "Full catalogue",
-    },
     // Testimonials → Press / Voices
     testimonials: {
       eyebrow: "Voices",
@@ -222,7 +164,6 @@ export const translations = {
       features: "Servicios",
       howItWorks: "Manifiesto",
       developers: "Eventos",
-      pricing: "Tienda",
       signIn: "Prensa",
       startCreating: "Booking",
     },
@@ -318,63 +259,6 @@ export const translations = {
       tabs: ["Agosto", "Septiembre", "Entradas"],
       readDocs: "Calendario completo",
       viewGithub: "Consultas de booking",
-    },
-    // Pricing → Tienda
-    pricing: {
-      eyebrow: "Tienda",
-      headline1: "Vinilo, cassette",
-      headline2: "y materia impresa.",
-      description:
-        "Música independiente como objeto físico. Ediciones limitadas, fundas terminadas a mano y merch diseñado in-house.",
-      monthly: "Disponible",
-      annual: "Pre-orden",
-      save: "Edición limitada",
-      perMonth: " CLP",
-      custom: "Agotado",
-      mostPopular: "Destacado",
-      plans: [
-        {
-          name: "Vinilo LP",
-          description: "12\" vinilo negro · funda gatefold",
-          features: [
-            "Newen Afrobeat — Grietas",
-            "Edición de 500",
-            "Prensaje 180g",
-            "Incluye descarga digital",
-            "Despachos desde Santiago",
-          ],
-          cta: "Agregar al carro",
-        },
-        {
-          name: "Cassette",
-          description: "Pro-dubbed · J-card impresa",
-          features: [
-            "Ecamhi — en viaje",
-            "Klaus B — Memorias (mixtape)",
-            "Edición de 100",
-            "Insertos en risografía",
-            "Incluye descarga digital",
-            "Stock limitado",
-          ],
-          cta: "Agregar al carro",
-        },
-        {
-          name: "Merch",
-          description: "Vestuario y materia impresa",
-          features: [
-            "Poleras · S/M/L/XL",
-            "Gorras · talla única",
-            "Posters A2",
-            "Tote bags",
-            "Stickers",
-            "Descuentos por bundle",
-            "Despacho mundial",
-          ],
-          cta: "Ver colección",
-        },
-      ],
-      bottomNote: "Todas las compras físicas incluyen archivos digitales en alta calidad. Despacho mundial desde Chile.",
-      compareFeatures: "Catálogo completo",
     },
     // Testimonials → Voces del roster
     testimonials: {
