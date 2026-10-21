@@ -163,7 +163,7 @@ If you write to us via the contact form (phonerecords.cl/en/contacto), we keep y
         body: `— Language preference is used solely to serve content in the language you chose.
 — Your cookie decision ("phone_consent") is used only to remember whether to load consent-based analytics.
 — If you accept, full analytics (Google Analytics 4 and Ahrefs Analytics) help us understand which pages work and which don't, to improve the site. Without consent, Google only receives technical data, without cookies or persistent identifiers; Google may receive technical data such as the page visited.
-— Anonymous Vercel analytics and Speed Insights data are used to measure usage and optimise load speed.
+— Vercel analytics and Speed Insights data are used to measure usage and optimise load speed.
 — We do not sell, rent or share your data with third parties for marketing.`,
       },
       {
