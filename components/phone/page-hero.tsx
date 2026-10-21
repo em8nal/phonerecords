@@ -54,9 +54,9 @@ export function PageHero({
 
   return (
     // pt-20 = altura del menú fijo: el menú queda sobre el fondo claro y la foto empieza debajo.
-    <section className={`relative bg-background pt-20 ${className}`}>
-      <div className={`relative w-full overflow-hidden bg-neutral-950 text-white ${HEIGHT[size]}`}>
-        <picture>
+    <section className={`relative bg-background pt-20 print:pt-0 ${className}`}>
+      <div className={`relative w-full overflow-hidden bg-neutral-950 text-white print:h-auto print:min-h-0 print:bg-white print:text-black ${HEIGHT[size]}`}>
+        <picture className="print:hidden">
           <source media="(min-width: 768px)" srcSet={desktop.srcSet} sizes="100vw" />
           {/* eslint-disable-next-line @next/next/no-img-element, jsx-a11y/alt-text */}
           <img
@@ -69,13 +69,13 @@ export function PageHero({
         {/* Degradado para contraste AA del texto blanco sobre cualquier foto */}
         <div
           aria-hidden="true"
-          className="absolute inset-0 bg-gradient-to-t from-black/85 via-black/45 to-black/15 md:from-black/80 md:via-black/35"
+          className="absolute inset-0 bg-gradient-to-t from-black/85 via-black/45 to-black/15 md:from-black/80 md:via-black/35 print:hidden"
         />
 
-        <div className="relative z-10 mx-auto flex h-full max-w-[1400px] items-end px-6 pb-8 lg:px-12 lg:pb-12">
+        <div className="relative z-10 mx-auto flex h-full max-w-[1400px] items-end px-6 pb-8 lg:px-12 lg:pb-12 print:h-auto print:px-0 print:pb-6 print:pt-4">
           <div className="max-w-4xl">
             {eyebrow && (
-              <p className="mb-4 inline-flex items-center gap-3 font-mono text-sm uppercase tracking-[0.1em] text-white/90 md:tracking-[0.18em]">
+              <p className="mb-4 inline-flex items-center gap-3 font-mono text-sm uppercase tracking-[0.1em] text-white/90 md:tracking-[0.18em] print:text-black">
                 <span className="h-px w-8 bg-white/50" aria-hidden="true" />
                 {eyebrow}
               </p>
