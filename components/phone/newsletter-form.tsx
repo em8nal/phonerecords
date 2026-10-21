@@ -7,7 +7,9 @@ import { translations } from "@/lib/translations";
 
 type Props = {
   lang: "es" | "en";
-  source: "contacto" | "home";
+  source: "contacto" | "home" | "footer";
+  /** `compact`: una sola columna (campo sobre botón) y etiqueta solo para lectores de pantalla; lo usa el footer. */
+  variant?: "default" | "compact";
   className?: string;
 };
 
@@ -16,8 +18,9 @@ type State =
   | { kind: "ok"; msg: string }
   | { kind: "err"; msg: string };
 
-export function NewsletterForm({ lang, source, className }: Props) {
+export function NewsletterForm({ lang, source, variant = "default", className }: Props) {
   const n = translations[lang].newsletter;
+  const compact = variant === "compact";
   const uid = useId();
   const emailId = `${uid}-email`;
   const msgId = `${uid}-msg`;
@@ -85,11 +88,15 @@ export function NewsletterForm({ lang, source, className }: Props) {
 
       <label
         htmlFor={emailId}
-        className="block text-xs font-mono uppercase tracking-widest text-muted-foreground mb-2"
+        className={
+          compact
+            ? "sr-only"
+            : "block text-xs font-mono uppercase tracking-widest text-muted-foreground mb-2"
+        }
       >
         {n.emailLabel}
       </label>
-      <div className="flex flex-col sm:flex-row gap-3">
+      <div className={compact ? "flex flex-col gap-2" : "flex flex-col sm:flex-row gap-3"}>
         <input
           id={emailId}
           name="email"
@@ -99,18 +106,32 @@ export function NewsletterForm({ lang, source, className }: Props) {
           placeholder={n.emailPlaceholder}
           aria-invalid={state.kind === "err"}
           aria-describedby={hasMsg ? msgId : undefined}
-          className="flex-1 min-w-0 bg-transparent border border-foreground/15 rounded-full px-5 h-12 text-base text-foreground placeholder:text-muted-foreground focus:outline-none focus:border-foreground/40 transition-colors"
+          className={
+            compact
+              ? "w-full min-w-0 bg-transparent border border-foreground/15 rounded-full px-4 h-11 text-base text-foreground placeholder:text-muted-foreground focus:outline-none focus:border-foreground/40 transition-colors"
+              : "flex-1 min-w-0 bg-transparent border border-foreground/15 rounded-full px-5 h-12 text-base text-foreground placeholder:text-muted-foreground focus:outline-none focus:border-foreground/40 transition-colors"
+          }
         />
         <button
           type="submit"
           disabled={isPending}
-          className="inline-flex items-center justify-center px-8 h-12 text-sm rounded-full bg-brand text-white hover:bg-brand/90 disabled:opacity-60 transition-colors"
+          className={
+            compact
+              ? "inline-flex w-full h-11 items-center justify-center px-5 text-sm rounded-full bg-brand text-white hover:bg-brand/90 disabled:opacity-60 transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand focus-visible:ring-offset-2 focus-visible:ring-offset-background"
+              : "inline-flex items-center justify-center px-8 h-12 text-sm rounded-full bg-brand text-white hover:bg-brand/90 disabled:opacity-60 transition-colors"
+          }
         >
           {isPending ? n.submitting : n.submit}
         </button>
       </div>
 
-      <p className="text-xs text-muted-foreground mt-3 leading-relaxed">
+      <p
+        className={
+          compact
+            ? "text-[11px] text-muted-foreground mt-2 leading-snug"
+            : "text-xs text-muted-foreground mt-3 leading-relaxed"
+        }
+      >
         {n.consent}{" "}
         <Link
           href={`/${lang}/privacidad`}

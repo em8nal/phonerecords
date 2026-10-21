@@ -171,7 +171,7 @@ export default async function ReleasePage({
       {/* Hero: portada desenfocada de fondo, portada nítida, h1, badge y CTA primario */}
       <ReleaseHero release={release} lang={uiLang} initialReleased={initiallyReleased} />
 
-      <article className="max-w-[1200px] mx-auto px-6 lg:px-12 pt-12 lg:pt-16 pb-24">
+      <article className="max-w-[1200px] mx-auto px-6 lg:px-12 pt-12 lg:pt-16 pb-8 lg:pb-12">
         <Link
           href={`/${lang}/catalogo`}
           className="inline-flex items-center gap-2 text-sm text-muted-foreground hover:text-foreground transition-colors mb-12 group"

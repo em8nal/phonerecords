@@ -228,7 +228,7 @@ export default async function ArtistPage({
       )}
 
       <article
-        className={`max-w-[1200px] mx-auto px-6 lg:px-12 pb-24 ${hero ? "pt-12 lg:pt-16" : "pt-32 lg:pt-40"}`}
+        className={`max-w-[1200px] mx-auto px-6 lg:px-12 pb-8 lg:pb-12 ${hero ? "pt-12 lg:pt-16" : "pt-32 lg:pt-40"}`}
       >
         {/* Back link */}
         <Link

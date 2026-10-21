@@ -12,7 +12,7 @@ export const subscribeSchema = z.object({
   source: z
     .string()
     .max(80)
-    .regex(/^(contacto|contacto-form|home|release:[a-z0-9-]+)$/),
+    .regex(/^(contacto|contacto-form|home|footer|release:[a-z0-9-]+)$/),
   consentText: z.string().trim().min(1).max(500),
   ipHash: z.string().max(128).nullish(),
 });

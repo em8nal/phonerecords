@@ -97,7 +97,7 @@ function SpotifyFacade({ kind, id, height, cover, coverAlt, title, lang }: Spoti
           type="button"
           onClick={play}
           aria-describedby={noticeId}
-          className={`inline-flex h-12 cursor-pointer items-center gap-2 rounded-full bg-foreground px-6 font-mono text-sm font-bold uppercase tracking-widest text-background transition-colors hover:bg-foreground/90 ${FACADE_FOCUS}`}
+          className={`inline-flex min-h-12 max-w-full cursor-pointer items-center gap-2 rounded-full bg-foreground px-5 py-2 text-left font-mono text-sm font-bold uppercase tracking-widest whitespace-normal text-background transition-colors hover:bg-foreground/90 sm:px-6 ${FACADE_FOCUS}`}
         >
           <PlayGlyph className="h-4 w-4" />
           {copy.spListen}
