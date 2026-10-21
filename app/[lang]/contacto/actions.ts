@@ -2,9 +2,8 @@
 
 import { z } from "zod";
 import { sendContactMail } from "@/lib/mail";
-import { hashIp, subscribe } from "@/lib/newsletter";
+import { getClientIp, hashIp, subscribe } from "@/lib/newsletter";
 import { translations } from "@/lib/translations";
-import { headers } from "next/headers";
 
 const contactSchema = z.object({
   name: z.string().trim().min(2).max(120),
@@ -90,9 +89,7 @@ export async function sendContactMessage(
   // Opt-in opcional: si falla, se registra y el contacto igual se da por enviado.
   if (newsletter === true) {
     try {
-      const h = await headers();
-      const ip =
-        h.get("x-forwarded-for")?.split(",")[0]?.trim() ?? h.get("x-real-ip");
+      const ip = await getClientIp();
       const res = await subscribe({
         email,
         lang,

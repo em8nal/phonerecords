@@ -176,9 +176,7 @@ export const translations = {
       checkboxNote:
         "Optional. We store your email, language and consent date. Details in our",
       privacyLink: "privacy policy",
-      success: "Thanks! You're subscribed.",
-      already: "This email is already subscribed.",
-      reactivated: "Welcome back! Your subscription is active again.",
+      success: "Done. If the email is valid, it will be subscribed.",
       errorInvalid: "Enter a valid email address.",
       errorUnavailable:
         "We couldn't complete your subscription. Please try again in a few minutes.",
@@ -380,9 +378,7 @@ export const translations = {
       checkboxNote:
         "Opcional. Guardamos tu correo, idioma y fecha de consentimiento. Detalles en nuestra",
       privacyLink: "política de privacidad",
-      success: "¡Gracias! Quedaste suscrito.",
-      already: "Este correo ya está suscrito.",
-      reactivated: "¡Qué bueno verte de vuelta! Tu suscripción está activa otra vez.",
+      success: "Listo. Si el correo es válido, quedará suscrito.",
       errorInvalid: "Ingresa un correo válido.",
       errorUnavailable:
         "No pudimos completar la suscripción. Intenta de nuevo en unos minutos.",

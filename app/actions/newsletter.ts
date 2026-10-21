@@ -1,8 +1,7 @@
 "use server";
 
-import { headers } from "next/headers";
 import { z } from "zod";
-import { hashIp, subscribe } from "@/lib/newsletter";
+import { getClientIp, hashIp, subscribe } from "@/lib/newsletter";
 import { translations } from "@/lib/translations";
 
 const MIN_FILL_MS = 2000;
@@ -28,23 +27,27 @@ export async function subscribeAction(
   if (!parsed.success) return { ok: false, error: "invalid" };
   const { email, lang, source, website, renderedAt } = parsed.data;
 
-  // Bots: honeypot lleno o envío demasiado rápido. Éxito silencioso, sin guardar.
-  const tooFast = !renderedAt || Date.now() - renderedAt < MIN_FILL_MS;
-  if (website.length > 0 || tooFast) {
-    return { ok: true, status: "queued" };
+  // Honeypot lleno: éxito silencioso, sin guardar.
+  if (website.length > 0) return { ok: true, status: "queued" };
+  // Envío demasiado rápido: error genérico (una persona puede reintentar).
+  if (!renderedAt || Date.now() - renderedAt < MIN_FILL_MS) {
+    return { ok: false, error: "unavailable" };
   }
 
-  const h = await headers();
-  const ip = h.get("x-forwarded-for")?.split(",")[0]?.trim() ?? h.get("x-real-ip");
+  const ip = await getClientIp();
 
   try {
-    return await subscribe({
+    const res = await subscribe({
       email,
       lang,
       source,
       consentText: translations[lang].newsletter.consent,
       ipHash: hashIp(ip),
     });
+    // El status interno (created/already/reactivated) solo va al log:
+    // la UI responde igual para no permitir enumerar suscriptores.
+    if (res.ok) console.info("[newsletter] subscribe", source, res.status);
+    return res.ok ? { ok: true, status: "queued" } : res;
   } catch (err) {
     console.error("[newsletter] action failed", err);
     return { ok: false, error: "unavailable" };

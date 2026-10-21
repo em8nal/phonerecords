@@ -1,5 +1,6 @@
 import "server-only";
 import { createHash } from "node:crypto";
+import { headers } from "next/headers";
 import { eq } from "drizzle-orm";
 import { z } from "zod";
 import { getDb, hasDb, schema } from "@/lib/db";
@@ -22,11 +23,24 @@ export type SubscribeResult =
   | { ok: true; status: "created" | "already" | "reactivated" | "queued" }
   | { ok: false; error: "invalid" | "unavailable" };
 
-/** sha256(IP + sal diaria). La IP nunca se guarda. Devuelve null sin IP. */
+/** IP del cliente: x-real-ip primero (la fija Vercel), luego x-forwarded-for. */
+export async function getClientIp(): Promise<string | null> {
+  const h = await headers();
+  return (
+    h.get("x-real-ip")?.trim() ||
+    h.get("x-forwarded-for")?.split(",")[0]?.trim() ||
+    null
+  );
+}
+
+/**
+ * sha256(IP + sal secreta + día UTC). La IP nunca se guarda.
+ * Sin IP o sin SUBSCRIBER_SALT devuelve null (no se guarda un hash con sal pública).
+ */
 export function hashIp(ip: string | null | undefined): string | null {
-  if (!ip) return null;
+  const salt = process.env.SUBSCRIBER_SALT;
+  if (!ip || !salt) return null;
   const day = new Date().toISOString().slice(0, 10);
-  const salt = process.env.SUBSCRIBER_SALT ?? "";
   return createHash("sha256").update(`${ip}|${salt}|${day}`).digest("hex");
 }
 
@@ -116,8 +130,24 @@ async function queueByMail(data: Parsed): Promise<SubscribeResult> {
       replyTo: data.email,
     });
   } catch (err) {
-    // El usuario ve éxito: el fallo queda solo en el log del servidor.
-    console.error("[newsletter] fallback mail failed", err);
+    // Sin DB ni correo la alta se perdería: se avisa al usuario y se deja
+    // una línea estructurada (email enmascarado) para recuperarla a mano.
+    console.error(
+      JSON.stringify({
+        event: "newsletter_subscription_lost",
+        email: maskEmail(data.email),
+        lang: data.lang,
+        source: data.source,
+        at: new Date().toISOString(),
+      }),
+      err,
+    );
+    return { ok: false, error: "unavailable" };
   }
   return { ok: true, status: "queued" };
+}
+
+function maskEmail(email: string): string {
+  const [local = "", domain = ""] = email.split("@");
+  return `${local.slice(0, 1)}***@${domain}`;
 }

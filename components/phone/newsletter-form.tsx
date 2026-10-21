@@ -51,13 +51,7 @@ export function NewsletterForm({ lang, source, className }: Props) {
         renderedAt: renderedAt.current,
       });
       if (res.ok) {
-        const msg =
-          res.status === "already"
-            ? n.already
-            : res.status === "reactivated"
-              ? n.reactivated
-              : n.success;
-        setState({ kind: "ok", msg });
+        setState({ kind: "ok", msg: n.success });
         form.reset();
       } else {
         setState({

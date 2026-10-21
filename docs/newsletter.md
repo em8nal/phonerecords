@@ -4,7 +4,7 @@ Las suscripciones llegan desde tres lugares: bloque "Newsletter" en `/contacto` 
 
 ## Con y sin base de datos
 
-- **Sin `DATABASE_URL`**: cada alta se envía como correo interno ("Nueva suscripción newsletter") al buzón del sello, vía `lib/mail.ts` (`ZOHO_SMTP_*`). La persona ve éxito igual; si el correo falla, el error queda solo en el log del servidor.
+- **Sin `DATABASE_URL`**: cada alta se envía como correo interno ("Nueva suscripción newsletter") al buzón del sello, vía `lib/mail.ts` (`ZOHO_SMTP_*`). Si el correo falla, la persona ve "intenta de nuevo" y el log del servidor registra una línea JSON `newsletter_subscription_lost` con el email enmascarado.
 - **Con `DATABASE_URL`**: upsert en la tabla `subscribers` (Postgres). Si la base falla en un envío, se cae al correo.
 
 ## Conectar Neon desde Vercel
@@ -36,7 +36,7 @@ where email = 'persona@ejemplo.com';
 
 ## Notas
 
-- `email` se guarda en minúsculas. `ip_hash` es sha256(IP + `SUBSCRIBER_SALT` + fecha UTC); nunca se guarda la IP.
+- `email` se guarda en minúsculas. `ip_hash` es sha256(IP + `SUBSCRIBER_SALT` + fecha UTC); nunca se guarda la IP. Si falta `SUBSCRIBER_SALT` (o la IP), `ip_hash` queda en `null`: defínela antes de abrir al público.
 - Reinscripción de alguien `unsubscribed`: vuelve a `subscribed`, se actualiza `consent_at` y el texto de consentimiento.
 - Estado por defecto `subscribed`; el doble opt-in (`pending`) llega en K2.
-- Antibot del bloque independiente: honeypot `website` y mínimo 2 s desde el render; si falla, la respuesta es de éxito pero no se guarda nada.
+- Antibot del bloque independiente: honeypot `website` y mínimo 2 s desde el render; honeypot: éxito silencioso sin guardar; envío demasiado rápido: error genérico. La UI responde el mismo mensaje para alta nueva, repetida o reactivada (no revela si un correo ya estaba suscrito); el detalle va solo al log.
