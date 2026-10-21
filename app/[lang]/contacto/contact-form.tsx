@@ -4,6 +4,8 @@ import { useState, useTransition } from "react";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { z } from "zod";
+import Link from "next/link";
+import { translations } from "@/lib/translations";
 import { sendContactMessage } from "./actions";
 
 type Lang = "es" | "en";
@@ -16,6 +18,7 @@ const formSchema = z.object({
   topic: z.enum(topicValues),
   message: z.string().trim().min(10, "min").max(5000),
   website: z.string().max(0).optional(),
+  newsletter: z.boolean().optional(),
 });
 
 type FormValues = z.infer<typeof formSchema>;
@@ -75,6 +78,7 @@ const copy: Record<Lang, Copy> = {
 
 export function ContactForm({ lang }: { lang: Lang }) {
   const c = copy[lang];
+  const nl = translations[lang].newsletter;
   const [isPending, startTransition] = useTransition();
   const [serverState, setServerState] = useState<
     { kind: "idle" } | { kind: "ok" } | { kind: "err"; msg: string }
@@ -93,6 +97,7 @@ export function ContactForm({ lang }: { lang: Lang }) {
       topic: "general",
       message: "",
       website: "",
+      newsletter: false,
     },
   });
 
@@ -147,6 +152,8 @@ export function ContactForm({ lang }: { lang: Lang }) {
           id="name"
           type="text"
           autoComplete="name"
+          aria-invalid={errors.name ? true : undefined}
+          aria-describedby={errors.name ? "name-error" : undefined}
           {...register("name")}
           className={fieldClass}
         />
@@ -162,6 +169,8 @@ export function ContactForm({ lang }: { lang: Lang }) {
           type="email"
           autoComplete="email"
           inputMode="email"
+          aria-invalid={errors.email ? true : undefined}
+          aria-describedby={errors.email ? "email-error" : undefined}
           {...register("email")}
           className={fieldClass}
         />
@@ -189,10 +198,40 @@ export function ContactForm({ lang }: { lang: Lang }) {
         <textarea
           id="message"
           rows={6}
+          aria-invalid={errors.message ? true : undefined}
+          aria-describedby={errors.message ? "message-error" : undefined}
           {...register("message")}
           className={`${fieldClass} resize-y min-h-[160px]`}
         />
       </Field>
+
+      <div className="flex items-start gap-3">
+        <input
+          id="newsletter"
+          type="checkbox"
+          aria-describedby="newsletter-note"
+          {...register("newsletter")}
+          className="mt-1 size-4 shrink-0 accent-foreground"
+        />
+        <div className="space-y-1">
+          <label htmlFor="newsletter" className="text-sm leading-snug">
+            {nl.checkbox}
+          </label>
+          <p
+            id="newsletter-note"
+            className="text-xs text-muted-foreground leading-relaxed"
+          >
+            {nl.checkboxNote}{" "}
+            <Link
+              href={`/${lang}/privacidad`}
+              className="underline underline-offset-2 hover:text-foreground"
+            >
+              {nl.privacyLink}
+            </Link>
+            .
+          </p>
+        </div>
+      </div>
 
       {serverState.kind === "err" && (
         <p
@@ -237,7 +276,11 @@ function Field({
         {label}
       </label>
       {children}
-      {error && <p className="text-xs text-red-500/90">{error}</p>}
+      {error && (
+        <p id={`${id}-error`} className="text-xs text-red-500/90">
+          {error}
+        </p>
+      )}
     </div>
   );
 }

@@ -5,6 +5,8 @@ import { Navigation } from "@/components/landing/navigation";
 import { PageHero } from "@/components/phone/page-hero";
 import { FooterSection } from "@/components/landing/footer-section";
 import { ContactForm } from "./contact-form";
+import { NewsletterForm } from "@/components/phone/newsletter-form";
+import { translations } from "@/lib/translations";
 
 type LangParams = { lang: string };
 
@@ -126,6 +128,26 @@ export default async function ContactoPage({
         <section className="grid lg:grid-cols-12 gap-10 lg:gap-16 items-start">
           <div className="lg:col-span-7">
             <ContactForm lang={formLang} />
+
+            <section
+              aria-labelledby="newsletter-heading"
+              className="mt-16 pt-12 border-t border-foreground/10"
+            >
+              <h2
+                id="newsletter-heading"
+                className="text-sm font-mono uppercase tracking-widest text-muted-foreground mb-4"
+              >
+                {translations[formLang].newsletter.title}
+              </h2>
+              <p className="text-base leading-relaxed text-foreground/85 mb-6 max-w-xl">
+                {translations[formLang].newsletter.description}
+              </p>
+              <NewsletterForm
+                lang={formLang}
+                source="contacto"
+                className="max-w-xl"
+              />
+            </section>
           </div>
 
           <aside className="lg:col-span-5 lg:pl-8 lg:border-l lg:border-foreground/10">

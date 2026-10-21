@@ -2,6 +2,8 @@
 
 import { z } from "zod";
 import { sendContactMail } from "@/lib/mail";
+import { getClientIp, hashIp, subscribe } from "@/lib/newsletter";
+import { translations } from "@/lib/translations";
 
 const contactSchema = z.object({
   name: z.string().trim().min(2).max(120),
@@ -11,6 +13,8 @@ const contactSchema = z.object({
   // honeypot — must remain empty
   website: z.string().max(0).optional().or(z.literal("")),
   lang: z.enum(["es", "en"]).default("es"),
+  // opt-in opcional al newsletter
+  newsletter: z.boolean().optional(),
 });
 
 export type ContactInput = z.infer<typeof contactSchema>;
@@ -34,7 +38,8 @@ export async function sendContactMessage(
     return { ok: false, error: "invalid" };
   }
 
-  const { name, email, topic, message, website, lang } = parsed.data;
+  const { name, email, topic, message, website, lang, newsletter } =
+    parsed.data;
 
   // Honeypot tripped: silently succeed so bots don't get signal.
   if (website && website.length > 0) {
@@ -72,7 +77,6 @@ export async function sendContactMessage(
 
   try {
     await sendContactMail({ subject, text, html, replyTo: email });
-    return { ok: true };
   } catch (err) {
     console.error("[contact] sendMail failed", err);
     return {
@@ -81,6 +85,25 @@ export async function sendContactMessage(
       details: err instanceof Error ? err.message : String(err),
     };
   }
+
+  // Opt-in opcional: si falla, se registra y el contacto igual se da por enviado.
+  if (newsletter === true) {
+    try {
+      const ip = await getClientIp();
+      const res = await subscribe({
+        email,
+        lang,
+        source: "contacto-form",
+        consentText: translations[lang].newsletter.checkbox,
+        ipHash: hashIp(ip),
+      });
+      if (!res.ok) console.error("[contact] newsletter opt-in rejected", res.error);
+    } catch (err) {
+      console.error("[contact] newsletter opt-in failed", err);
+    }
+  }
+
+  return { ok: true };
 }
 
 function escapeHtml(s: string) {
