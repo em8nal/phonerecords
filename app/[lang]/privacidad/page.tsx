@@ -41,7 +41,7 @@ const copy = {
     sections: [
       {
         title: "1 · Responsable del tratamiento",
-        body: `PHŌNÉ Records · representada por Enrique Ariel Camhi Ibarlucea · Ñuñoa, Región Metropolitana, Chile. Canal de contacto para asuntos de privacidad: formulario en phonerecords.cl/es/contacto.`,
+        body: `PHŌNÉ Records · Ñuñoa, Región Metropolitana, Chile. Canal de contacto para asuntos de privacidad: formulario en phonerecords.cl/es/contacto.`,
       },
       {
         title: "2 · Datos que recolectamos",
@@ -133,7 +133,7 @@ PHŌNÉ Records
     sections: [
       {
         title: "1 · Data controller",
-        body: `PHŌNÉ Records · represented by Enrique Ariel Camhi Ibarlucea · Ñuñoa, Región Metropolitana, Chile. Contact channel for privacy matters: form at phonerecords.cl/en/contacto.`,
+        body: `PHŌNÉ Records · Ñuñoa, Región Metropolitana, Chile. Contact channel for privacy matters: form at phonerecords.cl/en/contacto.`,
       },
       {
         title: "2 · Data we collect",
