@@ -117,8 +117,12 @@ export function BannerCarousel({ frameClassName, slides, labels }: BannerCarouse
                 aria-labelledby={slide.id}
                 aria-hidden={active ? undefined : true}
                 inert={!active}
-                className={`absolute inset-0 transition-opacity duration-700 ease-out motion-reduce:transition-none ${
-                  active ? "z-10 opacity-100" : "pointer-events-none z-0 opacity-0"
+                // Fundido en secuencia: el saliente se apaga rápido y el entrante aparece
+                // después, para que nunca se superpongan los textos de dos banners.
+                className={`absolute inset-0 transition-opacity ease-out motion-reduce:transition-none ${
+                  active
+                    ? "z-10 opacity-100 duration-500 delay-300"
+                    : "pointer-events-none z-0 opacity-0 duration-300"
                 }`}
               >
                 {slide.node}
