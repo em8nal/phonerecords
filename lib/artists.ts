@@ -61,9 +61,10 @@ In 2026 the group is preparing a new studio album that will mark a new sonic sta
 2026 releases with PHŌNÉ Records: single "La Fuerza" (October 30, 2026); new studio album 2026/2027.`,
     },
     links: [
-      { label: "Bandcamp", href: "https://newenafrobeat.bandcamp.com/music" },
       { label: "Spotify", href: "https://open.spotify.com/artist/0PTJ848ulShbjTx2yqaAlb" },
+      { label: "Apple Music", href: "https://music.apple.com/us/artist/newen-afrobeat/1023313707" },
       { label: "YouTube", href: "https://www.youtube.com/channel/UCTHMwr5NTvQ0MWbq0nbeP-w" },
+      { label: "Bandcamp", href: "https://newenafrobeat.bandcamp.com/music" },
       { label: "Instagram", href: "https://www.instagram.com/newenafrobeat/" },
     ],
     releases: [
@@ -96,6 +97,8 @@ Upcoming releases: album εποχή (2026), EP "en viaje" (2027).`,
     },
     links: [
       { label: "Spotify", href: "https://open.spotify.com/artist/6dUvYBGnjpf2emwATOIP4c" },
+      { label: "Apple Music", href: "https://music.apple.com/us/artist/ecamhi/1654191972" },
+      { label: "YouTube", href: "https://www.youtube.com/channel/UCZrXTZr4jRWnaac5sc99rog" },
       { label: "SoundCloud", href: "https://soundcloud.com/enrique-camhi" },
       { label: "Instagram", href: "https://www.instagram.com/ecamhi/" },
     ],
@@ -129,6 +132,9 @@ Latest release: "Cuántas veces" (October 2026), the single that opens the label
     },
     links: [
       { label: "Spotify", href: "https://open.spotify.com/artist/3LnpeMefgyavyTUTFNs5Xd" },
+      { label: "Apple Music", href: "https://music.apple.com/us/artist/con-fusi%C3%B3n/1518275936" },
+      { label: "YouTube", href: "https://www.youtube.com/channel/UCJP4nihg8wJcMjSNYrWkxxw" },
+      { label: "Instagram", href: "https://www.instagram.com/aguasudaca/" },
     ],
     releases: [
       { year: "in production", title: "Tulpa", format: "Álbum", notes: "Tracks: Acertijo · En vez de quejarte tanto · Pisando caca a propósito" },
@@ -158,10 +164,10 @@ He has played on stages and at festivals around the world — Brazil, Colombia, 
 2026 release cycle with PHŌNÉ Records: "Destellos de ti" (October 22, 2026), "Un Rezo" (November 5, 2026) and the album "Una Cuota De Caos" (November 20, 2026).`,
     },
     links: [
-      { label: "Bandcamp", href: "https://klausb.bandcamp.com/music" },
       { label: "Spotify", href: "https://open.spotify.com/artist/53A3Tz7xYVj0n3LlEwSmyw" },
       { label: "Apple Music", href: "https://music.apple.com/us/artist/klaus-b/1571046890" },
       { label: "YouTube", href: "https://www.youtube.com/channel/UCN-g9sETAcl84PdpXWUTXOg" },
+      { label: "Bandcamp", href: "https://klausb.bandcamp.com/music" },
       { label: "Instagram", href: "https://www.instagram.com/klaausb/" },
     ],
     releases: [
