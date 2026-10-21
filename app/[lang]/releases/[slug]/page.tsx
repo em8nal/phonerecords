@@ -9,7 +9,7 @@ import { SpotifyAlbumEmbed } from "@/components/spotify-embed";
 import { YouTubeEmbed } from "@/components/youtube-embed";
 import { ReleaseHero } from "@/components/phone/release-hero";
 import { ReleaseCardGrid } from "@/components/phone/release-card-grid";
-import { isReleased } from "@/lib/release-date";
+import { isReleased, formatReleaseLabel } from "@/lib/release-date";
 import type { Language } from "@/lib/translations";
 
 /** Extracts the Spotify album/track id from a `links` entry that points to open.spotify.com. */
@@ -23,6 +23,18 @@ function extractSpotifyAlbumId(links: { href: string }[] | undefined): string | 
 }
 
 type ReleaseParams = { lang: string; slug: string };
+
+/**
+ * Fecha completa para la fila meta, en la misma voz que el badge del hero:
+ * "23 de octubre de 2026" / "October 23, 2026". Las fechas parciales ("2027",
+ * "2027-03") y el texto libre quedan tal cual los da formatReleaseLabel (ya traen el año).
+ */
+function formatFullDate(releaseDate: string, lang: Language): string {
+  const label = formatReleaseLabel(releaseDate, lang);
+  if (!/^\d{4}-(0[1-9]|1[0-2])-(0[1-9]|[12]\d|3[01])$/.test(releaseDate)) return label;
+  const year = releaseDate.slice(0, 4);
+  return lang === "es" ? `${label} de ${year}` : `${label}, ${year}`;
+}
 
 export function generateStaticParams() {
   const langs: Language[] = ["es", "en"];
@@ -171,7 +183,10 @@ export default async function ReleasePage({
         {/* Meta: la portada, el h1, el badge y el CTA viven en el hero (una sola portada grande) */}
         <header className="mb-12 lg:mb-16">
           <div className="flex flex-wrap gap-x-8 gap-y-2 text-sm font-mono text-muted-foreground uppercase tracking-widest">
-            <span>{labels.releaseDate}: {release.releaseDate}</span>
+            <span>
+              {labels.releaseDate}:{" "}
+              <time dateTime={release.releaseDate}>{formatFullDate(release.releaseDate, uiLang)}</time>
+            </span>
             <span>{labels.format}: {release.format}</span>
             {release.label && <span>{labels.label}: {release.label}</span>}
           </div>
