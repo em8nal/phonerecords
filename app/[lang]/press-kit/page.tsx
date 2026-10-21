@@ -8,16 +8,9 @@ import { FooterSection } from "@/components/landing/footer-section";
 import { DownloadPdfButton } from "@/components/download-pdf-button";
 import { artists } from "@/lib/artists";
 import { getArtistEntries } from "@/lib/catalog";
+import { ARTIST_PORTRAIT } from "@/lib/artist-media";
 
 type LangParams = { lang: string };
-
-const ARTISTS_WITH_PHOTO = new Set([
-  "newen-afrobeat",
-  "con-fusion",
-  "klaus-brantmayer",
-  "ecamhi",
-  "rosario-lircay",
-]);
 
 // Order used on the printed press kit (page 1: Newen, Klaus, Ecamhi;
 // page 2: Claudio, Con.fusión, Andrés). Independent from the homepage
@@ -241,7 +234,7 @@ export default async function PressKitPage({
                 >
                   <div className="lg:col-span-3">
                     <div className="relative aspect-square bg-foreground/5 overflow-hidden rounded">
-                      {ARTISTS_WITH_PHOTO.has(r.slug) ? (
+                      {ARTIST_PORTRAIT.has(r.slug) ? (
                         <Image
                           src={`/artists/${r.slug}.jpg`}
                           alt={r.name}
