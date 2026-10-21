@@ -103,8 +103,8 @@ export default async function ReleasePage({
     .slice(0, 3);
 
   const labels = isEs
-    ? { back: "Volver al catálogo", tracklist: "Tracklist", credits: "Créditos", links: "Escuchar", releaseDate: "Fecha", format: "Formato", label: "Sello", more: "Más de", track: "Track" }
-    : { back: "Back to catalogue", tracklist: "Tracklist", credits: "Credits", links: "Listen", releaseDate: "Released", format: "Format", label: "Label", more: "More from", track: "Track" };
+    ? { back: "Volver al catálogo", tracklist: "Tracklist", credits: "Créditos", links: "Escuchar", releaseDate: initiallyReleased ? "Fecha" : "Fecha de lanzamiento", format: "Formato", label: "Sello", more: "Más de", track: "Track" }
+    : { back: "Back to catalogue", tracklist: "Tracklist", credits: "Credits", links: "Listen", releaseDate: initiallyReleased ? "Released" : "Release date", format: "Format", label: "Label", more: "More from", track: "Track" };
 
   // JSON-LD MusicAlbum schema
   const url = `https://phonerecords.cl/${lang}/releases/${slug}`;
@@ -258,7 +258,7 @@ export default async function ReleasePage({
                       rel="noopener noreferrer"
                       className="inline-flex items-center gap-2 text-sm hover:text-foreground/70 transition-colors group"
                     >
-                      {link.label}
+                      {isEs ? link.label : link.label.replace("Escuchar", "Listen")}
                       <ExternalLink className="w-3 h-3 opacity-50 group-hover:opacity-100 transition-opacity" />
                     </a>
                   </li>

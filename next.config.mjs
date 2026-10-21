@@ -6,7 +6,7 @@ const nextConfig = {
   // The release OG banner reads cover files from public/releases at request
   // time (fs), so make sure they are traced into that function's bundle.
   outputFileTracingIncludes: {
-    "/[lang]/releases/[slug]/opengraph-image": ["./public/releases/**"],
+    "/[lang]/releases/[slug]/opengraph-image": ["./public/releases/*.jpg"],
   },
   images: {
     // Vercel image proxy serves WebP/AVIF on supported browsers and falls back
