@@ -10,6 +10,8 @@ type Props = {
   /** Alt descriptivo ("título — artista") o "" si el texto vecino ya nombra el video. */
   alt: string;
   sizes: string;
+  /** Calidad inicial; "hqdefault" cuando la entrada sabe que no existe maxres (Video.thumb). */
+  initial?: Thumb;
 };
 
 /**
@@ -21,8 +23,8 @@ type Props = {
  * La URL se arma aquí (y no con youtubeThumb de lib/videos) para que el
  * catálogo completo de videos no entre al bundle del cliente.
  */
-export function VideoThumb({ youtubeId, alt, sizes }: Props) {
-  const [thumb, setThumb] = useState<Thumb>("maxresdefault");
+export function VideoThumb({ youtubeId, alt, sizes, initial = "maxresdefault" }: Props) {
+  const [thumb, setThumb] = useState<Thumb>(initial);
   return (
     <Image
       src={`https://i.ytimg.com/vi/${youtubeId}/${thumb}.jpg`}

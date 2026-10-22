@@ -10,7 +10,7 @@ import { VideoThumb } from "@/components/phone/video-thumb";
  */
 export type VideoCardData = Pick<
   Video,
-  "slug" | "youtubeId" | "title" | "artistSlug" | "artistName" | "kind" | "date"
+  "slug" | "youtubeId" | "title" | "artistSlug" | "artistName" | "kind" | "date" | "recordedYear" | "thumb"
 >;
 
 export function toVideoCardData(v: Video): VideoCardData {
@@ -22,6 +22,8 @@ export function toVideoCardData(v: Video): VideoCardData {
     artistName: v.artistName,
     kind: v.kind,
     date: v.date,
+    recordedYear: v.recordedYear,
+    thumb: v.thumb,
   };
 }
 
@@ -54,13 +56,15 @@ export function VideoCard({ video, lang, kindLabel, heading = "h3" }: Props) {
           youtubeId={video.youtubeId}
           alt={`${video.title} — ${video.artistName}`}
           sizes="(min-width: 1400px) 330px, (min-width: 1024px) 25vw, 50vw"
+          initial={video.thumb}
         />
       </div>
       <div className="p-4 lg:p-6">
         <Heading className="font-display text-lg lg:text-xl tracking-tight">{video.title}</Heading>
         <p className="mt-1 text-xs text-muted-foreground">{video.artistName}</p>
+        {/* Año de grabación si consta y difiere del de publicación (Live in Paris, 2015). */}
         <p className="mt-2 font-mono text-xs uppercase tracking-widest text-muted-foreground">
-          {video.date.slice(0, 4)} · {kindLabel}
+          {video.recordedYear ?? video.date.slice(0, 4)} · {kindLabel}
         </p>
       </div>
     </Link>

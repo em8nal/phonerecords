@@ -57,7 +57,7 @@ export function ArtistVideosSection({ artistSlug, lang }: Props) {
               </Link>
             </h3>
             <p className="mt-1 font-mono text-xs uppercase tracking-widest text-muted-foreground">
-              {kindLabel[v.kind]} · {v.date.slice(0, 4)}
+              {kindLabel[v.kind]} · {v.recordedYear ?? v.date.slice(0, 4)}
             </p>
           </div>
         ))}
