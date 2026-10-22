@@ -339,7 +339,7 @@ export function FeaturesSection() {
       >
         <picture>
           <source media="(min-width: 768px)" srcSet={bgDesktop.srcSet} sizes="(min-width: 2560px) 2560px, 100vw" />
-          {/* eslint-disable-next-line @next/next/no-img-element, jsx-a11y/alt-text */}
+          { }
           <img
             {...bgMobile}
             alt=""

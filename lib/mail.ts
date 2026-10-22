@@ -1,7 +1,7 @@
 import "server-only";
-import nodemailer from "nodemailer";
+import nodemailer, { type Transporter } from "nodemailer";
 
-let cached: nodemailer.Transporter | null = null;
+let cached: Transporter | null = null;
 
 function getTransporter() {
   if (cached) return cached;

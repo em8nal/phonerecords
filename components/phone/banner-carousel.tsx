@@ -1,6 +1,11 @@
 "use client";
 
-import { useCallback, useEffect, useRef, useState, type KeyboardEvent, type ReactNode } from "react";
+import { useCallback, useEffect, useRef, useState, useSyncExternalStore, type KeyboardEvent, type ReactNode } from "react";
+
+// "¿Ya hidrató?" sin efecto ni setState: false en el servidor, true en el cliente.
+const subscribeNoop = () => () => {};
+const isClient = () => true;
+const isServer = () => false;
 import { ChevronLeft, ChevronRight, Pause, Play } from "lucide-react";
 
 type BannerCarouselProps = {
@@ -44,12 +49,11 @@ export function BannerCarousel({ frameClassName, slides, labels }: BannerCarouse
   const [userPaused, setUserPaused] = useState(false);
   const [hovered, setHovered] = useState(false);
   const [focused, setFocused] = useState(false);
-  const [mounted, setMounted] = useState(false);
+  const mounted = useSyncExternalStore(subscribeNoop, isClient, isServer);
   const touchX = useRef<number | null>(null);
   const regionRef = useRef<HTMLElement>(null);
 
-  // Tras hidratar (el LCP ya pintó el slide 0) se montan las imágenes diferidas.
-  useEffect(() => setMounted(true), []);
+  // Tras hidratar (el LCP ya pintó el slide 0) se montan las imágenes diferidas (`mounted`).
 
   useEffect(() => {
     const mq = window.matchMedia("(prefers-reduced-motion: reduce)");

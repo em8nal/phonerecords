@@ -113,7 +113,7 @@ export default async function OG({ params }: { params: Promise<Params> }) {
           }}
         >
           {cover ? (
-            // eslint-disable-next-line @next/next/no-img-element
+             
             <img
               src={cover}
               alt=""

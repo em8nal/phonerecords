@@ -13,7 +13,8 @@ export function HeroSection() {
   const wordIndex = 0;
 
   useEffect(() => {
-    setIsVisible(true);
+    const id = window.requestAnimationFrame(() => setIsVisible(true));
+    return () => window.cancelAnimationFrame(id);
   }, []);
 
   return (

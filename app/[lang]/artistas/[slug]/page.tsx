@@ -15,25 +15,6 @@ import { getArtistHero, getArtistPortrait } from "@/lib/artist-media";
 
 type ActionLink = { href: string; kind: "listen" | "buy" };
 
-function pickReleaseAction(links: { label: string; href: string }[] | undefined): ActionLink | null {
-  if (!links?.length) return null;
-  // Priority: explicit buy markers first (Discogs marketplace, Beatport), then listen (Bandcamp/Spotify/SoundCloud).
-  for (const l of links) {
-    const u = l.href.toLowerCase();
-    if (u.includes("discogs.com/release") || u.includes("beatport.com")) {
-      return { href: l.href, kind: "buy" };
-    }
-  }
-  for (const l of links) {
-    const u = l.href.toLowerCase();
-    if (u.includes("bandcamp.com") || u.includes("open.spotify.com") || u.includes("soundcloud.com") || u.includes("music.apple.com")) {
-      return { href: l.href, kind: "listen" };
-    }
-  }
-  return { href: links[0].href, kind: "listen" };
-}
-
-/** Returns up to one listen action AND one buy action — both can render side by side. */
 function pickReleaseActions(
   links: { label: string; href: string }[] | undefined,
 ): { listen?: ActionLink; buy?: ActionLink } {

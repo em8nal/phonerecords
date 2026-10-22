@@ -61,7 +61,7 @@ export function PageHero({
       <div className={`relative w-full overflow-hidden bg-neutral-950 text-white print:h-auto print:min-h-0 print:bg-white print:text-black ${HEIGHT[size]}`}>
         <picture className="print:hidden">
           <source media="(min-width: 768px)" srcSet={desktop.srcSet} sizes="100vw" />
-          {/* eslint-disable-next-line @next/next/no-img-element, jsx-a11y/alt-text */}
+          { }
           <img
             {...mobile}
             alt={alt}

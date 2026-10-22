@@ -47,7 +47,7 @@ function BannerPicture({ banner, lang, first }: { banner: BannerEntry; lang: Lan
   return (
     <picture>
       <source media="(min-width: 768px)" srcSet={desktop.srcSet} sizes="100vw" />
-      {/* eslint-disable-next-line @next/next/no-img-element, jsx-a11y/alt-text */}
+      { }
       <img
         {...mobile}
         alt={alt}

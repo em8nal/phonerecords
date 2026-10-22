@@ -53,11 +53,8 @@ function normalizeDateForSort(raw: string): string {
   return `${y}-${mo}-${d}`;
 }
 
-function isVinyl(format: string): boolean {
-  // Only flag explicit vinyl markers — "LP" and "EP" alone also appear in
-  // digital format strings ("EP · digital · 4 tracks"), so we exclude them.
-  return /(vinilo|vinyl|12"|7"|10")/i.test(format);
-}
+/** Regla opcional por artista principal para filtrar sus entradas del catálogo público. */
+type CatalogRule = { keep?: (entry: CatalogEntry) => boolean };
 
 const CATALOG_RULES: Record<string, CatalogRule> = {};
 

@@ -443,4 +443,4 @@ export const translations = {
 } as const;
 
 export type Language = keyof typeof translations;
-export type Translations = typeof translations.en;
+export type Translations = (typeof translations)[Language];
