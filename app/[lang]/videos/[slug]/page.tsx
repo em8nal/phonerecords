@@ -1,7 +1,8 @@
 import type { Metadata } from "next";
 import { notFound } from "next/navigation";
-import Image from "next/image";
+import Image, { getImageProps } from "next/image";
 import Link from "next/link";
+import { preload } from "react-dom";
 import { ArrowLeft, ArrowUpRight } from "lucide-react";
 import { Navigation } from "@/components/landing/navigation";
 import { FooterSection } from "@/components/landing/footer-section";
@@ -18,7 +19,9 @@ import {
   isoDuration,
   videoExcerpt,
   videoSlugs,
-  youtubeThumb,
+  videoThumb,
+  videoThumbSize,
+  videoThumbs,
   youtubeWatchUrl,
   type Video,
 } from "@/lib/videos";
@@ -29,6 +32,9 @@ const LANGS: Language[] = ["es", "en"];
 
 const LINK_FOCUS =
   "rounded-sm focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand focus-visible:ring-offset-2";
+
+/** `sizes` de la facade grande (columna de 1104 px desde 1200 px); también lo usa el preload. */
+const FACADE_SIZES = "(min-width: 1200px) 1104px, 100vw";
 
 export function generateStaticParams() {
   return LANGS.flatMap((lang) => videoSlugs.map((slug) => ({ lang, slug })));
@@ -47,12 +53,15 @@ export async function generateMetadata(
   const { lang, slug } = await params;
   const v = getVideo(slug);
   const isEs = lang === "es";
-  if (!v) return { title: isEs ? "Video no encontrado" : "Video not found" };
+  // Misma guarda que la página: un video con fecha futura responde 404 y su <head>
+  // no debe adelantar título, description ni OG.
+  if (!v || !isReleased(v.date)) return { title: isEs ? "Video no encontrado" : "Video not found" };
   const uiLang: Language = isEs ? "es" : "en";
   const title = pageTitle(v);
   const description = videoExcerpt(v, uiLang);
   const url = `https://phonerecords.cl/${lang}/videos/${slug}`;
-  const thumb = youtubeThumb(v.youtubeId);
+  const thumb = videoThumb(v);
+  const { width, height } = videoThumbSize(v);
   return {
     title,
     description,
@@ -71,7 +80,7 @@ export async function generateMetadata(
       description,
       url,
       locale: isEs ? "es_CL" : "en_US",
-      images: [{ url: thumb, width: 1280, height: 720, alt: v.title }],
+      images: [{ url: thumb, width, height, alt: v.title }],
     },
     twitter: {
       card: "summary_large_image",
@@ -104,6 +113,19 @@ export default async function VideoPage({
   const url = `https://phonerecords.cl/${lang}/videos/${v.slug}`;
   const artistUrl = `https://phonerecords.cl/${lang}/artistas/${v.artistSlug}`;
 
+  // LCP: la facade (YouTubeEmbed, carril ajeno) carga su miniatura lazy y no admite
+  // `priority`. getImageProps genera el mismo src/srcSet/sizes que su <Image fill> interna
+  // (misma quality por defecto) y preload() hoista un <link rel="preload" as="image"
+  // fetchpriority="high"> al <head>, así los bytes del LCP llegan antes de la hidratación.
+  // Es el único preload de la página (regla: un solo priority por página).
+  const { props: thumbProps } = getImageProps({ src: videoThumb(v), alt: "", fill: true, sizes: FACADE_SIZES });
+  preload(thumbProps.src, {
+    as: "image",
+    imageSrcSet: thumbProps.srcSet,
+    imageSizes: thumbProps.sizes,
+    fetchPriority: "high",
+  });
+
   // JSON-LD: VideoObject (texto propio del idioma como description) + BreadcrumbList.
   const schema = {
     "@context": "https://schema.org",
@@ -113,7 +135,7 @@ export default async function VideoPage({
         "@id": `${url}#video`,
         name: v.title,
         description: paragraphs.join(" "),
-        thumbnailUrl: [youtubeThumb(v.youtubeId), youtubeThumb(v.youtubeId, "hqdefault")],
+        thumbnailUrl: videoThumbs(v),
         uploadDate: v.date,
         ...(v.durationSec ? { duration: isoDuration(v.durationSec) } : {}),
         embedUrl: `https://www.youtube-nocookie.com/embed/${v.youtubeId}`,
@@ -159,7 +181,7 @@ export default async function VideoPage({
       <article className="max-w-[1200px] mx-auto px-6 lg:px-12 pt-32 lg:pt-40 pb-8 lg:pb-12">
         <Link
           href={`/${lang}/videos`}
-          className="inline-flex items-center gap-2 text-sm text-muted-foreground hover:text-foreground transition-colors mb-12 group"
+          className="inline-flex min-h-6 items-center gap-2 text-sm text-muted-foreground hover:text-foreground transition-colors mb-12 group"
         >
           <ArrowLeft className="w-4 h-4 group-hover:-translate-x-1 transition-transform" />
           {t.back}
@@ -171,7 +193,7 @@ export default async function VideoPage({
             youtubeId={v.youtubeId}
             title={v.title}
             lang={uiLang}
-            sizes="(min-width: 1200px) 1104px, 100vw"
+            sizes={FACADE_SIZES}
           />
         </div>
 
@@ -186,7 +208,7 @@ export default async function VideoPage({
               <dd>
                 <Link
                   href={`/${lang}/artistas/${v.artistSlug}`}
-                  className={`text-foreground underline-offset-4 hover:underline ${LINK_FOCUS}`}
+                  className={`inline-flex min-h-6 items-center text-foreground underline-offset-4 hover:underline ${LINK_FOCUS}`}
                 >
                   {v.artistName}
                 </Link>
