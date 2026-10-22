@@ -37,6 +37,13 @@ export type Video = {
   kind: VideoKind;
   /** "YYYY-MM-DD" (fecha de publicación en YouTube); "YYYY-MM" solo tolerado. */
   date: string;
+  /**
+   * Año de grabación cuando consta en el título o la descripción oficial y
+   * difiere del de publicación (p. ej. "Live in Paris, 2015" subido en 2025).
+   * Lo usan los pies "tipo · año" de tarjetas y sección; `date` sigue siendo
+   * la fecha de publicación (uploadDate).
+   */
+  recordedYear?: number;
   durationSec?: number;
   /** Slug de lib/releases.ts cuando el video corresponde a una ficha del catálogo. */
   releaseSlug?: string;
@@ -46,6 +53,12 @@ export type Video = {
   credits?: VideoCredit[];
   /** Va primero en la sección de la ficha de artista (máx. 6 por artista). */
   featured?: boolean;
+  /**
+   * Mejor miniatura disponible en i.ytimg.com cuando NO existe `maxresdefault`
+   * (subidas antiguas o de baja resolución; verificado con `curl -I`). La usan
+   * OG, JSON-LD y el preload de la ficha; las facades caen a hq solas en cliente.
+   */
+  thumb?: "hqdefault";
 };
 
 /** Orden de los chips de tipo en /videos. */
@@ -91,6 +104,7 @@ const RAW: Video[] = [
     kind: "en-vivo",
     date: "2025-04-03",
     durationSec: 1462,
+    recordedYear: 2024,
     releaseSlug: "newen-afrobeat-liverpool-session",
     featured: true,
     description: {
@@ -98,12 +112,12 @@ const RAW: Video[] = [
 
 Tocan Fran Ri y Erin Rutledge en voces, Sebastián Crooker en guitarra, Benjamín Astroza en bajo, Alejandro "El Galita" Orellana y Tomás Pavez en percusiones, Roberto "Tito" Gevert en batería, Klaus Brantmayer en saxo alto, Vicente Aravena en saxo tenor y Enrique Camhi y Sergio Quijada en trompetas. Thomas Benson y Jack Wait firman la grabación y la mezcla; Caitlin Mongan y Jack Cowls, el registro de video.
 
-Es el registro en vivo más completo de la banda en el sitio y una buena puerta de entrada a su sonido actual: repertorio propio y repertorio de Fela en un mismo set, sin cortes.`,
+Con cuatro piezas seguidas y sin cortes, es una buena puerta de entrada a su sonido actual: repertorio propio y repertorio de Fela en un mismo set.`,
       en: `Live session by Newen Afrobeat, tape-recorded in Liverpool, UK, during the 2024 tour at Quarry (venue and studio) and captured by The Lightning Cave. Twenty-four minutes with four pieces back to back: "Es La Vida" and "Grietas", from the album Grietas (2024), and two Fela Kuti classics, "Ako" and "No Agreement". The audio of this session is the EP Liverpool Session, released in April 2025.
 
 The line-up is Fran Ri and Erin Rutledge on vocals, Sebastián Crooker on guitar, Benjamín Astroza on bass, Alejandro "El Galita" Orellana and Tomás Pavez on percussion, Roberto "Tito" Gevert on drums, Klaus Brantmayer on alto sax, Vicente Aravena on tenor sax and Enrique Camhi and Sergio Quijada on trumpets. Thomas Benson and Jack Wait recorded and mixed it; Caitlin Mongan and Jack Cowls shot the video.
 
-It is the most complete live recording of the band on this site and a good way into its current sound: their own repertoire and Fela's in one uninterrupted set.`,
+With four pieces back to back and no cuts, it is a good way into the band's current sound: their own repertoire and Fela's in one set.`,
     },
     credits: [
       { role: "Grabación y mezcla", name: "Thomas Benson, Jack Wait (The Lightning Cave)" },
@@ -121,6 +135,7 @@ It is the most complete live recording of the band on this site and a good way i
     kind: "en-vivo",
     date: "2025-10-17",
     durationSec: 777,
+    recordedYear: 2015,
     releaseSlug: "newen-afrobeat-newen-plays-fela",
     description: {
       es: `Registro en vivo de Newen Afrobeat con Tony Allen, baterista y cofundador del afrobeat junto a Fela Kuti, interpretando "Upside Down" en FGO Barbara, París, en octubre de 2015. La banda lo publicó en su canal diez años después, en octubre de 2025, como un documento recuperado de su archivo.
@@ -156,12 +171,12 @@ As the band tells it, that concert with Les Frères Smith was part of their firs
 
 La formación es la misma de la gira europea de 2024: Fran Ri y Erin Rutledge en voces, Sebastián Crooker en guitarra, Benjamín Astroza en bajo, Alejandro Orellana y Tomás Pavez en percusiones, Roberto "Tito" Gevert en batería, Klaus Brantmayer en saxo alto, Vicente Aravena en saxo tenor y Enrique Camhi y Sergio Quijada en trompetas, con Francisco Infante en el sonido en vivo.
 
-Junto a Live In Liverpool, es uno de los dos registros de esa gira que la banda ha publicado y sirve para escuchar cómo suena hoy, en escenario, un tema del disco de 2019.`,
+Junto a Live In Liverpool, es uno de los registros de esa gira publicados por la banda y sirve para escuchar cómo suena hoy, en escenario, un tema del disco de 2019.`,
       en: `Live version of "Voraz", recorded at the Kaliningrad City Jazz festival in 2024 and published on the band's channel in December that year. The song belongs to Curiche (2019), Newen Afrobeat's second album, where it sits third in the tracklist.
 
 The line-up is the one from the 2024 European tour: Fran Ri and Erin Rutledge on vocals, Sebastián Crooker on guitar, Benjamín Astroza on bass, Alejandro Orellana and Tomás Pavez on percussion, Roberto "Tito" Gevert on drums, Klaus Brantmayer on alto sax, Vicente Aravena on tenor sax and Enrique Camhi and Sergio Quijada on trumpets, with Francisco Infante on live sound.
 
-Together with Live In Liverpool, it is one of the two recordings from that tour the band has published, and a way to hear how a track from the 2019 album sounds on stage today.`,
+Together with Live In Liverpool, it is one of the recordings from that tour published by the band, and a way to hear how a track from the 2019 album sounds on stage today.`,
     },
     credits: [{ role: "Sonido en vivo", name: "Francisco Infante" }],
   },
@@ -210,12 +225,12 @@ The album page has the full credits and the rest of the tracklist.`,
 
 Lo dirigió Javier Moreno, con producción de Florece Producciones y Fran Ri, fotografía de Kevin Rodríguez, dirección de arte de Constanza Moreno, dirección de movimiento de María Pinchulef y edición, postproducción y color de Matías Cerón; se filmó en el estudio Jama Bros. La letra habla de ser "el presente de la historia" frente a la brutalidad, la adicción al poder, el patriarcado y las guerras, y pregunta si todo eso parará.
 
-Es el único videoclip de Grietas con un invitado chileno de la trayectoria de Vasconcellos, y uno de los dos videos del álbum junto al lyric video de "Grietas".`,
+Es el único videoclip de Grietas con un invitado chileno de la trayectoria de Vasconcellos, y uno de los videos del álbum, junto al lyric video de "Grietas".`,
       en: `Official music video for "Somos el Presente", the Newen Afrobeat song with Joe Vasconcellos included on the album Grietas (2024) and composed by Alejandro Orellana. It was published in June 2023 as one of the record's advance singles.
 
 Javier Moreno directed it, with production by Florece Producciones and Fran Ri, cinematography by Kevin Rodríguez, art direction by Constanza Moreno, movement direction by María Pinchulef and editing, post-production and colour by Matías Cerón; it was shot at the Jama Bros studio. The lyrics speak of being "the present of history" in the face of brutality, addiction to power, patriarchy and wars, and ask whether all of it will stop.
 
-It is the only Grietas video with a Chilean guest of Vasconcellos's standing, and one of the album's two videos alongside the "Grietas" lyric video.`,
+It is the only Grietas video with a Chilean guest of Vasconcellos's standing, and one of the album's videos, alongside the "Grietas" lyric video.`,
     },
     credits: [
       { role: "Dirección general", name: "Javier Moreno" },
@@ -235,6 +250,7 @@ It is the only Grietas video with a Chilean guest of Vasconcellos's standing, an
     kind: "sesion",
     date: "2021-10-15",
     durationSec: 700,
+    recordedYear: 2019,
     description: {
       es: `Sesión en vivo de Newen Afrobeat con Seun Kuti interpretando "Zombie", la canción que Fela Kuti publicó en 1977 sobre la brutalidad de la policía contra su propio pueblo. Se grabó en una sola toma en Estudios La Makinita, Santiago, en abril de 2019, en los días posteriores a Lollapalooza Chile, y la banda la publicó en octubre de 2021.
 
@@ -248,16 +264,18 @@ The meeting had a history: in 2018 Newen had returned to Nigeria to take part in
 The band reads the song as a premonition of what would happen in Chile in October 2019.`,
     },
     credits: [
-      { role: "Grabación", name: "Cristian \"Pini\" Zamora · Estudios La Makinita, abril 2019" },
+      { role: "Grabación", name: "Cristian \"Pini\" Zamora" },
+      { role: "Estudio", name: "Estudios La Makinita" },
       { role: "Montaje audiovisual", name: "Camilo Carrasco" },
       { role: "Cámaras", name: "Camilo Carrasco, Jennifer Maçan, Claudio \"Karita\" Parra" },
       { role: "Mezcla y master", name: "Jorge \"Pluto\" Abarca" },
-      { role: "Producción", name: "Tino Canessa · Lichens Family" },
+      { role: "Producción", name: "Tino Canessa (Lichens Family)" },
     ],
   },
   {
     slug: "newen-afrobeat-no-les-creere",
     youtubeId: "Xq8IgOcJ2qQ",
+    thumb: "hqdefault", // sin maxresdefault (curl -I, 21-10-2026)
     title: "Newen Afrobeat - No les creeré (Video Oficial)",
     artistSlug: "newen-afrobeat",
     artistName: "Newen Afrobeat",
@@ -547,6 +565,7 @@ It is the video introduction to the Gestosimple & Klaus B project and the first 
   {
     slug: "klaus-b-quisiera-entender",
     youtubeId: "1vIGdzmOELU",
+    thumb: "hqdefault", // sin maxresdefault (curl -I, 21-10-2026)
     title: "Klaus B feat Fran Ri & Newen Afrobeat - Quisiera Entender",
     artistSlug: "klaus-brantmayer",
     artistName: "Klaus B",
@@ -644,23 +663,25 @@ It is Con.fusión's most recent live recording and the piece that best shows her
     kind: "videoclip",
     date: "2026-06-29",
     durationSec: 183,
+    recordedYear: 2022,
     description: {
       es: `Videoclip oficial de "Zul Marino", canción de Con.fusión con el productor Fat Jota. Según la descripción del video, se filmó en Europa en 2022 y lo dirigió Bárbara Lafuente, la misma realizadora de "Cuántas veces". Se publicó en el canal de la artista el 29 de junio de 2026, el día en que subió de golpe buena parte de su archivo audiovisual, por lo que la fecha de publicación es posterior a la del rodaje.
 
 La canción, titulada "Zulmarino" en plataformas, salió como single en 2024. Fat Jota es el productor con el que empezó la trayectoria de Con.fusión, en un sonido cercano al lo-fi hip hop, antes de la banda Fat Lady y de sus colaboraciones posteriores.
 
-Es, junto a la sesión de Tiny Plants, uno de los dos registros de la dupla con Fat Jota publicados en el canal.`,
+Junto a la sesión de Tiny Plants, es uno de los registros de la dupla con Fat Jota publicados en el canal de la artista.`,
       en: `Official music video for "Zul Marino", a song by Con.fusión with producer Fat Jota. According to the video's description, it was shot in Europe in 2022 and directed by Bárbara Lafuente, the same filmmaker behind "Cuántas veces". It was published on the artist's channel on June 29, 2026, the day she uploaded a large part of her audiovisual archive at once, so the publication date is later than the shoot.
 
 The song, listed as "Zulmarino" on streaming platforms, came out as a single in 2024. Fat Jota is the producer with whom Con.fusión's path began, in a sound close to lo-fi hip hop, before the band Fat Lady and her later collaborations.
 
-Together with the Tiny Plants session, it is one of the two recordings of the duo with Fat Jota published on the channel.`,
+Together with the Tiny Plants session, it is one of the recordings of the duo with Fat Jota published on the artist's channel.`,
     },
     credits: [{ role: "Dirección", name: "Bárbara Lafuente" }],
   },
   {
     slug: "con-fusion-tiny-plants",
     youtubeId: "NmguTXmKM2o",
+    thumb: "hqdefault", // sin maxresdefault (curl -I, 21-10-2026)
     title: "TINY PLANTS CON.FUSION & FAT JOTA",
     artistSlug: "con-fusion",
     artistName: "Con.fusión",
@@ -668,14 +689,14 @@ Together with the Tiny Plants session, it is one of the two recordings of the du
     date: "2026-06-29",
     durationSec: 1008,
     description: {
-      es: `Sesión en vivo de Con.fusión y Fat Jota para Tiny Plants Concerts, un ciclo de conciertos en formato pequeño cuyo nombre aparece sobre la imagen. Dura casi 17 minutos, lo que la convierte en el registro más largo de la artista en el sitio, y se publicó en su canal el 29 de junio de 2026, el día en que subió buena parte de su archivo. El video no trae créditos ni fecha de grabación, así que no se puede fijar cuándo se tocó.
+      es: `Sesión en vivo de Con.fusión y Fat Jota para Tiny Plants Concerts, según indica el título del video. Dura casi 17 minutos y se publicó en el canal de la artista el 29 de junio de 2026, el día en que subió buena parte de su archivo. El video no trae descripción, créditos ni fecha de grabación, así que no se puede fijar cuándo se tocó ni describir su realización.
 
-Es el único video que muestra a la dupla Con.fusión y Fat Jota tocando en vivo, en un formato de banda, con el repertorio de su etapa de lo-fi hip hop. Con "Zul Marino", filmado en Europa en 2022, completa lo publicado de esa colaboración.
+Muestra a la dupla Con.fusión y Fat Jota tocando en vivo con el repertorio de su etapa de lo-fi hip hop. Junto con "Zul Marino", filmado en Europa en 2022, es parte de lo publicado de esa colaboración en el canal.
 
 Para quien llega desde "Cuántas veces", es la mejor forma de escuchar de dónde viene la voz del proyecto.`,
-      en: `Live session by Con.fusión and Fat Jota for Tiny Plants Concerts, a small-format concert series whose name appears over the picture. It runs almost 17 minutes, which makes it the artist's longest recording on this site, and it was published on her channel on June 29, 2026, the day she uploaded a large part of her archive. The video carries no credits or recording date, so when it was played cannot be established.
+      en: `Live session by Con.fusión and Fat Jota for Tiny Plants Concerts, as the video's title states. It runs almost 17 minutes and was published on the artist's channel on June 29, 2026, the day she uploaded a large part of her archive. The video carries no description, credits or recording date, so when it was played cannot be established, nor can its production be described.
 
-It is the only video showing the Con.fusión and Fat Jota duo playing live, in a band format, with the repertoire of their lo-fi hip hop period. Together with "Zul Marino", shot in Europe in 2022, it completes what has been published of that collaboration.
+It shows the Con.fusión and Fat Jota duo playing live with the repertoire of their lo-fi hip hop period. Together with "Zul Marino", shot in Europe in 2022, it is part of what has been published of that collaboration on the channel.
 
 For anyone arriving from "Cuántas veces", it is the best way to hear where the project's voice comes from.`,
     },
@@ -692,14 +713,14 @@ For anyone arriving from "Cuántas veces", it is the best way to hear where the 
     description: {
       es: `Sesión de Con.fusión con Simon Squalo y DJ Eseté para Sesiones Bugambilia, publicada en el canal de la artista el 29 de junio de 2026, el día en que subió buena parte de su archivo audiovisual. Dura 6:29 y el video no incluye descripción, créditos ni fecha de grabación, así que lo único que consta son sus participantes y el nombre del ciclo.
 
-Simon Squalo aparece en otros dos videos del mismo canal, lo que sugiere una colaboración sostenida, y el formato con DJ remite al rap e improvisación vocal que Con.fusión practica en el show en vivo de Matiah Chinaski. Catalina Aguilera ha desarrollado buena parte de su trabajo en este tipo de grabaciones colaborativas de la escena chilena.
+Simon Squalo aparece en otros dos videos del mismo canal, y el formato con DJ remite al rap e improvisación vocal que Con.fusión practica en el show en vivo de Matiah Chinaski. Catalina Aguilera ha desarrollado buena parte de su trabajo en este tipo de grabaciones colaborativas de la escena chilena.
 
-Se incluye como registro de esa red de colaboraciones; los datos de producción se completarán cuando la artista los confirme.`,
+Se incluye como registro de esa red de colaboraciones. El video no incluye créditos de realización.`,
       en: `Session by Con.fusión with Simon Squalo and DJ Eseté for Sesiones Bugambilia, published on the artist's channel on June 29, 2026, the day she uploaded a large part of her audiovisual archive. It runs 6:29 and the video includes no description, credits or recording date, so the only facts on record are its participants and the name of the series.
 
-Simon Squalo appears in two other videos on the same channel, which suggests a sustained collaboration, and the format with a DJ points to the rap and vocal improvisation Con.fusión practises in Matiah Chinaski's live show. Catalina Aguilera has built much of her work in this kind of collaborative recording within the Chilean scene.
+Simon Squalo appears in two other videos on the same channel, and the format with a DJ points to the rap and vocal improvisation Con.fusión practises in Matiah Chinaski's live show. Catalina Aguilera has built much of her work in this kind of collaborative recording within the Chilean scene.
 
-It is included as a record of that network of collaborations; production details will be completed once the artist confirms them.`,
+It is included as a record of that network of collaborations. The video carries no production credits.`,
     },
   },
   {
@@ -717,12 +738,12 @@ It is included as a record of that network of collaborations; production details
 
 La letra, incluida por la artista en la descripción, es una queja contra la rutina de producir: "¡Ay qué aburrido que se vuelve esto, ya está repetido!", "vivir no es solo producir", "no tengo nada más para dar", y cierra con "solo quiero vivir". Es uno de los primeros singles del catálogo público de Con.fusión, de la etapa de lo-fi hip hop con Fat Jota, donde la voz pasa del canto al rap sin pausa.
 
-Es el video más antiguo de la artista en el sitio y su único clip animado.`,
+Publicado en julio de 2020, es anterior al archivo que la artista subió a su canal en junio de 2026 y el primero de sus videoclips en formato animado.`,
       en: `Animated video for "Qué Aburrido!", a Con.fusión single produced by Fat Jota and published on July 9, 2020, one day before the song reached streaming platforms. Design and animation are by Camila Anaïs; it runs 2:28, the length of the track.
 
 The lyrics, included by the artist in the description, are a complaint against the routine of producing: "oh, how boring this is getting, it's already on repeat", "living is not just producing", "I have nothing more to give", closing with "I just want to live". It is one of the earliest singles in Con.fusión's public catalogue, from the lo-fi hip hop period with Fat Jota, where the voice moves from singing to rap without pause.
 
-It is the artist's oldest video on this site and her only animated clip.`,
+Published in July 2020, it predates the archive the artist uploaded to her channel in June 2026 and is the first of her music videos in animated form.`,
     },
     credits: [
       { role: "Producción", name: "Fat Jota" },
@@ -734,6 +755,7 @@ It is the artist's oldest video on this site and her only animated clip.`,
   {
     slug: "ecamhi-planet-earth",
     youtubeId: "suwNLQSkQEY",
+    thumb: "hqdefault", // sin maxresdefault (curl -I, 21-10-2026)
     title: "ecamhi - Planet Earth",
     artistSlug: "ecamhi",
     artistName: "ecamhi",
@@ -741,12 +763,12 @@ It is the artist's oldest video on this site and her only animated clip.`,
     date: "2020-10-27",
     durationSec: 168,
     description: {
-      es: `Video de "Planet Earth", pieza instrumental de ecamhi publicada en su canal el 27 de octubre de 2020, el mismo día que "Not My Birthday". Son los dos únicos videos del canal y los primeros registros audiovisuales del proyecto solista de Enrique Camhi, trompetista y productor de Newen Afrobeat. La descripción solo remite a su SoundCloud; las etiquetas del video hablan de beats, lo-fi, ambient y trompeta, y la imagen está construida con material fílmico de archivo.
+      es: `Video de "Planet Earth", pieza instrumental de ecamhi publicada en su canal el 27 de octubre de 2020, el mismo día que "Not My Birthday". A octubre de 2026 el canal no tiene otros videos: son los primeros registros audiovisuales del proyecto solista de Enrique Camhi, trompetista y productor de Newen Afrobeat. La descripción solo remite a su SoundCloud y no aporta datos sobre la imagen; las etiquetas del video hablan de beats, lo-fi, ambient y trompeta.
 
 El tema dura 2:48 y es anterior a "Fake Love" (2021), su primer registro oficial en plataformas, y a "Move To" (2022). Muestra la línea de beatmaking con trompeta que la bio del artista describe como su propuesta instrumental y electrónica.
 
 Es la entrada más temprana al universo de ecamhi, previa al EP "en viaje" que prepara con PHŌNÉ Records.`,
-      en: `Video for "Planet Earth", an instrumental piece by ecamhi published on his channel on October 27, 2020, the same day as "Not My Birthday". They are the only two videos on the channel and the first audiovisual records of the solo project of Enrique Camhi, trumpet player and producer with Newen Afrobeat. The description only points to his SoundCloud; the video's tags mention beats, lo-fi, ambient and trumpet, and the picture is built from archival film footage.
+      en: `Video for "Planet Earth", an instrumental piece by ecamhi published on his channel on October 27, 2020, the same day as "Not My Birthday". As of October 2026 the channel has no other videos: they are the first audiovisual records of the solo project of Enrique Camhi, trumpet player and producer with Newen Afrobeat. The description only points to his SoundCloud and gives no details about the picture; the video's tags mention beats, lo-fi, ambient and trumpet.
 
 The track runs 2:48 and predates "Fake Love" (2021), his first official release on streaming platforms, and "Move To" (2022). It shows the trumpet-and-beatmaking line that the artist's bio describes as his instrumental and electronic proposal.
 
@@ -764,12 +786,12 @@ It is the earliest entry into ecamhi's universe, prior to the EP "en viaje" he i
     date: "2020-10-27",
     durationSec: 250,
     description: {
-      es: `Video de "Not My Birthday", pieza de ecamhi publicada en su canal el 27 de octubre de 2020 junto a "Planet Earth". La descripción indica solo que la música está producida por Enrique Camhi y remite a su SoundCloud; la imagen, como en su pareja, está montada con material fílmico de archivo. Dura 4:10 y es el más largo de los dos.
+      es: `Video de "Not My Birthday", pieza de ecamhi publicada en su canal el 27 de octubre de 2020 junto a "Planet Earth". La descripción indica solo que la música está producida por Enrique Camhi y remite a su SoundCloud, sin datos sobre la imagen ni créditos de realización. Dura 4:10 y es el más largo de los dos.
 
 Enrique Camhi es trompetista, productor y compositor, integrante de Newen Afrobeat, y bajo el nombre ecamhi desarrolla una propuesta instrumental y electrónica influida por el beatmaking, el jazz y el hip hop. Estos dos videos de 2020 son el punto de partida de esa línea solista, antes de los singles con otros artistas que figuran en su discografía.
 
 Hoy ecamhi prepara el álbum "εποχή" y el EP "en viaje", concebido a partir de fotografías de gira; este video es el antecedente más antiguo de ese cruce entre imagen y sonido.`,
-      en: `Video for "Not My Birthday", a piece by ecamhi published on his channel on October 27, 2020 alongside "Planet Earth". The description states only that the music is produced by Enrique Camhi and points to his SoundCloud; the picture, as in its companion, is assembled from archival film footage. It runs 4:10 and is the longer of the two.
+      en: `Video for "Not My Birthday", a piece by ecamhi published on his channel on October 27, 2020 alongside "Planet Earth". The description states only that the music is produced by Enrique Camhi and points to his SoundCloud, with no details about the picture or production credits. It runs 4:10 and is the longer of the two.
 
 Enrique Camhi is a trumpet player, producer and composer, a member of Newen Afrobeat, and under the name ecamhi he develops an instrumental and electronic proposal influenced by beatmaking, jazz and hip hop. These two 2020 videos are the starting point of that solo line, before the singles with other artists listed in his discography.
 
@@ -790,16 +812,16 @@ Today ecamhi is preparing the album "εποχή" and the EP "en viaje", conceive
     durationSec: 186,
     featured: true,
     description: {
-      es: `Videoclip de "a ti", el segundo adelanto de "La Piel", el álbum debut de Rosario Lircay. La canción salió en junio de 2026 por seda.wav y el video se publicó en su canal el 25 de julio de ese año. Dura 3:06 y el video no incluye descripción ni créditos, así que la realización queda por confirmar con la artista.
+      es: `Videoclip de "a ti", el segundo adelanto de "La Piel", el álbum debut de Rosario Lircay. La canción salió en junio de 2026 por seda.wav y el video se publicó en su canal el 25 de julio de ese año. Dura 3:06 y el video no incluye descripción ni créditos de realización.
 
 "La Piel" reúne diez canciones nacidas de beats y luego tocadas por músicos, producidas por Fresco Fresco (Pablo Acuña y Nacho Barrientos), con la batería de Pablo Trangol y master de Chalo G. "a ti" sigue a "ya me tienes" (abril de 2026) y precede a "En Vela" (23 de octubre de 2026), su primer lanzamiento con PHŌNÉ Records.
 
-Es el primer videoclip de las canciones del disco y la pieza que presenta a la artista en el sitio antes de su llegada al sello.`,
-      en: `Music video for "a ti", the second single from "La Piel", Rosario Lircay's debut album. The song came out in June 2026 on seda.wav and the video was published on her channel on July 25 that year. It runs 3:06 and the video includes no description or credits, so the production team remains to be confirmed with the artist.
+Es el primer videoclip de las canciones del disco, anterior a la llegada de la artista al sello.`,
+      en: `Music video for "a ti", the second single from "La Piel", Rosario Lircay's debut album. The song came out in June 2026 on seda.wav and the video was published on her channel on July 25 that year. It runs 3:06 and the video includes no description or production credits.
 
 "La Piel" gathers ten songs born from beats and then played by musicians, produced by Fresco Fresco (Pablo Acuña and Nacho Barrientos), with Pablo Trangol on drums and mastering by Chalo G. "a ti" follows "ya me tienes" (April 2026) and precedes "En Vela" (October 23, 2026), her first release with PHŌNÉ Records.
 
-It is the first music video for the album's songs and the piece that introduces the artist on this site before her arrival at the label.`,
+It is the first music video for the album's songs, prior to the artist's arrival at the label.`,
     },
   },
   {
@@ -841,17 +863,18 @@ It is the first video of the "La Piel" period and the one that sets the audiovis
     kind: "documental",
     date: "2026-09-06",
     durationSec: 184,
+    recordedYear: 2025,
     description: {
       es: `Detrás de cámara de la sesión de fotos de "La Piel", el álbum debut de Rosario Lircay, realizada en Santiago de Chile en diciembre de 2025 y publicada en su canal el 6 de septiembre de 2026. Dura 3:04 y de fondo suenan tres canciones: "En vela", "Ya me tienes" y "Así se da".
 
 El video es de Lenin Araya, el mismo realizador del visualizer de "ya me tienes"; la fotografía es de @frrancesqo, el peinado y maquillaje de Amanda de la Puente, el styling de Tanza María y las luces de La Cámara Film, con Matías Schulze y Joaquín Álvarez Nelson como asistentes. La artista agradece a Cata Aguilera (Con.fusión) y a Sofi Pradel.
 
-Es la única pieza documental del catálogo de videos y muestra el trabajo de imagen del disco antes de la salida de "En Vela", su primer single con PHŌNÉ Records.`,
+Es un registro documental del trabajo de imagen del disco, anterior a la salida de "En Vela", su primer single con PHŌNÉ Records.`,
       en: `Behind the scenes of the photo shoot for "La Piel", Rosario Lircay's debut album, made in Santiago de Chile in December 2025 and published on her channel on September 6, 2026. It runs 3:04 and three songs play in the background: "En vela", "Ya me tienes" and "Así se da".
 
 The video is by Lenin Araya, the same filmmaker behind the "ya me tienes" visualizer; photography is by @frrancesqo, hair and make-up by Amanda de la Puente, styling by Tanza María and lighting by La Cámara Film, with Matías Schulze and Joaquín Álvarez Nelson assisting. The artist thanks Cata Aguilera (Con.fusión) and Sofi Pradel.
 
-It is the only documentary piece in the video catalogue and shows the album's image work before the release of "En Vela", her first single with PHŌNÉ Records.`,
+It is a documentary record of the album's image work, prior to the release of "En Vela", her first single with PHŌNÉ Records.`,
     },
     credits: [
       { role: "Video", name: "Lenin Araya" },
@@ -892,6 +915,22 @@ export function pickArtistVideos(artistSlug: string, limit = 6, nowMs: number = 
 
 export function youtubeThumb(id: string, q: "maxresdefault" | "hqdefault" = "maxresdefault"): string {
   return `https://i.ytimg.com/vi/${id}/${q}.jpg`;
+}
+
+/** Mejor miniatura existente del video: maxres salvo que `thumb` diga que no la hay. */
+export function videoThumb(v: Pick<Video, "youtubeId" | "thumb">): string {
+  return youtubeThumb(v.youtubeId, v.thumb ?? "maxresdefault");
+}
+
+/** Miniaturas existentes para `thumbnailUrl` de schema.org (maxres si existe, y hq). */
+export function videoThumbs(v: Pick<Video, "youtubeId" | "thumb">): string[] {
+  const hq = youtubeThumb(v.youtubeId, "hqdefault");
+  return v.thumb ? [hq] : [youtubeThumb(v.youtubeId), hq];
+}
+
+/** Dimensiones reales de la miniatura para Open Graph: maxres 1280×720, hq 480×360. */
+export function videoThumbSize(v: Pick<Video, "thumb">): { width: number; height: number } {
+  return v.thumb ? { width: 480, height: 360 } : { width: 1280, height: 720 };
 }
 
 export function youtubeWatchUrl(id: string): string {

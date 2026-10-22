@@ -6,9 +6,12 @@
 //   releaseSlug existente en lib/releases.ts si viene; kind válido; fecha
 //   "YYYY-MM" o "YYYY-MM-DD" válida; durationSec entero > 0 si viene;
 //   description.es/.en con 60–200 palabras, distintas entre sí y sin URLs;
-//   `videos` ordenado por fecha desc; ≤6 `featured` por artista; créditos con role y name.
+//   `videos` ordenado por fecha desc; ≤6 `featured` por artista; créditos con role y name;
+//   `thumb` solo "hqdefault"; `recordedYear` entero entre 1990 y el año de `date`.
 // Avisos (WARN, no fallan): fecha futura; releaseSlug de otro artista; primeros
-//   60 caracteres de description.es repetidos entre videos.
+//   60 caracteres de description.es repetidos entre videos; frases autorreferenciales
+//   que se vuelven falsas al crecer el catálogo ("en el sitio", "el único video"…);
+//   notas internas o hedging en copy público ("por confirmar", "lo que sugiere"…).
 import { videos, VIDEO_KINDS } from "../lib/videos.ts";
 import { artists } from "../lib/artists.ts";
 import { releaseSlugs, getRelease } from "../lib/releases.ts";
@@ -79,6 +82,12 @@ report("≤6 featured por artista", tooMany.length === 0, list(tooMany.map(([s, 
 const badCredits = videos.filter((v) => v.credits && !v.credits.every((c) => c && typeof c.role === "string" && c.role.trim() && typeof c.name === "string" && c.name.trim()));
 report("credits[] con role y name", badCredits.length === 0, list(badCredits.map((v) => v.slug)));
 
+const badThumb = videos.filter((v) => v.thumb !== undefined && v.thumb !== "hqdefault");
+report('thumb solo "hqdefault" (si viene)', badThumb.length === 0, list(badThumb.map((v) => `${v.slug}:${v.thumb}`)));
+
+const badRec = videos.filter((v) => v.recordedYear !== undefined && !(Number.isInteger(v.recordedYear) && v.recordedYear >= 1990 && v.recordedYear <= Number(v.date.slice(0, 4))));
+report("recordedYear entero entre 1990 y el año de date (si viene)", badRec.length === 0, list(badRec.map((v) => `${v.slug}:${v.recordedYear}`)));
+
 // ── Avisos ──
 const today = new Date().toISOString().slice(0, 10);
 const future = videos.filter((v) => v.date.localeCompare(today) > 0);
@@ -90,6 +99,18 @@ const foreign = videos.filter((v) => {
   return r && r.artistSlug !== v.artistSlug && !(r.featuredArtistSlugs ?? []).includes(v.artistSlug);
 });
 if (foreign.length) warn("releaseSlug de otro artista", list(foreign.map((v) => `${v.slug}:${v.releaseSlug}`)));
+
+// Frases que se vuelven falsas cuando el catálogo crece (nadie las vuelve a leer) y
+// notas internas que no deben salir en copy público. Avisan; se arreglan redactando.
+const SELF_REF = /\b(en el sitio|en este sitio|del catálogo de videos|en este catálogo|on this site|in the video catalogue|in this catalogue|los dos únicos|las dos únicas|el único video|la única pieza|the only two|the only video|the only piece)\b/i;
+const INTERNAL = /\b(por confirmar|se completarán|queda pendiente|to be confirmed|will be completed|lo que sugiere|which suggests)\b/i;
+for (const v of videos) {
+  const text = `${v.description?.es ?? ""} ${v.description?.en ?? ""}`;
+  const m1 = text.match(SELF_REF);
+  if (m1) warn("frase autorreferencial frágil", `${v.slug}: "${m1[0]}"`);
+  const m2 = text.match(INTERNAL);
+  if (m2) warn("nota interna o hedging en copy público", `${v.slug}: "${m2[0]}"`);
+}
 
 const seenStart = new Map();
 for (const v of videos) {
