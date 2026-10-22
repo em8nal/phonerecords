@@ -96,8 +96,12 @@ export default async function Home({
             addressCountry: "CL",
           },
         },
-        // Solo canales del sello: Bandcamp/Spotify/YouTube son de Newen Afrobeat.
-        sameAs: ["https://www.instagram.com/phone_records/"],
+        // Solo canales del sello (= LABEL_SOCIAL de footer-section.tsx, módulo cliente que no se
+        // puede importar aquí). Bandcamp/Spotify son de Newen Afrobeat; @phone_records es del sello.
+        sameAs: [
+          "https://www.instagram.com/phone_records/",
+          "https://www.youtube.com/@phone_records",
+        ],
         contactPoint: [
           {
             "@type": "ContactPoint",
