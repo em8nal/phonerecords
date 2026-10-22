@@ -1,23 +1,19 @@
 "use server";
 
-import { z } from "zod";
+import type { z } from "zod";
 import { sendContactMail } from "@/lib/mail";
 import { getClientIp, hashIp, subscribe } from "@/lib/newsletter";
 import { translations } from "@/lib/translations";
+import {
+  contactActionSchema,
+  extractHttpsUrls,
+  linkLines,
+} from "./contact-schema";
 
-const contactSchema = z.object({
-  name: z.string().trim().min(2).max(120),
-  email: z.string().trim().email().max(200),
-  topic: z.enum(["general", "booking", "prensa", "sello"]),
-  message: z.string().trim().min(10).max(5000),
-  // honeypot — must remain empty
-  website: z.string().max(0).optional().or(z.literal("")),
-  lang: z.enum(["es", "en"]).default("es"),
-  // opt-in opcional al newsletter
-  newsletter: z.boolean().optional(),
-});
+// Envío en menos de este tiempo desde el render = bot (mismo umbral que app/actions/newsletter.ts).
+const MIN_FILL_MS = 2000;
 
-export type ContactInput = z.infer<typeof contactSchema>;
+export type ContactInput = z.infer<typeof contactActionSchema>;
 
 export type ContactResult =
   | { ok: true }
@@ -28,26 +24,50 @@ const topicLabels = {
   booking: { es: "Booking", en: "Booking" },
   prensa: { es: "Prensa", en: "Press" },
   sello: { es: "Sello", en: "Label" },
+  propuesta: { es: "Propuesta de artista", en: "Artist proposal" },
 } as const;
 
 export async function sendContactMessage(
   raw: unknown,
 ): Promise<ContactResult> {
-  const parsed = contactSchema.safeParse(raw);
+  const parsed = contactActionSchema.safeParse(raw);
   if (!parsed.success) {
     return { ok: false, error: "invalid" };
   }
 
-  const { name, email, topic, message, website, lang, newsletter } =
-    parsed.data;
+  const {
+    name,
+    email,
+    topic,
+    message,
+    links,
+    city,
+    website,
+    lang,
+    newsletter,
+    renderedAt,
+  } = parsed.data;
 
   // Honeypot tripped: silently succeed so bots don't get signal.
   if (website && website.length > 0) {
     return { ok: true };
   }
 
+  // Demasiado rápido: error genérico (una persona reintenta; un bot no obtiene señal útil).
+  if (!renderedAt || Date.now() - renderedAt < MIN_FILL_MS) {
+    return { ok: false, error: "send_failed" };
+  }
+
+  const isProposal = topic === "propuesta";
   const topicLabel = topicLabels[topic][lang];
-  const subject = `[phonerecords.cl] ${topicLabel} · ${name}`;
+  // Sin saltos de línea ni espacios dobles: van en la cabecera Subject.
+  const nameClean = name.replace(/\s+/g, " ");
+  const cityClean = (city ?? "").replace(/\s+/g, " ");
+  const proposalLinks = isProposal ? linkLines(links ?? "") : [];
+
+  const subject = isProposal
+    ? `[phonerecords.cl] Propuesta de artista — ${nameClean} (${cityClean})`
+    : `[phonerecords.cl] ${topicLabel} · ${nameClean}`;
 
   const text = [
     `Nuevo mensaje desde phonerecords.cl`,
@@ -56,10 +76,37 @@ export async function sendContactMessage(
     `Email:    ${email}`,
     `Asunto:   ${topicLabel}`,
     `Idioma:   ${lang}`,
+    ...(isProposal
+      ? [
+          `Ciudad:   ${cityClean}`,
+          ``,
+          `Enlaces:`,
+          ...proposalLinks.map((line) => `  ${line}`),
+        ]
+      : []),
     ``,
     `Mensaje:`,
     message,
   ].join("\n");
+
+  const cityRow = isProposal
+    ? `<tr><td style="padding:4px 12px 4px 0;color:#666;">Ciudad</td><td>${escapeHtml(cityClean)}</td></tr>`
+    : "";
+  // Cada línea del textarea es un <li>; si contiene una URL https://, la línea entera enlaza a ella.
+  const linksBlock = isProposal
+    ? `
+      <p style="margin:16px 0 4px;font-size:14px;color:#666;">Enlaces</p>
+      <ul style="margin:0;padding-left:20px;font-size:14px;line-height:1.6;">
+        ${proposalLinks
+          .map((line) => {
+            const [url] = extractHttpsUrls(line);
+            return url
+              ? `<li><a href="${escapeHtml(url)}">${escapeHtml(line)}</a></li>`
+              : `<li>${escapeHtml(line)}</li>`;
+          })
+          .join("\n        ")}
+      </ul>`
+    : "";
 
   const html = `
     <div style="font-family: -apple-system, system-ui, sans-serif; max-width: 560px;">
@@ -69,7 +116,8 @@ export async function sendContactMessage(
         <tr><td style="padding:4px 12px 4px 0;color:#666;">Email</td><td><a href="mailto:${escapeHtml(email)}">${escapeHtml(email)}</a></td></tr>
         <tr><td style="padding:4px 12px 4px 0;color:#666;">Asunto</td><td>${escapeHtml(topicLabel)}</td></tr>
         <tr><td style="padding:4px 12px 4px 0;color:#666;">Idioma</td><td>${lang}</td></tr>
-      </table>
+        ${cityRow}
+      </table>${linksBlock}
       <hr style="border:none;border-top:1px solid #eee;margin:20px 0;" />
       <pre style="white-space:pre-wrap;font-family:inherit;font-size:14px;line-height:1.6;margin:0;">${escapeHtml(message)}</pre>
     </div>

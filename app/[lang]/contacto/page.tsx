@@ -18,8 +18,8 @@ export async function generateMetadata(
   return {
     title: isEs ? "Contacto" : "Contact",
     description: isEs
-      ? "Escríbenos para consultas generales, booking, prensa o trabajo con el sello PHŌNÉ Records."
-      : "Write to us for general inquiries, booking, press or working with PHŌNÉ Records.",
+      ? "Escríbenos para consultas generales, booking, prensa, propuestas de artista o trabajo con el sello PHŌNÉ Records."
+      : "Write to us for general inquiries, booking, press, artist proposals or working with PHŌNÉ Records.",
     alternates: {
       canonical: `https://phonerecords.cl/${lang}/contacto`,
       languages: {
@@ -36,7 +36,7 @@ const copy = {
     eyebrow: "Contacto",
     headline: "Conversemos.",
     intro:
-      "Escríbenos para consultas generales, propuestas de booking, prensa o trabajo con el sello. Respondemos lo antes posible.",
+      "Escríbenos para consultas generales, propuestas de booking, prensa, trabajo con el sello o para enviarnos tu propuesta de artista. Respondemos lo antes posible.",
     backHome: "Volver al inicio",
     partners: "Booking EU",
     partnersBody:
@@ -46,7 +46,7 @@ const copy = {
     eyebrow: "Contact",
     headline: "Let's talk.",
     intro:
-      "Write to us for general inquiries, booking proposals, press or working with the label. We reply as soon as we can.",
+      "Write to us for general inquiries, booking proposals, press, working with the label or to send us your artist proposal. We reply as soon as we can.",
     backHome: "Back to home",
     partners: "EU Booking",
     partnersBody:
