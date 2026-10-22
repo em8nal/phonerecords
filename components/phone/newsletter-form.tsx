@@ -135,7 +135,7 @@ export function NewsletterForm({ lang, source, variant = "default", className }:
         {n.consent}{" "}
         <Link
           href={`/${lang}/privacidad`}
-          className="underline underline-offset-2 hover:text-foreground"
+          className="underline underline-offset-2 hover:text-foreground rounded-sm focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand focus-visible:ring-offset-2 focus-visible:ring-offset-background"
         >
           {n.privacyLink}
         </Link>

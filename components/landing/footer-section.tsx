@@ -1,5 +1,6 @@
 "use client";
 
+import Link from "next/link";
 import { useLanguage } from "@/lib/language-context";
 import { Logo } from "@/components/phone/logo";
 import { NewsletterForm } from "@/components/phone/newsletter-form";
@@ -35,19 +36,22 @@ export function FooterSection() {
     <footer className="relative border-t border-foreground/10">
       <div className="relative z-10 max-w-[1400px] mx-auto px-6 lg:px-12">
         {/*
-          Marca | Artistas · Sello · Catálogo | Newsletter.
-          Desktop (≥1024): 3 | 2·2·2 | 3 de 12 columnas. Tablet: 2 columnas (marca a lo ancho,
-          luego 2×2). Móvil: 2 columnas; marca y newsletter a lo ancho (sin desbordes a 360 px).
+          Marca | Artistas · Sello · Contacto | Newsletter.
+          Desktop (≥1024): 3 | 2·2·2 | 3 de 12 columnas. Tablet (768–1023): 2 columnas; marca a lo
+          ancho, luego Artistas|Sello y Contacto|Newsletter. Móvil (<768): 2 columnas; marca,
+          Contacto y newsletter a lo ancho (sin huecos a 360/390/412 px ni campo de email estrecho).
+          Enlaces internos con next/link sin prefetch (no precargar ~13 rutas en cada página).
         */}
         <div className="py-16 lg:py-24 grid grid-cols-2 gap-x-6 gap-y-12 lg:grid-cols-12 lg:gap-8">
           {/* Marca */}
           <div className="col-span-2 lg:col-span-3">
-            <a
+            <Link
               href={`/${language}`}
+              prefetch={false}
               className={`inline-flex items-center mb-6 text-foreground ${FOCUS} focus-visible:ring-offset-4`}
             >
               <Logo className="h-10 w-auto" />
-            </a>
+            </Link>
             <p className="text-base text-muted-foreground leading-relaxed max-w-xs">
               {t.footer.tagline}
             </p>
@@ -57,16 +61,28 @@ export function FooterSection() {
           {columns.map((column) => {
             const headingId = `footer-${column.key}`;
             return (
-              <nav key={column.key} aria-labelledby={headingId} className="lg:col-span-2">
+              <nav
+                key={column.key}
+                aria-labelledby={headingId}
+                className={
+                  column.key === "contact"
+                    ? "col-span-2 md:col-span-1 lg:col-span-2"
+                    : "lg:col-span-2"
+                }
+              >
                 <h3 id={headingId} className="text-base font-medium mb-5">
                   {column.title}
                 </h3>
                 <ul className="space-y-3">
                   {column.links.map((link) => (
                     <li key={link.href}>
-                      <a href={localize(language, link.href)} className={LINK_CLASS}>
+                      <Link
+                        href={localize(language, link.href)}
+                        prefetch={false}
+                        className={LINK_CLASS}
+                      >
                         {link.label}
-                      </a>
+                      </Link>
                     </li>
                   ))}
                 </ul>

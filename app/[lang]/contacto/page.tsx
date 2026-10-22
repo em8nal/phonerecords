@@ -95,79 +95,81 @@ export default async function ContactoPage({
   };
 
   return (
-    <main className="relative min-h-screen overflow-x-hidden noise-overlay">
-      <script
-        type="application/ld+json"
-        dangerouslySetInnerHTML={{ __html: JSON.stringify(schema) }}
-      />
-      <Navigation />
-      <PageHero
-        image={{
-          desktop: "/media/klaus-b/destellos-hero.jpg",
-          mobile: "/media/klaus-b/destellos-hero-mobile.jpg",
-          alt: { es: "Klaus B, retrato en blanco y negro", en: "Klaus B, black and white portrait" },
-        }}
-        title={c.headline}
-        eyebrow={c.eyebrow}
-        lang={lang === "es" ? "es" : "en"}
-      />
+    <>
+      <main className="relative min-h-screen overflow-x-hidden noise-overlay">
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{ __html: JSON.stringify(schema) }}
+        />
+        <Navigation />
+        <PageHero
+          image={{
+            desktop: "/media/klaus-b/destellos-hero.jpg",
+            mobile: "/media/klaus-b/destellos-hero-mobile.jpg",
+            alt: { es: "Klaus B, retrato en blanco y negro", en: "Klaus B, black and white portrait" },
+          }}
+          title={c.headline}
+          eyebrow={c.eyebrow}
+          lang={lang === "es" ? "es" : "en"}
+        />
 
-      <article className="max-w-[1100px] mx-auto px-6 lg:px-12 pt-12 lg:pt-16 pb-24">
-        <Link
-          href={`/${lang}`}
-          className="inline-flex items-center gap-2 text-sm text-muted-foreground hover:text-foreground transition-colors mb-12 group"
-        >
-          <ArrowLeft className="w-4 h-4 group-hover:-translate-x-1 transition-transform" />
-          {c.backHome}
-        </Link>
+        <article className="max-w-[1100px] mx-auto px-6 lg:px-12 pt-12 lg:pt-16 pb-24">
+          <Link
+            href={`/${lang}`}
+            className="inline-flex items-center gap-2 text-sm text-muted-foreground hover:text-foreground transition-colors mb-12 group"
+          >
+            <ArrowLeft className="w-4 h-4 group-hover:-translate-x-1 transition-transform" />
+            {c.backHome}
+          </Link>
 
-        <header className="mb-16 lg:mb-24 max-w-3xl">
-          <p className="text-xl text-foreground/85 leading-relaxed">{c.intro}</p>
-        </header>
+          <header className="mb-16 lg:mb-24 max-w-3xl">
+            <p className="text-xl text-foreground/85 leading-relaxed">{c.intro}</p>
+          </header>
 
-        <section className="grid lg:grid-cols-12 gap-10 lg:gap-16 items-start">
-          <div className="lg:col-span-7">
-            <ContactForm lang={formLang} />
+          <section className="grid lg:grid-cols-12 gap-10 lg:gap-16 items-start">
+            <div className="lg:col-span-7">
+              <ContactForm lang={formLang} />
 
-            <section
-              aria-labelledby="newsletter-heading"
-              className="mt-16 pt-12 border-t border-foreground/10"
-            >
-              <h2
-                id="newsletter-heading"
-                className="text-sm font-mono uppercase tracking-widest text-muted-foreground mb-4"
+              <section
+                aria-labelledby="newsletter-heading"
+                className="mt-16 pt-12 border-t border-foreground/10"
               >
-                {translations[formLang].newsletter.title}
+                <h2
+                  id="newsletter-heading"
+                  className="text-sm font-mono uppercase tracking-widest text-muted-foreground mb-4"
+                >
+                  {translations[formLang].newsletter.title}
+                </h2>
+                <p className="text-base leading-relaxed text-foreground/85 mb-6 max-w-xl">
+                  {translations[formLang].newsletter.description}
+                </p>
+                <NewsletterForm
+                  lang={formLang}
+                  source="contacto"
+                  className="max-w-xl"
+                />
+              </section>
+            </div>
+
+            <aside className="lg:col-span-5 lg:pl-8 lg:border-l lg:border-foreground/10">
+              <h2 className="text-sm font-mono uppercase tracking-widest text-muted-foreground mb-4">
+                {c.partners}
               </h2>
-              <p className="text-base leading-relaxed text-foreground/85 mb-6 max-w-xl">
-                {translations[formLang].newsletter.description}
+              <p className="text-base leading-relaxed text-foreground/85">
+                {c.partnersBody}
               </p>
-              <NewsletterForm
-                lang={formLang}
-                source="contacto"
-                className="max-w-xl"
-              />
-            </section>
-          </div>
-
-          <aside className="lg:col-span-5 lg:pl-8 lg:border-l lg:border-foreground/10">
-            <h2 className="text-sm font-mono uppercase tracking-widest text-muted-foreground mb-4">
-              {c.partners}
-            </h2>
-            <p className="text-base leading-relaxed text-foreground/85">
-              {c.partnersBody}
-            </p>
-            <a
-              href="mailto:info@ludwigsound.com"
-              className="inline-flex items-center gap-2 mt-4 text-sm text-foreground/80 hover:text-foreground transition-colors"
-            >
-              Ludwig Sound — info@ludwigsound.com
-            </a>
-          </aside>
-        </section>
-      </article>
-
+              <a
+                href="mailto:info@ludwigsound.com"
+                className="inline-flex items-center gap-2 mt-4 text-sm text-foreground/80 hover:text-foreground transition-colors"
+              >
+                Ludwig Sound — info@ludwigsound.com
+              </a>
+            </aside>
+          </section>
+        </article>
+      </main>
+      {/* Fuera de <main>: así el <footer> es un landmark contentinfo real */}
       <FooterSection />
-    </main>
+    </>
   );
 }
