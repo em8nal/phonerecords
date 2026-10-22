@@ -98,7 +98,8 @@ export default async function VideosPage({
         dangerouslySetInnerHTML={{ __html: JSON.stringify(schema) }}
       />
       <Navigation />
-      {/* Foto B/N del archivo (saturación 0): hoy solo la usa el carrusel; /sello y /eventos usan otras. */}
+      {/* Foto B/N del archivo (saturación 0): la misma del carrusel y del hero de la ficha de
+          Rosario Lircay (lib/artist-media.ts); /sello y /eventos usan otras fotos. */}
       <PageHero
         image={{
           desktop: "/media/rosario-lircay/en-vela-hero.jpg",
@@ -114,15 +115,15 @@ export default async function VideosPage({
       <article className="max-w-[1400px] mx-auto px-6 lg:px-12 pt-12 lg:pt-16 pb-24">
         <Link
           href={`/${lang}`}
-          className="inline-flex items-center gap-2 text-sm text-muted-foreground hover:text-foreground transition-colors mb-12 group"
+          className="inline-flex min-h-6 items-center gap-2 text-sm text-muted-foreground hover:text-foreground transition-colors mb-12 group"
         >
           <ArrowLeft className="w-4 h-4 group-hover:-translate-x-1 transition-transform" />
           {t.backHome}
         </Link>
 
-        <header className="mb-12 lg:mb-16 max-w-3xl">
+        <div className="mb-12 lg:mb-16 max-w-3xl">
           <p className="text-xl text-foreground/85 leading-relaxed">{t.intro}</p>
-        </header>
+        </div>
 
         {/* useSearchParams exige un límite de Suspense; el render es por petición, así que no hay fallback visible. */}
         <Suspense fallback={null}>
@@ -136,6 +137,7 @@ export default async function VideosPage({
               filterKind: t.filterKind,
               all: t.all,
               count: t.count,
+              countOne: t.countOne,
               empty: t.empty,
               clear: t.clear,
               kindLabels: VIDEO_KIND_LABEL[uiLang],

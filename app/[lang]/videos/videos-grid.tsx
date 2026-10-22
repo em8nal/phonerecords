@@ -13,7 +13,9 @@ export type VideosGridLabels = {
   filterArtist: string;
   filterKind: string;
   all: string;
+  /** Plural y singular del contador sr-only ("3 videos" / "1 video"). */
   count: string;
+  countOne: string;
   empty: string;
   clear: string;
   /** Etiquetas de tipo ya en el idioma de la página (VIDEO_KIND_LABEL[lang]). */
@@ -92,12 +94,12 @@ export function VideosGrid({ lang, entries, artistsList, kinds, labels }: Props)
     <div className="space-y-6">
       {/* Filtro por artista */}
       <div role="group" aria-label={labels.filterArtist} className="flex flex-wrap gap-2">
-        <Chip active={!activeArtist} onClick={() => updateParam("artist", "")}>
-          {labels.all} <span className="opacity-50 ml-1">({entries.length})</span>
+        <Chip active={!activeArtist} count={entries.length} onClick={() => updateParam("artist", "")}>
+          {labels.all}
         </Chip>
         {artistsList.map((a) => (
-          <Chip key={a.slug} active={activeArtist === a.slug} onClick={() => updateParam("artist", a.slug)}>
-            {a.name} <span className="opacity-50 ml-1">({a.count})</span>
+          <Chip key={a.slug} active={activeArtist === a.slug} count={a.count} onClick={() => updateParam("artist", a.slug)}>
+            {a.name}
           </Chip>
         ))}
       </div>
@@ -107,15 +109,18 @@ export function VideosGrid({ lang, entries, artistsList, kinds, labels }: Props)
         <KindChip active={!activeKind} onClick={() => updateParam("kind", "")}>
           {labels.all}
         </KindChip>
-        {kinds.map((k) => (
-          <KindChip key={k} active={activeKind === k} onClick={() => updateParam("kind", k)}>
-            {labels.kindLabels[k]} <span className="opacity-50 ml-1">({kindCounts.get(k) ?? 0})</span>
-          </KindChip>
-        ))}
+        {/* Solo tipos con videos para el artista activo (o el tipo ya elegido, para poder soltarlo). */}
+        {kinds
+          .filter((k) => k === activeKind || (kindCounts.get(k) ?? 0) > 0)
+          .map((k) => (
+            <KindChip key={k} active={activeKind === k} count={kindCounts.get(k) ?? 0} onClick={() => updateParam("kind", k)}>
+              {labels.kindLabels[k]}
+            </KindChip>
+          ))}
       </div>
 
       <p role="status" className="sr-only">
-        {filtered.length} {labels.count}
+        {filtered.length} {filtered.length === 1 ? labels.countOne : labels.count}
       </p>
 
       {filtered.length === 0 ? (
@@ -144,15 +149,20 @@ export function VideosGrid({ lang, entries, artistsList, kinds, labels }: Props)
   );
 }
 
-function Chip({
-  active,
-  onClick,
-  children,
-}: {
+type ChipProps = {
   active: boolean;
   onClick: () => void;
   children: React.ReactNode;
-}) {
+  /** Conteo entre paréntesis. Sin `opacity-50`: muted-foreground da AA sobre el hueso. */
+  count?: number;
+};
+
+function ChipCount({ active, count }: { active: boolean; count?: number }) {
+  if (count === undefined) return null;
+  return <span className={`ml-1 ${active ? "text-background/70" : "text-muted-foreground"}`}>({count})</span>;
+}
+
+function Chip({ active, onClick, children, count }: ChipProps) {
   return (
     <button
       type="button"
@@ -165,19 +175,12 @@ function Chip({
       }`}
     >
       {children}
+      <ChipCount active={active} count={count} />
     </button>
   );
 }
 
-function KindChip({
-  active,
-  onClick,
-  children,
-}: {
-  active: boolean;
-  onClick: () => void;
-  children: React.ReactNode;
-}) {
+function KindChip({ active, onClick, children, count }: ChipProps) {
   return (
     <button
       type="button"
@@ -190,6 +193,7 @@ function KindChip({
       }`}
     >
       {children}
+      <ChipCount active={active} count={count} />
     </button>
   );
 }
