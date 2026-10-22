@@ -63,8 +63,8 @@ export function Navigation() {
             />
           </a>
 
-          {/* Desktop Navigation */}
-          <div className="hidden md:flex items-center gap-12">
+          {/* Desktop Navigation. gap-6 entre 768 y 1023 px: con 6 ítems, gap-12 desborda. */}
+          <div className="hidden md:flex items-center gap-6 lg:gap-12">
             {navLinks.map((link) => (
               <a
                 key={link.href}

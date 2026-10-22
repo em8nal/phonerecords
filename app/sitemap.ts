@@ -6,6 +6,12 @@ import { getPublishedVideos } from "@/lib/videos";
 const BASE = "https://phonerecords.cl";
 const LOCALES = ["es", "en"] as const;
 
+// Por petición, no congelado en el build: así un video con fecha futura entra al sitemap
+// a las 00:00 America/Santiago de ese día, en paridad con su ficha (404 hasta entonces,
+// evaluada por petición). Sin esto, `getPublishedVideos()` y `now` quedarían fijados en
+// el momento del deploy y el video aparecería recién en el siguiente.
+export const dynamic = "force-dynamic";
+
 function withAlternates(path: string) {
   return {
     es: `${BASE}/es${path}`,
