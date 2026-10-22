@@ -1,10 +1,11 @@
 "use client";
 
-import { useEffect, useRef, useState, useTransition } from "react";
-import { useForm } from "react-hook-form";
+import { Suspense, useEffect, useRef, useState, useTransition } from "react";
+import { useForm, type UseFormSetValue } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import type { z } from "zod";
 import Link from "next/link";
+import { useSearchParams } from "next/navigation";
 import { translations } from "@/lib/translations";
 import { sendContactMessage } from "./actions";
 import { contactFormSchema, topicValues, type Topic } from "./contact-schema";
@@ -134,14 +135,6 @@ export function ContactForm({ lang }: { lang: Lang }) {
     renderedAt.current = Date.now();
   }, []);
 
-  // ?topic=booking (enlace "Booking" del footer y del menú) preselecciona el asunto sin exigir Suspense.
-  useEffect(() => {
-    const wanted = new URLSearchParams(window.location.search).get("topic");
-    if (wanted && (topicValues as readonly string[]).includes(wanted)) {
-      setValue("topic", wanted as Topic);
-    }
-  }, [setValue]);
-
   const onSubmit = (values: FormValues) => {
     startTransition(async () => {
       setServerState({ kind: "idle" });
@@ -181,6 +174,13 @@ export function ContactForm({ lang }: { lang: Lang }) {
       className="space-y-6"
       aria-busy={isPending}
     >
+      {/* ?topic=booking|propuesta (footer y menú) preselecciona el asunto. Solo este hijo nulo
+          lee la query, así el formulario sigue prerenderizado y el asunto también cambia en una
+          navegación suave con next/link desde esta misma página. */}
+      <Suspense fallback={null}>
+        <TopicFromQuery setValue={setValue} />
+      </Suspense>
+
       {/* Honeypot — hidden from humans, visible to dumb bots */}
       <div aria-hidden className="hidden" style={{ display: "none" }}>
         <label htmlFor="website">Website</label>
@@ -346,6 +346,17 @@ export function ContactForm({ lang }: { lang: Lang }) {
       </button>
     </form>
   );
+}
+
+/** Sincroniza el asunto con `?topic=` (valores desconocidos se ignoran). No pinta nada. */
+function TopicFromQuery({ setValue }: { setValue: UseFormSetValue<FormValues> }) {
+  const wanted = useSearchParams().get("topic");
+  useEffect(() => {
+    if (wanted && (topicValues as readonly string[]).includes(wanted)) {
+      setValue("topic", wanted as Topic);
+    }
+  }, [wanted, setValue]);
+  return null;
 }
 
 const fieldClass =
