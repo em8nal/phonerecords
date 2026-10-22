@@ -1,6 +1,7 @@
 import type { MetadataRoute } from "next";
 import { artistSlugs } from "@/lib/artists";
 import { releaseSlugs } from "@/lib/releases";
+import { getPublishedVideos } from "@/lib/videos";
 
 const BASE = "https://phonerecords.cl";
 const LOCALES = ["es", "en"] as const;
@@ -13,7 +14,7 @@ function withAlternates(path: string) {
   };
 }
 
-const STATIC_PAGES = ["/manifiesto", "/sello", "/catalogo", "/eventos", "/contacto", "/privacidad", "/press-kit"] as const;
+const STATIC_PAGES = ["/manifiesto", "/sello", "/catalogo", "/videos", "/eventos", "/contacto", "/privacidad", "/press-kit"] as const;
 
 export default function sitemap(): MetadataRoute.Sitemap {
   const now = new Date();
@@ -56,5 +57,16 @@ export default function sitemap(): MetadataRoute.Sitemap {
     }))
   );
 
-  return [...home, ...editorial, ...artists, ...releases];
+  // Solo videos ya publicados: uno con fecha futura responde 404 hasta las 00:00 Santiago.
+  const videos = LOCALES.flatMap((lang) =>
+    getPublishedVideos().map((v) => ({
+      url: `${BASE}/${lang}/videos/${v.slug}`,
+      lastModified: now,
+      changeFrequency: "yearly" as const,
+      priority: 0.5,
+      alternates: { languages: withAlternates(`/videos/${v.slug}`) },
+    }))
+  );
+
+  return [...home, ...editorial, ...artists, ...releases, ...videos];
 }

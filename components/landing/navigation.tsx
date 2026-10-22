@@ -20,6 +20,7 @@ export function Navigation() {
   const navLinks = [
     { name: "Roster", href: `${home}#roster` },
     { name: isEs ? "Catálogo" : "Catalogue", href: `${home}/catalogo` },
+    { name: t.nav.videos, href: `${home}/videos` },
     { name: t.nav.features, href: `${home}#features` },
     { name: t.nav.howItWorks, href: `${home}/manifiesto` },
     { name: t.nav.label, href: `${home}/sello` },
