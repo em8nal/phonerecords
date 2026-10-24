@@ -12,6 +12,7 @@ import { isUpcoming } from "@/lib/release-date";
 import { PageHero } from "@/components/phone/page-hero";
 import { ArtistCardGrid } from "@/components/phone/artist-card-grid";
 import { getArtistHero, getArtistPortrait } from "@/lib/artist-media";
+import { ArtistVideosSection } from "@/components/phone/video-artist-section";
 
 type ActionLink = { href: string; kind: "listen" | "buy" };
 
@@ -457,6 +458,9 @@ export default async function ArtistPage({
             </div>
           </section>
         ) : null}
+
+        {/* Videos del artista (hasta 6 facades), justo después de la discografía; null si no tiene */}
+        <ArtistVideosSection artistSlug={slug} lang={uiLang} />
       </article>
 
       {/* Grilla de cierre: los demás artistas del roster (plan §5.7.5) */}

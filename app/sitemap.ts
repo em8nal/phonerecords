@@ -1,9 +1,16 @@
 import type { MetadataRoute } from "next";
 import { artistSlugs } from "@/lib/artists";
 import { releaseSlugs } from "@/lib/releases";
+import { getPublishedVideos } from "@/lib/videos";
 
 const BASE = "https://phonerecords.cl";
 const LOCALES = ["es", "en"] as const;
+
+// Por petición, no congelado en el build: así un video con fecha futura entra al sitemap
+// a las 00:00 America/Santiago de ese día, en paridad con su ficha (404 hasta entonces,
+// evaluada por petición). Sin esto, `getPublishedVideos()` y `now` quedarían fijados en
+// el momento del deploy y el video aparecería recién en el siguiente.
+export const dynamic = "force-dynamic";
 
 function withAlternates(path: string) {
   return {
@@ -13,7 +20,7 @@ function withAlternates(path: string) {
   };
 }
 
-const STATIC_PAGES = ["/manifiesto", "/sello", "/catalogo", "/eventos", "/contacto", "/privacidad", "/press-kit"] as const;
+const STATIC_PAGES = ["/manifiesto", "/sello", "/catalogo", "/videos", "/eventos", "/contacto", "/privacidad", "/press-kit"] as const;
 
 export default function sitemap(): MetadataRoute.Sitemap {
   const now = new Date();
@@ -56,5 +63,16 @@ export default function sitemap(): MetadataRoute.Sitemap {
     }))
   );
 
-  return [...home, ...editorial, ...artists, ...releases];
+  // Solo videos ya publicados: uno con fecha futura responde 404 hasta las 00:00 Santiago.
+  const videos = LOCALES.flatMap((lang) =>
+    getPublishedVideos().map((v) => ({
+      url: `${BASE}/${lang}/videos/${v.slug}`,
+      lastModified: now,
+      changeFrequency: "yearly" as const,
+      priority: 0.5,
+      alternates: { languages: withAlternates(`/videos/${v.slug}`) },
+    }))
+  );
+
+  return [...home, ...editorial, ...artists, ...releases, ...videos];
 }

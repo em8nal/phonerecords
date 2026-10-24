@@ -6,6 +6,7 @@ export const translations = {
       howItWorks: "Manifesto",
       developers: "Events",
       label: "Label",
+      videos: "Videos",
       signIn: "Press",
       startCreating: "Newsletter",
     },
@@ -182,6 +183,30 @@ export const translations = {
       errorUnavailable:
         "We couldn't complete your subscription. Please try again in a few minutes.",
     },
+    // Videos: /videos, /videos/[slug] y la sección "Videos" de la ficha de artista (carril F).
+    videos: {
+      headline: "Music videos,\nsessions and live.",
+      intro: "Videos by PHŌNÉ Records artists, with an original text for each piece. Filter by artist or type.",
+      backHome: "Back to home",
+      filterArtist: "Filter by artist",
+      filterKind: "Type",
+      all: "All",
+      count: "videos",
+      countOne: "video",
+      empty: "No videos match that filter.",
+      clear: "Clear filters",
+      more: "More videos",
+      moreHeading: "More videos",
+      allVideos: "All videos",
+      back: "Back to videos",
+      artist: "Artist",
+      date: "Date",
+      duration: "Duration",
+      credits: "Credits",
+      release: "From the release",
+      watchOnYouTube: "Watch on YouTube",
+      newTab: "(opens in new tab)",
+    },
     // Footer. Los href van sin /${lang}: footer-section.tsx antepone el idioma.
     // links.artists debe coincidir con lib/artists.ts (lo vigila `pnpm test:roster`).
     footer: {
@@ -206,6 +231,7 @@ export const translations = {
           { label: "Manifesto", href: "/manifiesto" },
           { label: "Services", href: "#features" },
           { label: "Releases", href: "/catalogo" },
+          { label: "Videos", href: "/videos" },
           { label: "Events", href: "/eventos" },
         ],
         contact: [
@@ -227,6 +253,7 @@ export const translations = {
       howItWorks: "Manifiesto",
       developers: "Eventos",
       label: "Sello",
+      videos: "Videos",
       signIn: "Prensa",
       startCreating: "Newsletter",
     },
@@ -403,6 +430,30 @@ export const translations = {
       errorUnavailable:
         "No pudimos completar la suscripción. Intenta de nuevo en unos minutos.",
     },
+    // Videos: /videos, /videos/[slug] y la sección "Videos" de la ficha de artista (carril F).
+    videos: {
+      headline: "Videoclips,\nsesiones y en vivo.",
+      intro: "Los videos de los artistas de PHŌNÉ Records, con un texto propio por pieza. Filtra por artista o por tipo.",
+      backHome: "Volver al inicio",
+      filterArtist: "Filtrar por artista",
+      filterKind: "Tipo",
+      all: "Todos",
+      count: "videos",
+      countOne: "video",
+      empty: "No hay videos con ese filtro.",
+      clear: "Quitar filtros",
+      more: "Ver más videos",
+      moreHeading: "Más videos",
+      allVideos: "Todos los videos",
+      back: "Volver a videos",
+      artist: "Artista",
+      date: "Fecha",
+      duration: "Duración",
+      credits: "Créditos",
+      release: "Del lanzamiento",
+      watchOnYouTube: "Ver en YouTube",
+      newTab: "(se abre en pestaña nueva)",
+    },
     // Footer. Misma forma que en `en` (el tipo Translations sale de `en`).
     footer: {
       tagline:
@@ -426,6 +477,7 @@ export const translations = {
           { label: "Manifiesto", href: "/manifiesto" },
           { label: "Servicios", href: "#features" },
           { label: "Lanzamientos", href: "/catalogo" },
+          { label: "Videos", href: "/videos" },
           { label: "Eventos", href: "/eventos" },
         ],
         contact: [

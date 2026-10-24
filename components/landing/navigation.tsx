@@ -20,6 +20,7 @@ export function Navigation() {
   const navLinks = [
     { name: "Roster", href: `${home}#roster` },
     { name: isEs ? "Catálogo" : "Catalogue", href: `${home}/catalogo` },
+    { name: t.nav.videos, href: `${home}/videos` },
     { name: t.nav.features, href: `${home}#features` },
     { name: t.nav.howItWorks, href: `${home}/manifiesto` },
     { name: t.nav.label, href: `${home}/sello` },
@@ -62,8 +63,8 @@ export function Navigation() {
             />
           </a>
 
-          {/* Desktop Navigation */}
-          <div className="hidden md:flex items-center gap-12">
+          {/* Desktop Navigation. gap-6 entre 768 y 1023 px: con 6 ítems, gap-12 desborda. */}
+          <div className="hidden md:flex items-center gap-6 lg:gap-12">
             {navLinks.map((link) => (
               <a
                 key={link.href}
