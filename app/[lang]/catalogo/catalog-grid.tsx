@@ -5,6 +5,7 @@ import { useRouter, useSearchParams, usePathname } from "next/navigation";
 import Link from "next/link";
 import Image from "next/image";
 import type { CatalogEntry } from "@/lib/catalog";
+import { resolveArtistSlug } from "@/lib/artist-slugs";
 import { ComingSoonBadge } from "@/components/release-status";
 
 type ArtistChip = { slug: string; name: string; count: number };
@@ -43,7 +44,8 @@ export function CatalogGrid({
   const [isPending, startTransition] = useTransition();
   const [pending, setPending] = useState<string | null>(null);
 
-  const activeArtist = searchParams.get("artist") ?? "";
+  // Un slug viejo guardado en un enlace (?artist=<slug anterior>) filtra igual por el vigente.
+  const activeArtist = resolveArtistSlug(searchParams.get("artist") ?? "");
   const activeYear = searchParams.get("year") ?? "";
   const activeSort = (searchParams.get("sort") as Sort) || "recent";
   const activeView = (searchParams.get("view") as View) || "grid";
@@ -103,13 +105,14 @@ export function CatalogGrid({
   return (
     <div className="space-y-6">
       {/* Artist filter */}
-      <div className="flex flex-wrap gap-2" role="tablist" aria-label={labels.artist}>
+      {/* role="group": los hijos son botones con aria-pressed, no pestañas (un tablist exige role="tab"). */}
+      <div className="flex flex-wrap gap-2" role="group" aria-label={labels.artist}>
         <Chip
           active={!activeArtist}
           loading={isPending && pending === "artist:"}
           onClick={() => updateParam("artist", "")}
         >
-          {labels.all} <span className="opacity-50 ml-1">({totalAll})</span>
+          {labels.all} <ChipCount active={!activeArtist} count={totalAll} />
         </Chip>
         {artistsList.map((a) => (
           <Chip
@@ -118,14 +121,14 @@ export function CatalogGrid({
             loading={isPending && pending === `artist:${a.slug}`}
             onClick={() => updateParam("artist", a.slug)}
           >
-            {a.name} <span className="opacity-50 ml-1">({a.count})</span>
+            {a.name} <ChipCount active={activeArtist === a.slug} count={a.count} />
           </Chip>
         ))}
       </div>
 
       {/* Year + sort row */}
       <div className="flex flex-col gap-3 lg:flex-row lg:items-center lg:justify-between">
-        <div className="flex flex-wrap gap-1.5" role="tablist" aria-label={labels.year}>
+        <div className="flex flex-wrap gap-1.5" role="group" aria-label={labels.year}>
           <YearChip
             active={!activeYear}
             loading={isPending && pending === "year:"}
@@ -140,7 +143,7 @@ export function CatalogGrid({
               loading={isPending && pending === `year:${y.year}`}
               onClick={() => updateParam("year", y.year)}
             >
-              {y.year} <span className="opacity-50 ml-1">({y.count})</span>
+              {y.year} <ChipCount active={activeYear === y.year} count={y.count} />
             </YearChip>
           ))}
         </div>
@@ -313,6 +316,15 @@ export function CatalogGrid({
       )}
     </div>
   );
+}
+
+/**
+ * Conteo entre paréntesis de un chip, con el patrón AA de /videos (ChipCount de
+ * videos-grid.tsx): sin `opacity-50`; muted-foreground sobre el hueso y
+ * background/70 sobre el chip activo dan ≥ 4,5:1.
+ */
+function ChipCount({ active, count }: { active: boolean; count: number }) {
+  return <span className={`ml-1 ${active ? "text-background/70" : "text-muted-foreground"}`}>({count})</span>;
 }
 
 function Chip({
