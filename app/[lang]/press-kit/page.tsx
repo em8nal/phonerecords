@@ -161,166 +161,167 @@ export default async function PressKitPage({
   };
 
   return (
-    <main className="relative min-h-screen overflow-x-hidden noise-overlay print:noise-overlay-none">
-      <script
-        type="application/ld+json"
-        dangerouslySetInnerHTML={{ __html: JSON.stringify(schema) }}
-      />
-      <Navigation />
-      <PageHero
-        image={{
-          desktop: "/media/ecamhi/ecamhi-hero.jpg",
-          mobile: "/media/ecamhi/ecamhi-hero-mobile.jpg",
-          alt: { es: "ecamhi tocando trompeta frente a una proyección", en: "ecamhi playing trumpet in front of a projection" },
-        }}
-        title={c.headline}
-        eyebrow={c.eyebrow}
-        lang={lang === "es" ? "es" : "en"}
-        titleClassName="text-5xl lg:text-7xl"
-      />
+    <>
+      <main className="relative min-h-screen overflow-x-hidden noise-overlay print:noise-overlay-none">
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{ __html: JSON.stringify(schema) }}
+        />
+        <Navigation />
+        <PageHero
+          image={{
+            desktop: "/media/ecamhi/ecamhi-hero.jpg",
+            mobile: "/media/ecamhi/ecamhi-hero-mobile.jpg",
+            alt: { es: "ecamhi tocando trompeta frente a una proyección", en: "ecamhi playing trumpet in front of a projection" },
+          }}
+          title={c.headline}
+          eyebrow={c.eyebrow}
+          lang={lang === "es" ? "es" : "en"}
+          titleClassName="text-5xl lg:text-7xl"
+        />
 
-      <article className="max-w-[1100px] mx-auto px-6 lg:px-12 pt-12 lg:pt-16 pb-24 print:pt-8">
-        <div className="flex items-center justify-between mb-12 print:hidden">
-          <Link
-            href={`/${lang}`}
-            className="inline-flex items-center gap-2 text-sm text-muted-foreground hover:text-foreground transition-colors group"
-          >
-            <ArrowLeft className="w-4 h-4 group-hover:-translate-x-1 transition-transform" />
-            {c.backHome}
-          </Link>
-          <DownloadPdfButton
-            label={c.download}
-            href={`/press-kits/press-kit-${lang}.pdf`}
-            filename={`phone-records-press-kit-${lang}.pdf`}
-          />
-        </div>
-
-        {/* Header */}
-        <header className="mb-16 lg:mb-20 max-w-3xl">
-          <p className="text-lg lg:text-xl text-foreground/85 leading-relaxed">
-            {c.intro}
-          </p>
-        </header>
-
-        {/* Section: label */}
-        <section className="mb-16 grid lg:grid-cols-12 gap-6 lg:gap-12">
-          <h2 className="lg:col-span-4 text-2xl lg:text-3xl font-display tracking-tight text-foreground/70">
-            {c.sections.label}
-          </h2>
-          <div className="lg:col-span-8 text-base leading-relaxed text-foreground/90">
-            {c.labelBody}
+        <article className="max-w-[1100px] mx-auto px-6 lg:px-12 pt-12 lg:pt-16 pb-24 print:pt-8">
+          <div className="flex items-center justify-between mb-12 print:hidden">
+            <Link
+              href={`/${lang}`}
+              className="inline-flex items-center gap-2 text-sm text-muted-foreground hover:text-foreground transition-colors group"
+            >
+              <ArrowLeft className="w-4 h-4 group-hover:-translate-x-1 transition-transform" />
+              {c.backHome}
+            </Link>
+            <DownloadPdfButton
+              label={c.download}
+              href={`/press-kits/press-kit-${lang}.pdf`}
+              filename={`phone-records-press-kit-${lang}.pdf`}
+            />
           </div>
-        </section>
 
-        {/* Section: roster */}
-        <section className="mb-16 press-roster-section">
-          <div className="flex items-baseline justify-between mb-10">
-            <h2 className="text-2xl lg:text-3xl font-display tracking-tight">
-              {c.sections.roster}
+          {/* Header */}
+          <header className="mb-16 lg:mb-20 max-w-3xl">
+            <p className="text-lg lg:text-xl text-foreground/85 leading-relaxed">
+              {c.intro}
+            </p>
+          </header>
+
+          {/* Section: label */}
+          <section className="mb-16 grid lg:grid-cols-12 gap-6 lg:gap-12">
+            <h2 className="lg:col-span-4 text-2xl lg:text-3xl font-display tracking-tight text-foreground/70">
+              {c.sections.label}
             </h2>
-            <span className="font-mono text-xs uppercase tracking-widest text-muted-foreground">
-              {rosterRows.length} {c.artistInside}
-            </span>
-          </div>
-          <div className="space-y-12 press-roster">
-            {rosterRows.map((r) => {
-              const introLine =
-                r.bio.split("\n").find((line) => line.trim().length > 0) ?? "";
-              return (
-                <div
-                  key={r.slug}
-                  className="press-roster-row grid lg:grid-cols-12 gap-6 lg:gap-10 pb-12 border-b border-foreground/10 last:border-0"
-                >
-                  <div className="lg:col-span-3">
-                    <div className="relative aspect-square bg-foreground/5 overflow-hidden rounded">
-                      {ARTIST_PORTRAIT.has(r.slug) ? (
-                        <Image
-                          src={`/artists/${r.slug}.jpg`}
-                          alt={r.name}
-                          fill
-                          sizes="(min-width: 1024px) 25vw, 100vw"
-                          className="object-cover"
-                        />
-                      ) : r.sampleCover ? (
-                        <Image
-                          src={r.sampleCover}
-                          alt={`${r.name} — ${r.sampleTitle}`}
-                          fill
-                          sizes="(min-width: 1024px) 25vw, 100vw"
-                          className="object-cover"
-                        />
-                      ) : (
-                        <div className="absolute inset-0 flex items-center justify-center text-muted-foreground/40 font-display text-3xl tracking-widest">
-                          PHŌNÉ
-                        </div>
-                      )}
+            <div className="lg:col-span-8 text-base leading-relaxed text-foreground/90">
+              {c.labelBody}
+            </div>
+          </section>
+
+          {/* Section: roster */}
+          <section className="mb-16 press-roster-section">
+            <div className="flex items-baseline justify-between mb-10">
+              <h2 className="text-2xl lg:text-3xl font-display tracking-tight">
+                {c.sections.roster}
+              </h2>
+              <span className="font-mono text-xs uppercase tracking-widest text-muted-foreground">
+                {rosterRows.length} {c.artistInside}
+              </span>
+            </div>
+            <div className="space-y-12 press-roster">
+              {rosterRows.map((r) => {
+                const introLine =
+                  r.bio.split("\n").find((line) => line.trim().length > 0) ?? "";
+                return (
+                  <div
+                    key={r.slug}
+                    className="press-roster-row grid lg:grid-cols-12 gap-6 lg:gap-10 pb-12 border-b border-foreground/10 last:border-0"
+                  >
+                    <div className="lg:col-span-3">
+                      <div className="relative aspect-square bg-foreground/5 overflow-hidden rounded">
+                        {ARTIST_PORTRAIT.has(r.slug) ? (
+                          <Image
+                            src={`/artists/${r.slug}.jpg`}
+                            alt={r.name}
+                            fill
+                            sizes="(min-width: 1024px) 25vw, 100vw"
+                            className="object-cover"
+                          />
+                        ) : r.sampleCover ? (
+                          <Image
+                            src={r.sampleCover}
+                            alt={`${r.name} — ${r.sampleTitle}`}
+                            fill
+                            sizes="(min-width: 1024px) 25vw, 100vw"
+                            className="object-cover"
+                          />
+                        ) : (
+                          <div className="absolute inset-0 flex items-center justify-center text-muted-foreground/40 font-display text-3xl tracking-widest">
+                            PHŌNÉ
+                          </div>
+                        )}
+                      </div>
                     </div>
-                  </div>
-                  <div className="lg:col-span-9 space-y-3">
-                    <div className="flex items-baseline gap-4 flex-wrap">
-                      <h3 className="text-2xl lg:text-3xl font-display tracking-tight">
+                    <div className="lg:col-span-9 space-y-3">
+                      <div className="flex items-baseline gap-4 flex-wrap">
+                        <h3 className="text-2xl lg:text-3xl font-display tracking-tight">
+                          <Link
+                            href={`/${lang}/artistas/${r.slug}`}
+                            className="hover:text-foreground/70 transition-colors"
+                          >
+                            {r.name}
+                          </Link>
+                        </h3>
+                        <span className="font-mono text-xs uppercase tracking-widest text-muted-foreground">
+                          {r.origin}
+                        </span>
+                      </div>
+                      <div className="font-mono text-xs uppercase tracking-wider text-muted-foreground">
+                        {r.genres.join(" · ")} · {c.releaseCount(r.releaseCount)}
+                      </div>
+                      <p className="text-sm lg:text-base leading-relaxed text-foreground/90">
+                        {introLine}
+                      </p>
+                      <div className="flex flex-wrap gap-3 pt-2 text-xs font-mono uppercase tracking-widest text-muted-foreground">
+                        <span>{c.individualPress}</span>
                         <Link
-                          href={`/${lang}/artistas/${r.slug}`}
-                          className="hover:text-foreground/70 transition-colors"
+                          href={`/press/${lang}/${r.slug}`}
+                          className="text-foreground/80 hover:text-foreground transition-colors underline underline-offset-4"
                         >
-                          {r.name}
+                          /press/{lang}/{r.slug}
                         </Link>
-                      </h3>
-                      <span className="font-mono text-xs uppercase tracking-widest text-muted-foreground">
-                        {r.origin}
-                      </span>
-                    </div>
-                    <div className="font-mono text-xs uppercase tracking-wider text-muted-foreground">
-                      {r.genres.join(" · ")} · {c.releaseCount(r.releaseCount)}
-                    </div>
-                    <p className="text-sm lg:text-base leading-relaxed text-foreground/90">
-                      {introLine}
-                    </p>
-                    <div className="flex flex-wrap gap-3 pt-2 text-xs font-mono uppercase tracking-widest text-muted-foreground">
-                      <span>{c.individualPress}</span>
-                      <Link
-                        href={`/press/${lang}/${r.slug}`}
-                        className="text-foreground/80 hover:text-foreground transition-colors underline underline-offset-4"
-                      >
-                        /press/{lang}/{r.slug}
-                      </Link>
+                      </div>
                     </div>
                   </div>
-                </div>
-              );
-            })}
+                );
+              })}
+            </div>
+          </section>
+
+          {/* Section: contact */}
+          <section className="mb-16 grid lg:grid-cols-12 gap-6 lg:gap-12 press-contact-section">
+            <h2 className="lg:col-span-4 text-2xl lg:text-3xl font-display tracking-tight text-foreground/70">
+              {c.sections.contact}
+            </h2>
+            <div className="lg:col-span-8 text-base leading-relaxed text-foreground/90">
+              <dl className="divide-y divide-foreground/10 border-y border-foreground/10">
+                {c.contactRows.map((row) => (
+                  <div
+                    key={row.label}
+                    className="grid grid-cols-1 sm:grid-cols-12 gap-2 py-3"
+                  >
+                    <dt className="sm:col-span-4 font-mono text-xs uppercase tracking-widest text-muted-foreground">
+                      {row.label}
+                    </dt>
+                    <dd className="sm:col-span-8 text-foreground/90">{row.value}</dd>
+                  </div>
+                ))}
+              </dl>
+              <p className="mt-6 text-sm italic text-foreground/70">{c.contactNote}</p>
+            </div>
+          </section>
+
+          <div className="font-mono text-xs uppercase tracking-widest text-muted-foreground/60 pt-8 border-t border-foreground/10">
+            phonerecords.cl · {totalReleases} releases · {new Date().getFullYear()}
           </div>
-        </section>
-
-        {/* Section: contact */}
-        <section className="mb-16 grid lg:grid-cols-12 gap-6 lg:gap-12 press-contact-section">
-          <h2 className="lg:col-span-4 text-2xl lg:text-3xl font-display tracking-tight text-foreground/70">
-            {c.sections.contact}
-          </h2>
-          <div className="lg:col-span-8 text-base leading-relaxed text-foreground/90">
-            <dl className="divide-y divide-foreground/10 border-y border-foreground/10">
-              {c.contactRows.map((row) => (
-                <div
-                  key={row.label}
-                  className="grid grid-cols-1 sm:grid-cols-12 gap-2 py-3"
-                >
-                  <dt className="sm:col-span-4 font-mono text-xs uppercase tracking-widest text-muted-foreground">
-                    {row.label}
-                  </dt>
-                  <dd className="sm:col-span-8 text-foreground/90">{row.value}</dd>
-                </div>
-              ))}
-            </dl>
-            <p className="mt-6 text-sm italic text-foreground/70">{c.contactNote}</p>
-          </div>
-        </section>
-
-        <div className="font-mono text-xs uppercase tracking-widest text-muted-foreground/60 pt-8 border-t border-foreground/10">
-          phonerecords.cl · {totalReleases} releases · {new Date().getFullYear()}
-        </div>
-      </article>
-
+        </article>
+      </main>
       <FooterSection />
-    </main>
+    </>
   );
 }

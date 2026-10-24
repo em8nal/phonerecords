@@ -254,7 +254,6 @@ export function ContactForm({ lang }: { lang: Lang }) {
             <textarea
               id="links"
               rows={3}
-              inputMode="url"
               autoCapitalize="none"
               autoCorrect="off"
               spellCheck={false}
@@ -331,7 +330,7 @@ export function ContactForm({ lang }: { lang: Lang }) {
       {serverState.kind === "err" && (
         <p
           role="alert"
-          className="text-sm text-red-500/90"
+          className="text-sm text-brand"
         >
           {serverState.msg}
         </p>
@@ -360,7 +359,7 @@ function TopicFromQuery({ setValue }: { setValue: UseFormSetValue<FormValues> })
 }
 
 const fieldClass =
-  "w-full bg-transparent border border-foreground/15 rounded-xl px-4 h-12 text-base text-foreground placeholder:text-muted-foreground focus:outline-none focus:border-foreground/40 transition-colors";
+  "w-full bg-transparent border border-foreground/15 rounded-xl px-4 h-12 text-base text-foreground placeholder:text-muted-foreground focus:outline-none focus:border-foreground/40 focus-visible:ring-2 focus-visible:ring-brand focus-visible:ring-offset-2 focus-visible:ring-offset-background transition-colors";
 
 function Field({
   id,
@@ -391,7 +390,7 @@ function Field({
         </p>
       )}
       {error && (
-        <p id={`${id}-error`} className="text-xs text-red-500/90">
+        <p id={`${id}-error`} className="text-xs text-brand">
           {error}
         </p>
       )}

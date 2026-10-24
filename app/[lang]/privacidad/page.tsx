@@ -292,60 +292,61 @@ export default async function PrivacyPage({
   };
 
   return (
-    <main className="relative min-h-screen overflow-x-hidden noise-overlay">
-      <script
-        type="application/ld+json"
-        dangerouslySetInnerHTML={{ __html: JSON.stringify(schema) }}
-      />
-      <Navigation />
+    <>
+      <main className="relative min-h-screen overflow-x-hidden noise-overlay">
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{ __html: JSON.stringify(schema) }}
+        />
+        <Navigation />
 
-      <article className="max-w-[1000px] mx-auto px-6 lg:px-12 pt-32 lg:pt-40 pb-24">
-        <Link
-          href={`/${lang}`}
-          className="inline-flex items-center gap-2 text-sm text-muted-foreground hover:text-foreground transition-colors mb-12 group"
-        >
-          <ArrowLeft className="w-4 h-4 group-hover:-translate-x-1 transition-transform" />
-          {c.backHome}
-        </Link>
+        <article className="max-w-[1000px] mx-auto px-6 lg:px-12 pt-32 lg:pt-40 pb-24">
+          <Link
+            href={`/${lang}`}
+            className="inline-flex items-center gap-2 text-sm text-muted-foreground hover:text-foreground transition-colors mb-12 group"
+          >
+            <ArrowLeft className="w-4 h-4 group-hover:-translate-x-1 transition-transform" />
+            {c.backHome}
+          </Link>
 
-        <header className="mb-20 lg:mb-24">
-          <span className="inline-flex items-center gap-3 text-sm font-mono text-muted-foreground mb-8">
-            <span className="w-8 h-px bg-foreground/30" />
-            {c.eyebrow}
-          </span>
-          <h1 className="text-5xl lg:text-7xl font-display tracking-tight leading-[0.95] whitespace-pre-line mb-10">
-            {c.headline}
-          </h1>
-          <p className="text-lg lg:text-xl text-foreground/85 leading-relaxed max-w-3xl">
-            {c.intro}
-          </p>
-          <p className="mt-8 font-mono text-xs uppercase tracking-widest text-muted-foreground">
-            {c.lastUpdated}: {lastUpdatedFmt}
-          </p>
-        </header>
+          <header className="mb-20 lg:mb-24">
+            <span className="inline-flex items-center gap-3 text-sm font-mono text-muted-foreground mb-8">
+              <span className="w-8 h-px bg-foreground/30" />
+              {c.eyebrow}
+            </span>
+            <h1 className="text-5xl lg:text-7xl font-display tracking-tight leading-[0.95] whitespace-pre-line mb-10">
+              {c.headline}
+            </h1>
+            <p className="text-lg lg:text-xl text-foreground/85 leading-relaxed max-w-3xl">
+              {c.intro}
+            </p>
+            <p className="mt-8 font-mono text-xs uppercase tracking-widest text-muted-foreground">
+              {c.lastUpdated}: {lastUpdatedFmt}
+            </p>
+          </header>
 
-        <div className="space-y-16 lg:space-y-20">
-          {c.sections.map((section) => (
-            <section key={section.title} className="grid lg:grid-cols-12 gap-6 lg:gap-12">
-              <h2 className="lg:col-span-4 text-xl lg:text-2xl font-display tracking-tight text-foreground/70">
-                {section.title}
-              </h2>
-              <div className="lg:col-span-8 space-y-5 text-base leading-relaxed text-foreground/90">
-                {section.body.split(/\n{2,}/).map((p, i) => (
-                  <p key={i} className="whitespace-pre-line">
-                    {p}
-                  </p>
-                ))}
-                {section.consentButton && (
-                  <ConsentResetButton label={section.consentButton} />
-                )}
-              </div>
-            </section>
-          ))}
-        </div>
-      </article>
-
+          <div className="space-y-16 lg:space-y-20">
+            {c.sections.map((section) => (
+              <section key={section.title} className="grid lg:grid-cols-12 gap-6 lg:gap-12">
+                <h2 className="lg:col-span-4 text-xl lg:text-2xl font-display tracking-tight text-foreground/70">
+                  {section.title}
+                </h2>
+                <div className="lg:col-span-8 space-y-5 text-base leading-relaxed text-foreground/90">
+                  {section.body.split(/\n{2,}/).map((p, i) => (
+                    <p key={i} className="whitespace-pre-line">
+                      {p}
+                    </p>
+                  ))}
+                  {section.consentButton && (
+                    <ConsentResetButton label={section.consentButton} />
+                  )}
+                </div>
+              </section>
+            ))}
+          </div>
+        </article>
+      </main>
       <FooterSection />
-    </main>
+    </>
   );
 }

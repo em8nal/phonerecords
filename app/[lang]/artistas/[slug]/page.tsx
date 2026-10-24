@@ -197,276 +197,277 @@ export default async function ArtistPage({
   };
 
   return (
-    <main className="relative min-h-screen overflow-x-hidden noise-overlay">
-      <script
-        type="application/ld+json"
-        dangerouslySetInnerHTML={{ __html: JSON.stringify(schema) }}
-      />
-      <Navigation />
+    <>
+      <main className="relative min-h-screen overflow-x-hidden noise-overlay">
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{ __html: JSON.stringify(schema) }}
+        />
+        <Navigation />
 
-      {/* Hero fotográfico ancho: contiene el h1 (nombre) y el eyebrow (géneros) */}
-      {hero && (
-        <PageHero image={hero} title={artist.name} eyebrow={artist.genres.join(" · ")} lang={uiLang} />
-      )}
+        {/* Hero fotográfico ancho: contiene el h1 (nombre) y el eyebrow (géneros) */}
+        {hero && (
+          <PageHero image={hero} title={artist.name} eyebrow={artist.genres.join(" · ")} lang={uiLang} />
+        )}
 
-      <article
-        className={`max-w-[1200px] mx-auto px-6 lg:px-12 pb-8 lg:pb-12 ${hero ? "pt-12 lg:pt-16" : "pt-32 lg:pt-40"}`}
-      >
-        {/* Back link */}
-        <Link
-          href={`/${lang}#roster`}
-          className="inline-flex items-center gap-2 text-sm text-muted-foreground hover:text-foreground transition-colors mb-12 group"
+        <article
+          className={`max-w-[1200px] mx-auto px-6 lg:px-12 pb-8 lg:pb-12 ${hero ? "pt-12 lg:pt-16" : "pt-32 lg:pt-40"}`}
         >
-          <ArrowLeft className="w-4 h-4 group-hover:-translate-x-1 transition-transform" />
-          {labels.back}
-        </Link>
+          {/* Back link */}
+          <Link
+            href={`/${lang}#roster`}
+            className="inline-flex items-center gap-2 text-sm text-muted-foreground hover:text-foreground transition-colors mb-12 group"
+          >
+            <ArrowLeft className="w-4 h-4 group-hover:-translate-x-1 transition-transform" />
+            {labels.back}
+          </Link>
 
-        {/* Header: con hero, el nombre y los géneros ya van sobre la foto (h1 del PageHero) */}
-        {hero ? (
-          <header className="mb-12 lg:mb-16">
-            <p className="font-mono text-sm text-muted-foreground">
-              {labels.origin} · {artist.origin}
-            </p>
-          </header>
-        ) : (
-          <header className={`mb-16 lg:mb-24 ${portrait ? "grid lg:grid-cols-12 gap-8 lg:gap-12 items-end" : ""}`}>
-            <div className={portrait ? "lg:col-span-7 order-2 lg:order-1" : ""}>
-              <div className="font-mono text-xs text-muted-foreground tracking-widest uppercase mb-6">
-                {labels.genre} · {artist.genres.join(" · ")}
-              </div>
-              <h1 className="text-5xl lg:text-8xl font-display tracking-tight leading-[0.9] mb-8">
-                {artist.name}
-              </h1>
-              <div className="font-mono text-sm text-muted-foreground">
+          {/* Header: con hero, el nombre y los géneros ya van sobre la foto (h1 del PageHero) */}
+          {hero ? (
+            <header className="mb-12 lg:mb-16">
+              <p className="font-mono text-sm text-muted-foreground">
                 {labels.origin} · {artist.origin}
-              </div>
-            </div>
-            {portrait && (
-              <div className="lg:col-span-5 order-1 lg:order-2">
-                <div className="relative aspect-square bg-foreground/5 rounded overflow-hidden">
-                  {/* Sin hero, el retrato es el LCP de la página */}
-                  <Image
-                    src={portrait}
-                    alt={artist.name}
-                    fill
-                    sizes="(min-width: 1024px) 40vw, 100vw"
-                    className="object-cover"
-                    priority
-                  />
+              </p>
+            </header>
+          ) : (
+            <header className={`mb-16 lg:mb-24 ${portrait ? "grid lg:grid-cols-12 gap-8 lg:gap-12 items-end" : ""}`}>
+              <div className={portrait ? "lg:col-span-7 order-2 lg:order-1" : ""}>
+                <div className="font-mono text-xs text-muted-foreground tracking-widest uppercase mb-6">
+                  {labels.genre} · {artist.genres.join(" · ")}
+                </div>
+                <h1 className="text-5xl lg:text-8xl font-display tracking-tight leading-[0.9] mb-8">
+                  {artist.name}
+                </h1>
+                <div className="font-mono text-sm text-muted-foreground">
+                  {labels.origin} · {artist.origin}
                 </div>
               </div>
-            )}
-          </header>
-        )}
+              {portrait && (
+                <div className="lg:col-span-5 order-1 lg:order-2">
+                  <div className="relative aspect-square bg-foreground/5 rounded overflow-hidden">
+                    {/* Sin hero, el retrato es el LCP de la página */}
+                    <Image
+                      src={portrait}
+                      alt={artist.name}
+                      fill
+                      sizes="(min-width: 1024px) 40vw, 100vw"
+                      className="object-cover"
+                      priority
+                    />
+                  </div>
+                </div>
+              )}
+            </header>
+          )}
 
-        {/* Bio */}
-        <section className="grid lg:grid-cols-12 gap-12 lg:gap-16 mb-20">
-          <div className="lg:col-span-8 space-y-6 text-lg lg:text-xl text-foreground/90 leading-relaxed">
-            {bio.split(/\n{2,}/).map((paragraph, i) => (
-              <p key={i} className={i === 0 ? "text-xl lg:text-2xl text-foreground" : ""}>
-                {paragraph}
-              </p>
-            ))}
-          </div>
-
-          {/* Sidebar: links + stats */}
-          <aside className="lg:col-span-4 space-y-10">
-            {/* Con hero, el retrato cuadrado baja al aside como ficha junto a métricas y enlaces
-                (en Newen es la única foto real de la banda: su hero es el arte del single). */}
-            {hero && portrait && (
-              <figure className="relative aspect-square w-full max-w-xs lg:max-w-none overflow-hidden rounded bg-foreground/5">
-                <Image
-                  src={portrait}
-                  alt={isEs ? `${artist.name}, retrato` : `${artist.name}, portrait`}
-                  fill
-                  sizes="(min-width: 1200px) 330px, (min-width: 1024px) 30vw, 320px"
-                  className="object-cover"
-                />
-              </figure>
-            )}
-            {artist.stats && (
-              <div>
-                <h3 className="font-mono text-xs text-muted-foreground uppercase tracking-widest mb-4">
-                  {labels.stats}
-                </h3>
-                <dl className="space-y-3">
-                  {artist.stats.monthlyListeners != null && (
-                    <div className="flex items-baseline justify-between border-b border-foreground/10 pb-2">
-                      <dt className="text-sm text-muted-foreground">
-                        {isEs ? "Oyentes mensuales" : "Monthly listeners"}
-                      </dt>
-                      <dd className="font-display text-xl">
-                        {artist.stats.monthlyListeners.toLocaleString(numberLocale)}
-                      </dd>
-                    </div>
-                  )}
-                  {artist.stats.spotifyFollowers != null && (
-                    <div className="flex items-baseline justify-between border-b border-foreground/10 pb-2">
-                      <dt className="text-sm text-muted-foreground">Spotify</dt>
-                      <dd className="font-display text-xl">
-                        {artist.stats.spotifyFollowers.toLocaleString(numberLocale)}
-                      </dd>
-                    </div>
-                  )}
-                  {artist.stats.youtubeSubs != null && (
-                    <div className="flex items-baseline justify-between border-b border-foreground/10 pb-2">
-                      <dt className="text-sm text-muted-foreground">YouTube</dt>
-                      <dd className="font-display text-xl">
-                        {artist.stats.youtubeSubs.toLocaleString(numberLocale)}
-                      </dd>
-                    </div>
-                  )}
-                </dl>
-              </div>
-            )}
-
-            {artist.links.length > 0 && (
-              <div>
-                <h3 className="font-mono text-xs text-muted-foreground uppercase tracking-widest mb-4">
-                  {labels.links}
-                </h3>
-                <ul className="space-y-2">
-                  {artist.links.map((link) => (
-                    <li key={link.href}>
-                      <a
-                        href={link.href}
-                        target="_blank"
-                        rel="noopener noreferrer"
-                        className="inline-flex items-center gap-2 text-sm hover:text-foreground/70 transition-colors group"
-                      >
-                        {link.label}
-                        <ExternalLink className="w-3 h-3 opacity-50 group-hover:opacity-100 transition-opacity" />
-                      </a>
-                    </li>
-                  ))}
-                </ul>
-              </div>
-            )}
-
-            {/* Press kit */}
-            <div>
-              <h3 className="font-mono text-xs text-muted-foreground uppercase tracking-widest mb-4">
-                {isEs ? "Press kit" : "Press kit"}
-              </h3>
-              <Link
-                href={`/press/${lang}/${slug}`}
-                className="inline-flex items-center gap-2 px-4 h-10 text-sm rounded-full border border-foreground/20 hover:bg-foreground/5 transition-colors"
-              >
-                <FileText className="w-4 h-4" />
-                {isEs ? "Descargar PDF" : "Download PDF"}
-              </Link>
+          {/* Bio */}
+          <section className="grid lg:grid-cols-12 gap-12 lg:gap-16 mb-20">
+            <div className="lg:col-span-8 space-y-6 text-lg lg:text-xl text-foreground/90 leading-relaxed">
+              {bio.split(/\n{2,}/).map((paragraph, i) => (
+                <p key={i} className={i === 0 ? "text-xl lg:text-2xl text-foreground" : ""}>
+                  {paragraph}
+                </p>
+              ))}
             </div>
-          </aside>
-        </section>
 
-        {/* Spotify embed (top tracks) */}
-        {spotifyArtistId && (
-          <section className="mb-20">
-            <h2 className="font-mono text-xs text-muted-foreground uppercase tracking-widest mb-6">
-              {labels.listenSpotify}
-            </h2>
-            <SpotifyArtistEmbed
-              artistId={spotifyArtistId}
-              cover={portrait ?? undefined}
-              coverAlt={artist.name}
-              title={artist.name}
-            />
+            {/* Sidebar: links + stats */}
+            <aside className="lg:col-span-4 space-y-10">
+              {/* Con hero, el retrato cuadrado baja al aside como ficha junto a métricas y enlaces
+                  (en Newen es la única foto real de la banda: su hero es el arte del single). */}
+              {hero && portrait && (
+                <figure className="relative aspect-square w-full max-w-xs lg:max-w-none overflow-hidden rounded bg-foreground/5">
+                  <Image
+                    src={portrait}
+                    alt={isEs ? `${artist.name}, retrato` : `${artist.name}, portrait`}
+                    fill
+                    sizes="(min-width: 1200px) 330px, (min-width: 1024px) 30vw, 320px"
+                    className="object-cover"
+                  />
+                </figure>
+              )}
+              {artist.stats && (
+                <div>
+                  <h2 className="font-mono text-xs text-muted-foreground uppercase tracking-widest mb-4">
+                    {labels.stats}
+                  </h2>
+                  <dl className="space-y-3">
+                    {artist.stats.monthlyListeners != null && (
+                      <div className="flex items-baseline justify-between border-b border-foreground/10 pb-2">
+                        <dt className="text-sm text-muted-foreground">
+                          {isEs ? "Oyentes mensuales" : "Monthly listeners"}
+                        </dt>
+                        <dd className="font-display text-xl">
+                          {artist.stats.monthlyListeners.toLocaleString(numberLocale)}
+                        </dd>
+                      </div>
+                    )}
+                    {artist.stats.spotifyFollowers != null && (
+                      <div className="flex items-baseline justify-between border-b border-foreground/10 pb-2">
+                        <dt className="text-sm text-muted-foreground">Spotify</dt>
+                        <dd className="font-display text-xl">
+                          {artist.stats.spotifyFollowers.toLocaleString(numberLocale)}
+                        </dd>
+                      </div>
+                    )}
+                    {artist.stats.youtubeSubs != null && (
+                      <div className="flex items-baseline justify-between border-b border-foreground/10 pb-2">
+                        <dt className="text-sm text-muted-foreground">YouTube</dt>
+                        <dd className="font-display text-xl">
+                          {artist.stats.youtubeSubs.toLocaleString(numberLocale)}
+                        </dd>
+                      </div>
+                    )}
+                  </dl>
+                </div>
+              )}
+
+              {artist.links.length > 0 && (
+                <div>
+                  <h2 className="font-mono text-xs text-muted-foreground uppercase tracking-widest mb-4">
+                    {labels.links}
+                  </h2>
+                  <ul className="space-y-2">
+                    {artist.links.map((link) => (
+                      <li key={link.href}>
+                        <a
+                          href={link.href}
+                          target="_blank"
+                          rel="noopener noreferrer"
+                          className="inline-flex items-center gap-2 text-sm hover:text-foreground/70 transition-colors group"
+                        >
+                          {link.label}
+                          <ExternalLink className="w-3 h-3 opacity-50 group-hover:opacity-100 transition-opacity" />
+                        </a>
+                      </li>
+                    ))}
+                  </ul>
+                </div>
+              )}
+
+              {/* Press kit */}
+              <div>
+                <h2 className="font-mono text-xs text-muted-foreground uppercase tracking-widest mb-4">
+                  {isEs ? "Press kit" : "Press kit"}
+                </h2>
+                <Link
+                  href={`/press/${lang}/${slug}`}
+                  className="inline-flex items-center gap-2 px-4 h-10 text-sm rounded-full border border-foreground/20 hover:bg-foreground/5 transition-colors"
+                >
+                  <FileText className="w-4 h-4" />
+                  {isEs ? "Descargar PDF" : "Download PDF"}
+                </Link>
+              </div>
+            </aside>
           </section>
-        )}
 
-        {/* Full discography — rich entries link to detail pages, lightweight ones don't */}
-        {allEntries.length > 0 ? (
-          <section className="mb-20">
-            <div className="flex items-baseline justify-between mb-12">
-              <h2 className="text-3xl lg:text-5xl font-display tracking-tight">
-                {labels.releases}
+          {/* Spotify embed (top tracks) */}
+          {spotifyArtistId && (
+            <section className="mb-20">
+              <h2 className="font-mono text-xs text-muted-foreground uppercase tracking-widest mb-6">
+                {labels.listenSpotify}
               </h2>
-              <Link
-                href={`/${lang}/catalogo`}
-                className="font-mono text-xs uppercase tracking-widest text-muted-foreground hover:text-foreground transition-colors"
-              >
-                {labels.catalogue} →
-              </Link>
-            </div>
-            <div className="border-t border-foreground/10">
-              {allEntries.map((r) => {
-                const release = r.releaseSlug ? getRelease(r.releaseSlug) : undefined;
-                const richActions = pickReleaseActions(release?.links);
-                // Compose final listen + buy. Lightweight entries (no rich record) fall back to externalHref.
-                let listenAction: ActionLink | undefined = richActions.listen;
-                let buyAction: ActionLink | undefined = richActions.buy;
-                if (!buyAction && r.externalHref && (r.externalKind ?? "buy") === "buy") {
-                  buyAction = { href: r.externalHref, kind: "buy" };
-                }
-                if (!listenAction && r.externalHref && r.externalKind === "listen") {
-                  listenAction = { href: r.externalHref, kind: "listen" };
-                }
-                const titleNode = (
-                  <span className="font-display text-lg group-hover:translate-x-1 transition-transform inline-block">
-                    {r.title}
-                  </span>
-                );
-                return (
-                  <div
-                    key={r.key}
-                    className="group grid grid-cols-12 gap-4 py-6 border-b border-foreground/10 hover:bg-foreground/[0.02] transition-colors px-2 -mx-2"
-                  >
-                    <div className="col-span-6 sm:col-span-2 font-mono text-sm text-muted-foreground self-center">
-                      {r.year || r.releaseDate.slice(0, 7)}
-                    </div>
-                    <div className="col-span-12 sm:col-span-5 order-3 sm:order-none">
-                      {r.releaseSlug ? (
-                        <Link href={`/${lang}/releases/${r.releaseSlug}`}>{titleNode}</Link>
-                      ) : (
-                        titleNode
-                      )}
-                      {r.format && r.format !== "—" && (
-                        <div className="text-sm text-muted-foreground mt-1">{r.format}</div>
-                      )}
-                    </div>
-                    <div className="col-span-12 sm:col-span-3 text-sm text-muted-foreground self-center order-4 sm:order-none">
-                      {r.label && <div className="font-mono text-xs uppercase tracking-wider">{r.label}</div>}
-                      {r.notes && <div className="mt-1">{r.notes}</div>}
-                    </div>
-                    <div className="col-span-6 sm:col-span-2 self-center order-2 sm:order-none">
-                      <div className="flex flex-col sm:items-end gap-1.5">
-                        {listenAction && (
-                          <a
-                            href={listenAction.href}
-                            target="_blank"
-                            rel="noopener noreferrer"
-                            className="inline-flex items-center justify-center gap-1.5 px-3.5 h-9 text-xs font-mono font-bold uppercase tracking-widest rounded-full bg-foreground text-background hover:bg-foreground/85 transition-colors w-full sm:w-auto"
-                          >
-                            ▶ {listenAction.href.includes("onerpm.link") && isUpcoming(r.releaseDate) ? "Pre-save" : labels.listen}
-                          </a>
+              <SpotifyArtistEmbed
+                artistId={spotifyArtistId}
+                cover={portrait ?? undefined}
+                coverAlt={artist.name}
+                title={artist.name}
+              />
+            </section>
+          )}
+
+          {/* Full discography — rich entries link to detail pages, lightweight ones don't */}
+          {allEntries.length > 0 ? (
+            <section className="mb-20">
+              <div className="flex items-baseline justify-between mb-12">
+                <h2 className="text-3xl lg:text-5xl font-display tracking-tight">
+                  {labels.releases}
+                </h2>
+                <Link
+                  href={`/${lang}/catalogo`}
+                  className="font-mono text-xs uppercase tracking-widest text-muted-foreground hover:text-foreground transition-colors"
+                >
+                  {labels.catalogue} →
+                </Link>
+              </div>
+              <div className="border-t border-foreground/10">
+                {allEntries.map((r) => {
+                  const release = r.releaseSlug ? getRelease(r.releaseSlug) : undefined;
+                  const richActions = pickReleaseActions(release?.links);
+                  // Compose final listen + buy. Lightweight entries (no rich record) fall back to externalHref.
+                  let listenAction: ActionLink | undefined = richActions.listen;
+                  let buyAction: ActionLink | undefined = richActions.buy;
+                  if (!buyAction && r.externalHref && (r.externalKind ?? "buy") === "buy") {
+                    buyAction = { href: r.externalHref, kind: "buy" };
+                  }
+                  if (!listenAction && r.externalHref && r.externalKind === "listen") {
+                    listenAction = { href: r.externalHref, kind: "listen" };
+                  }
+                  const titleNode = (
+                    <span className="font-display text-lg group-hover:translate-x-1 transition-transform inline-block">
+                      {r.title}
+                    </span>
+                  );
+                  return (
+                    <div
+                      key={r.key}
+                      className="group grid grid-cols-12 gap-4 py-6 border-b border-foreground/10 hover:bg-foreground/[0.02] transition-colors px-2 -mx-2"
+                    >
+                      <div className="col-span-6 sm:col-span-2 font-mono text-sm text-muted-foreground self-center">
+                        {r.year || r.releaseDate.slice(0, 7)}
+                      </div>
+                      <div className="col-span-12 sm:col-span-5 order-3 sm:order-none">
+                        {r.releaseSlug ? (
+                          <Link href={`/${lang}/releases/${r.releaseSlug}`}>{titleNode}</Link>
+                        ) : (
+                          titleNode
                         )}
-                        {buyAction && (
-                          <a
-                            href={buyAction.href}
-                            target="_blank"
-                            rel="noopener noreferrer"
-                            className="inline-flex items-center justify-center gap-1.5 px-3.5 h-9 text-xs font-mono font-bold uppercase tracking-widest rounded-full border border-foreground/20 text-foreground hover:bg-foreground hover:text-background transition-colors w-full sm:w-auto"
-                          >
-                            {labels.buy} <ExternalLink className="w-3 h-3" />
-                          </a>
+                        {r.format && r.format !== "—" && (
+                          <div className="text-sm text-muted-foreground mt-1">{r.format}</div>
                         )}
                       </div>
+                      <div className="col-span-12 sm:col-span-3 text-sm text-muted-foreground self-center order-4 sm:order-none">
+                        {r.label && <div className="font-mono text-xs uppercase tracking-wider">{r.label}</div>}
+                        {r.notes && <div className="mt-1">{r.notes}</div>}
+                      </div>
+                      <div className="col-span-6 sm:col-span-2 self-center order-2 sm:order-none">
+                        <div className="flex flex-col sm:items-end gap-1.5">
+                          {listenAction && (
+                            <a
+                              href={listenAction.href}
+                              target="_blank"
+                              rel="noopener noreferrer"
+                              className="inline-flex items-center justify-center gap-1.5 px-3.5 h-9 text-xs font-mono font-bold uppercase tracking-widest rounded-full bg-foreground text-background hover:bg-foreground/85 transition-colors w-full sm:w-auto"
+                            >
+                              ▶ {listenAction.href.includes("onerpm.link") && isUpcoming(r.releaseDate) ? "Pre-save" : labels.listen}
+                            </a>
+                          )}
+                          {buyAction && (
+                            <a
+                              href={buyAction.href}
+                              target="_blank"
+                              rel="noopener noreferrer"
+                              className="inline-flex items-center justify-center gap-1.5 px-3.5 h-9 text-xs font-mono font-bold uppercase tracking-widest rounded-full border border-foreground/20 text-foreground hover:bg-foreground hover:text-background transition-colors w-full sm:w-auto"
+                            >
+                              {labels.buy} <ExternalLink className="w-3 h-3" />
+                            </a>
+                          )}
+                        </div>
+                      </div>
                     </div>
-                  </div>
-                );
-              })}
-            </div>
-          </section>
-        ) : null}
+                  );
+                })}
+              </div>
+            </section>
+          ) : null}
 
-        {/* Videos del artista (hasta 6 facades), justo después de la discografía; null si no tiene */}
-        <ArtistVideosSection artistSlug={slug} lang={uiLang} />
-      </article>
+          {/* Videos del artista (hasta 6 facades), justo después de la discografía; null si no tiene */}
+          <ArtistVideosSection artistSlug={slug} lang={uiLang} />
+        </article>
 
-      {/* Grilla de cierre: los demás artistas del roster (plan §5.7.5) */}
-      <ArtistCardGrid lang={uiLang} excludeSlug={slug} />
-
+        {/* Grilla de cierre: los demás artistas del roster (plan §5.7.5) */}
+        <ArtistCardGrid lang={uiLang} excludeSlug={slug} />
+      </main>
       <FooterSection />
-    </main>
+    </>
   );
 }

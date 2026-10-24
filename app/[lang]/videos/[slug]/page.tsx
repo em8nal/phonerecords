@@ -170,153 +170,156 @@ export default async function VideoPage({
   };
 
   return (
-    <main className="relative min-h-screen overflow-x-hidden noise-overlay">
-      <script
-        type="application/ld+json"
-        dangerouslySetInnerHTML={{ __html: JSON.stringify(schema) }}
-      />
-      <Navigation />
+    <>
+      <main className="relative min-h-screen overflow-x-hidden noise-overlay">
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{ __html: JSON.stringify(schema) }}
+        />
+        <Navigation />
 
-      {/* Sin PageHero: la facade del video es el hero. pt-32 deja libre el menú fijo. */}
-      <article className="max-w-[1200px] mx-auto px-6 lg:px-12 pt-32 lg:pt-40 pb-8 lg:pb-12">
-        <Link
-          href={`/${lang}/videos`}
-          className="inline-flex min-h-6 items-center gap-2 text-sm text-muted-foreground hover:text-foreground transition-colors mb-12 group"
-        >
-          <ArrowLeft className="w-4 h-4 group-hover:-translate-x-1 transition-transform" />
-          {t.back}
-        </Link>
+        {/* Sin PageHero: la facade del video es el hero. pt-32 deja libre el menú fijo. */}
+        <article className="max-w-[1200px] mx-auto px-6 lg:px-12 pt-32 lg:pt-40 pb-8 lg:pb-12">
+          <Link
+            href={`/${lang}/videos`}
+            className="inline-flex min-h-6 items-center gap-2 text-sm text-muted-foreground hover:text-foreground transition-colors mb-12 group"
+          >
+            <ArrowLeft className="w-4 h-4 group-hover:-translate-x-1 transition-transform" />
+            {t.back}
+          </Link>
 
-        {/* Facade grande: miniatura + botón; el iframe de youtube-nocookie solo se monta al clic. */}
-        <div className="mb-8 lg:mb-12">
-          <YouTubeEmbed
-            youtubeId={v.youtubeId}
-            title={v.title}
-            lang={uiLang}
-            sizes={FACADE_SIZES}
-          />
-        </div>
-
-        <header className="mb-12 lg:mb-16">
-          <p className="font-mono text-xs uppercase tracking-widest text-muted-foreground mb-4">{kindLabel}</p>
-          <h1 className="text-4xl lg:text-6xl font-display tracking-tight leading-[0.95] text-balance mb-6">
-            {v.title}
-          </h1>
-          <dl className="flex flex-wrap gap-x-8 gap-y-2 font-mono text-sm uppercase tracking-widest text-muted-foreground">
-            <div>
-              <dt className="sr-only">{t.artist}</dt>
-              <dd>
-                <Link
-                  href={`/${lang}/artistas/${v.artistSlug}`}
-                  className={`inline-flex min-h-6 items-center text-foreground underline-offset-4 hover:underline ${LINK_FOCUS}`}
-                >
-                  {v.artistName}
-                </Link>
-              </dd>
-            </div>
-            <div>
-              <dt className="sr-only">{t.date}</dt>
-              <dd>
-                <time dateTime={v.date}>{formatVideoDate(v.date, uiLang)}</time>
-              </dd>
-            </div>
-            {v.durationSec ? (
-              <div>
-                <dt className="sr-only">{t.duration}</dt>
-                <dd>{formatDuration(v.durationSec)}</dd>
-              </div>
-            ) : null}
-          </dl>
-        </header>
-
-        <section className="grid lg:grid-cols-12 gap-12 lg:gap-16 mb-20">
-          {/* Texto propio (no la descripción de YouTube) */}
-          <div className="lg:col-span-8 space-y-6">
-            {paragraphs.map((text, i) => (
-              <p
-                key={i}
-                className={
-                  i === 0
-                    ? "text-lg lg:text-xl text-foreground/90 leading-relaxed"
-                    : "text-base lg:text-lg text-foreground/80 leading-relaxed"
-                }
-              >
-                {text}
-              </p>
-            ))}
+          {/* Facade grande: miniatura + botón; el iframe de youtube-nocookie solo se monta al clic. */}
+          <div className="mb-8 lg:mb-12">
+            <YouTubeEmbed
+              youtubeId={v.youtubeId}
+              title={v.title}
+              lang={uiLang}
+              sizes={FACADE_SIZES}
+              priority
+              initialThumb={v.thumb ?? "maxresdefault"}
+            />
           </div>
 
-          <aside className="lg:col-span-4 space-y-10">
-            {release && (
+          <header className="mb-12 lg:mb-16">
+            <p className="font-mono text-xs uppercase tracking-widest text-muted-foreground mb-4">{kindLabel}</p>
+            <h1 className="text-4xl lg:text-6xl font-display tracking-tight leading-[0.95] text-balance mb-6">
+              {v.title}
+            </h1>
+            <dl className="flex flex-wrap gap-x-8 gap-y-2 font-mono text-sm uppercase tracking-widest text-muted-foreground">
               <div>
-                <h2 className="font-mono text-xs uppercase tracking-widest text-muted-foreground mb-4">
-                  {t.release}
-                </h2>
-                <Link
-                  href={`/${lang}/releases/${release.slug}`}
-                  className={`group flex items-center gap-4 ${LINK_FOCUS}`}
+                <dt className="sr-only">{t.artist}</dt>
+                <dd>
+                  <Link
+                    href={`/${lang}/artistas/${v.artistSlug}`}
+                    className={`inline-flex min-h-6 items-center text-foreground underline-offset-4 hover:underline ${LINK_FOCUS}`}
+                  >
+                    {v.artistName}
+                  </Link>
+                </dd>
+              </div>
+              <div>
+                <dt className="sr-only">{t.date}</dt>
+                <dd>
+                  <time dateTime={v.date}>{formatVideoDate(v.date, uiLang)}</time>
+                </dd>
+              </div>
+              {v.durationSec ? (
+                <div>
+                  <dt className="sr-only">{t.duration}</dt>
+                  <dd>{formatDuration(v.durationSec)}</dd>
+                </div>
+              ) : null}
+            </dl>
+          </header>
+
+          <section className="grid lg:grid-cols-12 gap-12 lg:gap-16 mb-20">
+            {/* Texto propio (no la descripción de YouTube) */}
+            <div className="lg:col-span-8 space-y-6">
+              {paragraphs.map((text, i) => (
+                <p
+                  key={i}
+                  className={
+                    i === 0
+                      ? "text-lg lg:text-xl text-foreground/90 leading-relaxed"
+                      : "text-base lg:text-lg text-foreground/80 leading-relaxed"
+                  }
                 >
-                  {release.cover && (
-                    <span className="relative block h-16 w-16 shrink-0 overflow-hidden bg-foreground/5">
-                      <Image
-                        src={release.cover}
-                        alt={`${release.title} — ${release.artistName}`}
-                        fill
-                        sizes="64px"
-                        className="object-cover"
-                      />
-                    </span>
-                  )}
-                  <span className="min-w-0">
-                    <span className="block font-display text-lg tracking-tight group-hover:text-muted-foreground transition-colors">
-                      {release.title}
-                    </span>
-                    <span className="block mt-1 font-mono text-xs uppercase tracking-widest text-muted-foreground">
-                      {release.artistName} · {release.year}
-                    </span>
-                  </span>
-                </Link>
-              </div>
-            )}
-
-            {v.credits && v.credits.length > 0 && (
-              <div>
-                <h2 className="font-mono text-xs uppercase tracking-widest text-muted-foreground mb-4">
-                  {t.credits}
-                </h2>
-                <dl>
-                  {v.credits.map((c, i) => (
-                    <div key={i} className="grid grid-cols-12 gap-4 py-3 border-b border-foreground/10">
-                      <dt className="col-span-12 sm:col-span-5 font-mono text-xs uppercase tracking-widest text-muted-foreground">
-                        {c.role}
-                      </dt>
-                      <dd className="col-span-12 sm:col-span-7 text-sm">{c.name}</dd>
-                    </div>
-                  ))}
-                </dl>
-              </div>
-            )}
-
-            <div>
-              <a
-                href={youtubeWatchUrl(v.youtubeId)}
-                target="_blank"
-                rel="noopener noreferrer"
-                className={`inline-flex min-h-11 items-center gap-2 text-sm text-foreground/80 hover:text-foreground transition-colors ${LINK_FOCUS}`}
-              >
-                {t.watchOnYouTube}
-                <ArrowUpRight className="w-4 h-4" aria-hidden />
-                <span className="sr-only"> {t.newTab}</span>
-              </a>
+                  {text}
+                </p>
+              ))}
             </div>
-          </aside>
-        </section>
-      </article>
 
-      {/* Grilla de cierre: mismo artista primero, luego los más recientes */}
-      <VideoCardGrid lang={uiLang} currentSlug={v.slug} artistSlug={v.artistSlug} />
+            <aside className="lg:col-span-4 space-y-10">
+              {release && (
+                <div>
+                  <h2 className="font-mono text-xs uppercase tracking-widest text-muted-foreground mb-4">
+                    {t.release}
+                  </h2>
+                  <Link
+                    href={`/${lang}/releases/${release.slug}`}
+                    className={`group flex items-center gap-4 ${LINK_FOCUS}`}
+                  >
+                    {release.cover && (
+                      <span className="relative block h-16 w-16 shrink-0 overflow-hidden bg-foreground/5">
+                        <Image
+                          src={release.cover}
+                          alt={`${release.title} — ${release.artistName}`}
+                          fill
+                          sizes="64px"
+                          className="object-cover"
+                        />
+                      </span>
+                    )}
+                    <span className="min-w-0">
+                      <span className="block font-display text-lg tracking-tight group-hover:text-muted-foreground transition-colors">
+                        {release.title}
+                      </span>
+                      <span className="block mt-1 font-mono text-xs uppercase tracking-widest text-muted-foreground">
+                        {release.artistName} · {release.year}
+                      </span>
+                    </span>
+                  </Link>
+                </div>
+              )}
 
+              {v.credits && v.credits.length > 0 && (
+                <div>
+                  <h2 className="font-mono text-xs uppercase tracking-widest text-muted-foreground mb-4">
+                    {t.credits}
+                  </h2>
+                  <dl>
+                    {v.credits.map((c, i) => (
+                      <div key={i} className="grid grid-cols-12 gap-4 py-3 border-b border-foreground/10">
+                        <dt className="col-span-12 sm:col-span-5 font-mono text-xs uppercase tracking-widest text-muted-foreground">
+                          {c.role}
+                        </dt>
+                        <dd className="col-span-12 sm:col-span-7 text-sm">{c.name}</dd>
+                      </div>
+                    ))}
+                  </dl>
+                </div>
+              )}
+
+              <div>
+                <a
+                  href={youtubeWatchUrl(v.youtubeId)}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className={`inline-flex min-h-11 items-center gap-2 text-sm text-foreground/80 hover:text-foreground transition-colors ${LINK_FOCUS}`}
+                >
+                  {t.watchOnYouTube}
+                  <ArrowUpRight className="w-4 h-4" aria-hidden />
+                  <span className="sr-only"> {t.newTab}</span>
+                </a>
+              </div>
+            </aside>
+          </section>
+        </article>
+
+        {/* Grilla de cierre: mismo artista primero, luego los más recientes */}
+        <VideoCardGrid lang={uiLang} currentSlug={v.slug} artistSlug={v.artistSlug} />
+      </main>
       <FooterSection />
-    </main>
+    </>
   );
 }

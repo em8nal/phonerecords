@@ -122,46 +122,47 @@ export default async function CatalogoPage({
       };
 
   return (
-    <main className="relative min-h-screen overflow-x-hidden noise-overlay">
-      <script
-        type="application/ld+json"
-        dangerouslySetInnerHTML={{ __html: JSON.stringify(schema) }}
-      />
-      <Navigation />
-      <PageHero
-        image={{
-          desktop: "/media/klaus-b/destellos-hero.jpg",
-          mobile: "/media/klaus-b/destellos-hero-mobile.jpg",
-          alt: { es: "Klaus B, retrato en blanco y negro", en: "Klaus B, black and white portrait" },
-        }}
-        title={t.headline}
-        eyebrow={t.eyebrow}
-        lang={lang === "es" ? "es" : "en"}
-        size="short"
-      />
-
-      <article className="max-w-[1400px] mx-auto px-6 lg:px-12 pt-12 lg:pt-16 pb-24">
-        <Link
-          href={`/${lang}`}
-          className="inline-flex items-center gap-2 text-sm text-muted-foreground hover:text-foreground transition-colors mb-12 group"
-        >
-          <ArrowLeft className="w-4 h-4 group-hover:-translate-x-1 transition-transform" />
-          {t.backHome}
-        </Link>
-
-        <header className="mb-12 lg:mb-16 max-w-3xl">
-          <p className="text-xl text-foreground/85 leading-relaxed">{t.intro}</p>
-        </header>
-
-        <CatalogGrid
-          lang={lang}
-          entries={entries}
-          artistsList={artistsList}
-          labels={t.labels}
+    <>
+      <main className="relative min-h-screen overflow-x-hidden noise-overlay">
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{ __html: JSON.stringify(schema) }}
         />
-      </article>
+        <Navigation />
+        <PageHero
+          image={{
+            desktop: "/media/klaus-b/destellos-hero.jpg",
+            mobile: "/media/klaus-b/destellos-hero-mobile.jpg",
+            alt: { es: "Klaus B, retrato en blanco y negro", en: "Klaus B, black and white portrait" },
+          }}
+          title={t.headline}
+          eyebrow={t.eyebrow}
+          lang={lang === "es" ? "es" : "en"}
+          size="short"
+        />
 
+        <article className="max-w-[1400px] mx-auto px-6 lg:px-12 pt-12 lg:pt-16 pb-24">
+          <Link
+            href={`/${lang}`}
+            className="inline-flex items-center gap-2 text-sm text-muted-foreground hover:text-foreground transition-colors mb-12 group"
+          >
+            <ArrowLeft className="w-4 h-4 group-hover:-translate-x-1 transition-transform" />
+            {t.backHome}
+          </Link>
+
+          <header className="mb-12 lg:mb-16 max-w-3xl">
+            <p className="text-xl text-foreground/85 leading-relaxed">{t.intro}</p>
+          </header>
+
+          <CatalogGrid
+            lang={lang}
+            entries={entries}
+            artistsList={artistsList}
+            labels={t.labels}
+          />
+        </article>
+      </main>
       <FooterSection />
-    </main>
+    </>
   );
 }

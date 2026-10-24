@@ -54,7 +54,9 @@ export async function sendContactMessage(
   }
 
   // Demasiado rápido: error genérico (una persona reintenta; un bot no obtiene señal útil).
-  if (!renderedAt || Date.now() - renderedAt < MIN_FILL_MS) {
+  // Delta negativo = reloj del cliente adelantado: no se puede medir, se deja pasar (el honeypot sigue activo).
+  const elapsed = renderedAt ? Date.now() - renderedAt : -1;
+  if (!renderedAt || (elapsed >= 0 && elapsed < MIN_FILL_MS)) {
     return { ok: false, error: "send_failed" };
   }
 

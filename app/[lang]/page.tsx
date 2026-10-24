@@ -134,18 +134,20 @@ export default async function Home({
   };
 
   return (
-    <main className="relative min-h-screen overflow-x-hidden noise-overlay">
-      <script
-        type="application/ld+json"
-        dangerouslySetInnerHTML={{ __html: JSON.stringify(labelSchema) }}
-      />
-      <Navigation />
-      <ReleaseBanner lang={lang === "en" ? "en" : "es"} />
-      <HeroSection />
-      <IntegrationsSection />
-      <FeaturesSection />
-      <CtaSection />
+    <>
+      <main className="relative min-h-screen overflow-x-hidden noise-overlay">
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{ __html: JSON.stringify(labelSchema) }}
+        />
+        <Navigation />
+        <ReleaseBanner lang={lang === "en" ? "en" : "es"} />
+        <HeroSection />
+        <IntegrationsSection />
+        <FeaturesSection />
+        <CtaSection />
+      </main>
       <FooterSection />
-    </main>
+    </>
   );
 }

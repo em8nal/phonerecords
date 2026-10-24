@@ -250,196 +250,197 @@ export default async function SelloPage({
   };
 
   return (
-    <main className="relative min-h-screen overflow-x-hidden noise-overlay">
-      <script
-        type="application/ld+json"
-        dangerouslySetInnerHTML={{ __html: JSON.stringify(schema) }}
-      />
-      <Navigation />
-      <PageHero
-        image={{
-          desktop: "/media/sello/sello-hero.jpg",
-          mobile: "/media/sello/sello-hero-mobile.jpg",
-          alt: {
-            es: "Con.fusión e invitados en la sesión La Banca: tres personas alrededor de una banca de plaza en un escenario oscuro, dos sentadas con micrófonos y una de pie detrás; foto en blanco y negro",
-            en: "Con.fusión and guests at the La Banca session: three people around a park bench on a dark stage, two seated with microphones and one standing behind; black-and-white photo",
-          },
-        }}
-        title={c.headline}
-        eyebrow={c.eyebrow}
-        imagePosition="object-[50%_30%] md:object-[50%_5%]"
-        lang={lang === "es" ? "es" : "en"}
-      />
+    <>
+      <main className="relative min-h-screen overflow-x-hidden noise-overlay">
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{ __html: JSON.stringify(schema) }}
+        />
+        <Navigation />
+        <PageHero
+          image={{
+            desktop: "/media/sello/sello-hero.jpg",
+            mobile: "/media/sello/sello-hero-mobile.jpg",
+            alt: {
+              es: "Con.fusión e invitados en la sesión La Banca: tres personas alrededor de una banca de plaza en un escenario oscuro, dos sentadas con micrófonos y una de pie detrás; foto en blanco y negro",
+              en: "Con.fusión and guests at the La Banca session: three people around a park bench on a dark stage, two seated with microphones and one standing behind; black-and-white photo",
+            },
+          }}
+          title={c.headline}
+          eyebrow={c.eyebrow}
+          imagePosition="object-[50%_30%] md:object-[50%_5%]"
+          lang={lang === "es" ? "es" : "en"}
+        />
 
-      <article className="max-w-[1200px] mx-auto px-6 lg:px-12 pt-12 lg:pt-16 pb-24">
-        <Link
-          href={`/${lang}`}
-          className="inline-flex items-center gap-2 text-sm text-muted-foreground hover:text-foreground transition-colors mb-12 group"
-        >
-          <ArrowLeft className="w-4 h-4 group-hover:-translate-x-1 transition-transform" />
-          {c.backHome}
-        </Link>
+        <article className="max-w-[1200px] mx-auto px-6 lg:px-12 pt-12 lg:pt-16 pb-24">
+          <Link
+            href={`/${lang}`}
+            className="inline-flex items-center gap-2 text-sm text-muted-foreground hover:text-foreground transition-colors mb-12 group"
+          >
+            <ArrowLeft className="w-4 h-4 group-hover:-translate-x-1 transition-transform" />
+            {c.backHome}
+          </Link>
 
-        <header className="mb-20 lg:mb-28">
-          <p className="text-xl lg:text-2xl text-foreground/85 leading-relaxed max-w-3xl">
-            {c.intro}
-          </p>
-        </header>
+          <header className="mb-20 lg:mb-28">
+            <p className="text-xl lg:text-2xl text-foreground/85 leading-relaxed max-w-3xl">
+              {c.intro}
+            </p>
+          </header>
 
-        {/* Modes of production */}
-        <section className="mb-20 lg:mb-28">
-          <h2 className="text-3xl lg:text-5xl font-display tracking-tight mb-6">
-            {c.modes.title}
-          </h2>
-          <p className="text-lg text-foreground/80 leading-relaxed max-w-3xl mb-12">
-            {c.modes.lede}
-          </p>
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-px bg-foreground/10 border border-foreground/10">
-            {c.modes.items.map((mode, i) => (
-              <div key={mode.name} className="bg-background p-8 lg:p-10 flex flex-col">
-                <div className="font-mono text-xs text-muted-foreground mb-4">
-                  {String(i + 1).padStart(2, "0")}
-                </div>
-                <h3 className="text-2xl font-display tracking-tight mb-1">{mode.name}</h3>
-                <div className="font-mono text-xs uppercase tracking-widest text-muted-foreground mb-4">
-                  {mode.subtitle}
-                </div>
-                <p className="text-base text-foreground/75 leading-relaxed">{mode.body}</p>
-              </div>
-            ))}
-          </div>
-        </section>
-
-        <figure className="mb-20 lg:mb-28">
-          <div className="relative aspect-video overflow-hidden border border-foreground/10 bg-foreground/5">
-            <Image
-              src="/media/klaus-b/destellos-hero.jpg"
-              alt={c.figures.klaus.alt}
-              fill
-              sizes="(min-width: 1200px) 1104px, (min-width: 1024px) calc(100vw - 96px), calc(100vw - 48px)"
-              className="object-cover"
-            />
-          </div>
-          <figcaption className="mt-3 font-mono text-xs uppercase tracking-widest text-muted-foreground">
-            {c.figures.klaus.caption}
-          </figcaption>
-        </figure>
-
-        {/* Position / criteria */}
-        <section className="mb-20 lg:mb-28">
-          <h2 className="text-3xl lg:text-5xl font-display tracking-tight mb-6">
-            {c.position.title}
-          </h2>
-          <p className="text-lg text-foreground/80 leading-relaxed max-w-3xl mb-12">
-            {c.position.lede}
-          </p>
-          <div className="space-y-px bg-foreground/10 border border-foreground/10">
-            {c.position.items.map((item, i) => (
-              <div
-                key={item.name}
-                className="bg-background grid grid-cols-1 md:grid-cols-12 gap-6 md:gap-12 p-8 lg:p-10"
-              >
-                <div className="md:col-span-3">
-                  <div className="font-mono text-xs text-muted-foreground mb-2">
+          {/* Modes of production */}
+          <section className="mb-20 lg:mb-28">
+            <h2 className="text-3xl lg:text-5xl font-display tracking-tight mb-6">
+              {c.modes.title}
+            </h2>
+            <p className="text-lg text-foreground/80 leading-relaxed max-w-3xl mb-12">
+              {c.modes.lede}
+            </p>
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-px bg-foreground/10 border border-foreground/10">
+              {c.modes.items.map((mode, i) => (
+                <div key={mode.name} className="bg-background p-8 lg:p-10 flex flex-col">
+                  <div className="font-mono text-xs text-muted-foreground mb-4">
                     {String(i + 1).padStart(2, "0")}
                   </div>
-                  <h3 className="text-2xl font-display tracking-tight">{item.name}</h3>
+                  <h3 className="text-2xl font-display tracking-tight mb-1">{mode.name}</h3>
+                  <div className="font-mono text-xs uppercase tracking-widest text-muted-foreground mb-4">
+                    {mode.subtitle}
+                  </div>
+                  <p className="text-base text-foreground/75 leading-relaxed">{mode.body}</p>
                 </div>
-                <p className="md:col-span-9 text-base text-foreground/80 leading-relaxed">
-                  {item.body}
-                </p>
-              </div>
-            ))}
-          </div>
-        </section>
+              ))}
+            </div>
+          </section>
 
-        <figure className="mb-20 lg:mb-28">
-          <div className="relative aspect-video overflow-hidden border border-foreground/10 bg-foreground/5">
-            <Image
-              src="/media/con-fusion/cuantas-veces-hero.jpg"
-              alt={c.figures.confusion.alt}
-              fill
-              sizes="(min-width: 1200px) 1104px, (min-width: 1024px) calc(100vw - 96px), calc(100vw - 48px)"
-              className="object-cover"
-            />
-          </div>
-          <figcaption className="mt-3 font-mono text-xs uppercase tracking-widest text-muted-foreground">
-            {c.figures.confusion.caption}
-          </figcaption>
-        </figure>
+          <figure className="mb-20 lg:mb-28">
+            <div className="relative aspect-video overflow-hidden border border-foreground/10 bg-foreground/5">
+              <Image
+                src="/media/klaus-b/destellos-hero.jpg"
+                alt={c.figures.klaus.alt}
+                fill
+                sizes="(min-width: 1200px) 1104px, (min-width: 1024px) calc(100vw - 96px), calc(100vw - 48px)"
+                className="object-cover"
+              />
+            </div>
+            <figcaption className="mt-3 font-mono text-xs uppercase tracking-widest text-muted-foreground">
+              {c.figures.klaus.caption}
+            </figcaption>
+          </figure>
 
-        {/* Services */}
-        <section className="mb-20 lg:mb-28">
-          <h2 className="text-3xl lg:text-5xl font-display tracking-tight mb-12">
-            {c.services.title}
-          </h2>
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-px bg-foreground/10 border border-foreground/10">
-            {c.services.items.map((service, i) => (
-              <div key={service.name} className="bg-background p-8 lg:p-10">
-                <div className="font-mono text-xs text-muted-foreground mb-4">
-                  {String(i + 1).padStart(2, "0")}
+          {/* Position / criteria */}
+          <section className="mb-20 lg:mb-28">
+            <h2 className="text-3xl lg:text-5xl font-display tracking-tight mb-6">
+              {c.position.title}
+            </h2>
+            <p className="text-lg text-foreground/80 leading-relaxed max-w-3xl mb-12">
+              {c.position.lede}
+            </p>
+            <div className="space-y-px bg-foreground/10 border border-foreground/10">
+              {c.position.items.map((item, i) => (
+                <div
+                  key={item.name}
+                  className="bg-background grid grid-cols-1 md:grid-cols-12 gap-6 md:gap-12 p-8 lg:p-10"
+                >
+                  <div className="md:col-span-3">
+                    <div className="font-mono text-xs text-muted-foreground mb-2">
+                      {String(i + 1).padStart(2, "0")}
+                    </div>
+                    <h3 className="text-2xl font-display tracking-tight">{item.name}</h3>
+                  </div>
+                  <p className="md:col-span-9 text-base text-foreground/80 leading-relaxed">
+                    {item.body}
+                  </p>
                 </div>
-                <h3 className="text-xl font-display tracking-tight mb-3">{service.name}</h3>
-                <p className="text-base text-foreground/75 leading-relaxed">{service.body}</p>
-              </div>
-            ))}
+              ))}
+            </div>
+          </section>
+
+          <figure className="mb-20 lg:mb-28">
+            <div className="relative aspect-video overflow-hidden border border-foreground/10 bg-foreground/5">
+              <Image
+                src="/media/con-fusion/cuantas-veces-hero.jpg"
+                alt={c.figures.confusion.alt}
+                fill
+                sizes="(min-width: 1200px) 1104px, (min-width: 1024px) calc(100vw - 96px), calc(100vw - 48px)"
+                className="object-cover"
+              />
+            </div>
+            <figcaption className="mt-3 font-mono text-xs uppercase tracking-widest text-muted-foreground">
+              {c.figures.confusion.caption}
+            </figcaption>
+          </figure>
+
+          {/* Services */}
+          <section className="mb-20 lg:mb-28">
+            <h2 className="text-3xl lg:text-5xl font-display tracking-tight mb-12">
+              {c.services.title}
+            </h2>
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-px bg-foreground/10 border border-foreground/10">
+              {c.services.items.map((service, i) => (
+                <div key={service.name} className="bg-background p-8 lg:p-10">
+                  <div className="font-mono text-xs text-muted-foreground mb-4">
+                    {String(i + 1).padStart(2, "0")}
+                  </div>
+                  <h3 className="text-xl font-display tracking-tight mb-3">{service.name}</h3>
+                  <p className="text-base text-foreground/75 leading-relaxed">{service.body}</p>
+                </div>
+              ))}
+            </div>
+          </section>
+
+          {/* Contact */}
+          <section className="mb-20 lg:mb-28">
+            <h2 className="text-3xl lg:text-5xl font-display tracking-tight mb-12">
+              {c.contact.title}
+            </h2>
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-x-12 gap-y-6">
+              {c.contact.items.map((item) => (
+                <a
+                  key={item.label}
+                  href={item.href}
+                  className="group flex items-baseline justify-between border-b border-foreground/10 pb-4 hover:border-foreground/30 transition-colors"
+                >
+                  <span className="font-mono text-xs uppercase tracking-widest text-muted-foreground">
+                    {item.label}
+                  </span>
+                  <span className="text-base flex items-center gap-2">
+                    {item.value}
+                    <ArrowUpRight className="w-3 h-3 opacity-50 group-hover:opacity-100 transition-opacity" />
+                  </span>
+                </a>
+              ))}
+            </div>
+          </section>
+
+          {/* Legal */}
+          <section className="mb-16 pb-12 border-t border-foreground/10 pt-12">
+            <h2 className="font-mono text-xs uppercase tracking-widest text-muted-foreground mb-4">
+              {c.legal.title}
+            </h2>
+            <div className="text-sm text-foreground/70 space-y-1">
+              {c.legal.lines.map((l, i) => (
+                <div key={i}>{l}</div>
+              ))}
+            </div>
+          </section>
+
+          {/* CTAs */}
+          <div className="flex flex-col sm:flex-row gap-4">
+            <Link
+              href={`/${lang}/manifiesto`}
+              className="inline-flex items-center justify-center px-8 h-14 text-base rounded-full bg-foreground text-background hover:bg-foreground/90 transition-colors"
+            >
+              {c.cta.manifesto}
+            </Link>
+            <Link
+              href={`/${lang}#roster`}
+              className="inline-flex items-center justify-center px-8 h-14 text-base rounded-full border border-foreground/20 hover:bg-foreground/5 transition-colors"
+            >
+              {c.cta.roster}
+            </Link>
           </div>
-        </section>
-
-        {/* Contact */}
-        <section className="mb-20 lg:mb-28">
-          <h2 className="text-3xl lg:text-5xl font-display tracking-tight mb-12">
-            {c.contact.title}
-          </h2>
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-x-12 gap-y-6">
-            {c.contact.items.map((item) => (
-              <a
-                key={item.label}
-                href={item.href}
-                className="group flex items-baseline justify-between border-b border-foreground/10 pb-4 hover:border-foreground/30 transition-colors"
-              >
-                <span className="font-mono text-xs uppercase tracking-widest text-muted-foreground">
-                  {item.label}
-                </span>
-                <span className="text-base flex items-center gap-2">
-                  {item.value}
-                  <ArrowUpRight className="w-3 h-3 opacity-50 group-hover:opacity-100 transition-opacity" />
-                </span>
-              </a>
-            ))}
-          </div>
-        </section>
-
-        {/* Legal */}
-        <section className="mb-16 pb-12 border-t border-foreground/10 pt-12">
-          <h2 className="font-mono text-xs uppercase tracking-widest text-muted-foreground mb-4">
-            {c.legal.title}
-          </h2>
-          <div className="text-sm text-foreground/70 space-y-1">
-            {c.legal.lines.map((l, i) => (
-              <div key={i}>{l}</div>
-            ))}
-          </div>
-        </section>
-
-        {/* CTAs */}
-        <div className="flex flex-col sm:flex-row gap-4">
-          <Link
-            href={`/${lang}/manifiesto`}
-            className="inline-flex items-center justify-center px-8 h-14 text-base rounded-full bg-foreground text-background hover:bg-foreground/90 transition-colors"
-          >
-            {c.cta.manifesto}
-          </Link>
-          <Link
-            href={`/${lang}#roster`}
-            className="inline-flex items-center justify-center px-8 h-14 text-base rounded-full border border-foreground/20 hover:bg-foreground/5 transition-colors"
-          >
-            {c.cta.roster}
-          </Link>
-        </div>
-      </article>
-
+        </article>
+      </main>
       <FooterSection />
-    </main>
+    </>
   );
 }

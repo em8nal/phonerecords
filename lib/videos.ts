@@ -225,12 +225,12 @@ The album page has the full credits and the rest of the tracklist.`,
 
 Lo dirigió Javier Moreno, con producción de Florece Producciones y Fran Ri, fotografía de Kevin Rodríguez, dirección de arte de Constanza Moreno, dirección de movimiento de María Pinchulef y edición, postproducción y color de Matías Cerón; se filmó en el estudio Jama Bros. La letra habla de ser "el presente de la historia" frente a la brutalidad, la adicción al poder, el patriarcado y las guerras, y pregunta si todo eso parará.
 
-Es el único videoclip de Grietas con un invitado chileno de la trayectoria de Vasconcellos, y uno de los videos del álbum, junto al lyric video de "Grietas".`,
+Junto al lyric video de "Grietas", es uno de los videos del álbum.`,
       en: `Official music video for "Somos el Presente", the Newen Afrobeat song with Joe Vasconcellos included on the album Grietas (2024) and composed by Alejandro Orellana. It was published in June 2023 as one of the record's advance singles.
 
 Javier Moreno directed it, with production by Florece Producciones and Fran Ri, cinematography by Kevin Rodríguez, art direction by Constanza Moreno, movement direction by María Pinchulef and editing, post-production and colour by Matías Cerón; it was shot at the Jama Bros studio. The lyrics speak of being "the present of history" in the face of brutality, addiction to power, patriarchy and wars, and ask whether all of it will stop.
 
-It is the only Grietas video with a Chilean guest of Vasconcellos's standing, and one of the album's videos, alongside the "Grietas" lyric video.`,
+Alongside the "Grietas" lyric video, it is one of the album's videos.`,
     },
     credits: [
       { role: "Dirección general", name: "Javier Moreno" },
@@ -394,6 +394,38 @@ With "Cántaros" and "Open Your Eyes" it forms the trilogy of Curiche videos.`,
   },
 
   // ─────────── Klaus B (y el dúo Gestosimple & Klaus B) ───────────
+  {
+    slug: "klaus-b-destellos-de-ti",
+    youtubeId: "zEfVXTYtuo8",
+    title: "Klaus B - Destellos De Ti [Videoclip Oficial]",
+    artistSlug: "klaus-brantmayer",
+    artistName: "Klaus B",
+    kind: "videoclip",
+    date: "2026-10-23",
+    durationSec: 281,
+    releaseSlug: "klaus-b-destellos-de-ti",
+    featured: true,
+    description: {
+      es: `Videoclip oficial de "Destellos de ti", el single con el que Klaus B abre el ciclo de "Una Cuota De Caos", su próximo álbum con PHŌNÉ Records. Se publicó en el canal del artista el 23 de octubre de 2026, un día después de que la canción llegara a plataformas.
+
+La dirección, el montaje y la cámara son de Matías Burgos; la producción del video es del propio Klaus B, y participa la bailarina Catalina Herrera. En la canción tocan Klaus B en saxo alto, Pablo James en trombón, Felamusic en teclados, José Toledo en guitarra eléctrica, Francisco Ruiz en bajo y Benjamín Plaza en batería. Se grabó con Martín Schlotfeldt en Estudio Vinilo, la mezcla es de Ticho en Modo Estudios y el master, de Francisco Holzmann.
+
+La descripción oficial presenta la canción como imágenes, sensaciones e intuiciones envueltas en una nostalgia luminosa: la memoria como aquello que nos define y el presente como lo que ilumina el camino. El segundo adelanto del ciclo es "Un Rezo" (5 de noviembre de 2026).`,
+      en: `Official music video for "Destellos de ti", the single with which Klaus B opens the cycle of "Una Cuota De Caos", his upcoming album with PHŌNÉ Records. It was published on the artist's channel on October 23, 2026, one day after the song reached streaming platforms.
+
+Direction, editing and camera are by Matías Burgos; the video was produced by Klaus B himself, and dancer Catalina Herrera takes part. On the song, Klaus B plays alto saxophone, with Pablo James on trombone, Felamusic on keys, José Toledo on electric guitar, Francisco Ruiz on bass and Benjamín Plaza on drums. It was recorded with Martín Schlotfeldt at Estudio Vinilo, mixed by Ticho at Modo Estudios and mastered by Francisco Holzmann.
+
+The official description presents the song as images, sensations and intuitions wrapped in a luminous nostalgia: memory as what defines us, and the present as what lights the way. The second single of the cycle is "Un Rezo" (November 5, 2026).`,
+    },
+    credits: [
+      { role: "Dirección, montaje y cámara", name: "Matías Burgos" },
+      { role: "Producción del video", name: "Klaus B" },
+      { role: "Bailarina", name: "Catalina Herrera" },
+      { role: "Grabación (Estudio Vinilo)", name: "Martín Schlotfeldt" },
+      { role: "Mezcla (Modo Estudios)", name: "Ticho" },
+      { role: "Master", name: "Francisco Holzmann" },
+    ],
+  },
   {
     slug: "klaus-b-those-days-far-away-lyric-visualizer",
     youtubeId: "6Geg_XVD_Uc",

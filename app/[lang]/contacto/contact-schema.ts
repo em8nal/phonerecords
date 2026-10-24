@@ -8,14 +8,17 @@ export type Topic = (typeof topicValues)[number];
 
 /** URLs `https://` con host con punto, en cualquier posición del texto (separadas por espacio, coma o punto y coma). */
 export const extractHttpsUrls = (text: string): string[] =>
-  text.split(/[\s,;]+/).filter((token) => {
-    try {
-      const url = new URL(token);
-      return url.protocol === "https:" && url.hostname.includes(".");
-    } catch {
-      return false;
-    }
-  });
+  text
+    .split(/[\s,;]+/)
+    .map((token) => token.replace(/^[(<\["'«]+/, "").replace(/[)>\]"'».,:!?]+$/, ""))
+    .filter((token) => {
+      try {
+        const url = new URL(token);
+        return url.protocol === "https:" && url.hostname.includes(".");
+      } catch {
+        return false;
+      }
+    });
 
 /** Líneas no vacías del textarea de enlaces, recortadas. */
 export const linkLines = (text: string): string[] =>

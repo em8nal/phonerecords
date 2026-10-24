@@ -21,6 +21,10 @@ type YouTubeEmbedProps = {
   lang?: FacadeLang;
   /** `sizes` de la miniatura; por defecto la columna de 8/12 de la ficha de release (≈700 px desde 1200 px). */
   sizes?: string;
+  /** Miniatura con carga inmediata y prioridad alta: solo cuando la facade es el LCP de la página (ficha de video). */
+  priority?: boolean;
+  /** Calidad inicial de la miniatura; "hqdefault" para las subidas sin maxresdefault (evita un 404). */
+  initialThumb?: Thumb;
 };
 
 /**
@@ -34,10 +38,12 @@ export function YouTubeEmbed({
   title,
   lang,
   sizes = "(min-width: 1200px) 700px, (min-width: 1024px) 62vw, 100vw",
+  priority = false,
+  initialThumb = "maxresdefault",
 }: YouTubeEmbedProps) {
   const copy = facadeCopy[useFacadeLang(lang)];
   const [playing, setPlaying] = useState(false);
-  const [thumb, setThumb] = useState<Thumb>("maxresdefault");
+  const [thumb, setThumb] = useState<Thumb>(initialThumb);
   const iframeRef = useRef<HTMLIFrameElement>(null);
   const noticeId = useId();
 
@@ -77,6 +83,8 @@ export function YouTubeEmbed({
           alt=""
           fill
           sizes={sizes}
+          loading={priority ? "eager" : undefined}
+          fetchPriority={priority ? "high" : undefined}
           className="object-cover"
           onError={() => {
             if (thumb === "maxresdefault") setThumb("hqdefault");

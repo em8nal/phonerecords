@@ -161,162 +161,163 @@ export default async function ReleasePage({
   };
 
   return (
-    <main className="relative min-h-screen overflow-x-hidden noise-overlay">
-      <script
-        type="application/ld+json"
-        dangerouslySetInnerHTML={{ __html: JSON.stringify(albumSchema) }}
-      />
-      <Navigation />
+    <>
+      <main className="relative min-h-screen overflow-x-hidden noise-overlay">
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{ __html: JSON.stringify(albumSchema) }}
+        />
+        <Navigation />
 
-      {/* Hero: portada desenfocada de fondo, portada nítida, h1, badge y CTA primario */}
-      <ReleaseHero release={release} lang={uiLang} initialReleased={initiallyReleased} />
+        {/* Hero: portada desenfocada de fondo, portada nítida, h1, badge y CTA primario */}
+        <ReleaseHero release={release} lang={uiLang} initialReleased={initiallyReleased} />
 
-      <article className="max-w-[1200px] mx-auto px-6 lg:px-12 pt-12 lg:pt-16 pb-8 lg:pb-12">
-        <Link
-          href={`/${lang}/catalogo`}
-          className="inline-flex items-center gap-2 text-sm text-muted-foreground hover:text-foreground transition-colors mb-12 group"
-        >
-          <ArrowLeft className="w-4 h-4 group-hover:-translate-x-1 transition-transform" />
-          {labels.back}
-        </Link>
+        <article className="max-w-[1200px] mx-auto px-6 lg:px-12 pt-12 lg:pt-16 pb-8 lg:pb-12">
+          <Link
+            href={`/${lang}/catalogo`}
+            className="inline-flex items-center gap-2 text-sm text-muted-foreground hover:text-foreground transition-colors mb-12 group"
+          >
+            <ArrowLeft className="w-4 h-4 group-hover:-translate-x-1 transition-transform" />
+            {labels.back}
+          </Link>
 
-        {/* Meta: la portada, el h1, el badge y el CTA viven en el hero (una sola portada grande) */}
-        <header className="mb-12 lg:mb-16">
-          <div className="flex flex-wrap gap-x-8 gap-y-2 text-sm font-mono text-muted-foreground uppercase tracking-widest">
-            <span>
-              {labels.releaseDate}:{" "}
-              <time dateTime={release.releaseDate}>{formatFullDate(release.releaseDate, uiLang)}</time>
-            </span>
-            <span>{labels.format}: {release.format}</span>
-            {release.label && <span>{labels.label}: {release.label}</span>}
-          </div>
-        </header>
+          {/* Meta: la portada, el h1, el badge y el CTA viven en el hero (una sola portada grande) */}
+          <header className="mb-12 lg:mb-16">
+            <div className="flex flex-wrap gap-x-8 gap-y-2 text-sm font-mono text-muted-foreground uppercase tracking-widest">
+              <span>
+                {labels.releaseDate}:{" "}
+                <time dateTime={release.releaseDate}>{formatFullDate(release.releaseDate, uiLang)}</time>
+              </span>
+              <span>{labels.format}: {release.format}</span>
+              {release.label && <span>{labels.label}: {release.label}</span>}
+            </div>
+          </header>
 
-        {/* Description */}
-        <section className="grid lg:grid-cols-12 gap-12 lg:gap-16 mb-20">
-          <div className="lg:col-span-8 space-y-6">
-            {paragraphs.map((text, i) => (
-              <p
-                key={i}
-                className={
-                  i === 0
-                    ? "text-lg lg:text-xl text-foreground/90 leading-relaxed"
-                    : "text-base lg:text-lg text-foreground/80 leading-relaxed"
-                }
-              >
-                {text}
-              </p>
-            ))}
-            {release.video && (
-              <div className="pt-6">
-                <YouTubeEmbed youtubeId={release.video.youtubeId} title={release.video.title} />
-              </div>
-            )}
-          </div>
-
-          {release.links && release.links.length > 0 && (
-            <aside className="lg:col-span-4">
-              <h3 className="font-mono text-xs text-muted-foreground uppercase tracking-widest mb-4">
-                {labels.links}
-              </h3>
-              <ul className="space-y-2">
-                {release.links.map((link) => (
-                  <li key={link.href}>
-                    <a
-                      href={link.href}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      className="inline-flex items-center gap-2 text-sm hover:text-foreground/70 transition-colors group"
-                    >
-                      {isEs ? link.label : link.label.replace("Escuchar", "Listen")}
-                      <ExternalLink className="w-3 h-3 opacity-50 group-hover:opacity-100 transition-opacity" />
-                    </a>
-                  </li>
-                ))}
-              </ul>
-            </aside>
-          )}
-        </section>
-
-        {/* Spotify player (only when release has a Spotify link) */}
-        {(() => {
-          const spotifyId = extractSpotifyAlbumId(release.links);
-          if (!spotifyId) return null;
-          return (
-            <section className="mb-20">
-              <SpotifyAlbumEmbed
-                albumId={spotifyId}
-                height={352}
-                cover={release.cover}
-                coverAlt={`${release.title} — ${release.artistName}`}
-                title={release.title}
-              />
-            </section>
-          );
-        })()}
-
-        {/* Tracklist */}
-        {release.tracklist && release.tracklist.length > 0 && (
-          <section className="mb-20">
-            <h2 className="text-3xl lg:text-5xl font-display tracking-tight mb-12">
-              {labels.tracklist}
-            </h2>
-            <div className="border-t border-foreground/10">
-              {release.tracklist.map((t) => (
-                <div
-                  key={t.n}
-                  className="grid grid-cols-12 gap-4 py-5 border-b border-foreground/10 items-baseline"
+          {/* Description */}
+          <section className="grid lg:grid-cols-12 gap-12 lg:gap-16 mb-20">
+            <div className="lg:col-span-8 space-y-6">
+              {paragraphs.map((text, i) => (
+                <p
+                  key={i}
+                  className={
+                    i === 0
+                      ? "text-lg lg:text-xl text-foreground/90 leading-relaxed"
+                      : "text-base lg:text-lg text-foreground/80 leading-relaxed"
+                  }
                 >
-                  <div className="col-span-1 font-mono text-xs text-muted-foreground">
-                    {String(t.n).padStart(2, "0")}
-                  </div>
-                  <div className="col-span-9 lg:col-span-8">
-                    <div className="text-base lg:text-lg">{t.title}</div>
-                    {t.guests && t.guests.length > 0 && (
-                      <div className="text-xs text-muted-foreground mt-1">
-                        feat. {t.guests.join(", ")}
-                      </div>
-                    )}
-                    {t.composer && (
-                      <div className="text-xs text-muted-foreground mt-1">
-                        comp. {t.composer}
-                      </div>
-                    )}
-                  </div>
-                  <div className="col-span-2 lg:col-span-3 text-right font-mono text-sm text-muted-foreground">
-                    {t.duration}
-                  </div>
-                </div>
+                  {text}
+                </p>
               ))}
-            </div>
-          </section>
-        )}
-
-        {/* Credits */}
-        {release.credits && release.credits.length > 0 && (
-          <section className="mb-20">
-            <h2 className="text-3xl lg:text-5xl font-display tracking-tight mb-12">
-              {labels.credits}
-            </h2>
-            <div className="space-y-4">
-              {release.credits.map((c, i) => (
-                <div key={i} className="grid grid-cols-12 gap-4 py-3 border-b border-foreground/10">
-                  <div className="col-span-12 sm:col-span-4 font-mono text-xs uppercase tracking-widest text-muted-foreground">
-                    {c.role}
-                  </div>
-                  <div className="col-span-12 sm:col-span-8 text-base">{c.name}</div>
+              {release.video && (
+                <div className="pt-6">
+                  <YouTubeEmbed youtubeId={release.video.youtubeId} title={release.video.title} />
                 </div>
-              ))}
+              )}
             </div>
+
+            {release.links && release.links.length > 0 && (
+              <aside className="lg:col-span-4">
+                <h2 className="font-mono text-xs text-muted-foreground uppercase tracking-widest mb-4">
+                  {labels.links}
+                </h2>
+                <ul className="space-y-2">
+                  {release.links.map((link) => (
+                    <li key={link.href}>
+                      <a
+                        href={link.href}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="inline-flex items-center gap-2 text-sm hover:text-foreground/70 transition-colors group"
+                      >
+                        {isEs ? link.label : link.label.replace("Escuchar", "Listen")}
+                        <ExternalLink className="w-3 h-3 opacity-50 group-hover:opacity-100 transition-opacity" />
+                      </a>
+                    </li>
+                  ))}
+                </ul>
+              </aside>
+            )}
           </section>
-        )}
 
-      </article>
+          {/* Spotify player (only when release has a Spotify link) */}
+          {(() => {
+            const spotifyId = extractSpotifyAlbumId(release.links);
+            if (!spotifyId) return null;
+            return (
+              <section className="mb-20">
+                <SpotifyAlbumEmbed
+                  albumId={spotifyId}
+                  height={352}
+                  cover={release.cover}
+                  coverAlt={`${release.title} — ${release.artistName}`}
+                  title={release.title}
+                />
+              </section>
+            );
+          })()}
 
-      {/* Grilla de cierre: mismo artista primero, luego los más recientes (plan §5.7.5) */}
-      <ReleaseCardGrid lang={uiLang} currentSlug={release.slug} artistSlug={release.artistSlug} />
+          {/* Tracklist */}
+          {release.tracklist && release.tracklist.length > 0 && (
+            <section className="mb-20">
+              <h2 className="text-3xl lg:text-5xl font-display tracking-tight mb-12">
+                {labels.tracklist}
+              </h2>
+              <div className="border-t border-foreground/10">
+                {release.tracklist.map((t) => (
+                  <div
+                    key={t.n}
+                    className="grid grid-cols-12 gap-4 py-5 border-b border-foreground/10 items-baseline"
+                  >
+                    <div className="col-span-1 font-mono text-xs text-muted-foreground">
+                      {String(t.n).padStart(2, "0")}
+                    </div>
+                    <div className="col-span-9 lg:col-span-8">
+                      <div className="text-base lg:text-lg">{t.title}</div>
+                      {t.guests && t.guests.length > 0 && (
+                        <div className="text-xs text-muted-foreground mt-1">
+                          feat. {t.guests.join(", ")}
+                        </div>
+                      )}
+                      {t.composer && (
+                        <div className="text-xs text-muted-foreground mt-1">
+                          comp. {t.composer}
+                        </div>
+                      )}
+                    </div>
+                    <div className="col-span-2 lg:col-span-3 text-right font-mono text-sm text-muted-foreground">
+                      {t.duration}
+                    </div>
+                  </div>
+                ))}
+              </div>
+            </section>
+          )}
 
+          {/* Credits */}
+          {release.credits && release.credits.length > 0 && (
+            <section className="mb-20">
+              <h2 className="text-3xl lg:text-5xl font-display tracking-tight mb-12">
+                {labels.credits}
+              </h2>
+              <div className="space-y-4">
+                {release.credits.map((c, i) => (
+                  <div key={i} className="grid grid-cols-12 gap-4 py-3 border-b border-foreground/10">
+                    <div className="col-span-12 sm:col-span-4 font-mono text-xs uppercase tracking-widest text-muted-foreground">
+                      {c.role}
+                    </div>
+                    <div className="col-span-12 sm:col-span-8 text-base">{c.name}</div>
+                  </div>
+                ))}
+              </div>
+            </section>
+          )}
+
+        </article>
+
+        {/* Grilla de cierre: mismo artista primero, luego los más recientes (plan §5.7.5) */}
+        <ReleaseCardGrid lang={uiLang} currentSlug={release.slug} artistSlug={release.artistSlug} />
+      </main>
       <FooterSection />
-    </main>
+    </>
   );
 }

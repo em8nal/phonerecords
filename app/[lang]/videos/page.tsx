@@ -92,61 +92,62 @@ export default async function VideosPage({
   };
 
   return (
-    <main className="relative min-h-screen overflow-x-hidden noise-overlay">
-      <script
-        type="application/ld+json"
-        dangerouslySetInnerHTML={{ __html: JSON.stringify(schema) }}
-      />
-      <Navigation />
-      {/* Foto B/N del archivo (saturación 0): la misma del carrusel y del hero de la ficha de
-          Rosario Lircay (lib/artist-media.ts); /sello y /eventos usan otras fotos. */}
-      <PageHero
-        image={{
-          desktop: "/media/rosario-lircay/en-vela-hero.jpg",
-          mobile: "/media/rosario-lircay/en-vela-hero-mobile.jpg",
-          alt: { es: "Rosario Lircay, retrato nocturno en la calle", en: "Rosario Lircay, night portrait on the street" },
-        }}
-        title={t.headline}
-        eyebrow="Videos"
-        lang={uiLang}
-        size="short"
-      />
+    <>
+      <main className="relative min-h-screen overflow-x-hidden noise-overlay">
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{ __html: JSON.stringify(schema) }}
+        />
+        <Navigation />
+        {/* Foto B/N del archivo (saturación 0): la misma del carrusel y del hero de la ficha de
+            Rosario Lircay (lib/artist-media.ts); /sello y /eventos usan otras fotos. */}
+        <PageHero
+          image={{
+            desktop: "/media/rosario-lircay/en-vela-hero.jpg",
+            mobile: "/media/rosario-lircay/en-vela-hero-mobile.jpg",
+            alt: { es: "Rosario Lircay, retrato nocturno en la calle", en: "Rosario Lircay, night portrait on the street" },
+          }}
+          title={t.headline}
+          eyebrow="Videos"
+          lang={uiLang}
+          size="short"
+        />
 
-      <article className="max-w-[1400px] mx-auto px-6 lg:px-12 pt-12 lg:pt-16 pb-24">
-        <Link
-          href={`/${lang}`}
-          className="inline-flex min-h-6 items-center gap-2 text-sm text-muted-foreground hover:text-foreground transition-colors mb-12 group"
-        >
-          <ArrowLeft className="w-4 h-4 group-hover:-translate-x-1 transition-transform" />
-          {t.backHome}
-        </Link>
+        <article className="max-w-[1400px] mx-auto px-6 lg:px-12 pt-12 lg:pt-16 pb-24">
+          <Link
+            href={`/${lang}`}
+            className="inline-flex min-h-6 items-center gap-2 text-sm text-muted-foreground hover:text-foreground transition-colors mb-12 group"
+          >
+            <ArrowLeft className="w-4 h-4 group-hover:-translate-x-1 transition-transform" />
+            {t.backHome}
+          </Link>
 
-        <div className="mb-12 lg:mb-16 max-w-3xl">
-          <p className="text-xl text-foreground/85 leading-relaxed">{t.intro}</p>
-        </div>
+          <div className="mb-12 lg:mb-16 max-w-3xl">
+            <p className="text-xl text-foreground/85 leading-relaxed">{t.intro}</p>
+          </div>
 
-        {/* useSearchParams exige un límite de Suspense; el render es por petición, así que no hay fallback visible. */}
-        <Suspense fallback={null}>
-          <VideosGrid
-            lang={uiLang}
-            entries={entries}
-            artistsList={artistsList}
-            kinds={kinds}
-            labels={{
-              filterArtist: t.filterArtist,
-              filterKind: t.filterKind,
-              all: t.all,
-              count: t.count,
-              countOne: t.countOne,
-              empty: t.empty,
-              clear: t.clear,
-              kindLabels: VIDEO_KIND_LABEL[uiLang],
-            }}
-          />
-        </Suspense>
-      </article>
-
+          {/* useSearchParams exige un límite de Suspense; el render es por petición, así que no hay fallback visible. */}
+          <Suspense fallback={null}>
+            <VideosGrid
+              lang={uiLang}
+              entries={entries}
+              artistsList={artistsList}
+              kinds={kinds}
+              labels={{
+                filterArtist: t.filterArtist,
+                filterKind: t.filterKind,
+                all: t.all,
+                count: t.count,
+                countOne: t.countOne,
+                empty: t.empty,
+                clear: t.clear,
+                kindLabels: VIDEO_KIND_LABEL[uiLang],
+              }}
+            />
+          </Suspense>
+        </article>
+      </main>
       <FooterSection />
-    </main>
+    </>
   );
 }

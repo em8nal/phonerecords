@@ -63,8 +63,8 @@ export function Navigation() {
             />
           </a>
 
-          {/* Desktop Navigation. gap-6 entre 768 y 1023 px: con 6 ítems, gap-12 desborda. */}
-          <div className="hidden md:flex items-center gap-6 lg:gap-12">
+          {/* Desktop Navigation desde lg: con 6 ítems la fila no cabe en tablet (768–1023 px usa el menú móvil). */}
+          <div className="hidden lg:flex items-center gap-8 xl:gap-12">
             {navLinks.map((link) => (
               <a
                 key={link.href}
@@ -78,7 +78,7 @@ export function Navigation() {
           </div>
 
           {/* Desktop CTA */}
-          <div className="hidden md:flex items-center gap-4">
+          <div className="hidden lg:flex items-center gap-4">
             <LanguageSelector />
             <a
               href={pressHref}
@@ -98,7 +98,7 @@ export function Navigation() {
           {/* Mobile Menu Button */}
           <button
             onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
-            className="md:hidden p-2"
+            className="lg:hidden p-2"
             aria-label="Toggle menu"
           >
             {isMobileMenuOpen ? (
@@ -113,7 +113,7 @@ export function Navigation() {
       
       {/* Mobile Menu - Full Screen Overlay */}
       <div
-        className={`md:hidden fixed inset-0 bg-background z-40 transition-all duration-500 ${
+        className={`lg:hidden fixed inset-0 bg-background z-40 transition-all duration-500 ${
           isMobileMenuOpen 
             ? "opacity-100 pointer-events-auto" 
             : "opacity-0 pointer-events-none"

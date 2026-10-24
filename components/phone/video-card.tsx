@@ -54,7 +54,7 @@ export function VideoCard({ video, lang, kindLabel, heading = "h3" }: Props) {
       <div className="relative aspect-video overflow-hidden bg-neutral-950">
         <VideoThumb
           youtubeId={video.youtubeId}
-          alt={`${video.title} — ${video.artistName}`}
+          alt=""
           sizes="(min-width: 1400px) 330px, (min-width: 1024px) 25vw, 50vw"
           initial={video.thumb}
         />
