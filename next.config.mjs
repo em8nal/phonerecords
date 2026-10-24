@@ -7,9 +7,6 @@ const nextConfig = {
       { source: "/press/:lang(es|en)/andres-abrigo", destination: "/:lang/press-kit", permanent: true },
     ];
   },
-  typescript: {
-    ignoreBuildErrors: true,
-  },
   // The release OG banner reads cover files from public/releases at request
   // time (fs), so make sure they are traced into that function's bundle.
   outputFileTracingIncludes: {
