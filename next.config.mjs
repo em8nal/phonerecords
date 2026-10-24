@@ -5,6 +5,18 @@ const nextConfig = {
       // Andrés Abrigo salió del roster (21-10-2026): sus URLs van al roster y al press kit.
       { source: "/:lang(es|en)/artistas/andres-abrigo", destination: "/:lang#roster", permanent: true },
       { source: "/press/:lang(es|en)/andres-abrigo", destination: "/:lang/press-kit", permanent: true },
+      // A9: Claudio Solís, retirado del roster; GA4 aún registra visitas a sus URLs.
+      { source: "/:lang(es|en)/artistas/claudio-solis", destination: "/:lang#roster", permanent: true },
+      { source: "/press/:lang(es|en)/claudio-solis", destination: "/:lang/press-kit", permanent: true },
+      // 17a (24-10-2026): la ficha de Klaus B pasa a /artistas/klaus-b, en un solo salto desde cada
+      // URL vieja: ficha, subrutas (la imagen OG que guardaron las redes), ruta sin idioma (los
+      // redirects corren antes que proxy.ts), press kit web y PDF. Alias de ?artist= en
+      // lib/artist-slugs.ts; `pnpm test:releases` exige estas 5 formas por cada slug viejo.
+      { source: "/:lang(es|en)/artistas/klaus-brantmayer", destination: "/:lang/artistas/klaus-b", permanent: true },
+      { source: "/:lang(es|en)/artistas/klaus-brantmayer/:path+", destination: "/:lang/artistas/klaus-b/:path+", permanent: true },
+      { source: "/artistas/klaus-brantmayer", destination: "/es/artistas/klaus-b", permanent: true },
+      { source: "/press/:lang(es|en)/klaus-brantmayer", destination: "/press/:lang/klaus-b", permanent: true },
+      { source: "/press-kits/klaus-brantmayer-:lang(es|en).pdf", destination: "/press-kits/klaus-b-:lang.pdf", permanent: true },
     ];
   },
   // The release OG banner reads cover files from public/releases at request
