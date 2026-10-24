@@ -12,12 +12,12 @@ import { ARTIST_PORTRAIT } from "@/lib/artist-media";
 
 type LangParams = { lang: string };
 
-// Order used on the printed press kit (page 1: Newen, Klaus, ecamhi;
-// page 2: Claudio, Con.fusión, Andrés). Independent from the homepage
-// roster order in lib/artists.ts.
+// Orden del press kit impreso (Newen, Klaus B, ecamhi, Con.fusión, Rosario
+// Lircay). Independiente del orden del roster de portada en lib/artists.ts;
+// un artista que no esté aquí va al final.
 const PRESS_KIT_ORDER = [
   "newen-afrobeat",
-  "klaus-brantmayer",
+  "klaus-b",
   "ecamhi",
   "con-fusion",
   "rosario-lircay",

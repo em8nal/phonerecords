@@ -121,7 +121,7 @@ The recording is ℗ 2026 Newen Afrobeat and the release © 2026 PHŌNÉ Records
     title: "Grietas",
     artistSlug: "newen-afrobeat",
     artistName: "Newen Afrobeat",
-    featuredArtistSlugs: ["ecamhi", "klaus-brantmayer"],
+    featuredArtistSlugs: ["ecamhi", "klaus-b"],
     releaseDate: "2024-09-25",
     year: 2024,
     type: "album",
@@ -305,7 +305,7 @@ The recording is ℗ 2026 Newen Afrobeat and the release © 2026 PHŌNÉ Records
   {
     slug: "klaus-b-un-rezo",
     title: "Un Rezo",
-    artistSlug: "klaus-brantmayer",
+    artistSlug: "klaus-b",
     artistName: "Klaus B",
     releaseDate: "2026-11-05",
     year: 2026,
@@ -344,7 +344,7 @@ The album follows "Viaje Sin Tiempo" (2024), a record made together with Gestosi
   {
     slug: "klaus-b-destellos-de-ti",
     title: "Destellos de ti",
-    artistSlug: "klaus-brantmayer",
+    artistSlug: "klaus-b",
     artistName: "Klaus B",
     releaseDate: "2026-10-22",
     year: 2026,
@@ -398,7 +398,7 @@ On this single, Klaus B is credited with composition, saxophone, flute and produ
   {
     slug: "klaus-b-memorias-mixtape",
     title: "Memorias: Mixtape",
-    artistSlug: "klaus-brantmayer",
+    artistSlug: "klaus-b",
     artistName: "Klaus B",
     releaseDate: "2025-11-17",
     year: 2025,
@@ -442,7 +442,7 @@ On this single, Klaus B is credited with composition, saxophone, flute and produ
   {
     slug: "klaus-b-estudios-del-maipo",
     title: "Estudios Del Maipo: Live Session",
-    artistSlug: "klaus-brantmayer",
+    artistSlug: "klaus-b",
     artistName: "Gestosimple & Klaus B",
     featuredArtistSlugs: ["ecamhi"],
     releaseDate: "2025-11-26",
@@ -481,7 +481,7 @@ On this single, Klaus B is credited with composition, saxophone, flute and produ
   {
     slug: "klaus-b-viaje-sin-tiempo",
     title: "Viaje Sin Tiempo",
-    artistSlug: "klaus-brantmayer",
+    artistSlug: "klaus-b",
     artistName: "Gestosimple & Klaus B",
     releaseDate: "2024-06-12",
     year: 2024,
@@ -520,7 +520,7 @@ On this single, Klaus B is credited with composition, saxophone, flute and produ
   {
     slug: "klaus-b-quisiera-entender",
     title: "Quisiera Entender feat. Newen Afrobeat",
-    artistSlug: "klaus-brantmayer",
+    artistSlug: "klaus-b",
     artistName: "Klaus B",
     releaseDate: "2023-07-11",
     year: 2023,
@@ -554,7 +554,7 @@ On this single, Klaus B is credited with composition, saxophone, flute and produ
   {
     slug: "klaus-b-those-days-far-away",
     title: "Those Days Far Away",
-    artistSlug: "klaus-brantmayer",
+    artistSlug: "klaus-b",
     artistName: "Klaus B",
     releaseDate: "2025-11-11",
     year: 2025,
@@ -585,7 +585,7 @@ On this single, Klaus B is credited with composition, saxophone, flute and produ
   {
     slug: "klaus-b-el-secreto",
     title: "El Secreto",
-    artistSlug: "klaus-brantmayer",
+    artistSlug: "klaus-b",
     artistName: "Klaus B",
     releaseDate: "2025-10-30",
     year: 2025,
@@ -604,7 +604,7 @@ On this single, Klaus B is credited with composition, saxophone, flute and produ
   {
     slug: "klaus-b-viento-radiante",
     title: "Viento Radiante",
-    artistSlug: "klaus-brantmayer",
+    artistSlug: "klaus-b",
     artistName: "Klaus B",
     releaseDate: "2021-06-29",
     year: 2021,
@@ -633,7 +633,7 @@ On this single, Klaus B is credited with composition, saxophone, flute and produ
   {
     slug: "klaus-b-espejismos",
     title: "Espejismos",
-    artistSlug: "klaus-brantmayer",
+    artistSlug: "klaus-b",
     artistName: "Klaus B",
     releaseDate: "2021-11-12",
     year: 2021,
@@ -654,7 +654,7 @@ On this single, Klaus B is credited with composition, saxophone, flute and produ
   {
     slug: "klaus-b-de-noche",
     title: "De Noche",
-    artistSlug: "klaus-brantmayer",
+    artistSlug: "klaus-b",
     artistName: "Klaus B",
     releaseDate: "2021-08-12",
     year: 2021,

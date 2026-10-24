@@ -31,7 +31,7 @@ export type Video = {
   youtubeId: string;
   /** Título oficial del video, tal como está en YouTube. */
   title: string;
-  /** Debe existir en lib/artists.ts. Dúo Gestosimple & Klaus B → "klaus-brantmayer". */
+  /** Debe existir en lib/artists.ts. Dúo Gestosimple & Klaus B → "klaus-b". */
   artistSlug: string;
   artistName: string;
   kind: VideoKind;
@@ -398,7 +398,7 @@ With "Cántaros" and "Open Your Eyes" it forms the trilogy of Curiche videos.`,
     slug: "klaus-b-destellos-de-ti",
     youtubeId: "zEfVXTYtuo8",
     title: "Klaus B - Destellos De Ti [Videoclip Oficial]",
-    artistSlug: "klaus-brantmayer",
+    artistSlug: "klaus-b",
     artistName: "Klaus B",
     kind: "videoclip",
     date: "2026-10-23",
@@ -430,7 +430,7 @@ The official description presents the song as images, sensations and intuitions 
     slug: "klaus-b-those-days-far-away-lyric-visualizer",
     youtubeId: "6Geg_XVD_Uc",
     title: "Klaus B - Those Days Far Away feat. Mr.Li, Seven Star, Racecar (Lyric Visualizer)",
-    artistSlug: "klaus-brantmayer",
+    artistSlug: "klaus-b",
     artistName: "Klaus B",
     kind: "lyric",
     date: "2025-11-13",
@@ -453,7 +453,7 @@ Within Klaus B's catalogue it marks the turn towards cross-continental collabora
     slug: "klaus-b-el-secreto-visualizer",
     youtubeId: "6rkl5zVTii8",
     title: "Klaus B - El Secreto (Visualizer)",
-    artistSlug: "klaus-brantmayer",
+    artistSlug: "klaus-b",
     artistName: "Klaus B",
     kind: "visualizer",
     date: "2025-10-30",
@@ -476,7 +476,7 @@ It is the first of the two visualizers the artist published in 2025; the second 
     slug: "gestosimple-klaus-b-requiem-estudios-del-maipo",
     youtubeId: "2OL4vyx-3iQ",
     title: "Gestosimple & Klaus B - Requiem (J Dilla) / Estudios del Maipo: Live Session",
-    artistSlug: "klaus-brantmayer",
+    artistSlug: "klaus-b",
     artistName: "Klaus B",
     kind: "sesion",
     date: "2025-12-01",
@@ -506,7 +506,7 @@ Together with "Desde La Emisora", captured in the same session, it is the visibl
     slug: "gestosimple-klaus-b-desde-la-emisora-estudios-del-maipo",
     youtubeId: "0D-YOGVmCVc",
     title: "Gestosimple & Klaus B - Desde La Emisora / Estudios del Maipo: Live Session",
-    artistSlug: "klaus-brantmayer",
+    artistSlug: "klaus-b",
     artistName: "Klaus B",
     kind: "sesion",
     date: "2025-08-14",
@@ -537,7 +537,7 @@ It is the most-watched video on the duo's channel and brings together two PHŌN�
     slug: "gestosimple-klaus-b-el-rayo-mas-calido",
     youtubeId: "m1Gw-BL7vcs",
     title: "Gestosimple & Klaus B - EL RAYO MÁS CÁLIDO feat Celeste Shaw, Cidtronyck, Felamusic, Ecamhi",
-    artistSlug: "klaus-brantmayer",
+    artistSlug: "klaus-b",
     artistName: "Klaus B",
     kind: "videoclip",
     date: "2023-09-23",
@@ -567,7 +567,7 @@ The lyrics look for "the warmest ray" crossing "the desert in bloom or barren", 
     slug: "gestosimple-klaus-b-viaje-sin-tiempo",
     youtubeId: "pNQM33Qz4Fo",
     title: "Gestosimple & Klaus B - VIAJE SIN TIEMPO feat Fran Ri, DJ Dacel, Felamusic",
-    artistSlug: "klaus-brantmayer",
+    artistSlug: "klaus-b",
     artistName: "Klaus B",
     kind: "videoclip",
     date: "2023-04-28",
@@ -599,7 +599,7 @@ It is the video introduction to the Gestosimple & Klaus B project and the first 
     youtubeId: "1vIGdzmOELU",
     thumb: "hqdefault", // sin maxresdefault (curl -I, 21-10-2026)
     title: "Klaus B feat Fran Ri & Newen Afrobeat - Quisiera Entender",
-    artistSlug: "klaus-brantmayer",
+    artistSlug: "klaus-b",
     artistName: "Klaus B",
     kind: "videoclip",
     date: "2023-05-26",

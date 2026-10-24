@@ -223,7 +223,7 @@ export const translations = {
           { label: "Newen Afrobeat", href: "/artistas/newen-afrobeat" },
           { label: "ecamhi", href: "/artistas/ecamhi" },
           { label: "Con.fusión", href: "/artistas/con-fusion" },
-          { label: "Klaus B", href: "/artistas/klaus-brantmayer" },
+          { label: "Klaus B", href: "/artistas/klaus-b" },
           { label: "Rosario Lircay", href: "/artistas/rosario-lircay" },
         ],
         label: [
@@ -469,7 +469,7 @@ export const translations = {
           { label: "Newen Afrobeat", href: "/artistas/newen-afrobeat" },
           { label: "ecamhi", href: "/artistas/ecamhi" },
           { label: "Con.fusión", href: "/artistas/con-fusion" },
-          { label: "Klaus B", href: "/artistas/klaus-brantmayer" },
+          { label: "Klaus B", href: "/artistas/klaus-b" },
           { label: "Rosario Lircay", href: "/artistas/rosario-lircay" },
         ],
         label: [

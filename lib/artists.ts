@@ -2,6 +2,10 @@
 // Sourced from informacion.md, spotify_manual.yaml, and Bandcamp scraping.
 // Refresh stats periodically by re-running scripts/update_artists.py.
 
+// Alias de slugs viejos (?artist= y enlaces guardados). Viven en un módulo puro
+// para que los componentes cliente no carguen este archivo completo.
+export { LEGACY_ARTIST_SLUGS, resolveArtistSlug } from "./artist-slugs";
+
 export type ArtistLink = {
   label: string;
   href: string;
@@ -24,6 +28,8 @@ export type Release = {
 export type Artist = {
   slug: string;
   name: string;
+  /** Otros nombres con que se le conoce o busca (JSON-LD `alternateName`). */
+  alternateName?: string[];
   genres: string[];
   origin: string;
   bio: { es: string; en: string };
@@ -108,6 +114,7 @@ Upcoming releases: album εποχή (2026), EP "en viaje" (2027).`,
   {
     slug: "con-fusion",
     name: "Con.fusión",
+    alternateName: ["Con.fusion"],
     genres: ["Hip Hop", "Jazz", "Neo Soul"],
     origin: "Santiago, Chile",
     stats: { monthlyListeners: 8700 },
@@ -140,8 +147,9 @@ Latest release: "Cuántas veces" (October 2026), the single that opens the label
     ],
   },
   {
-    slug: "klaus-brantmayer",
+    slug: "klaus-b",
     name: "Klaus B",
+    alternateName: ["Klaus Brantmayer"],
     genres: ["Nu-jazz", "Hip-hop jazz", "Rap jazz", "Neo-soul"],
     origin: "Santiago, Chile",
     bio: {
