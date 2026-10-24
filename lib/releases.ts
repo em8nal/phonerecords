@@ -130,9 +130,9 @@ The recording is ℗ 2026 Newen Afrobeat and the release © 2026 PHŌNÉ Records
     cover: "https://f4.bcbits.com/img/a1399189381_10.jpg",
     description: {
       es:
-        "Cuarto LP de Newen Afrobeat, grabado en Santuario Sónico (Santiago, abril 2022) con producción general de Sebastián Crooker, mezcla de Fran 'Antena' Infante y master de Carlos Barros. El disco articula a cuatro artistas del roster PHŌNÉ: ecamhi (trompeta + co-composición de Mare Mare + co-dirección de arte con Tom Pavez), Klaus Brantmayer (composición de Es la Vida), y Claudio Solís (diseño gráfico). Featurings de Lido Pimienta, Dele Sosimi, Joe Vasconcellos y Chico César.",
+        "Cuarto LP de Newen Afrobeat, grabado en Santuario Sónico (Santiago, abril 2022) con producción general de Sebastián Crooker, mezcla de Fran 'Antena' Infante y master de Carlos Barros. Además de la banda, el disco reúne a dos artistas del roster PHŌNÉ: ecamhi (trompeta, co-composición de Mare Mare y co-dirección de arte con Tom Pavez) y Klaus B (composición de Es la vida). Featurings de Lido Pimienta, Dele Sosimi, Joe Vasconcellos y Chico César.",
       en:
-        "Newen Afrobeat's fourth LP, recorded at Santuario Sónico (Santiago, April 2022) with general production by Sebastián Crooker, mixing by Fran 'Antena' Infante and mastering by Carlos Barros. The album articulates four PHŌNÉ roster artists: ecamhi (trumpet + co-composition of Mare Mare + co-art direction with Tom Pavez), Klaus Brantmayer (composer of Es la Vida), and Claudio Solís (graphic design). Featurings by Lido Pimienta, Dele Sosimi, Joe Vasconcellos and Chico César.",
+        "Newen Afrobeat's fourth LP, recorded at Santuario Sónico (Santiago, April 2022) with general production by Sebastián Crooker, mixing by Fran 'Antena' Infante and mastering by Carlos Barros. Besides the band, the album brings together two PHŌNÉ roster artists: ecamhi (trumpet, co-composition of Mare Mare and co-art direction with Tom Pavez) and Klaus B (composer of Es la vida). Featurings by Lido Pimienta, Dele Sosimi, Joe Vasconcellos and Chico César.",
     },
     tracklist: [
       { n: 1, title: "Grietas", duration: "5:13", composer: "Fran Ri", guests: ["Lido Pimienta"] },
