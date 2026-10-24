@@ -73,6 +73,8 @@ Rosario Lircay is the stage name of Rosario Meléndez, a singer from the Ñuble 
     links: [
       { label: "Pre-save / Escuchar", href: "https://onerpm.link/105010589210" },
       { label: "Apple Music", href: "https://music.apple.com/us/album/en-vela-single/6821221086" },
+      // Del smartlink; verificado con el oEmbed de Spotify (título "En Vela"), 24-10-2026.
+      { label: "Spotify", href: "https://open.spotify.com/album/5ONQBpFhxX31ruaLxwUMqw" },
     ],
   },
   {
@@ -393,7 +395,11 @@ On this single, Klaus B is credited with composition, saxophone, flute and produ
       { role: "Distribución", name: "ONErpm" },
     ],
     video: { youtubeId: "zEfVXTYtuo8", title: "Klaus B - Destellos De Ti [Videoclip Oficial]" },
-    links: [{ label: "Pre-save / Escuchar", href: "https://onerpm.link/102211016130" }],
+    links: [
+      { label: "Pre-save / Escuchar", href: "https://onerpm.link/102211016130" },
+      // Del smartlink; verificado con el oEmbed de Spotify (título "Destellos de Ti"), 24-10-2026.
+      { label: "Spotify", href: "https://open.spotify.com/album/5loHWji5dshEXJv1LavbCF" },
+    ],
   },
   {
     slug: "klaus-b-memorias-mixtape",
@@ -876,9 +882,11 @@ Con.fusión is the solo project of Catalina Aguilera, a proposal that moves betw
       { role: "Diseño gráfico", name: "Daniel Torres" },
       { role: "℗", name: "PHŌNÉ Records, bajo licencia exclusiva a ONErpm" },
     ],
+    // Orden estándar (Bandcamp · Discogs · Apple Music · Spotify · YouTube). Spotify sin
+    // verificar todavía (no hay smartlink y la API pública de song.link ya no responde).
     links: [
-      { label: "YouTube", href: "https://www.youtube.com/watch?v=lPXsqrH4SU4" },
       { label: "Apple Music", href: "https://music.apple.com/us/album/cu%C3%A1ntas-veces-feat-ecamhi-nuvee/6810767171" },
+      { label: "YouTube", href: "https://www.youtube.com/watch?v=lPXsqrH4SU4" },
     ],
   },
   {
@@ -1003,4 +1011,24 @@ export function getReleasesByArtist(artistSlug: string): Release[] {
 
 export function getAllReleasesSorted(): Release[] {
   return [...releases].sort((a, b) => b.releaseDate.localeCompare(a.releaseDate));
+}
+
+/** Recurso de Spotify que la ficha de lanzamiento puede embeber. */
+export type SpotifyRef = { kind: "album" | "track" | "playlist"; id: string };
+
+const SPOTIFY_REF_RE =
+  /open\.spotify\.com\/(?:intl-[a-z]{2}\/)?(album|track|playlist)\/([A-Za-z0-9]{22})(?![A-Za-z0-9])/;
+
+/**
+ * Primer enlace de `links` que apunta a un álbum, una canción o una lista de
+ * Spotify (los perfiles /artist/ no cuentan). Vive en lib y no en
+ * components/spotify-embed.tsx porque un server component no puede llamar
+ * funciones de un módulo "use client".
+ */
+export function spotifyRefFromLinks(links?: { href: string }[]): SpotifyRef | null {
+  for (const l of links ?? []) {
+    const m = SPOTIFY_REF_RE.exec(l.href);
+    if (m) return { kind: m[1] as SpotifyRef["kind"], id: m[2] };
+  }
+  return null;
 }
