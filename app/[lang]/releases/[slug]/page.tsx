@@ -4,23 +4,13 @@ import Link from "next/link";
 import { ArrowLeft, ExternalLink } from "lucide-react";
 import { Navigation } from "@/components/landing/navigation";
 import { FooterSection } from "@/components/landing/footer-section";
-import { releaseSlugs, getRelease } from "@/lib/releases";
-import { SpotifyAlbumEmbed } from "@/components/spotify-embed";
+import { releaseSlugs, getRelease, spotifyRefFromLinks } from "@/lib/releases";
+import { SpotifyEmbed } from "@/components/spotify-embed";
 import { YouTubeEmbed } from "@/components/youtube-embed";
 import { ReleaseHero } from "@/components/phone/release-hero";
 import { ReleaseCardGrid } from "@/components/phone/release-card-grid";
 import { isReleased, formatReleaseLabel } from "@/lib/release-date";
 import type { Language } from "@/lib/translations";
-
-/** Extracts the Spotify album/track id from a `links` entry that points to open.spotify.com. */
-function extractSpotifyAlbumId(links: { href: string }[] | undefined): string | null {
-  if (!links) return null;
-  for (const l of links) {
-    const m = l.href.match(/open\.spotify\.com\/(?:album|track)\/([A-Za-z0-9]{16,})/);
-    if (m) return m[1];
-  }
-  return null;
-}
 
 type ReleaseParams = { lang: string; slug: string };
 
@@ -239,15 +229,17 @@ export default async function ReleasePage({
             )}
           </section>
 
-          {/* Spotify player (only when release has a Spotify link) */}
+          {/* Reproductor de Spotify (facade): solo con un enlace de álbum, canción o lista y ya
+              publicado (la ruta se renderiza por petición). Singles en la variante compacta de 152 px. */}
           {(() => {
-            const spotifyId = extractSpotifyAlbumId(release.links);
-            if (!spotifyId) return null;
+            const spotify = initiallyReleased ? spotifyRefFromLinks(release.links) : null;
+            if (!spotify) return null;
             return (
               <section className="mb-20">
-                <SpotifyAlbumEmbed
-                  albumId={spotifyId}
-                  height={352}
+                <SpotifyEmbed
+                  kind={spotify.kind}
+                  id={spotify.id}
+                  height={release.type === "single" ? 152 : 352}
                   cover={release.cover}
                   coverAlt={`${release.title} — ${release.artistName}`}
                   title={release.title}
