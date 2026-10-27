@@ -7,7 +7,7 @@ import { Navigation } from "@/components/landing/navigation";
 import { FooterSection } from "@/components/landing/footer-section";
 import { artistSlugs, getArtist } from "@/lib/artists";
 import { getArtistEntries } from "@/lib/catalog";
-import { getRelease } from "@/lib/releases";
+import { getRelease, isPhoneRelease } from "@/lib/releases";
 import { isUpcoming } from "@/lib/release-date";
 import { PageHero } from "@/components/phone/page-hero";
 import { ArtistCardGrid } from "@/components/phone/artist-card-grid";
@@ -53,6 +53,28 @@ function extractSpotifyArtistId(links: { href: string }[]): string | null {
 
 
 type ArtistParams = { lang: string; slug: string };
+
+// Identificadores del grafo JSON-LD. Mismo formato que lib/schema.ts del carril H
+// (SITE, ORG_ID, artistId); al integrar se reemplazan por esos imports.
+const SITE = "https://phonerecords.cl";
+const ORG_ID = `${SITE}/#organization`;
+const artistLdId = (artistSlug: string) => `${SITE}/#artist-${artistSlug}`;
+const absUrl = (src: string) => (/^https?:\/\//.test(src) ? src : `${SITE}${src.startsWith("/") ? "" : "/"}${src}`);
+/** Fecha ISO completa o parcial ("2026", "2026-06", "2026-06-12"); deja fuera "in production". */
+const LD_DATE_RE = /^\d{4}(-\d{2}){0,2}$/;
+/** Origen con año de formación: "Santiago, Chile · 2009" → lugar + año. */
+const ORIGIN_YEAR_RE = /^(.*\S)\s*·\s*(\d{4})$/;
+
+/**
+ * Sello que edita el lanzamiento, para `recordLabel`: PHŌNÉ con el @id de la
+ * organización; otro sello solo con su nombre; sin sello o "Independent", nada.
+ */
+function recordLabelLd(label: string | undefined) {
+  if (!label || label === "Independent") return undefined;
+  return isPhoneRelease({ label })
+    ? { "@id": ORG_ID, "@type": "Organization", name: label }
+    : { "@type": "Organization", name: label };
+}
 
 export function generateStaticParams() {
   const langs: Language[] = ["es", "en"];
@@ -135,38 +157,57 @@ export default async function ArtistPage({
   const portrait = getArtistPortrait(slug);
 
   // Schema.org JSON-LD: MusicGroup + BreadcrumbList for rich snippets.
+  // @id estable e igual en ES y EN (la url sí va por idioma); el mismo que usa el
+  // `member` del sello en la portada y el `byArtist` de las fichas de lanzamiento.
+  const artistId = artistLdId(slug);
+  const originMatch = ORIGIN_YEAR_RE.exec(artist.origin);
+  // `album` solo con los lanzamientos propios: las colaboraciones (otro artista
+  // principal) ya cuelgan del grafo de ese artista.
+  const ownEntries = allEntries.filter((e) => e.artistSlug === slug);
   const schema = {
     "@context": "https://schema.org",
     "@graph": [
       {
         "@type": "MusicGroup",
-        "@id": `${url}#artist`,
+        "@id": artistId,
         name: artist.name,
+        ...(artist.alternateName?.length ? { alternateName: artist.alternateName } : {}),
         description: bio,
         genre: artist.genres,
         url,
-        sameAs: artist.links.map((l) => l.href),
-        ...(portrait ? { image: `https://phonerecords.cl${portrait}` } : {}),
-        location: {
-          "@type": "Place",
-          name: artist.origin,
-        },
-        recordLabel: {
-          "@type": "MusicLabel",
-          "@id": "https://phonerecords.cl/#organization",
-          name: "PHŌNÉ Records",
-        },
-        ...(allEntries.length
+        ...(artist.links.length ? { sameAs: artist.links.map((l) => l.href) } : {}),
+        ...(portrait ? { image: absUrl(portrait) } : {}),
+        location: { "@type": "Place", name: artist.origin },
+        ...(originMatch
           ? {
-              album: allEntries.map((r) => ({
-                "@type": "MusicAlbum",
-                name: r.title,
-                ...(r.year ? { datePublished: r.year } : {}),
-                ...(r.label ? { recordLabel: { "@type": "Organization", name: r.label } } : {}),
-                ...(r.cover ? { image: r.cover } : {}),
-                ...(r.notes ? { description: r.notes } : {}),
-                byArtist: { "@id": `${url}#artist` },
-              })),
+              foundingLocation: { "@type": "Place", name: originMatch[1] },
+              foundingDate: originMatch[2],
+            }
+          : {}),
+        // Inverso del `member` de la organización. MusicGroup no tiene `recordLabel`.
+        memberOf: { "@id": ORG_ID },
+        ...(ownEntries.length
+          ? {
+              album: ownEntries.map((e) => {
+                const date = e.releaseSlug ? e.releaseDate : e.year;
+                const recordLabel = recordLabelLd(e.label);
+                return {
+                  "@type": "MusicAlbum",
+                  ...(e.releaseSlug
+                    ? {
+                        "@id": `${SITE}/${lang}/releases/${e.releaseSlug}#album`,
+                        url: `${SITE}/${lang}/releases/${e.releaseSlug}`,
+                      }
+                    : {}),
+                  name: e.title,
+                  ...(!e.upcoming && LD_DATE_RE.test(date) ? { datePublished: date } : {}),
+                  ...(recordLabel ? { recordLabel } : {}),
+                  ...(e.cover ? { image: absUrl(e.cover) } : {}),
+                  // Las notas de las entradas livianas están escritas en español.
+                  ...(isEs && e.notes ? { description: e.notes } : {}),
+                  byArtist: { "@id": artistId },
+                };
+              }),
             }
           : {}),
       },
@@ -176,18 +217,12 @@ export default async function ArtistPage({
           {
             "@type": "ListItem",
             position: 1,
-            name: "PHŌNÉ Records",
-            item: `https://phonerecords.cl/${lang}`,
+            name: isEs ? "Inicio" : "Home",
+            item: `${SITE}/${lang}`,
           },
           {
             "@type": "ListItem",
             position: 2,
-            name: labels.roster,
-            item: `https://phonerecords.cl/${lang}#roster`,
-          },
-          {
-            "@type": "ListItem",
-            position: 3,
             name: artist.name,
             item: url,
           },
