@@ -27,6 +27,10 @@ type Labels = {
 type Sort = "recent" | "az" | "za";
 type View = "grid" | "list";
 
+/** Foco visible de los chips, el mismo de /videos (videos-grid.tsx). */
+const CHIP_FOCUS =
+  "focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand focus-visible:ring-offset-2";
+
 export function CatalogGrid({
   lang,
   entries,
@@ -149,7 +153,9 @@ export function CatalogGrid({
         </div>
 
         <div className="flex gap-3 items-center flex-wrap">
-          <div className="flex gap-1.5" role="radiogroup" aria-label={labels.sort}>
+          {/* Botones con aria-pressed en un group, como los filtros: un radiogroup exigiría
+              mover la selección con las flechas. */}
+          <div className="flex gap-1.5" role="group" aria-label={labels.sort}>
             {(
               [
                 ["recent", labels.sortRecent],
@@ -167,7 +173,8 @@ export function CatalogGrid({
               </SortBtn>
             ))}
           </div>
-          <div className="flex gap-1.5" role="radiogroup">
+          {/* Labels no trae el nombre del grupo (page.tsx es de H): va local. */}
+          <div className="flex gap-1.5" role="group" aria-label={lang === "es" ? "Vista" : "View"}>
             <SortBtn
               active={activeView === "grid"}
               loading={isPending && pending === "view:"}
@@ -344,7 +351,7 @@ function Chip({
       onClick={onClick}
       aria-pressed={active}
       data-loading={loading || undefined}
-      className={`inline-flex items-center px-4 h-10 text-sm rounded-full border transition-colors ${
+      className={`inline-flex items-center px-4 h-10 text-sm rounded-full border transition-colors ${CHIP_FOCUS} ${
         active
           ? "bg-foreground text-background border-foreground"
           : "bg-transparent text-foreground/70 border-foreground/15 hover:border-foreground/40 hover:text-foreground"
@@ -372,7 +379,7 @@ function YearChip({
       onClick={onClick}
       aria-pressed={active}
       data-loading={loading || undefined}
-      className={`inline-flex items-center px-3 h-7 text-xs font-mono uppercase tracking-widest rounded-full border transition-colors ${
+      className={`inline-flex items-center px-3 h-7 text-xs font-mono uppercase tracking-widest rounded-full border transition-colors ${CHIP_FOCUS} ${
         active
           ? "bg-foreground text-background border-foreground"
           : "bg-transparent text-muted-foreground border-foreground/10 hover:border-foreground/30 hover:text-foreground"
@@ -419,10 +426,9 @@ function SortBtn({
     <button
       type="button"
       onClick={onClick}
-      aria-checked={active}
-      role="radio"
+      aria-pressed={active}
       data-loading={loading || undefined}
-      className={`inline-flex items-center gap-1.5 px-3 h-8 text-xs font-mono uppercase tracking-widest rounded-full border transition-colors ${
+      className={`inline-flex items-center gap-1.5 px-3 h-8 text-xs font-mono uppercase tracking-widest rounded-full border transition-colors ${CHIP_FOCUS} ${
         active
           ? "bg-foreground text-background border-foreground"
           : "bg-transparent text-foreground/70 border-foreground/15 hover:border-foreground/40 hover:text-foreground"
