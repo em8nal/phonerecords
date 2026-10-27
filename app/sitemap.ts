@@ -14,6 +14,10 @@ const LOCALES = ["es", "en"] as const;
 // a las 00:00 America/Santiago de ese día, en paridad con su ficha (404 hasta entonces,
 // evaluada por petición). Sin esto, `getPublishedVideos()` y `now` quedarían fijados en
 // el momento del deploy y el video aparecería recién en el siguiente.
+// Decisión (revisión del pendiente 17): se mantiene por petición y no `revalidate = 3600`
+// como /llms.txt. El cálculo extra (fichas, catálogo, eventos) recorre arreglos en memoria
+// de unas 150 entradas, y con ISR un video o el fin de la última fecha de /eventos llegarían
+// al sitemap con hasta 1 h de atraso respecto de su página.
 export const dynamic = "force-dynamic";
 
 function withAlternates(path: string) {
