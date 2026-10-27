@@ -9,7 +9,9 @@
 //   el sufijo de la plantilla de app/layout.tsx; getArtistEntries sin duplicados y ninguna
 //   entrada liviana de lib/artists.ts repite una ficha; redirects de next.config.mjs: todos
 //   permanentes, las 5 formas por slug viejo y las 2 de claudio-solis, en un solo salto
-//   (probado con getPathMatch y compile de Next, como los aplica el servidor).
+//   (probado con getPathMatch y compile de Next, como los aplica el servidor); la ficha de
+//   lanzamiento se renderiza por petición (app/layout.tsx lee headers() o cookies()) o
+//   declara revalidate/dynamic, porque corta el reproductor y datePublished con isReleased().
 // Avisos (WARN, no fallan): ficha ya publicada (isReleased de lib/release-date.ts) sin
 //   enlace de Spotify ni de Apple Music; artista sin public/press-kits/<slug>-{es,en}.pdf.
 // INFO: entradas de discografía por artista (ficha de artista = press kit).
@@ -111,6 +113,24 @@ report(
   `releaseTitle ≤ ${MAX_TITLE_LENGTH} caracteres (${titles.length - nAbs} con plantilla, ${nAbs} absolutos)`,
   longTitles.length === 0,
   list(longTitles.map((t) => `${t.slug} (${t.shown.length})`)),
+);
+
+// --- Corte de estreno ---------------------------------------------------------------------
+// La ficha de lanzamiento muestra el reproductor y datePublished solo si isReleased(). Es exacto
+// a las 00:00 de Santiago mientras la ruta se renderice por petición: hoy lo fuerza el layout raíz.
+// Si H2 quita headers()/cookies() del layout, la ruta pasa a estática y el corte se congela en el
+// build; entonces la página tiene que declarar `export const revalidate = 3600` (o dynamic).
+const releasePageSrc = readFileSync(path.join(ROOT, "app/[lang]/releases/[slug]/page.tsx"), "utf8");
+const layoutPerRequest = /\bawait\s+(?:headers|cookies)\(\)/.test(layoutSrc);
+const pageRevalidates = /export\s+const\s+(?:revalidate|dynamic)\s*=/.test(releasePageSrc);
+report(
+  "ficha de lanzamiento por petición o con revalidate (corte de isReleased)",
+  layoutPerRequest || pageRevalidates,
+  layoutPerRequest
+    ? "app/layout.tsx lee headers()/cookies()"
+    : pageRevalidates
+      ? "la página declara revalidate/dynamic"
+      : "app/layout.tsx ya no lee headers()/cookies(): agrega `export const revalidate = 3600` a app/[lang]/releases/[slug]/page.tsx",
 );
 
 // --- Discografía -------------------------------------------------------------------------

@@ -124,7 +124,10 @@ export default async function ReleasePage({
     .split(/\n{2,}/)
     .map((p) => p.trim())
     .filter(Boolean);
-  // Server-side answer, used for SSR/hydration; the client components re-check the clock.
+  // Se evalúa en cada petición: app/layout.tsx lee headers() y cookies(), así que la ruta no se
+  // prerenderiza aunque tenga generateStaticParams (el build del 24-10 no la trae en
+  // prerender-manifest.json). Si el layout deja de leerlos (H2), test:releases exige revalidate.
+  // Los componentes cliente vuelven a mirar el reloj para el badge y el label del CTA.
   const initiallyReleased = isReleased(release.releaseDate);
   const uiLang: Language = isEs ? "es" : "en";
 
@@ -146,7 +149,7 @@ export default async function ReleasePage({
         "@id": `${url}#album`,
         name: release.title,
         url,
-        // Solo ya publicado: la ruta se renderiza por petición y cambia a las 00:00 de Santiago.
+        // Solo ya publicado; cambia a las 00:00 de Santiago (render por petición, ver initiallyReleased).
         ...(initiallyReleased ? { datePublished: release.releaseDate } : {}),
         ...(release.cover ? { image: absUrl(release.cover) } : {}),
         albumReleaseType: release.type === "single"
@@ -266,7 +269,9 @@ export default async function ReleasePage({
           </section>
 
           {/* Reproductor de Spotify (facade): solo con un enlace de álbum, canción o lista y ya
-              publicado (la ruta se renderiza por petición). Singles en la variante compacta de 152 px. */}
+              publicado; aparece desde las 00:00 de Santiago del estreno porque la ruta se renderiza
+              por petición (ver initiallyReleased). Singles en la variante compacta de 152 px.
+              La portada es decorativa (alt vacío): el hero ya la describe y el título va al lado. */}
           {(() => {
             const spotify = initiallyReleased ? spotifyRefFromLinks(release.links) : null;
             if (!spotify) return null;
@@ -277,7 +282,6 @@ export default async function ReleasePage({
                   id={spotify.id}
                   height={release.type === "single" ? 152 : 352}
                   cover={release.cover}
-                  coverAlt={`${release.title} — ${release.artistName}`}
                   title={release.title}
                 />
               </section>

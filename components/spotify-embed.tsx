@@ -53,10 +53,15 @@ type SpotifyFacadeProps = SpotifyFacadeExtras & {
  * La tarjeta reserva `minHeight: height`, así el iframe no provoca salto.
  *
  * Con height 152 usa la variante compacta en fila (portada de 120 px desde
- * `sm`, oculta en móvil): su alto natural es ≤ 146 px de 320 a 1200 px de
- * ancho (16 + 16 + 8 + 44 + 8 + 8 + 2×15 + 16), dentro de los 150 px que deja
- * el borde, así que la tarjeta mide 152 px como el iframe. Con zoom de texto
- * crece (minHeight, no height) en vez de recortar.
+ * `sm`, oculta en móvil): con la fuente por defecto y desde ~300 px de ancho
+ * su alto natural es ≤ 146 px (16 + 16 + 8 + 44 + 8 + 8 + 2×15 + 16), dentro
+ * de los 150 px que deja el borde, así que la tarjeta mide 152 px como el
+ * iframe. Más angosta (el aviso pasa a 3 líneas) o con texto agrandado crece
+ * (minHeight, no height) en vez de recortar, y al clic baja a los 152 px del
+ * iframe: ese salto sigue a una interacción y no cuenta para CLS.
+ *
+ * Sin `coverAlt` la portada queda decorativa (alt vacío), que es lo correcto
+ * cuando la página ya describe esa misma imagen.
  */
 function SpotifyFacade({ kind, id, height, cover, coverAlt, title, lang }: SpotifyFacadeProps) {
   const facadeLang = useFacadeLang(lang);
