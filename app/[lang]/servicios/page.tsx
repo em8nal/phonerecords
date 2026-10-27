@@ -116,7 +116,7 @@ export default async function ServiciosPage({
               </nav>
             </div>
             <div className="lg:col-span-5">
-              <ServicesStrip covers={getStripCovers(lang)} label={c.hero.stripLabel} />
+              <ServicesStrip covers={getStripCovers(lang)} label={c.hero.stripLabel} lang={lang} />
             </div>
           </div>
         </section>
