@@ -8,6 +8,8 @@ import {
   contactActionSchema,
   extractHttpsUrls,
   linkLines,
+  projectTypeLabels,
+  serviceInterestLabels,
 } from "./contact-schema";
 
 // Envío en menos de este tiempo desde el render = bot (mismo umbral que app/actions/newsletter.ts).
@@ -25,6 +27,7 @@ const topicLabels = {
   prensa: { es: "Prensa", en: "Press" },
   sello: { es: "Sello", en: "Label" },
   propuesta: { es: "Propuesta de artista", en: "Artist proposal" },
+  servicios: { es: "Dirección creativa, diseño y prensa", en: "Creative direction, design & press" },
 } as const;
 
 export async function sendContactMessage(
@@ -42,6 +45,9 @@ export async function sendContactMessage(
     message,
     links,
     city,
+    services,
+    projectType,
+    releaseWindow,
     website,
     lang,
     newsletter,
@@ -61,15 +67,25 @@ export async function sendContactMessage(
   }
 
   const isProposal = topic === "propuesta";
+  const isServices = topic === "servicios";
+  const hasLinks = isProposal || isServices;
   const topicLabel = topicLabels[topic][lang];
   // Sin saltos de línea ni espacios dobles: van en la cabecera Subject.
   const nameClean = name.replace(/\s+/g, " ");
   const cityClean = (city ?? "").replace(/\s+/g, " ");
-  const proposalLinks = isProposal ? linkLines(links ?? "") : [];
+  const linkList = hasLinks ? linkLines(links ?? "") : [];
+  // Asunto "servicios": etiquetas en español (el correo es interno), sin duplicados.
+  const servicesClean = isServices
+    ? [...new Set(services ?? [])].map((s) => serviceInterestLabels[s].es).join(" · ")
+    : "";
+  const projectClean = isServices && projectType ? projectTypeLabels[projectType].es : "";
+  const releaseClean = (releaseWindow ?? "").replace(/\s+/g, " ").trim() || "(sin indicar)";
 
   const subject = isProposal
     ? `[phonerecords.cl] Propuesta de artista — ${nameClean} (${cityClean})`
-    : `[phonerecords.cl] ${topicLabel} · ${nameClean}`;
+    : isServices
+      ? `[phonerecords.cl] Cotización de servicios — ${nameClean}`
+      : `[phonerecords.cl] ${topicLabel} · ${nameClean}`;
 
   const text = [
     `Nuevo mensaje desde phonerecords.cl`,
@@ -78,12 +94,19 @@ export async function sendContactMessage(
     `Email:    ${email}`,
     `Asunto:   ${topicLabel}`,
     `Idioma:   ${lang}`,
-    ...(isProposal
+    ...(isProposal ? [`Ciudad:   ${cityClean}`] : []),
+    ...(isServices
       ? [
-          `Ciudad:   ${cityClean}`,
+          `Servicios: ${servicesClean}`,
+          `Proyecto: ${projectClean}`,
+          `Fecha estimada: ${releaseClean}`,
+        ]
+      : []),
+    ...(hasLinks
+      ? [
           ``,
           `Enlaces:`,
-          ...proposalLinks.map((line) => `  ${line}`),
+          ...(linkList.length > 0 ? linkList.map((line) => `  ${line}`) : [`  (sin indicar)`]),
         ]
       : []),
     ``,
@@ -91,22 +114,29 @@ export async function sendContactMessage(
     message,
   ].join("\n");
 
-  const cityRow = isProposal
-    ? `<tr><td style="padding:4px 12px 4px 0;color:#666;">Ciudad</td><td>${escapeHtml(cityClean)}</td></tr>`
+  const row = (label: string, value: string) =>
+    `<tr><td style="padding:4px 12px 4px 0;color:#666;">${label}</td><td>${escapeHtml(value)}</td></tr>`;
+  const cityRow = isProposal ? row("Ciudad", cityClean) : "";
+  const servicesRows = isServices
+    ? [row("Servicios", servicesClean), row("Proyecto", projectClean), row("Fecha estimada", releaseClean)].join("\n        ")
     : "";
   // Cada línea del textarea es un <li>; si contiene una URL https://, la línea entera enlaza a ella.
-  const linksBlock = isProposal
-    ? `
-      <p style="margin:16px 0 4px;font-size:14px;color:#666;">Enlaces</p>
-      <ul style="margin:0;padding-left:20px;font-size:14px;line-height:1.6;">
-        ${proposalLinks
+  const linkItems =
+    linkList.length > 0
+      ? linkList
           .map((line) => {
             const [url] = extractHttpsUrls(line);
             return url
               ? `<li><a href="${escapeHtml(url)}">${escapeHtml(line)}</a></li>`
               : `<li>${escapeHtml(line)}</li>`;
           })
-          .join("\n        ")}
+          .join("\n        ")
+      : `<li>(sin indicar)</li>`;
+  const linksBlock = hasLinks
+    ? `
+      <p style="margin:16px 0 4px;font-size:14px;color:#666;">Enlaces</p>
+      <ul style="margin:0;padding-left:20px;font-size:14px;line-height:1.6;">
+        ${linkItems}
       </ul>`
     : "";
 
@@ -118,7 +148,7 @@ export async function sendContactMessage(
         <tr><td style="padding:4px 12px 4px 0;color:#666;">Email</td><td><a href="mailto:${escapeHtml(email)}">${escapeHtml(email)}</a></td></tr>
         <tr><td style="padding:4px 12px 4px 0;color:#666;">Asunto</td><td>${escapeHtml(topicLabel)}</td></tr>
         <tr><td style="padding:4px 12px 4px 0;color:#666;">Idioma</td><td>${lang}</td></tr>
-        ${cityRow}
+        ${cityRow}${servicesRows}
       </table>${linksBlock}
       <hr style="border:none;border-top:1px solid #eee;margin:20px 0;" />
       <pre style="white-space:pre-wrap;font-family:inherit;font-size:14px;line-height:1.6;margin:0;">${escapeHtml(message)}</pre>

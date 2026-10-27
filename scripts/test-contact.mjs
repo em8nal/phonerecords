@@ -1,12 +1,17 @@
-// Prueba del esquema del formulario de contacto (asunto "propuesta"):
+// Prueba del esquema del formulario de contacto (asuntos "propuesta" y "servicios"):
 //   node --import ./scripts/ts-resolve-hook.mjs scripts/test-contact.mjs
 // Importa app/[lang]/contacto/contact-schema.ts (solo zod, sin directivas) y comprueba
-// que los campos extra (enlaces, ciudad) se exigen solo con topic = "propuesta".
+// que los campos extra se exigen solo con su asunto: enlaces y ciudad con "propuesta";
+// servicios de interés y tipo de proyecto con "servicios" (fecha estimada y enlaces, opcionales).
 import {
   contactActionSchema,
   contactFormSchema,
   extractHttpsUrls,
   linkLines,
+  projectTypeLabels,
+  projectTypeValues,
+  serviceInterestLabels,
+  serviceInterestValues,
   topicValues,
 } from "../app/[lang]/contacto/contact-schema.ts";
 
@@ -31,8 +36,9 @@ const failsOnlyAt = (result, ...paths) =>
   JSON.stringify([...new Set(issuePaths(result))].sort()) === JSON.stringify([...paths].sort());
 
 report(
-  "topicValues incluye propuesta (y los 4 anteriores)",
-  JSON.stringify(topicValues) === JSON.stringify(["general", "booking", "prensa", "sello", "propuesta"]),
+  "topicValues = los 5 anteriores + servicios",
+  JSON.stringify(topicValues) === JSON.stringify(["general", "booking", "prensa", "sello", "propuesta", "servicios"]),
+  JSON.stringify(topicValues),
 );
 
 // (1) general sin links/city ⇒ ok
@@ -126,5 +132,70 @@ const r9 = contactFormSchema.safeParse({ ...base, topic: "propuesta", links: "",
 report("contactFormSchema: propuesta vacía ⇒ falla en links y city", failsOnlyAt(r9, "links", "city"), issuePaths(r9).join(","));
 const r9b = contactFormSchema.safeParse({ ...base, topic: "sello" });
 report("contactFormSchema: sello sin extras ⇒ ok", r9b.success, issuePaths(r9b).join(","));
+
+// ── Asunto "servicios" (dirección creativa, diseño y prensa) ──
+const servicios = { ...base, topic: "servicios", services: ["portada", "prensa"], projectType: "ep" };
+
+// (10) válido con dos servicios y tipo ⇒ ok
+const s1 = contactActionSchema.safeParse(servicios);
+report("servicios válido (2 casillas + EP) ⇒ ok", s1.success, issuePaths(s1).join(","));
+
+// (11) sin servicios marcados ⇒ falla solo en services (sin campo y con arreglo vacío)
+const { services: _omit, ...withoutServices } = servicios;
+const s2 = contactActionSchema.safeParse(withoutServices);
+report("servicios sin casillas (campo ausente) ⇒ falla solo en services", failsOnlyAt(s2, "services"), issuePaths(s2).join(","));
+const s2b = contactActionSchema.safeParse({ ...servicios, services: [] });
+report("servicios con casillas vacías ([]) ⇒ falla solo en services", failsOnlyAt(s2b, "services"), issuePaths(s2b).join(","));
+
+// (12) sin tipo de proyecto (null = radios sin marcar) ⇒ falla solo en projectType
+const s3 = contactActionSchema.safeParse({ ...servicios, projectType: null });
+report("servicios sin tipo de proyecto ⇒ falla solo en projectType", failsOnlyAt(s3, "projectType"), issuePaths(s3).join(","));
+
+// (13) fecha estimada en texto libre ⇒ ok; sin fecha ⇒ ok; con salto de línea ⇒ falla
+const s4 = contactActionSchema.safeParse({ ...servicios, releaseWindow: "marzo 2027" });
+report("servicios con fecha en texto ('marzo 2027') ⇒ ok", s4.success && s4.data.releaseWindow === "marzo 2027", issuePaths(s4).join(","));
+const s4b = contactActionSchema.safeParse({ ...servicios, releaseWindow: "" });
+report("servicios con fecha vacía ⇒ ok (opcional)", s4b.success, issuePaths(s4b).join(","));
+const s4c = contactActionSchema.safeParse({ ...servicios, releaseWindow: "marzo\nBcc: x@y.z" });
+report("fecha con salto de línea ⇒ falla en releaseWindow", failsOnlyAt(s4c, "releaseWindow"), issuePaths(s4c).join(","));
+
+// (14) enlaces opcionales y sin exigir https:// (a diferencia de "propuesta")
+const s5 = contactActionSchema.safeParse({ ...servicios, links: "maqueta en Drive\nIG: @x" });
+report("servicios con enlaces sin https:// ⇒ ok", s5.success, issuePaths(s5).join(","));
+
+// (15) casilla desconocida ⇒ falla en services.0; "Todavía no lo tengo claro" vale sola
+const s6 = contactActionSchema.safeParse({ ...servicios, services: ["xyz"] });
+report("servicio desconocido ⇒ falla solo en services.0", failsOnlyAt(s6, "services.0"), issuePaths(s6).join(","));
+const s6b = contactActionSchema.safeParse({ ...servicios, services: ["por-definir"], projectType: "otro" });
+report("'Todavía no lo tengo claro' + Otro ⇒ ok", s6b.success, issuePaths(s6b).join(","));
+
+// (16) otros asuntos no exigen los campos de servicios ni la ciudad
+const s7 = contactActionSchema.safeParse({ ...base, topic: "booking", services: [], projectType: null });
+report("booking sin campos de servicios ⇒ ok", s7.success, issuePaths(s7).join(","));
+const s7b = contactActionSchema.safeParse({ ...servicios, city: "" });
+report("servicios no exige ciudad", s7b.success, issuePaths(s7b).join(","));
+
+// (17) el esquema del cliente aplica las mismas reglas
+const s8 = contactFormSchema.safeParse({ ...base, topic: "servicios", services: [], projectType: null, releaseWindow: "" });
+report("contactFormSchema: servicios vacío ⇒ falla en services y projectType", failsOnlyAt(s8, "services", "projectType"), issuePaths(s8).join(","));
+const s8b = contactFormSchema.safeParse(servicios);
+report("contactFormSchema: servicios válido ⇒ ok", s8b.success, issuePaths(s8b).join(","));
+
+// (18) etiquetas ES/EN para cada casilla y cada tipo (sin presupuesto ni cifras)
+const missingLabels = [
+  ...serviceInterestValues.filter((v) => !serviceInterestLabels[v]?.es || !serviceInterestLabels[v]?.en),
+  ...projectTypeValues.filter((v) => !projectTypeLabels[v]?.es || !projectTypeLabels[v]?.en),
+];
+report("etiquetas ES/EN de casillas y tipos", missingLabels.length === 0, missingLabels.join(", "));
+report(
+  "7 casillas (con 'Todavía no lo tengo claro') y 4 tipos",
+  serviceInterestValues.length === 7 &&
+    serviceInterestLabels["por-definir"].es === "Todavía no lo tengo claro" &&
+    JSON.stringify(projectTypeValues) === JSON.stringify(["single", "ep", "disco", "otro"]),
+);
+report(
+  "sin campo de presupuesto en el esquema",
+  !Object.keys(contactActionSchema._def.schema.shape).some((k) => /budget|presupuesto|monto|amount/i.test(k)),
+);
 
 process.exit(ok ? 0 : 1);

@@ -57,7 +57,7 @@ Solo con tu consentimiento (si aceptas en el banner de cookies):
 
 Cómo cambiar tu decisión: puedes borrar las cookies de este sitio en tu navegador o usar el botón al final de esta sección, que elimina "phone_consent" y vuelve a mostrar el banner.
 
-Si nos escribes por el formulario de contacto (phonerecords.cl/es/contacto), conservamos tu nombre, email y mensaje para responderte. No lo usamos para nada más. Si envías una propuesta de artista, guardamos también los enlaces y la ciudad que indiques, solo para evaluarla.`,
+Si nos escribes por el formulario de contacto (phonerecords.cl/es/contacto), conservamos tu nombre, email y mensaje para responderte. No lo usamos para nada más. Si envías una propuesta de artista, guardamos también los enlaces y la ciudad que indiques, solo para evaluarla. Si nos escribes por servicios de dirección creativa, diseño y prensa, guardamos también los servicios que te interesan, el tipo de proyecto, la fecha estimada de lanzamiento y los enlaces que compartas, solo para responder tu consulta.`,
         consentButton: "Cambiar mi decisión de cookies",
       },
       {
@@ -167,7 +167,7 @@ Only with your consent (if you accept in the cookie banner):
 
 How to change your decision: you can clear this site's cookies in your browser or use the button at the end of this section, which removes "phone_consent" and shows the banner again.
 
-If you write to us via the contact form (phonerecords.cl/en/contacto), we keep your name, email and message to respond. We don't use it for anything else. If you send an artist proposal, we also keep the links and the city you provide, only to evaluate it.`,
+If you write to us via the contact form (phonerecords.cl/en/contacto), we keep your name, email and message to respond. We don't use it for anything else. If you send an artist proposal, we also keep the links and the city you provide, only to evaluate it. If you write to us about creative direction, design and press services, we also keep the services you're interested in, the project type, the estimated release date and any links you share, only to answer your inquiry.`,
         consentButton: "Change my cookie choice",
       },
       {
