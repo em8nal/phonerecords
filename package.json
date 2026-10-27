@@ -7,6 +7,7 @@
     "test:roster": "node --import ./scripts/ts-resolve-hook.mjs scripts/test-roster.mjs",
     "test:videos": "node --import ./scripts/ts-resolve-hook.mjs scripts/test-videos.mjs",
     "test:contact": "node --import ./scripts/ts-resolve-hook.mjs scripts/test-contact.mjs",
+    "test:releases": "node --import ./scripts/ts-resolve-hook.mjs scripts/test-releases.mjs",
     "build": "next build",
     "dev": "next dev",
     "lint": "eslint .",

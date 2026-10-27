@@ -12,6 +12,24 @@ import { DownloadPdfButton } from "@/components/download-pdf-button";
 // Beyond this we show a tail line directing readers to the full catalog page.
 const MAX_DISCOGRAPHY_ENTRIES = 18;
 
+// Los formatos de lib/ están escritos en español ("EP en vivo", "vinilo") y el sello sin
+// editorial dice "Independent": el press kit los muestra en el idioma del documento.
+const FORMAT_EN: ReadonlyArray<readonly [RegExp, string]> = [
+  [/EP en vivo/g, "Live EP"],
+  [/en producción/g, "in production"],
+  [/Álbum debut/g, "Debut album"],
+  [/Álbum/g, "Album"],
+  [/LP debut/g, "Debut LP"],
+  [/2° LP/g, "2nd LP"],
+  [/Single instrumental/g, "Instrumental single"],
+  [/\bvinilo\b/g, "vinyl"],
+  [/\bVinilo\b/g, "Vinyl"],
+];
+const localizeFormat = (format: string, isEs: boolean) =>
+  isEs ? format : FORMAT_EN.reduce((acc, [re, en]) => acc.replace(re, en), format);
+const localizeLabel = (label: string, isEs: boolean) =>
+  isEs && label === "Independent" ? "Independiente" : label;
+
 type PressParams = { lang: string; slug: string };
 
 export function generateStaticParams() {
@@ -56,36 +74,6 @@ export default async function PressKitPage({
   const isEs = lang === "es";
   const bio = isEs ? artist.bio.es : artist.bio.en;
 
-  // Build discography: prefer curated inline `artist.releases`; fall back to
-  // catalog entries (rich + lightweight) so Solis/Ecamhi also have a section.
-  type DiscoRow = {
-    year: string;
-    title: string;
-    format?: string;
-    label?: string;
-    notes?: string;
-  };
-  const inlineReleases: DiscoRow[] = (artist.releases ?? []).map((r) => ({
-    year: r.year,
-    title: r.title,
-    format: r.format,
-    label: r.label,
-    notes: r.notes,
-  }));
-  const fallbackReleases: DiscoRow[] = inlineReleases.length
-    ? []
-    : getArtistEntries(slug).map((e) => ({
-        year: e.year,
-        title: e.title,
-        format: e.format,
-        label: e.label,
-        notes: e.notes,
-      }));
-  const allReleases = inlineReleases.length ? inlineReleases : fallbackReleases;
-  const discography = allReleases.slice(0, MAX_DISCOGRAPHY_ENTRIES);
-  const extraReleases = Math.max(0, allReleases.length - discography.length);
-  const useTwoColumnDisco = discography.length > 10;
-
   const t = isEs
     ? {
         pressKit: "PRESS KIT",
@@ -94,6 +82,9 @@ export default async function PressKitPage({
         downloadHint: "Descarga el PDF maquetado en A4 listo para imprimir o adjuntar.",
         bio: "Biografía",
         discography: "Discografía",
+        inProduction: "En producción",
+        comingSoon: "Próximamente",
+        collaboration: "Colaboración",
         moreReleases: (n: number) =>
           `+${n} releases adicionales · catálogo completo en phonerecords.cl/es/artistas/${slug}`,
         links: "Enlaces",
@@ -119,6 +110,9 @@ export default async function PressKitPage({
         downloadHint: "Download the A4 PDF ready to print or attach.",
         bio: "Biography",
         discography: "Discography",
+        inProduction: "In production",
+        comingSoon: "Coming soon",
+        collaboration: "Collaboration",
         moreReleases: (n: number) =>
           `+${n} more releases · full catalogue at phonerecords.cl/en/artistas/${slug}`,
         links: "Links",
@@ -137,6 +131,34 @@ export default async function PressKitPage({
           "European booking handled by Ludwig Sound Booking Agency (Heidelberg, Germany). For Latin America and the rest of the world: PHŌNÉ Records.",
         generated: "Document generated",
       };
+
+  // Discografía: siempre la misma fuente que la ficha de artista (getArtistEntries:
+  // fichas de lib/releases.ts + entradas livianas sin ficha, sin duplicados). Las
+  // colaboraciones (lanzamientos de otro artista donde aparece) se marcan en la meta.
+  // Sin año de 4 dígitos ("in production"), la columna del año lleva "—" (14 mm no
+  // alcanzan para "En producción") y el estado abre la meta.
+  type DiscoRow = { key: string; year: string | null; title: string; meta: string };
+  const allReleases: DiscoRow[] = getArtistEntries(slug).map((e) => {
+    const year = e.year.match(/\d{4}/)?.[0] ?? null;
+    return {
+      key: e.key,
+      year,
+      title: e.title,
+      meta: [
+        !year && t.inProduction,
+        e.upcoming && t.comingSoon,
+        e.artistSlug !== slug && t.collaboration,
+        e.artistName !== artist.name && e.artistName,
+        e.format !== "—" && localizeFormat(e.format, isEs),
+        e.label && localizeLabel(e.label, isEs),
+      ]
+        .filter(Boolean)
+        .join(" · "),
+    };
+  });
+  const discography = allReleases.slice(0, MAX_DISCOGRAPHY_ENTRIES);
+  const extraReleases = Math.max(0, allReleases.length - discography.length);
+  const useTwoColumnDisco = discography.length > 10;
 
   const today = new Date().toLocaleDateString(isEs ? "es-CL" : "en-GB", {
     year: "numeric",
@@ -213,16 +235,16 @@ export default async function PressKitPage({
                   : "press-disco-list"
               }
             >
-              {discography.map((r, i) => (
-                <li key={`${r.year}-${i}`} className="press-disco-item">
-                  <span className="press-disco-year">{r.year}</span>
+              {discography.map((r) => (
+                <li key={r.key} className="press-disco-item">
+                  {r.year ? (
+                    <span className="press-disco-year">{r.year}</span>
+                  ) : (
+                    <span className="press-disco-year" aria-hidden="true">—</span>
+                  )}
                   <span className="press-disco-body">
                     <span className="press-disco-name">{r.title}</span>
-                    {(r.format || r.label) && (
-                      <span className="press-disco-meta">
-                        {[r.format, r.label].filter(Boolean).join(" · ")}
-                      </span>
-                    )}
+                    {r.meta && <span className="press-disco-meta">{r.meta}</span>}
                   </span>
                 </li>
               ))}

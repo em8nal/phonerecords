@@ -212,11 +212,11 @@ export const BANNER_ENTRIES: BannerEntry[] = [
     image: IMAGE,
     cta: {
       // Relativo: el link final del álbum aún no existe; se prefija el idioma.
-      href: "/artistas/klaus-brantmayer",
+      href: "/artistas/klaus-b",
       beforeRelease: { es: "Ver artista", en: "View artist" },
       afterRelease: { es: "Ver artista", en: "View artist" },
     },
-    secondaryHref: "/artistas/klaus-brantmayer",
+    secondaryHref: "/artistas/klaus-b",
   },
   {
     slug: "con-fusion-cuantas-veces",

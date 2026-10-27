@@ -2,6 +2,10 @@
 // Sourced from informacion.md, spotify_manual.yaml, and Bandcamp scraping.
 // Refresh stats periodically by re-running scripts/update_artists.py.
 
+// Alias de slugs viejos (?artist= y enlaces guardados). Viven en un módulo puro
+// para que los componentes cliente no carguen este archivo completo.
+export { LEGACY_ARTIST_SLUGS, resolveArtistSlug } from "./artist-slugs";
+
 export type ArtistLink = {
   label: string;
   href: string;
@@ -24,10 +28,17 @@ export type Release = {
 export type Artist = {
   slug: string;
   name: string;
+  /** Otros nombres con que se le conoce o busca (JSON-LD `alternateName`). */
+  alternateName?: string[];
   genres: string[];
   origin: string;
   bio: { es: string; en: string };
   links: ArtistLink[];
+  /**
+   * Solo lanzamientos SIN ficha en lib/releases.ts (singles de otros sellos, discos
+   * en producción…). Lo que ya tiene ficha no se repite aquí: la discografía de la
+   * ficha de artista y del press kit sale de getArtistEntries (lib/catalog.ts).
+   */
   releases?: Release[];
   stats?: {
     spotifyFollowers?: number;
@@ -67,13 +78,6 @@ In 2026 the group is preparing a new studio album that will mark a new sonic sta
       { label: "Bandcamp", href: "https://newenafrobeat.bandcamp.com/music" },
       { label: "Instagram", href: "https://www.instagram.com/newenafrobeat/" },
     ],
-    releases: [
-      { year: "2025-04", title: "Liverpool Session", format: "EP en vivo · 4 tracks", notes: "Grabado 100% análogo en Quarry, Liverpool" },
-      { year: "2024-09", title: "Grietas", format: "LP · vinilo + digital", label: "OfficeHome Records (París)", notes: "Featurings: Lido Pimienta, Dele Sosimi, Joe Vasconcellos, Chico César" },
-      { year: "2019-05", title: "Curiche", format: "2° LP · 7 tracks", notes: "Grabado en Santuario Sónico" },
-      { year: "2017-02", title: "Newen Plays Fela", format: "EP · CD (sold out)", notes: "Con Seun Kuti, Cheick Tidiane Seck, Egypt 80" },
-      { year: "2014-06", title: "Newen Afrobeat", format: "LP debut · 7 tracks", notes: "Producido por Chalo Gonzáles + Nicolás Urbina" },
-    ],
     stats: { spotifyFollowers: 66199, monthlyListeners: 28729, youtubeSubs: 44200 },
   },
   {
@@ -102,12 +106,11 @@ Upcoming releases: album εποχή (2026), EP "en viaje" (2027).`,
       { label: "Instagram", href: "https://www.instagram.com/ecamhi/" },
     ],
     stats: { monthlyListeners: 3 },
-    releases: [
-    ],
   },
   {
     slug: "con-fusion",
     name: "Con.fusión",
+    alternateName: ["Con.fusion"],
     genres: ["Hip Hop", "Jazz", "Neo Soul"],
     origin: "Santiago, Chile",
     stats: { monthlyListeners: 8700 },
@@ -140,8 +143,9 @@ Latest release: "Cuántas veces" (October 2026), the single that opens the label
     ],
   },
   {
-    slug: "klaus-brantmayer",
+    slug: "klaus-b",
     name: "Klaus B",
+    alternateName: ["Klaus Brantmayer"],
     genres: ["Nu-jazz", "Hip-hop jazz", "Rap jazz", "Neo-soul"],
     origin: "Santiago, Chile",
     bio: {
@@ -168,15 +172,6 @@ He has played on stages and at festivals around the world — Brazil, Colombia, 
       { label: "YouTube", href: "https://www.youtube.com/channel/UCN-g9sETAcl84PdpXWUTXOg" },
       { label: "Bandcamp", href: "https://klausb.bandcamp.com/music" },
       { label: "Instagram", href: "https://www.instagram.com/klaausb/" },
-    ],
-    releases: [
-      { year: "2025-11", title: "Estudios Del Maipo: Live Session", format: "EP en vivo · 3 tracks", notes: "Gestosimple & Klaus B · Cajón del Maipo" },
-      { year: "2025-11", title: "Memorias: Mixtape", format: "LP / Mixtape · 15 tracks", notes: "Compuesto, producido y grabado por Klaus B" },
-      { year: "2025-10", title: "El Secreto", format: "Single" },
-      { year: "2024-06", title: "Viaje Sin Tiempo", format: "LP · 12 tracks", notes: "Gestosimple & Klaus B" },
-      { year: "2023-07", title: "Quisiera Entender feat. Newen Afrobeat", format: "Single" },
-      { year: "2021-08", title: "De Noche", format: "Single" },
-      { year: "2021-06", title: "Viento Radiante", format: "Single instrumental" },
     ],
     stats: { spotifyFollowers: 460, monthlyListeners: 2186, youtubeSubs: 87 },
   },

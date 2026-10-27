@@ -5,6 +5,7 @@ import { useRouter, useSearchParams, usePathname } from "next/navigation";
 import Link from "next/link";
 import Image from "next/image";
 import type { CatalogEntry } from "@/lib/catalog";
+import { resolveArtistSlug } from "@/lib/artist-slugs";
 import { ComingSoonBadge } from "@/components/release-status";
 
 type ArtistChip = { slug: string; name: string; count: number };
@@ -26,6 +27,10 @@ type Labels = {
 type Sort = "recent" | "az" | "za";
 type View = "grid" | "list";
 
+/** Foco visible de los chips, el mismo de /videos (videos-grid.tsx). */
+const CHIP_FOCUS =
+  "focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand focus-visible:ring-offset-2";
+
 export function CatalogGrid({
   lang,
   entries,
@@ -43,7 +48,8 @@ export function CatalogGrid({
   const [isPending, startTransition] = useTransition();
   const [pending, setPending] = useState<string | null>(null);
 
-  const activeArtist = searchParams.get("artist") ?? "";
+  // Un slug viejo guardado en un enlace (?artist=<slug anterior>) filtra igual por el vigente.
+  const activeArtist = resolveArtistSlug(searchParams.get("artist") ?? "");
   const activeYear = searchParams.get("year") ?? "";
   const activeSort = (searchParams.get("sort") as Sort) || "recent";
   const activeView = (searchParams.get("view") as View) || "grid";
@@ -103,13 +109,14 @@ export function CatalogGrid({
   return (
     <div className="space-y-6">
       {/* Artist filter */}
-      <div className="flex flex-wrap gap-2" role="tablist" aria-label={labels.artist}>
+      {/* role="group": los hijos son botones con aria-pressed, no pestañas (un tablist exige role="tab"). */}
+      <div className="flex flex-wrap gap-2" role="group" aria-label={labels.artist}>
         <Chip
           active={!activeArtist}
           loading={isPending && pending === "artist:"}
           onClick={() => updateParam("artist", "")}
         >
-          {labels.all} <span className="opacity-50 ml-1">({totalAll})</span>
+          {labels.all} <ChipCount active={!activeArtist} count={totalAll} />
         </Chip>
         {artistsList.map((a) => (
           <Chip
@@ -118,14 +125,14 @@ export function CatalogGrid({
             loading={isPending && pending === `artist:${a.slug}`}
             onClick={() => updateParam("artist", a.slug)}
           >
-            {a.name} <span className="opacity-50 ml-1">({a.count})</span>
+            {a.name} <ChipCount active={activeArtist === a.slug} count={a.count} />
           </Chip>
         ))}
       </div>
 
       {/* Year + sort row */}
       <div className="flex flex-col gap-3 lg:flex-row lg:items-center lg:justify-between">
-        <div className="flex flex-wrap gap-1.5" role="tablist" aria-label={labels.year}>
+        <div className="flex flex-wrap gap-1.5" role="group" aria-label={labels.year}>
           <YearChip
             active={!activeYear}
             loading={isPending && pending === "year:"}
@@ -140,13 +147,15 @@ export function CatalogGrid({
               loading={isPending && pending === `year:${y.year}`}
               onClick={() => updateParam("year", y.year)}
             >
-              {y.year} <span className="opacity-50 ml-1">({y.count})</span>
+              {y.year} <ChipCount active={activeYear === y.year} count={y.count} />
             </YearChip>
           ))}
         </div>
 
         <div className="flex gap-3 items-center flex-wrap">
-          <div className="flex gap-1.5" role="radiogroup" aria-label={labels.sort}>
+          {/* Botones con aria-pressed en un group, como los filtros: un radiogroup exigiría
+              mover la selección con las flechas. */}
+          <div className="flex gap-1.5" role="group" aria-label={labels.sort}>
             {(
               [
                 ["recent", labels.sortRecent],
@@ -164,7 +173,8 @@ export function CatalogGrid({
               </SortBtn>
             ))}
           </div>
-          <div className="flex gap-1.5" role="radiogroup">
+          {/* Labels no trae el nombre del grupo (page.tsx es de H): va local. */}
+          <div className="flex gap-1.5" role="group" aria-label={lang === "es" ? "Vista" : "View"}>
             <SortBtn
               active={activeView === "grid"}
               loading={isPending && pending === "view:"}
@@ -315,6 +325,15 @@ export function CatalogGrid({
   );
 }
 
+/**
+ * Conteo entre paréntesis de un chip, con el patrón AA de /videos (ChipCount de
+ * videos-grid.tsx): sin opacidad al 50 %; muted-foreground sobre el hueso y
+ * background/70 sobre el chip activo dan ≥ 4,5:1.
+ */
+function ChipCount({ active, count }: { active: boolean; count: number }) {
+  return <span className={`ml-1 ${active ? "text-background/70" : "text-muted-foreground"}`}>({count})</span>;
+}
+
 function Chip({
   active,
   loading,
@@ -332,7 +351,7 @@ function Chip({
       onClick={onClick}
       aria-pressed={active}
       data-loading={loading || undefined}
-      className={`inline-flex items-center px-4 h-10 text-sm rounded-full border transition-colors ${
+      className={`inline-flex items-center px-4 h-10 text-sm rounded-full border transition-colors ${CHIP_FOCUS} ${
         active
           ? "bg-foreground text-background border-foreground"
           : "bg-transparent text-foreground/70 border-foreground/15 hover:border-foreground/40 hover:text-foreground"
@@ -360,7 +379,7 @@ function YearChip({
       onClick={onClick}
       aria-pressed={active}
       data-loading={loading || undefined}
-      className={`inline-flex items-center px-3 h-7 text-xs font-mono uppercase tracking-widest rounded-full border transition-colors ${
+      className={`inline-flex items-center px-3 h-7 text-xs font-mono uppercase tracking-widest rounded-full border transition-colors ${CHIP_FOCUS} ${
         active
           ? "bg-foreground text-background border-foreground"
           : "bg-transparent text-muted-foreground border-foreground/10 hover:border-foreground/30 hover:text-foreground"
@@ -407,10 +426,9 @@ function SortBtn({
     <button
       type="button"
       onClick={onClick}
-      aria-checked={active}
-      role="radio"
+      aria-pressed={active}
       data-loading={loading || undefined}
-      className={`inline-flex items-center gap-1.5 px-3 h-8 text-xs font-mono uppercase tracking-widest rounded-full border transition-colors ${
+      className={`inline-flex items-center gap-1.5 px-3 h-8 text-xs font-mono uppercase tracking-widest rounded-full border transition-colors ${CHIP_FOCUS} ${
         active
           ? "bg-foreground text-background border-foreground"
           : "bg-transparent text-foreground/70 border-foreground/15 hover:border-foreground/40 hover:text-foreground"

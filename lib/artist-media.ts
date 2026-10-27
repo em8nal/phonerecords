@@ -18,7 +18,7 @@ export type ArtistHero = {
 
 /** Hero por artista. Compatible con `PageHeroProps["image"]`. */
 export const ARTIST_HERO: Record<string, ArtistHero> = {
-  "klaus-brantmayer": {
+  "klaus-b": {
     desktop: "/media/klaus-b/destellos-hero.jpg",
     mobile: "/media/klaus-b/destellos-hero-mobile.jpg",
     alt: {
@@ -71,7 +71,7 @@ export function getArtistHero(slug: string): ArtistHero | null {
 export const ARTIST_PORTRAIT: ReadonlySet<string> = new Set([
   "newen-afrobeat",
   "con-fusion",
-  "klaus-brantmayer",
+  "klaus-b",
   "ecamhi",
   "rosario-lircay",
 ]);

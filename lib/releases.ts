@@ -73,6 +73,8 @@ Rosario Lircay is the stage name of Rosario Meléndez, a singer from the Ñuble 
     links: [
       { label: "Pre-save / Escuchar", href: "https://onerpm.link/105010589210" },
       { label: "Apple Music", href: "https://music.apple.com/us/album/en-vela-single/6821221086" },
+      // Del smartlink; verificado con el oEmbed de Spotify (título "En Vela") el 24-10 y el 26-10-2026.
+      { label: "Spotify", href: "https://open.spotify.com/album/5ONQBpFhxX31ruaLxwUMqw" },
     ],
   },
   {
@@ -121,7 +123,7 @@ The recording is ℗ 2026 Newen Afrobeat and the release © 2026 PHŌNÉ Records
     title: "Grietas",
     artistSlug: "newen-afrobeat",
     artistName: "Newen Afrobeat",
-    featuredArtistSlugs: ["ecamhi", "klaus-brantmayer"],
+    featuredArtistSlugs: ["ecamhi", "klaus-b"],
     releaseDate: "2024-09-25",
     year: 2024,
     type: "album",
@@ -130,9 +132,9 @@ The recording is ℗ 2026 Newen Afrobeat and the release © 2026 PHŌNÉ Records
     cover: "https://f4.bcbits.com/img/a1399189381_10.jpg",
     description: {
       es:
-        "Cuarto LP de Newen Afrobeat, grabado en Santuario Sónico (Santiago, abril 2022) con producción general de Sebastián Crooker, mezcla de Fran 'Antena' Infante y master de Carlos Barros. El disco articula a cuatro artistas del roster PHŌNÉ: ecamhi (trompeta + co-composición de Mare Mare + co-dirección de arte con Tom Pavez), Klaus Brantmayer (composición de Es la Vida), y Claudio Solís (diseño gráfico). Featurings de Lido Pimienta, Dele Sosimi, Joe Vasconcellos y Chico César.",
+        "Cuarto LP de Newen Afrobeat, grabado en Santuario Sónico (Santiago, abril 2022) con producción general de Sebastián Crooker, mezcla de Fran 'Antena' Infante y master de Carlos Barros. Además de la banda, el disco reúne a dos artistas del roster PHŌNÉ: ecamhi (trompeta, co-composición de Mare Mare y co-dirección de arte con Tom Pavez) y Klaus B (composición de Es la vida). Featurings de Lido Pimienta, Dele Sosimi, Joe Vasconcellos y Chico César.",
       en:
-        "Newen Afrobeat's fourth LP, recorded at Santuario Sónico (Santiago, April 2022) with general production by Sebastián Crooker, mixing by Fran 'Antena' Infante and mastering by Carlos Barros. The album articulates four PHŌNÉ roster artists: ecamhi (trumpet + co-composition of Mare Mare + co-art direction with Tom Pavez), Klaus Brantmayer (composer of Es la Vida), and Claudio Solís (graphic design). Featurings by Lido Pimienta, Dele Sosimi, Joe Vasconcellos and Chico César.",
+        "Newen Afrobeat's fourth LP, recorded at Santuario Sónico (Santiago, April 2022) with general production by Sebastián Crooker, mixing by Fran 'Antena' Infante and mastering by Carlos Barros. Besides the band, the album brings together two PHŌNÉ roster artists: ecamhi (trumpet, co-composition of Mare Mare and co-art direction with Tom Pavez) and Klaus B (composer of Es la vida). Featurings by Lido Pimienta, Dele Sosimi, Joe Vasconcellos and Chico César.",
     },
     tracklist: [
       { n: 1, title: "Grietas", duration: "5:13", composer: "Fran Ri", guests: ["Lido Pimienta"] },
@@ -305,7 +307,7 @@ The recording is ℗ 2026 Newen Afrobeat and the release © 2026 PHŌNÉ Records
   {
     slug: "klaus-b-un-rezo",
     title: "Un Rezo",
-    artistSlug: "klaus-brantmayer",
+    artistSlug: "klaus-b",
     artistName: "Klaus B",
     releaseDate: "2026-11-05",
     year: 2026,
@@ -344,7 +346,7 @@ The album follows "Viaje Sin Tiempo" (2024), a record made together with Gestosi
   {
     slug: "klaus-b-destellos-de-ti",
     title: "Destellos de ti",
-    artistSlug: "klaus-brantmayer",
+    artistSlug: "klaus-b",
     artistName: "Klaus B",
     releaseDate: "2026-10-22",
     year: 2026,
@@ -393,12 +395,16 @@ On this single, Klaus B is credited with composition, saxophone, flute and produ
       { role: "Distribución", name: "ONErpm" },
     ],
     video: { youtubeId: "zEfVXTYtuo8", title: "Klaus B - Destellos De Ti [Videoclip Oficial]" },
-    links: [{ label: "Pre-save / Escuchar", href: "https://onerpm.link/102211016130" }],
+    links: [
+      { label: "Pre-save / Escuchar", href: "https://onerpm.link/102211016130" },
+      // Del smartlink; verificado con el oEmbed de Spotify (título "Destellos de Ti") el 24-10 y el 26-10-2026.
+      { label: "Spotify", href: "https://open.spotify.com/album/5loHWji5dshEXJv1LavbCF" },
+    ],
   },
   {
     slug: "klaus-b-memorias-mixtape",
     title: "Memorias: Mixtape",
-    artistSlug: "klaus-brantmayer",
+    artistSlug: "klaus-b",
     artistName: "Klaus B",
     releaseDate: "2025-11-17",
     year: 2025,
@@ -442,7 +448,7 @@ On this single, Klaus B is credited with composition, saxophone, flute and produ
   {
     slug: "klaus-b-estudios-del-maipo",
     title: "Estudios Del Maipo: Live Session",
-    artistSlug: "klaus-brantmayer",
+    artistSlug: "klaus-b",
     artistName: "Gestosimple & Klaus B",
     featuredArtistSlugs: ["ecamhi"],
     releaseDate: "2025-11-26",
@@ -481,7 +487,7 @@ On this single, Klaus B is credited with composition, saxophone, flute and produ
   {
     slug: "klaus-b-viaje-sin-tiempo",
     title: "Viaje Sin Tiempo",
-    artistSlug: "klaus-brantmayer",
+    artistSlug: "klaus-b",
     artistName: "Gestosimple & Klaus B",
     releaseDate: "2024-06-12",
     year: 2024,
@@ -520,7 +526,7 @@ On this single, Klaus B is credited with composition, saxophone, flute and produ
   {
     slug: "klaus-b-quisiera-entender",
     title: "Quisiera Entender feat. Newen Afrobeat",
-    artistSlug: "klaus-brantmayer",
+    artistSlug: "klaus-b",
     artistName: "Klaus B",
     releaseDate: "2023-07-11",
     year: 2023,
@@ -554,7 +560,7 @@ On this single, Klaus B is credited with composition, saxophone, flute and produ
   {
     slug: "klaus-b-those-days-far-away",
     title: "Those Days Far Away",
-    artistSlug: "klaus-brantmayer",
+    artistSlug: "klaus-b",
     artistName: "Klaus B",
     releaseDate: "2025-11-11",
     year: 2025,
@@ -585,7 +591,7 @@ On this single, Klaus B is credited with composition, saxophone, flute and produ
   {
     slug: "klaus-b-el-secreto",
     title: "El Secreto",
-    artistSlug: "klaus-brantmayer",
+    artistSlug: "klaus-b",
     artistName: "Klaus B",
     releaseDate: "2025-10-30",
     year: 2025,
@@ -604,7 +610,7 @@ On this single, Klaus B is credited with composition, saxophone, flute and produ
   {
     slug: "klaus-b-viento-radiante",
     title: "Viento Radiante",
-    artistSlug: "klaus-brantmayer",
+    artistSlug: "klaus-b",
     artistName: "Klaus B",
     releaseDate: "2021-06-29",
     year: 2021,
@@ -633,7 +639,7 @@ On this single, Klaus B is credited with composition, saxophone, flute and produ
   {
     slug: "klaus-b-espejismos",
     title: "Espejismos",
-    artistSlug: "klaus-brantmayer",
+    artistSlug: "klaus-b",
     artistName: "Klaus B",
     releaseDate: "2021-11-12",
     year: 2021,
@@ -654,7 +660,7 @@ On this single, Klaus B is credited with composition, saxophone, flute and produ
   {
     slug: "klaus-b-de-noche",
     title: "De Noche",
-    artistSlug: "klaus-brantmayer",
+    artistSlug: "klaus-b",
     artistName: "Klaus B",
     releaseDate: "2021-08-12",
     year: 2021,
@@ -876,9 +882,11 @@ Con.fusión is the solo project of Catalina Aguilera, a proposal that moves betw
       { role: "Diseño gráfico", name: "Daniel Torres" },
       { role: "℗", name: "PHŌNÉ Records, bajo licencia exclusiva a ONErpm" },
     ],
+    // Orden estándar (Bandcamp · Discogs · Apple Music · Spotify · YouTube). Spotify sin
+    // verificar todavía (no hay smartlink y la API pública de song.link ya no responde).
     links: [
-      { label: "YouTube", href: "https://www.youtube.com/watch?v=lPXsqrH4SU4" },
       { label: "Apple Music", href: "https://music.apple.com/us/album/cu%C3%A1ntas-veces-feat-ecamhi-nuvee/6810767171" },
+      { label: "YouTube", href: "https://www.youtube.com/watch?v=lPXsqrH4SU4" },
     ],
   },
   {
@@ -1003,4 +1011,61 @@ export function getReleasesByArtist(artistSlug: string): Release[] {
 
 export function getAllReleasesSorted(): Release[] {
   return [...releases].sort((a, b) => b.releaseDate.localeCompare(a.releaseDate));
+}
+
+/** Recurso de Spotify que la ficha de lanzamiento puede embeber. */
+export type SpotifyRef = { kind: "album" | "track" | "playlist"; id: string };
+
+const SPOTIFY_REF_RE =
+  /open\.spotify\.com\/(?:intl-[a-z]{2}\/)?(album|track|playlist)\/([A-Za-z0-9]{22})(?![A-Za-z0-9])/;
+
+/**
+ * Primer enlace de `links` que apunta a un álbum, una canción o una lista de
+ * Spotify (los perfiles /artist/ no cuentan). Vive en lib y no en
+ * components/spotify-embed.tsx porque un server component no puede llamar
+ * funciones de un módulo "use client".
+ */
+export function spotifyRefFromLinks(links?: { href: string }[]): SpotifyRef | null {
+  for (const l of links ?? []) {
+    const m = SPOTIFY_REF_RE.exec(l.href);
+    if (m) return { kind: m[1] as SpotifyRef["kind"], id: m[2] };
+  }
+  return null;
+}
+
+/** Nombre del sello tal como aparece en `label` cuando PHŌNÉ edita el lanzamiento. */
+export const PHONE_LABEL = "PHŌNÉ Records";
+
+/** True cuando el lanzamiento lo edita PHŌNÉ (`label === PHONE_LABEL`), no solo lo distribuye. */
+export function isPhoneRelease(r: Pick<Release, "label">): boolean {
+  return r.label === PHONE_LABEL;
+}
+
+/**
+ * Sufijo que agrega la plantilla de título de app/layout.tsx (`'%s — PHŌNÉ Records'`).
+ * `pnpm test:releases` comprueba que ambos coincidan.
+ */
+export const TITLE_SUFFIX = " — PHŌNÉ Records";
+
+/** Tope de caracteres del <title> de una ficha de lanzamiento. */
+export const MAX_TITLE_LENGTH = 60;
+
+const FEAT_RE = /\s+(?:feat\.|ft\.|featuring)\s.*$/i;
+
+/**
+ * Título de la ficha de lanzamiento, de ≤ 60 caracteres con el sufijo del sitio.
+ * Con `full = "título — artista"`: si `full` + sufijo cabe, se usa la plantilla
+ * (`absolute: false`). Si no, el primero que quepa SIN sufijo (`absolute: true`) entre
+ * `full`, "título — artista" sin el " feat. …" del artista, y el título solo. Último
+ * recurso: el título cortado a 59 caracteres + "…".
+ */
+export function releaseTitle(
+  r: Pick<Release, "title" | "artistName">,
+): { text: string; absolute: boolean } {
+  const full = `${r.title} — ${r.artistName}`;
+  if (full.length + TITLE_SUFFIX.length <= MAX_TITLE_LENGTH) return { text: full, absolute: false };
+  const candidates = [full, `${r.title} — ${r.artistName.replace(FEAT_RE, "")}`, r.title];
+  const fit = candidates.find((c) => c.length <= MAX_TITLE_LENGTH);
+  if (fit) return { text: fit, absolute: true };
+  return { text: `${r.title.slice(0, MAX_TITLE_LENGTH - 1).trimEnd()}…`, absolute: true };
 }

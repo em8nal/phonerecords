@@ -4,6 +4,7 @@ import { useMemo, useTransition } from "react";
 import { usePathname, useRouter, useSearchParams } from "next/navigation";
 import type { Language } from "@/lib/translations";
 import type { VideoKind } from "@/lib/videos";
+import { resolveArtistSlug } from "@/lib/artist-slugs";
 import { VideoCard, type VideoCardData } from "@/components/phone/video-card";
 import { GridFillers } from "@/components/phone/grid-fillers";
 
@@ -48,7 +49,8 @@ export function VideosGrid({ lang, entries, artistsList, kinds, labels }: Props)
   const searchParams = useSearchParams();
   const [isPending, startTransition] = useTransition();
 
-  const rawArtist = searchParams.get("artist") ?? "";
+  // Un slug viejo guardado en un enlace (?artist=<slug anterior>) filtra igual por el vigente.
+  const rawArtist = resolveArtistSlug(searchParams.get("artist") ?? "");
   const activeArtist = artistsList.some((a) => a.slug === rawArtist) ? rawArtist : "";
   const rawKind = searchParams.get("kind") ?? "";
   const activeKind = (kinds as string[]).includes(rawKind) ? (rawKind as VideoKind) : "";
