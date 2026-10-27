@@ -8,7 +8,7 @@ import { pageMetadata } from "@/lib/seo";
 
 type LangParams = { lang: string };
 
-const LAST_UPDATED = "2026-10-21";
+const LAST_UPDATED = "2026-10-26";
 
 export async function generateMetadata(
   { params }: { params: Promise<LangParams> }
