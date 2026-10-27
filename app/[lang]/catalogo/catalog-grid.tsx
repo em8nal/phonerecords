@@ -320,7 +320,7 @@ export function CatalogGrid({
 
 /**
  * Conteo entre paréntesis de un chip, con el patrón AA de /videos (ChipCount de
- * videos-grid.tsx): sin `opacity-50`; muted-foreground sobre el hueso y
+ * videos-grid.tsx): sin opacidad al 50 %; muted-foreground sobre el hueso y
  * background/70 sobre el chip activo dan ≥ 4,5:1.
  */
 function ChipCount({ active, count }: { active: boolean; count: number }) {
