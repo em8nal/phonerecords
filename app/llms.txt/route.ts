@@ -86,36 +86,41 @@ function labelReleases(nowMs: number): Release[] {
     .sort((a, b) => b.releaseDate.localeCompare(a.releaseDate) || a.title.localeCompare(b.title));
 }
 
-function sections(lang: Language, nowMs: number, heading: "##" | "###"): string[] {
+/**
+ * Secciones de un idioma, todas en H2: los parsers de llmstxt.org solo leen como listas de
+ * enlaces las secciones `##`. Las de inglés llevan el prefijo "English · ".
+ */
+function sections(lang: Language, nowMs: number, prefix: "" | "English · "): string[] {
   const c = COPY[lang];
+  const heading = `## ${prefix}`;
   const base = `${SITE}/${lang}`;
   const videoCount = getPublishedVideos(nowMs).length;
   return [
-    `${heading} ${c.label}`,
+    `${heading}${c.label}`,
     "",
     item(c.about[0], `${base}/sello`, c.about[1]),
     item(c.manifesto[0], `${base}/manifiesto`, c.manifesto[1]),
     item(c.catalogue[0], `${base}/catalogo`, c.catalogue[1]),
     "",
-    `${heading} ${c.artists}`,
+    `${heading}${c.artists}`,
     "",
     ...artists.map((a) => item(a.name, `${base}/artistas/${a.slug}`, firstSentence(a.bio[lang]))),
     "",
-    `${heading} ${c.releases}`,
+    `${heading}${c.releases}`,
     "",
     ...labelReleases(nowMs).map((r) =>
       item(`${r.title} — ${r.artistName}`, `${base}/releases/${r.slug}`, `${r.releaseDate} · ${TYPE_LABEL[lang][r.type]}`),
     ),
     "",
-    `${heading} ${c.videos}`,
+    `${heading}${c.videos}`,
     "",
     item(c.videos, `${base}/videos`, c.videosNote(videoCount)),
     "",
-    `${heading} ${c.press}`,
+    `${heading}${c.press}`,
     "",
     item(c.pressKit[0], `${base}/press-kit`, c.pressKit[1]),
     "",
-    `${heading} ${c.contact}`,
+    `${heading}${c.contact}`,
     "",
     item(c.contactPage[0], `${base}/contacto`, c.contactPage[1]),
     item(c.booking[0], `${base}/contacto?topic=booking`, c.booking[1]),
@@ -133,12 +138,12 @@ export function GET(): Response {
     "",
     `Artistas: ${artists.map((a) => a.name).join(", ")}.`,
     "",
-    ...sections("es", now, "##"),
+    ...sections("es", now, ""),
     "## English",
     "",
     `${COPY.en.summary} Artists: ${artists.map((a) => a.name).join(", ")}.`,
     "",
-    ...sections("en", now, "###"),
+    ...sections("en", now, "English · "),
   ].join("\n");
 
   return new Response(body, {

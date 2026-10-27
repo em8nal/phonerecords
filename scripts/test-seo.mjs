@@ -17,7 +17,8 @@
 //   exactPastDate / latestDate: día completo, real y ya alcanzado (00:00 Santiago).
 //   sitemap(): lastmod solo YYYY-MM-DD verdadero y no futuro, /eventos solo con fechas
 //     próximas, portada con el máximo, lanzamientos y artistas con la fecha esperada.
-//   GET /llms.txt: 200 text/plain, H1, resumen ">", "## English", artistas en ES y EN,
+//   GET /llms.txt: 200 text/plain, H1, resumen ">", "## English", secciones solo en H2
+//     (las de inglés con "English · "), artistas en ES y EN,
 //     solo lanzamientos ℗ PHŌNÉ publicados (todos), URLs absolutas.
 //   htmlLimitedBots (si next.config.mjs lo define): lista por defecto de Next + 9 bots de IA.
 // Avisos (WARN): htmlLimitedBots aún sin definir; /press-kit aún sin pageMetadata
@@ -295,6 +296,9 @@ for (const lang of LANGS) {
   report("content-type text/plain; charset=utf-8", res.headers.get("content-type") === "text/plain; charset=utf-8", res.headers.get("content-type"));
   const text = await res.text();
   report("H1 # PHŌNÉ Records, resumen > y ## English", text.startsWith("# PHŌNÉ Records\n") && /^> \S.+$/m.test(text) && /^## English$/m.test(text));
+  const h3 = text.match(/^#{3,} .*$/gm) ?? [];
+  report("secciones en H2, sin ### (llmstxt.org)", h3.length === 0, list(h3));
+  report("secciones de inglés con el prefijo English ·", /^## English · About$/m.test(text) && /^## English · Artists$/m.test(text));
   const [esPart = "", enPart = ""] = text.split(/^## English$/m);
   const missingEs = artists.filter((a) => !esPart.includes(`](${SITE}/es/artistas/${a.slug}):`));
   const missingEn = artists.filter((a) => !enPart.includes(`](${SITE}/en/artistas/${a.slug}):`));
