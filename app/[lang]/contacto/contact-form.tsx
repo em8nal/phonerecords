@@ -8,7 +8,15 @@ import Link from "next/link";
 import { useSearchParams } from "next/navigation";
 import { translations } from "@/lib/translations";
 import { sendContactMessage } from "./actions";
-import { contactFormSchema, topicValues, type Topic } from "./contact-schema";
+import {
+  contactFormSchema,
+  projectTypeLabels,
+  projectTypeValues,
+  serviceInterestLabels,
+  serviceInterestValues,
+  topicValues,
+  type Topic,
+} from "./contact-schema";
 
 type Lang = "es" | "en";
 
@@ -23,14 +31,32 @@ type Copy = {
   linksHint: string;
   linksPlaceholder: string;
   city: string;
+  // Asunto "servicios" (las etiquetas de casillas y tipos viven en contact-schema.ts)
+  services: string;
+  projectType: string;
+  releaseWindow: string;
+  releaseWindowPlaceholder: string;
+  linksOptional: string;
+  linksHintServices: string;
   message: string;
   messagePlaceholderProposal: string;
+  messagePlaceholderServices: string;
   submit: string;
   submitting: string;
   success: string;
   errorInvalid: string;
   errorSend: string;
-  errors: { min: string; email: string; links: string; city: string };
+  errors: {
+    min: string;
+    email: string;
+    links: string;
+    /** Enlaces con "servicios": son opcionales, el único error posible es el largo. */
+    linksServices: string;
+    city: string;
+    services: string;
+    projectType: string;
+    releaseWindow: string;
+  };
 };
 
 const copy: Record<Lang, Copy> = {
@@ -44,14 +70,23 @@ const copy: Record<Lang, Copy> = {
       prensa: "Prensa",
       sello: "Sello",
       propuesta: "Propuesta de artista",
+      servicios: "Dirección creativa, diseño y prensa",
     },
     links: "Enlaces",
     linksHint: "Uno por línea; al menos uno completo (https://…).",
     linksPlaceholder: "Spotify, YouTube, Bandcamp, Instagram…",
     city: "Ciudad",
+    services: "Servicios de interés",
+    projectType: "Tipo de proyecto",
+    releaseWindow: "Fecha estimada de lanzamiento (opcional)",
+    releaseWindowPlaceholder: "Ej.: marzo 2027",
+    linksOptional: "Enlaces (opcional)",
+    linksHintServices: "Uno por línea: maquetas, Spotify, YouTube, referencias…",
     message: "Mensaje",
     messagePlaceholderProposal:
       "Cuéntanos quién eres y qué estás preparando (pocas líneas).",
+    messagePlaceholderServices:
+      "Cuéntanos en qué etapa está tu proyecto y qué te gustaría lograr.",
     submit: "Enviar mensaje",
     submitting: "Enviando…",
     success: "Mensaje enviado. Te responderemos pronto.",
@@ -61,7 +96,11 @@ const copy: Record<Lang, Copy> = {
       min: "Muy corto.",
       email: "Email inválido.",
       links: "Incluye al menos un enlace completo (https://…).",
+      linksServices: "La lista de enlaces es demasiado larga; acórtala un poco.",
       city: "Indica tu ciudad.",
+      services: "Marca al menos una opción.",
+      projectType: "Elige el tipo de proyecto.",
+      releaseWindow: "Usa una sola línea.",
     },
   },
   en: {
@@ -74,14 +113,23 @@ const copy: Record<Lang, Copy> = {
       prensa: "Press",
       sello: "Label",
       propuesta: "Artist proposal",
+      servicios: "Creative direction, design & press",
     },
     links: "Links",
     linksHint: "One per line; at least one full link (https://…).",
     linksPlaceholder: "Spotify, YouTube, Bandcamp, Instagram…",
     city: "City",
+    services: "Services you're interested in",
+    projectType: "Project type",
+    releaseWindow: "Estimated release date (optional)",
+    releaseWindowPlaceholder: "e.g. March 2027",
+    linksOptional: "Links (optional)",
+    linksHintServices: "One per line: demos, Spotify, YouTube, references…",
     message: "Message",
     messagePlaceholderProposal:
       "Tell us who you are and what you're working on (a few lines).",
+    messagePlaceholderServices:
+      "Tell us what stage your project is at and what you'd like to achieve.",
     submit: "Send message",
     submitting: "Sending…",
     success: "Message sent. We'll be in touch.",
@@ -91,7 +139,11 @@ const copy: Record<Lang, Copy> = {
       min: "Too short.",
       email: "Invalid email.",
       links: "Include at least one full link (https://…).",
+      linksServices: "The list of links is too long; please shorten it.",
       city: "Tell us your city.",
+      services: "Choose at least one option.",
+      projectType: "Choose the project type.",
+      releaseWindow: "Use a single line.",
     },
   },
 };
@@ -123,13 +175,19 @@ export function ContactForm({ lang }: { lang: Lang }) {
       message: "",
       links: "",
       city: "",
+      services: [],
+      projectType: undefined,
+      releaseWindow: "",
       website: "",
       newsletter: false,
     },
   });
 
-  // Enlaces y ciudad solo existen (y solo se validan) con el asunto "Propuesta de artista".
-  const isProposal = watch("topic") === "propuesta";
+  // Campos por asunto: enlaces y ciudad con "Propuesta de artista"; servicios de interés, tipo de
+  // proyecto, fecha estimada y enlaces (opcionales) con "Dirección creativa, diseño y prensa".
+  const topic = watch("topic");
+  const isProposal = topic === "propuesta";
+  const isServices = topic === "servicios";
 
   useEffect(() => {
     renderedAt.current = Date.now();
@@ -138,11 +196,17 @@ export function ContactForm({ lang }: { lang: Lang }) {
   const onSubmit = (values: FormValues) => {
     startTransition(async () => {
       setServerState({ kind: "idle" });
-      // Fuera de "propuesta", enlaces y ciudad no viajan (RHF conserva los valores de campos desmontados).
-      const payload =
-        values.topic === "propuesta"
-          ? values
-          : { ...values, links: undefined, city: undefined };
+      // Cada campo extra viaja solo con su asunto (RHF conserva los valores de campos desmontados).
+      const withProposal = values.topic === "propuesta";
+      const withServices = values.topic === "servicios";
+      const payload = {
+        ...values,
+        links: withProposal || withServices ? values.links : undefined,
+        city: withProposal ? values.city : undefined,
+        services: withServices ? values.services : undefined,
+        projectType: withServices ? values.projectType : undefined,
+        releaseWindow: withServices ? values.releaseWindow : undefined,
+      };
       const res = await sendContactMessage({
         ...payload,
         lang,
@@ -174,7 +238,7 @@ export function ContactForm({ lang }: { lang: Lang }) {
       className="space-y-6"
       aria-busy={isPending}
     >
-      {/* ?topic=booking|propuesta (footer y menú) preselecciona el asunto. Solo este hijo nulo
+      {/* ?topic=booking|propuesta|servicios (footer, menú y /servicios) preselecciona el asunto. Solo este hijo nulo
           lee la query, así el formulario sigue prerenderizado y el asunto también cambia en una
           navegación suave con next/link desde esta misma página. */}
       <Suspense fallback={null}>
@@ -230,8 +294,8 @@ export function ContactForm({ lang }: { lang: Lang }) {
         <select
           id="topic"
           {...register("topic", {
-            // Al cambiar de asunto, los errores de los campos de propuesta no deben quedar colgando.
-            onChange: () => clearErrors(["links", "city"]),
+            // Al cambiar de asunto, los errores de los campos por asunto no deben quedar colgando.
+            onChange: () => clearErrors(["links", "city", "services", "projectType", "releaseWindow"]),
           })}
           className={`${fieldClass} appearance-none pr-10 bg-[url('data:image/svg+xml;utf8,<svg%20xmlns=%22http://www.w3.org/2000/svg%22%20viewBox=%220%200%2020%2020%22%20fill=%22currentColor%22><path%20d=%22M5.5%208l4.5%204.5L14.5%208z%22/></svg>')] bg-no-repeat bg-[right_0.75rem_center] bg-[length:1rem]`}
         >
@@ -243,44 +307,120 @@ export function ContactForm({ lang }: { lang: Lang }) {
         </select>
       </Field>
 
-      {isProposal && (
+      {isServices && (
         <>
-          <Field
-            id="links"
-            label={c.links}
-            hint={c.linksHint}
-            error={errors.links ? c.errors.links : undefined}
-          >
-            <textarea
-              id="links"
-              rows={3}
-              autoCapitalize="none"
-              autoCorrect="off"
-              spellCheck={false}
-              placeholder={c.linksPlaceholder}
-              aria-invalid={errors.links ? true : undefined}
-              aria-describedby={errors.links ? "links-error links-hint" : "links-hint"}
-              {...register("links")}
-              className={`${fieldClass} resize-y min-h-24 py-3`}
-            />
-          </Field>
+          <fieldset aria-describedby={errors.services ? "services-error" : undefined}>
+            <legend className={legendClass}>{c.services}</legend>
+            <div className="mt-2 grid gap-x-6 sm:grid-cols-2">
+              {serviceInterestValues.map((value) => (
+                <label
+                  key={value}
+                  // "Todavía no lo tengo claro" va sola en su fila: no queda huérfana y se separa del resto.
+                  className={`flex min-h-11 cursor-pointer items-center gap-3 text-base ${value === "por-definir" ? "sm:col-span-2" : ""}`}
+                >
+                  <input
+                    type="checkbox"
+                    value={value}
+                    aria-invalid={errors.services ? true : undefined}
+                    // El error también en cada casilla: el foco de shouldFocusError cae en la primera y
+                    // la descripción del fieldset no se anuncia igual en todos los lectores.
+                    aria-describedby={errors.services ? "services-error" : undefined}
+                    {...register("services")}
+                    className={choiceClass}
+                  />
+                  {serviceInterestLabels[value][lang]}
+                </label>
+              ))}
+            </div>
+            {errors.services && (
+              <p id="services-error" className="mt-2 text-xs text-brand">
+                {c.errors.services}
+              </p>
+            )}
+          </fieldset>
+
+          {/* Los radios no admiten aria-invalid: el error llega por el aria-describedby del grupo y de cada radio. */}
+          <fieldset aria-describedby={errors.projectType ? "projectType-error" : undefined}>
+            <legend className={legendClass}>{c.projectType}</legend>
+            <div className="mt-2 grid grid-cols-2 gap-x-6 sm:grid-cols-4">
+              {projectTypeValues.map((value) => (
+                <label key={value} className="flex min-h-11 cursor-pointer items-center gap-3 text-base">
+                  <input
+                    type="radio"
+                    value={value}
+                    aria-describedby={errors.projectType ? "projectType-error" : undefined}
+                    {...register("projectType")}
+                    className={choiceClass}
+                  />
+                  {projectTypeLabels[value][lang]}
+                </label>
+              ))}
+            </div>
+            {errors.projectType && (
+              <p id="projectType-error" className="mt-2 text-xs text-brand">
+                {c.errors.projectType}
+              </p>
+            )}
+          </fieldset>
 
           <Field
-            id="city"
-            label={c.city}
-            error={errors.city ? c.errors.city : undefined}
+            id="releaseWindow"
+            label={c.releaseWindow}
+            error={errors.releaseWindow ? c.errors.releaseWindow : undefined}
           >
             <input
-              id="city"
+              id="releaseWindow"
               type="text"
-              autoComplete="address-level2"
-              aria-invalid={errors.city ? true : undefined}
-              aria-describedby={errors.city ? "city-error" : undefined}
-              {...register("city")}
+              maxLength={60}
+              autoComplete="off"
+              placeholder={c.releaseWindowPlaceholder}
+              aria-invalid={errors.releaseWindow ? true : undefined}
+              aria-describedby={errors.releaseWindow ? "releaseWindow-error" : undefined}
+              {...register("releaseWindow")}
               className={fieldClass}
             />
           </Field>
         </>
+      )}
+
+      {(isProposal || isServices) && (
+        <Field
+          id="links"
+          label={isServices ? c.linksOptional : c.links}
+          hint={isServices ? c.linksHintServices : c.linksHint}
+          error={errors.links ? (isServices ? c.errors.linksServices : c.errors.links) : undefined}
+        >
+          <textarea
+            id="links"
+            rows={3}
+            autoCapitalize="none"
+            autoCorrect="off"
+            spellCheck={false}
+            placeholder={c.linksPlaceholder}
+            aria-invalid={errors.links ? true : undefined}
+            aria-describedby={errors.links ? "links-error links-hint" : "links-hint"}
+            {...register("links")}
+            className={`${fieldClass} resize-y min-h-24 py-3`}
+          />
+        </Field>
+      )}
+
+      {isProposal && (
+        <Field
+          id="city"
+          label={c.city}
+          error={errors.city ? c.errors.city : undefined}
+        >
+          <input
+            id="city"
+            type="text"
+            autoComplete="address-level2"
+            aria-invalid={errors.city ? true : undefined}
+            aria-describedby={errors.city ? "city-error" : undefined}
+            {...register("city")}
+            className={fieldClass}
+          />
+        </Field>
       )}
 
       <Field
@@ -291,7 +431,13 @@ export function ContactForm({ lang }: { lang: Lang }) {
         <textarea
           id="message"
           rows={6}
-          placeholder={isProposal ? c.messagePlaceholderProposal : undefined}
+          placeholder={
+            isProposal
+              ? c.messagePlaceholderProposal
+              : isServices
+                ? c.messagePlaceholderServices
+                : undefined
+          }
           aria-invalid={errors.message ? true : undefined}
           aria-describedby={errors.message ? "message-error" : undefined}
           {...register("message")}
@@ -357,6 +503,17 @@ function TopicFromQuery({ setValue }: { setValue: UseFormSetValue<FormValues> })
   }, [wanted, setValue]);
   return null;
 }
+
+/** Leyenda de un grupo de casillas o radios: mismo estilo que el label de los campos. */
+const legendClass = "block text-xs font-mono uppercase tracking-widest text-muted-foreground";
+
+/**
+ * Casillas y radios: tamaño fijo dentro de una fila de 44 px y foco visible en el rojo del sitio.
+ * Con outline y no con ring: el ring es un box-shadow y WebKit (Safari de macOS y todo iOS) no lo
+ * pinta sobre checkbox y radio nativos; el outline sí se dibuja en todos los motores.
+ */
+const choiceClass =
+  "size-4 shrink-0 accent-foreground focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-brand";
 
 const fieldClass =
   "w-full bg-transparent border border-foreground/15 rounded-xl px-4 h-12 text-base text-foreground placeholder:text-muted-foreground focus:outline-none focus:border-foreground/40 focus-visible:ring-2 focus-visible:ring-brand focus-visible:ring-offset-2 focus-visible:ring-offset-background transition-colors";

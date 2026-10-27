@@ -75,6 +75,8 @@ export const translations = {
             "Concerts, showcases and tour management. International booking through partners (Ludwig Sound · Heidelberg).",
         },
       ],
+      // Enlace del bloque `item` a la página de servicios (href sin /${lang}: lo antepone FeaturesSection).
+      servicesLink: { item: "03", label: "See services", href: "/servicios" },
     },
     // How it works → Manifesto / 3 segments
     howItWorks: {
@@ -229,7 +231,7 @@ export const translations = {
         label: [
           { label: "About PHŌNÉ", href: "/sello" },
           { label: "Manifesto", href: "/manifiesto" },
-          { label: "Services", href: "#features" },
+          { label: "Services", href: "/servicios" },
           { label: "Releases", href: "/catalogo" },
           { label: "Videos", href: "/videos" },
           { label: "Events", href: "/eventos" },
@@ -322,6 +324,7 @@ export const translations = {
             "Conciertos, showcases y tour management. Booking internacional vía Ludwig Sound (Heidelberg, Alemania).",
         },
       ],
+      servicesLink: { item: "03", label: "Ver servicios", href: "/servicios" },
     },
     // How it works → Manifiesto / 3 segmentos
     howItWorks: {
@@ -475,7 +478,7 @@ export const translations = {
         label: [
           { label: "Sobre PHŌNÉ", href: "/sello" },
           { label: "Manifiesto", href: "/manifiesto" },
-          { label: "Servicios", href: "#features" },
+          { label: "Servicios", href: "/servicios" },
           { label: "Lanzamientos", href: "/catalogo" },
           { label: "Videos", href: "/videos" },
           { label: "Eventos", href: "/eventos" },
