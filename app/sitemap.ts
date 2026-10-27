@@ -28,7 +28,7 @@ function withAlternates(path: string) {
   };
 }
 
-const STATIC_PAGES = ["/manifiesto", "/sello", "/catalogo", "/videos", "/eventos", "/contacto", "/privacidad", "/press-kit"] as const;
+const STATIC_PAGES = ["/manifiesto", "/sello", "/servicios", "/catalogo", "/videos", "/eventos", "/contacto", "/privacidad", "/press-kit"] as const;
 type StaticPath = "" | (typeof STATIC_PAGES)[number];
 
 /**
@@ -42,6 +42,7 @@ const STATIC_LASTMOD: Record<StaticPath, string | undefined> = {
   "": "2026-10-26",
   "/manifiesto": "2026-10-26",
   "/sello": "2026-10-26",
+  "/servicios": "2026-10-26", // pendiente 18: fecha del commit que crea la página
   "/catalogo": "2026-10-26",
   "/videos": "2026-10-26",
   "/eventos": undefined,

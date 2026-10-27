@@ -1,7 +1,9 @@
 "use client";
 
 import { useEffect, useRef, useState } from "react";
+import Link from "next/link";
 import { getImageProps } from "next/image";
+import { ArrowRight } from "lucide-react";
 import { useLanguage } from "@/lib/language-context";
 
 // Un visual por servicio, en el mismo orden que `t.features.items`:
@@ -248,7 +250,15 @@ function AnimatedVisual({ type }: { type: string }) {
   }
 }
 
-function FeatureCard({ feature, index, visual }: { feature: { number: string; title: string; description: string }; index: number; visual: string }) {
+type FeatureCardProps = {
+  feature: { number: string; title: string; description: string };
+  index: number;
+  visual: string;
+  /** Enlace bajo la descripción (bloque 03 → /[lang]/servicios). */
+  cta?: { label: string; href: string };
+};
+
+function FeatureCard({ feature, index, visual, cta }: FeatureCardProps) {
   const [isVisible, setIsVisible] = useState(false);
   const cardRef = useRef<HTMLDivElement>(null);
 
@@ -287,6 +297,15 @@ function FeatureCard({ feature, index, visual }: { feature: { number: string; ti
             <p className="text-lg text-white/80 leading-relaxed">
               {feature.description}
             </p>
+            {cta && (
+              <Link
+                href={cta.href}
+                className="mt-6 inline-flex min-h-11 items-center gap-2 rounded-sm text-base text-white underline decoration-white/40 underline-offset-4 transition-colors hover:decoration-white focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand focus-visible:ring-offset-2 focus-visible:ring-offset-neutral-950"
+              >
+                {cta.label}
+                <ArrowRight aria-hidden="true" className="size-4" />
+              </Link>
+            )}
           </div>
 
           {/* Visual */}
@@ -302,7 +321,8 @@ function FeatureCard({ feature, index, visual }: { feature: { number: string; ti
 }
 
 export function FeaturesSection() {
-  const { t } = useLanguage();
+  const { t, language } = useLanguage();
+  const servicesLink = t.features.servicesLink;
   const [isVisible, setIsVisible] = useState(false);
   const sectionRef = useRef<HTMLDivElement>(null);
 
@@ -374,7 +394,17 @@ export function FeaturesSection() {
         {/* Features List */}
         <div>
           {t.features.items.map((feature, index) => (
-            <FeatureCard key={feature.number} feature={feature} index={index} visual={visuals[index]} />
+            <FeatureCard
+              key={feature.number}
+              feature={feature}
+              index={index}
+              visual={visuals[index]}
+              cta={
+                feature.number === servicesLink.item
+                  ? { label: servicesLink.label, href: `/${language}${servicesLink.href}` }
+                  : undefined
+              }
+            />
           ))}
         </div>
       </div>
