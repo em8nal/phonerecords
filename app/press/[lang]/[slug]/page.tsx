@@ -12,6 +12,24 @@ import { DownloadPdfButton } from "@/components/download-pdf-button";
 // Beyond this we show a tail line directing readers to the full catalog page.
 const MAX_DISCOGRAPHY_ENTRIES = 18;
 
+// Los formatos de lib/ están escritos en español ("EP en vivo", "vinilo") y el sello sin
+// editorial dice "Independent": el press kit los muestra en el idioma del documento.
+const FORMAT_EN: ReadonlyArray<readonly [RegExp, string]> = [
+  [/EP en vivo/g, "Live EP"],
+  [/en producción/g, "in production"],
+  [/Álbum debut/g, "Debut album"],
+  [/Álbum/g, "Album"],
+  [/LP debut/g, "Debut LP"],
+  [/2° LP/g, "2nd LP"],
+  [/Single instrumental/g, "Instrumental single"],
+  [/\bvinilo\b/g, "vinyl"],
+  [/\bVinilo\b/g, "Vinyl"],
+];
+const localizeFormat = (format: string, isEs: boolean) =>
+  isEs ? format : FORMAT_EN.reduce((acc, [re, en]) => acc.replace(re, en), format);
+const localizeLabel = (label: string, isEs: boolean) =>
+  isEs && label === "Independent" ? "Independiente" : label;
+
 type PressParams = { lang: string; slug: string };
 
 export function generateStaticParams() {
@@ -117,21 +135,27 @@ export default async function PressKitPage({
   // Discografía: siempre la misma fuente que la ficha de artista (getArtistEntries:
   // fichas de lib/releases.ts + entradas livianas sin ficha, sin duplicados). Las
   // colaboraciones (lanzamientos de otro artista donde aparece) se marcan en la meta.
-  type DiscoRow = { key: string; year: string; title: string; meta: string };
-  const allReleases: DiscoRow[] = getArtistEntries(slug).map((e) => ({
-    key: e.key,
-    year: e.year.match(/\d{4}/)?.[0] ?? t.inProduction,
-    title: e.title,
-    meta: [
-      e.upcoming && t.comingSoon,
-      e.artistSlug !== slug && t.collaboration,
-      e.artistName !== artist.name && e.artistName,
-      e.format !== "—" && e.format,
-      e.label,
-    ]
-      .filter(Boolean)
-      .join(" · "),
-  }));
+  // Sin año de 4 dígitos ("in production"), la columna del año lleva "—" (14 mm no
+  // alcanzan para "En producción") y el estado abre la meta.
+  type DiscoRow = { key: string; year: string | null; title: string; meta: string };
+  const allReleases: DiscoRow[] = getArtistEntries(slug).map((e) => {
+    const year = e.year.match(/\d{4}/)?.[0] ?? null;
+    return {
+      key: e.key,
+      year,
+      title: e.title,
+      meta: [
+        !year && t.inProduction,
+        e.upcoming && t.comingSoon,
+        e.artistSlug !== slug && t.collaboration,
+        e.artistName !== artist.name && e.artistName,
+        e.format !== "—" && localizeFormat(e.format, isEs),
+        e.label && localizeLabel(e.label, isEs),
+      ]
+        .filter(Boolean)
+        .join(" · "),
+    };
+  });
   const discography = allReleases.slice(0, MAX_DISCOGRAPHY_ENTRIES);
   const extraReleases = Math.max(0, allReleases.length - discography.length);
   const useTwoColumnDisco = discography.length > 10;
@@ -213,7 +237,11 @@ export default async function PressKitPage({
             >
               {discography.map((r) => (
                 <li key={r.key} className="press-disco-item">
-                  <span className="press-disco-year">{r.year}</span>
+                  {r.year ? (
+                    <span className="press-disco-year">{r.year}</span>
+                  ) : (
+                    <span className="press-disco-year" aria-hidden="true">—</span>
+                  )}
                   <span className="press-disco-body">
                     <span className="press-disco-name">{r.title}</span>
                     {r.meta && <span className="press-disco-meta">{r.meta}</span>}
