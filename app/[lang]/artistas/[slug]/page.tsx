@@ -144,8 +144,8 @@ export default async function ArtistPage({
   const isEs = lang === "es";
   const bio = isEs ? artist.bio.es : artist.bio.en;
   const labels = isEs
-    ? { back: "Volver al roster", releases: "Discografía", links: "Enlaces", origin: "Origen", genre: "Género", stats: "Métricas", roster: "Roster", listenSpotify: "Escuchar en Spotify", catalogue: "Catálogo", viewRelease: "Ver release", listen: "Escuchar", buy: "Comprar" }
-    : { back: "Back to roster", releases: "Discography", links: "Links", origin: "Origin", genre: "Genre", stats: "Metrics", roster: "Roster", listenSpotify: "Listen on Spotify", catalogue: "Catalogue", viewRelease: "View release", listen: "Listen", buy: "Buy" };
+    ? { back: "Volver al roster", releases: "Discografía", links: "Enlaces", origin: "Origen", genre: "Género", stats: "Métricas", listenSpotify: "Escuchar en Spotify", catalogue: "Catálogo", viewRelease: "Ver release", listen: "Escuchar", buy: "Comprar" }
+    : { back: "Back to roster", releases: "Discography", links: "Links", origin: "Origin", genre: "Genre", stats: "Metrics", listenSpotify: "Listen on Spotify", catalogue: "Catalogue", viewRelease: "View release", listen: "Listen", buy: "Buy" };
   const numberLocale = isEs ? "es-CL" : "en-US";
   const url = `https://phonerecords.cl/${lang}/artistas/${slug}`;
   const spotifyArtistId = extractSpotifyArtistId(artist.links);
@@ -177,7 +177,8 @@ export default async function ArtistPage({
         url,
         ...(artist.links.length ? { sameAs: artist.links.map((l) => l.href) } : {}),
         ...(portrait ? { image: absUrl(portrait) } : {}),
-        location: { "@type": "Place", name: artist.origin },
+        // Un Place es un lugar: el año de "Santiago, Chile · 2009" va solo en foundingDate.
+        location: { "@type": "Place", name: originMatch?.[1] ?? artist.origin },
         ...(originMatch
           ? {
               foundingLocation: { "@type": "Place", name: originMatch[1] },
@@ -200,6 +201,7 @@ export default async function ArtistPage({
                       }
                     : {}),
                   name: e.title,
+                  // `upcoming` se calcula en cada petición (app/layout.tsx lee headers() y cookies()).
                   ...(!e.upcoming && LD_DATE_RE.test(date) ? { datePublished: date } : {}),
                   ...(recordLabel ? { recordLabel } : {}),
                   ...(e.cover ? { image: absUrl(e.cover) } : {}),

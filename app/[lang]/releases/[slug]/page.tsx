@@ -177,7 +177,8 @@ export default async function ReleasePage({
       {
         "@type": "BreadcrumbList",
         itemListElement: [
-          { "@type": "ListItem", position: 1, name: "PHŌNÉ Records", item: `https://phonerecords.cl/${lang}` },
+          // Misma miga que la ficha de artista: Inicio/Home → /${lang}.
+          { "@type": "ListItem", position: 1, name: isEs ? "Inicio" : "Home", item: `https://phonerecords.cl/${lang}` },
           { "@type": "ListItem", position: 2, name: isEs ? "Catálogo" : "Catalogue", item: `https://phonerecords.cl/${lang}/catalogo` },
           { "@type": "ListItem", position: 3, name: `${release.artistName} — ${release.title}`, item: url },
         ],
