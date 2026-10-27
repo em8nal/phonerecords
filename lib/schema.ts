@@ -3,7 +3,8 @@
 // Una sola definición de la organización (PHŌNÉ Records) con un `@id` que no
 // cambia con el idioma; la portada y /sello la usan tal cual. Los miembros salen
 // de lib/artists.ts, así que sumar o renombrar un artista no exige tocar este
-// archivo. Tipo "Organization": https://schema.org/MusicLabel no existe (404).
+// archivo. Tipo "Organization": schema.org no tiene un tipo propio para sellos
+// discográficos (la URL de ese tipo responde 404; comprobado el 26-10-2026).
 //
 // Imports relativos e `import type`: scripts/test-seo.mjs importa este módulo
 // desde Node sin el alias @/.
