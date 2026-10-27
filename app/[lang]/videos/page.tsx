@@ -9,6 +9,7 @@ import { artists } from "@/lib/artists";
 import { translations, type Language } from "@/lib/translations";
 import { VIDEO_KINDS, VIDEO_KIND_LABEL, getPublishedVideos, youtubeThumb } from "@/lib/videos";
 import { toVideoCardData } from "@/components/phone/video-card";
+import { pageMetadata } from "@/lib/seo";
 import { VideosGrid } from "./videos-grid";
 
 type LangParams = { lang: string };
@@ -18,20 +19,14 @@ export async function generateMetadata(
 ): Promise<Metadata> {
   const { lang } = await params;
   const isEs = lang === "es";
-  return {
+  return pageMetadata({
+    lang,
+    path: "/videos",
     title: "Videos",
     description: isEs
       ? "Videoclips, sesiones y registros en vivo de los artistas de PHŌNÉ Records, con un texto propio por pieza."
       : "Music videos, sessions and live footage from PHŌNÉ Records artists, with an original text for each piece.",
-    alternates: {
-      canonical: `https://phonerecords.cl/${lang}/videos`,
-      languages: {
-        es: "https://phonerecords.cl/es/videos",
-        en: "https://phonerecords.cl/en/videos",
-        "x-default": "https://phonerecords.cl/es/videos",
-      },
-    },
-  };
+  });
 }
 
 export default async function VideosPage({

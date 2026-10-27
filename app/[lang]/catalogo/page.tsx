@@ -5,6 +5,7 @@ import { Navigation } from "@/components/landing/navigation";
 import { PageHero } from "@/components/phone/page-hero";
 import { FooterSection } from "@/components/landing/footer-section";
 import { getCatalogEntries, getCatalogArtists } from "@/lib/catalog";
+import { pageMetadata } from "@/lib/seo";
 import { CatalogGrid } from "./catalog-grid";
 
 type LangParams = { lang: string };
@@ -14,20 +15,14 @@ export async function generateMetadata(
 ): Promise<Metadata> {
   const { lang } = await params;
   const isEs = lang === "es";
-  return {
+  return pageMetadata({
+    lang,
+    path: "/catalogo",
     title: isEs ? "Catálogo" : "Catalogue",
     description: isEs
       ? "Catálogo completo PHŌNÉ Records: discos, EPs, sesiones en vivo y singles del roster — Newen Afrobeat, Klaus B, ecamhi, Con.fusión y Rosario Lircay."
       : "Complete PHŌNÉ Records catalogue: albums, EPs, live sessions and singles from the roster — Newen Afrobeat, Klaus B, ecamhi, Con.fusión and Rosario Lircay.",
-    alternates: {
-      canonical: `https://phonerecords.cl/${lang}/catalogo`,
-      languages: {
-        es: "https://phonerecords.cl/es/catalogo",
-        en: "https://phonerecords.cl/en/catalogo",
-        "x-default": "https://phonerecords.cl/es/catalogo",
-      },
-    },
-  };
+  });
 }
 
 export default async function CatalogoPage({

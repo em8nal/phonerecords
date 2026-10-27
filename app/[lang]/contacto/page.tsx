@@ -7,6 +7,7 @@ import { FooterSection } from "@/components/landing/footer-section";
 import { ContactForm } from "./contact-form";
 import { NewsletterForm } from "@/components/phone/newsletter-form";
 import { translations } from "@/lib/translations";
+import { pageMetadata } from "@/lib/seo";
 
 type LangParams = { lang: string };
 
@@ -15,20 +16,14 @@ export async function generateMetadata(
 ): Promise<Metadata> {
   const { lang } = await params;
   const isEs = lang === "es";
-  return {
+  return pageMetadata({
+    lang,
+    path: "/contacto",
     title: isEs ? "Contacto" : "Contact",
     description: isEs
       ? "Escríbenos para consultas generales, booking, prensa, propuestas de artista o trabajo con el sello PHŌNÉ Records."
       : "Write to us for general inquiries, booking, press, artist proposals or working with PHŌNÉ Records.",
-    alternates: {
-      canonical: `https://phonerecords.cl/${lang}/contacto`,
-      languages: {
-        es: "https://phonerecords.cl/es/contacto",
-        en: "https://phonerecords.cl/en/contacto",
-        "x-default": "https://phonerecords.cl/es/contacto",
-      },
-    },
-  };
+  });
 }
 
 const copy = {
