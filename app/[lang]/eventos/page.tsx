@@ -165,7 +165,7 @@ export default async function EventosPage({
         <article className="max-w-[1100px] mx-auto px-6 lg:px-12 pt-12 lg:pt-16 pb-24">
           <Link
             href={`/${lang}`}
-            className="inline-flex items-center gap-2 text-sm text-muted-foreground hover:text-foreground transition-colors mb-12 group"
+            className={`inline-flex min-h-6 items-center gap-2 text-sm text-muted-foreground hover:text-foreground transition-colors mb-12 group ${LINK_FOCUS}`}
           >
             <ArrowLeft className="w-4 h-4 group-hover:-translate-x-1 transition-transform" />
             {t.backHome}
