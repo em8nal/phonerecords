@@ -165,14 +165,14 @@ export const SERVICES: Record<Language, ServicesCopy> = {
           id: "sesion",
           kicker: "Fotografía, video de banda y press kit",
           title: "Dirección de arte de sesión, fotografía y video de banda",
-          summary: "Concepto y dirección de arte de la sesión, fotografías para press kit y cápsulas de video de la banda.",
+          summary: "Concepto y dirección de arte de la sesión, fotografías para press kit y, como opción, cápsulas de video de la banda.",
           includes: [
             {
               name: "Dirección de arte de la sesión",
               text: "concepto, moodboard y brief de locación, vestuario y estilismo, con la coordinación de la producción.",
             },
             { name: "Fotografía", text: "sesión y edición de fotografías para press kit." },
-            { name: "Video de banda", text: "cápsulas cortas de presentación de la banda." },
+            { name: "Video de banda (opcional)", text: "cápsulas cortas de presentación de la banda." },
           ],
           note: "La producción de la sesión (videógrafo, locación, vestuario, maquillaje y peinado, iluminación o equipos, transporte y alimentación) corresponde a costos de terceros que se estiman según cada proyecto; su coordinación va incluida en la dirección de arte.",
           caption: "Con.fusión · sesión en azotea, agosto 2026",
@@ -251,7 +251,7 @@ export const SERVICES: Record<Language, ServicesCopy> = {
       title: "Starting point",
       body: [
         "A record doesn't end at the master. Between the studio and the audience lies a series of decisions —a cover, a photograph, a press release, a release order— that define how it will be heard, read and remembered. When those decisions are made separately, the release fragments: the image says one thing, the press another, social media a third.",
-        "At PHŌNÉ we accompany that passage with a creative direction that ties every piece together from one principle: a project's visual and narrative language must emerge from its own identity.",
+        "At PHŌNÉ we guide that journey with creative direction that ties every piece together from one principle: a project's visual and narrative language must emerge from its own identity.",
       ],
       quote: "Nothing is superimposed.",
     },
@@ -262,7 +262,7 @@ export const SERVICES: Record<Language, ServicesCopy> = {
         {
           id: "direccion",
           title: "Creative direction",
-          body: "A diagnosis of the identity of the project and the record, its concept and narrative. Delivered as a brand manual: the document that orders every later decision.",
+          body: "A diagnosis of the identity of the project and the record, its concept and narrative. Delivered as a brand manual: the document that guides every later decision.",
         },
         {
           id: "planificacion",
@@ -272,7 +272,7 @@ export const SERVICES: Record<Language, ServicesCopy> = {
         {
           id: "ilustrador",
           title: "Working with the illustrator",
-          body: "Choosing the illustrator or designer according to the record's language, the cover brief and support throughout the process. The cover is built in dialogue between artist, illustrator and art direction.",
+          body: "Choosing the illustrator or designer to suit the record's language, writing the cover brief and supporting the process. The cover is built in dialogue between artist, illustrator and art direction.",
         },
         {
           id: "diseno",
@@ -287,7 +287,7 @@ export const SERVICES: Record<Language, ServicesCopy> = {
       ],
     },
     pieces: {
-      title: "Pieces that combine",
+      title: "Pieces you can combine",
       lede: "Each piece can be added on its own or combined with others, depending on what your project needs.",
       includes: "Includes",
       inquire: "Ask about this piece",
@@ -300,7 +300,7 @@ export const SERVICES: Record<Language, ServicesCopy> = {
           includes: [
             { text: "Identity diagnosis of the project and the record." },
             { text: "Concept and narrative." },
-            { text: "Brand manual, the document that orders later decisions." },
+            { text: "Brand manual, the document that guides later decisions." },
             { text: "Calendar for singles, album, press and live shows, with clear milestones." },
           ],
           caption: "Klaus B · recording session",
@@ -324,14 +324,14 @@ export const SERVICES: Record<Language, ServicesCopy> = {
           id: "sesion",
           kicker: "Photography, band video & press kit",
           title: "Session art direction, photography and band video",
-          summary: "Session concept and art direction, press-kit photos and short band video capsules.",
+          summary: "Session concept and art direction, press-kit photos and, optionally, short band video capsules.",
           includes: [
             {
               name: "Session art direction",
               text: "concept, moodboard and brief for location, wardrobe and styling, including production coordination.",
             },
             { name: "Photography", text: "shoot and editing of press-kit photos." },
-            { name: "Band video", text: "short capsules introducing the band." },
+            { name: "Band video (optional)", text: "short capsules introducing the band." },
           ],
           note: "Session production (videographer, location, wardrobe, hair and make-up, lighting or equipment, transport and catering) involves third-party costs estimated for each project; its coordination is included in the art direction.",
           caption: "Con.fusión · rooftop session, August 2026",
@@ -402,19 +402,19 @@ export const STRIP_SLUGS = ["klaus-b-destellos-de-ti", "newen-afrobeat-la-fuerza
 export const COVER_ALT: Record<string, Localized> = {
   "klaus-b-destellos-de-ti": {
     es: "Portada de Destellos de ti, de Klaus B: anillos concéntricos verdes sobre fondo negro, con el nombre del artista en verde y el título en letras blancas",
-    en: "Destellos de ti cover by Klaus B: concentric green rings on a black background, with the artist's name in green and the title in white letters",
+    en: "Cover of Klaus B's Destellos de ti: concentric green rings on a black background, with the artist's name in green and the title in white letters",
   },
   "newen-afrobeat-la-fuerza": {
     es: "Portada de La Fuerza, de Newen Afrobeat: ilustración de una montaña nevada, un desierto rojo y una laguna con flamencos",
-    en: "La Fuerza cover art by Newen Afrobeat: illustration of a snow-capped mountain, a red desert and a lagoon with flamingos",
+    en: "Cover of Newen Afrobeat's La Fuerza: illustration of a snow-capped mountain, a red desert and a lagoon with flamingos",
   },
   "con-fusion-cuantas-veces": {
     es: "Portada de Cuántas veces, de Con.fusión: un gato negro de ojos brillantes camina de noche hacia la cámara; foto en blanco y negro",
-    en: "Cuántas veces cover by Con.fusión: a black cat with glowing eyes walks towards the camera at night; black-and-white photo",
+    en: "Cover of Con.fusión's Cuántas veces: a black cat with glowing eyes walks towards the camera at night; black-and-white photo",
   },
   "rosario-lircay-en-vela": {
     es: "Portada de En Vela, de Rosario Lircay: la cantante, agachada de noche en una calle, con vestido rojo y un ramo de flores bajo una luz roja",
-    en: "En Vela cover by Rosario Lircay: the singer crouching on a street at night, in a red dress, holding a bunch of flowers under a red light",
+    en: "Cover of Rosario Lircay's En Vela: the singer crouching on a street at night, in a red dress, holding a bunch of flowers under a red light",
   },
 };
 
