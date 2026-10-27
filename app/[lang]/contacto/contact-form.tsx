@@ -328,6 +328,7 @@ export function ContactForm({ lang }: { lang: Lang }) {
             )}
           </fieldset>
 
+          {/* Los radios no admiten aria-invalid: el error llega por el aria-describedby del grupo. */}
           <fieldset aria-describedby={errors.projectType ? "projectType-error" : undefined}>
             <legend className={legendClass}>{c.projectType}</legend>
             <div className="mt-2 grid grid-cols-2 gap-x-6 sm:grid-cols-4">
@@ -336,7 +337,6 @@ export function ContactForm({ lang }: { lang: Lang }) {
                   <input
                     type="radio"
                     value={value}
-                    aria-invalid={errors.projectType ? true : undefined}
                     {...register("projectType")}
                     className={choiceClass}
                   />
