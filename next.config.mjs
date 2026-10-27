@@ -1,5 +1,9 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {
+  // A4 (17d/17i): bots que reciben la metadata bloqueante en <head>. Reemplaza la lista por defecto de
+  // Next 16.4.2, así que empieza con la copia literal de next/dist/shared/lib/router/utils/html-bots.js
+  // y suma los buscadores y crawlers de IA. Al subir Next, comparar el prefijo (test:seo lo vigila).
+  htmlLimitedBots: /[\w-]+-Google|Google-[\w-]+|Chrome-Lighthouse|Slurp|DuckDuckBot|baiduspider|yandex|sogou|bitlybot|tumblr|vkShare|quora link preview|redditbot|ia_archiver|Bingbot|BingPreview|applebot|facebookexternalhit|facebookcatalog|Twitterbot|LinkedInBot|Slackbot|Discordbot|WhatsApp|SkypeUriPreview|Yeti|googleweblight|GPTBot|OAI-SearchBot|ChatGPT-User|PerplexityBot|Perplexity-User|ClaudeBot|Claude-SearchBot|Claude-User|CCBot/i,
   async redirects() {
     return [
       // Andrés Abrigo salió del roster (21-10-2026): sus URLs van al roster y al press kit.

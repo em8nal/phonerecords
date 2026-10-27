@@ -63,11 +63,11 @@ export function ReleaseHero({ release, lang, initialReleased }: Props) {
   // Smart link si existe; si no, el primer enlace de escucha (nunca una tienda:
   // "Escuchar" no debe mandar a Discogs) y solo cuando ya salió, para no
   // etiquetar "Pre-save" una plataforma. Por salir y sin smart link → sin CTA.
-  // Ojo: `initialReleased` se calcula al generar la página estática. El label
-  // Pre-save → Escuchar y el badge sí flipan en el cliente a las 00:00 de
-  // Santiago, pero un release SIN smartLink que salga después del deploy no
-  // muestra CTA hasta el siguiente build. Hoy todos los próximos con enlaces
-  // tienen smartLink, así que no afecta.
+  // Ojo: `initialReleased` se calcula en el servidor en cada petición (el root
+  // layout lee headers() y cookies()). El label Pre-save → Escuchar y el badge
+  // además flipan en el cliente a las 00:00 de Santiago. Si H2 vuelve estática
+  // la ruta, un release SIN smartLink que salga después del deploy no mostrará
+  // CTA hasta el siguiente revalidate.
   const ctaHref = release.smartLink ?? (initialReleased ? pickListenHref(release.links) : undefined);
 
   return (

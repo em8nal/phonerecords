@@ -21,6 +21,7 @@ import { createRequire } from "node:module";
 import { fileURLToPath } from "node:url";
 import path from "node:path";
 import { releases, spotifyRefFromLinks, releaseTitle, TITLE_SUFFIX, MAX_TITLE_LENGTH } from "../lib/releases.ts";
+import { TITLE_TEMPLATE } from "../lib/seo.ts";
 import { artists, LEGACY_ARTIST_SLUGS, resolveArtistSlug } from "../lib/artists.ts";
 import { BANNER_ENTRIES } from "../lib/banner.ts";
 import { getArtistEntries } from "../lib/catalog.ts";
@@ -100,9 +101,11 @@ const artistOnly = spotifyRefFromLinks([{ href: "https://open.spotify.com/artist
 report("spotifyRefFromLinks ignora perfiles /artist/", artistOnly === null);
 
 // --- Títulos -----------------------------------------------------------------------------
+// La plantilla vive en lib/seo.ts (TITLE_TEMPLATE) y app/layout.tsx la usa tal cual.
 const layoutSrc = readFileSync(path.join(ROOT, "app/layout.tsx"), "utf8");
-const template = /template:\s*(['"`])%s(.*?)\1/.exec(layoutSrc)?.[2];
-report("TITLE_SUFFIX coincide con la plantilla de app/layout.tsx", template === TITLE_SUFFIX, `plantilla "%s${template ?? "?"}"`);
+const template = TITLE_TEMPLATE.replace("%s", "");
+report("app/layout.tsx usa TITLE_TEMPLATE de lib/seo.ts", /template:\s*TITLE_TEMPLATE/.test(layoutSrc));
+report("TITLE_SUFFIX coincide con la plantilla de lib/seo.ts", template === TITLE_SUFFIX, `plantilla "%s${template}"`);
 const titles = releases.map((r) => {
   const t = releaseTitle(r);
   return { slug: r.slug, absolute: t.absolute, shown: t.absolute ? t.text : t.text + TITLE_SUFFIX };

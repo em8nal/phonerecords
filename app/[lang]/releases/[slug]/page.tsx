@@ -18,15 +18,10 @@ import { ReleaseHero } from "@/components/phone/release-hero";
 import { ReleaseCardGrid } from "@/components/phone/release-card-grid";
 import { isReleased, formatReleaseLabel } from "@/lib/release-date";
 import type { Language } from "@/lib/translations";
+import { SITE, ORG_ID, artistId as artistLdId, absUrl } from "@/lib/schema";
 
 type ReleaseParams = { lang: string; slug: string };
 
-// Identificadores del grafo JSON-LD. Mismo formato que lib/schema.ts del carril H
-// (SITE, ORG_ID, artistId); al integrar se reemplazan por esos imports.
-const SITE = "https://phonerecords.cl";
-const ORG_ID = `${SITE}/#organization`;
-const artistLdId = (artistSlug: string) => `${SITE}/#artist-${artistSlug}`;
-const absUrl = (src: string) => (/^https?:\/\//.test(src) ? src : `${SITE}${src.startsWith("/") ? "" : "/"}${src}`);
 
 /**
  * Sello que edita el lanzamiento, para `recordLabel`: PHŌNÉ con el @id de la

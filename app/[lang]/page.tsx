@@ -22,7 +22,7 @@ export async function generateMetadata(
   const { lang } = await params;
   const isEs = lang === "es";
   const title = isEs
-    ? "PHŌNÉ Records — Sello cultural independiente · Santiago de Chile"
+    ? "PHŌNÉ Records — Sello cultural independiente · Santiago"
     : "PHŌNÉ Records — Independent cultural label · Santiago, Chile";
   const description = isEs
     ? "Sello cultural independiente con dirección autoral. Roster latinoamericano en diálogo con circuitos globales: Newen Afrobeat, Klaus B, ecamhi, Con.fusión y Rosario Lircay."

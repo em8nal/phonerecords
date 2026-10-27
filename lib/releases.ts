@@ -17,7 +17,7 @@ export type Release = {
   title: string;
   artistSlug: string;
   artistName: string;
-  releaseDate: string; // ISO yyyy-mm-dd or yyyy-mm
+  releaseDate: string; // ISO yyyy-mm-dd, yyyy-mm or yyyy (fecha parcial si no se conoce el día)
   year: number;
   type: "album" | "ep" | "single" | "live" | "mixtape" | "compilation";
   format: string; // human-readable (e.g. "LP · vinilo + digital")
@@ -255,7 +255,7 @@ The recording is ℗ 2026 Newen Afrobeat and the release © 2026 PHŌNÉ Records
     title: "Newen Plays Fela (12\" Vinyl)",
     artistSlug: "newen-afrobeat",
     artistName: "Newen Afrobeat",
-    releaseDate: "2023-01-01",
+    releaseDate: "2023",
     year: 2023,
     type: "ep",
     format: "Vinilo · 12\" Mini-Album · Limited Edition",

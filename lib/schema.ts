@@ -32,6 +32,10 @@ const LABEL_DESCRIPTION: Record<Language, string> = {
 
 export const toLang = (lang: string): Language => (lang === "en" ? "en" : "es");
 
+/** URL absoluta para imágenes del grafo: deja igual las http(s) y antepone SITE a las rutas del sitio. */
+export const absUrl = (src: string): string =>
+  /^https?:\/\//.test(src) ? src : `${SITE}${src.startsWith("/") ? "" : "/"}${src}`;
+
 /** `@id` estable de cada artista; las fichas de artista usan este mismo formato. */
 export const artistId = (slug: string): string => `${SITE}/#artist-${slug}`;
 

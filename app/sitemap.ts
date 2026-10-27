@@ -39,15 +39,15 @@ type StaticPath = "" | (typeof STATIC_PAGES)[number];
  * una página, actualizar su fecha aquí (/press-kit, después de integrar el carril G).
  */
 const STATIC_LASTMOD: Record<StaticPath, string | undefined> = {
-  "": "2026-10-24",
-  "/manifiesto": "2026-10-24",
-  "/sello": "2026-10-24",
-  "/catalogo": "2026-10-24",
-  "/videos": "2026-10-24",
+  "": "2026-10-26",
+  "/manifiesto": "2026-10-26",
+  "/sello": "2026-10-26",
+  "/catalogo": "2026-10-26",
+  "/videos": "2026-10-26",
   "/eventos": undefined,
-  "/contacto": "2026-10-24",
-  "/privacidad": "2026-10-24",
-  "/press-kit": "2026-10-24",
+  "/contacto": "2026-10-26",
+  "/privacidad": "2026-10-26",
+  "/press-kit": "2026-10-26",
 };
 
 type Entry = MetadataRoute.Sitemap[number];

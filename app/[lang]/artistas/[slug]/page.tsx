@@ -43,6 +43,7 @@ function pickReleaseActions(
 }
 import { SpotifyArtistEmbed } from "@/components/spotify-embed";
 import type { Language } from "@/lib/translations";
+import { SITE, ORG_ID, artistId as artistLdId, absUrl } from "@/lib/schema";
 
 function extractSpotifyArtistId(links: { href: string }[]): string | null {
   const sp = links.find((l) => l.href.includes("open.spotify.com/artist/"));
@@ -54,12 +55,6 @@ function extractSpotifyArtistId(links: { href: string }[]): string | null {
 
 type ArtistParams = { lang: string; slug: string };
 
-// Identificadores del grafo JSON-LD. Mismo formato que lib/schema.ts del carril H
-// (SITE, ORG_ID, artistId); al integrar se reemplazan por esos imports.
-const SITE = "https://phonerecords.cl";
-const ORG_ID = `${SITE}/#organization`;
-const artistLdId = (artistSlug: string) => `${SITE}/#artist-${artistSlug}`;
-const absUrl = (src: string) => (/^https?:\/\//.test(src) ? src : `${SITE}${src.startsWith("/") ? "" : "/"}${src}`);
 /** Fecha ISO completa o parcial ("2026", "2026-06", "2026-06-12"); deja fuera "in production". */
 const LD_DATE_RE = /^\d{4}(-\d{2}){0,2}$/;
 /** Origen con año de formación: "Santiago, Chile · 2009" → lugar + año. */

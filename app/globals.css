@@ -427,6 +427,28 @@
   font-family: var(--font-jetbrains), monospace;
   font-size: 9pt;
 }
+/* En pantallas angostas el press kit web va a una columna (el PDF se imprime a 1200 px y no cambia). */
+@media screen and (max-width: 640px) {
+  .press-disco-two-col,
+  .press-links-list {
+    columns: 1;
+  }
+  .press-document {
+    padding: 8mm 5mm;
+  }
+  /* Etiqueta arriba y valor debajo: el correo largo no se sale de la pantalla. */
+  .press-contact-row {
+    flex-direction: column;
+    gap: 1mm;
+  }
+  .press-contact-label {
+    min-width: 0;
+  }
+  .press-contact-value {
+    text-align: left;
+    overflow-wrap: anywhere;
+  }
+}
 .press-mgmt-note {
   font-size: 9pt;
   font-style: italic;
