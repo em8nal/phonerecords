@@ -4,7 +4,14 @@ import Link from "next/link";
 import { ArrowLeft, ExternalLink } from "lucide-react";
 import { Navigation } from "@/components/landing/navigation";
 import { FooterSection } from "@/components/landing/footer-section";
-import { releaseSlugs, getRelease, spotifyRefFromLinks } from "@/lib/releases";
+import {
+  releaseSlugs,
+  getRelease,
+  spotifyRefFromLinks,
+  releaseTitle,
+  isPhoneRelease,
+} from "@/lib/releases";
+import { getArtist } from "@/lib/artists";
 import { SpotifyEmbed } from "@/components/spotify-embed";
 import { YouTubeEmbed } from "@/components/youtube-embed";
 import { ReleaseHero } from "@/components/phone/release-hero";
@@ -13,6 +20,24 @@ import { isReleased, formatReleaseLabel } from "@/lib/release-date";
 import type { Language } from "@/lib/translations";
 
 type ReleaseParams = { lang: string; slug: string };
+
+// Identificadores del grafo JSON-LD. Mismo formato que lib/schema.ts del carril H
+// (SITE, ORG_ID, artistId); al integrar se reemplazan por esos imports.
+const SITE = "https://phonerecords.cl";
+const ORG_ID = `${SITE}/#organization`;
+const artistLdId = (artistSlug: string) => `${SITE}/#artist-${artistSlug}`;
+const absUrl = (src: string) => (/^https?:\/\//.test(src) ? src : `${SITE}${src.startsWith("/") ? "" : "/"}${src}`);
+
+/**
+ * Sello que edita el lanzamiento, para `recordLabel`: PHŌNÉ con el @id de la
+ * organización; otro sello solo con su nombre; sin sello o "Independent", nada.
+ */
+function recordLabelLd(label: string | undefined) {
+  if (!label || label === "Independent") return undefined;
+  return isPhoneRelease({ label })
+    ? { "@id": ORG_ID, "@type": "Organization", name: label }
+    : { "@type": "Organization", name: label };
+}
 
 /**
  * Fecha completa para la fila meta, en la misma voz que el badge del hero:
@@ -51,8 +76,11 @@ export async function generateMetadata(
   // Collapse paragraph breaks so the snippet reads as one line.
   const desc = trimToLength(fullDescription.replace(/\s+/g, " "), 158);
   const pageTitle = `${release.title} — ${release.artistName}`;
+  // <title> ≤ 60 caracteres: con la plantilla '%s — PHŌNÉ Records' si cabe; si no, absoluto
+  // y sin sufijo (releaseTitle). og:title y twitter:title siguen con el título completo.
+  const docTitle = releaseTitle(release);
   return {
-    title: pageTitle,
+    title: docTitle.absolute ? { absolute: docTitle.text } : docTitle.text,
     description: desc,
     alternates: {
       canonical: `https://phonerecords.cl/${lang}/releases/${slug}`,
@@ -105,7 +133,11 @@ export default async function ReleasePage({
     : { back: "Back to catalogue", tracklist: "Tracklist", credits: "Credits", links: "Listen", releaseDate: initiallyReleased ? "Released" : "Release date", format: "Format", label: "Label", track: "Track" };
 
   // JSON-LD MusicAlbum schema
-  const url = `https://phonerecords.cl/${lang}/releases/${slug}`;
+  const url = `${SITE}/${lang}/releases/${slug}`;
+  const recordLabel = recordLabelLd(release.label);
+  // Un @id y un nombre por artista: el del roster (o el acreditado si no está en el roster);
+  // si la ficha acredita otro nombre ("Gestosimple & Klaus B"), va en creditText.
+  const artistName = getArtist(release.artistSlug)?.name ?? release.artistName;
   const albumSchema = {
     "@context": "https://schema.org",
     "@graph": [
@@ -114,19 +146,22 @@ export default async function ReleasePage({
         "@id": `${url}#album`,
         name: release.title,
         url,
-        datePublished: release.releaseDate,
-        ...(release.cover ? { image: release.cover } : {}),
+        // Solo ya publicado: la ruta se renderiza por petición y cambia a las 00:00 de Santiago.
+        ...(initiallyReleased ? { datePublished: release.releaseDate } : {}),
+        ...(release.cover ? { image: absUrl(release.cover) } : {}),
         albumReleaseType: release.type === "single"
           ? "https://schema.org/SingleRelease"
           : release.type === "ep"
           ? "https://schema.org/EPRelease"
           : "https://schema.org/AlbumRelease",
-        ...(release.label ? { recordLabel: { "@type": "Organization", name: release.label } } : {}),
+        ...(recordLabel ? { recordLabel } : {}),
         byArtist: {
           "@type": "MusicGroup",
-          name: release.artistName,
-          url: `https://phonerecords.cl/${lang}/artistas/${release.artistSlug}`,
+          "@id": artistLdId(release.artistSlug),
+          name: artistName,
+          url: `${SITE}/${lang}/artistas/${release.artistSlug}`,
         },
+        ...(artistName !== release.artistName ? { creditText: release.artistName } : {}),
         numTracks: release.tracklist?.length,
         ...(release.tracklist
           ? {

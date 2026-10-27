@@ -1032,3 +1032,40 @@ export function spotifyRefFromLinks(links?: { href: string }[]): SpotifyRef | nu
   }
   return null;
 }
+
+/** Nombre del sello tal como aparece en `label` cuando PHŌNÉ edita el lanzamiento. */
+export const PHONE_LABEL = "PHŌNÉ Records";
+
+/** True cuando el lanzamiento lo edita PHŌNÉ (`label === PHONE_LABEL`), no solo lo distribuye. */
+export function isPhoneRelease(r: Pick<Release, "label">): boolean {
+  return r.label === PHONE_LABEL;
+}
+
+/**
+ * Sufijo que agrega la plantilla de título de app/layout.tsx (`'%s — PHŌNÉ Records'`).
+ * `pnpm test:releases` comprueba que ambos coincidan.
+ */
+export const TITLE_SUFFIX = " — PHŌNÉ Records";
+
+/** Tope de caracteres del <title> de una ficha de lanzamiento. */
+export const MAX_TITLE_LENGTH = 60;
+
+const FEAT_RE = /\s+(?:feat\.|ft\.|featuring)\s.*$/i;
+
+/**
+ * Título de la ficha de lanzamiento, de ≤ 60 caracteres con el sufijo del sitio.
+ * Con `full = "título — artista"`: si `full` + sufijo cabe, se usa la plantilla
+ * (`absolute: false`). Si no, el primero que quepa SIN sufijo (`absolute: true`) entre
+ * `full`, "título — artista" sin el " feat. …" del artista, y el título solo. Último
+ * recurso: el título cortado a 59 caracteres + "…".
+ */
+export function releaseTitle(
+  r: Pick<Release, "title" | "artistName">,
+): { text: string; absolute: boolean } {
+  const full = `${r.title} — ${r.artistName}`;
+  if (full.length + TITLE_SUFFIX.length <= MAX_TITLE_LENGTH) return { text: full, absolute: false };
+  const candidates = [full, `${r.title} — ${r.artistName.replace(FEAT_RE, "")}`, r.title];
+  const fit = candidates.find((c) => c.length <= MAX_TITLE_LENGTH);
+  if (fit) return { text: fit, absolute: true };
+  return { text: `${r.title.slice(0, MAX_TITLE_LENGTH - 1).trimEnd()}…`, absolute: true };
+}
