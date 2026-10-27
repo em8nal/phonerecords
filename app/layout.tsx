@@ -38,7 +38,7 @@ export const viewport: Viewport = {
   themeColor: '#000000',
 };
 
-// Valores por defecto neutros: sin canonical, og:url ni og:locale para todo el sitio
+// Valores por defecto neutros: sin URL canónica, og:url ni og:locale para todo el sitio
 // (cada página bajo /[lang] trae los suyos con pageMetadata de lib/seo.ts). Lo que no
 // los defina (press kits, 404) hereda solo marca, tipo e imagen, y Next completa
 // og:title y og:description con el título y la descripción de esa página.
