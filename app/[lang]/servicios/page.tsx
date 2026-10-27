@@ -18,6 +18,7 @@ import {
 } from "@/lib/services";
 import { toJsonLd, toLang } from "@/lib/schema";
 import { pageMetadata } from "@/lib/seo";
+import type { Language } from "@/lib/translations";
 
 // /servicios (pendiente 18): dirección creativa, diseño y prensa para lanzamientos, a la medida
 // de cada artista. Los textos viven en lib/services.ts. Diagramación propia, armónica con el
@@ -46,6 +47,12 @@ const FOCUS =
   "focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand focus-visible:ring-offset-2 focus-visible:ring-offset-background";
 const SECTION_TITLE = "font-display text-4xl leading-[1.05] tracking-tight text-balance lg:text-6xl";
 const SECTION_LEDE = "mt-6 max-w-[60ch] text-lg leading-relaxed text-foreground/80";
+// Tamaño del h1 por idioma: "Releasing a record" es ~20 % más ancho que "Lanzar un disco" y a
+// text-8xl no cabe en la columna 7/12 (dejaba "record" sola en una línea a 1024 y 1280).
+const H1_SIZE: Record<Language, string> = {
+  es: "text-5xl sm:text-6xl lg:text-7xl xl:text-8xl",
+  en: "text-4xl sm:text-6xl xl:text-7xl",
+};
 
 export default async function ServiciosPage({
   params,
@@ -85,7 +92,7 @@ export default async function ServiciosPage({
               </p>
               <h1
                 id="servicios-title"
-                className="whitespace-pre-line font-display text-5xl leading-[0.95] tracking-tight sm:text-6xl lg:text-7xl xl:text-8xl"
+                className={`whitespace-pre-line font-display leading-[0.95] tracking-tight ${H1_SIZE[lang]}`}
               >
                 {c.hero.title}
               </h1>

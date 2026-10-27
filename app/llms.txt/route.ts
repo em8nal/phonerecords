@@ -28,6 +28,7 @@ const COPY = {
     about: ["Sobre el sello", "sello discográfico, management y producción musical en Santiago de Chile; ediciones en vinilo y digital, giras entre Chile y Europa."],
     manifesto: ["Manifiesto", "marco, circulación y dirección autoral para la música independiente."],
     catalogue: ["Catálogo", "discos, EPs, sesiones en vivo y singles del roster."],
+    services: ["Dirección creativa, diseño y prensa", "dirección creativa, diseño, prensa y planificación para lanzamientos discográficos, a la medida de cada artista."],
     artists: "Artistas",
     releases: `Lanzamientos ℗ ${LABEL_NAME}`,
     videos: "Videos",
@@ -38,6 +39,7 @@ const COPY = {
     contact: "Contacto",
     contactPage: ["Contacto", "consultas generales, booking, prensa, propuestas de artista o trabajo con el sello."],
     booking: ["Booking y conciertos", "formulario de contacto con el asunto booking."],
+    servicesQuote: ["Conversemos tu lanzamiento", "formulario de contacto con el asunto dirección creativa, diseño y prensa."],
   },
   en: {
     summary:
@@ -46,6 +48,7 @@ const COPY = {
     about: ["About the label", "record label, management and music production in Santiago, Chile; vinyl and digital releases, tours between Chile and Europe."],
     manifesto: ["Manifesto", "framework, circulation and authorial direction for independent music."],
     catalogue: ["Catalogue", "albums, EPs, live sessions and singles from the roster."],
+    services: ["Creative direction, design & press", "creative direction, design, press and planning for record releases, tailored to each artist."],
     artists: "Artists",
     releases: `Releases ℗ ${LABEL_NAME}`,
     videos: "Videos",
@@ -56,6 +59,7 @@ const COPY = {
     contact: "Contact",
     contactPage: ["Contact", "general inquiries, booking, press, artist proposals or working with the label."],
     booking: ["Booking and concerts", "contact form with the booking topic."],
+    servicesQuote: ["Let's talk about your release", "contact form with the creative direction, design & press topic."],
   },
 } as const;
 
@@ -101,6 +105,7 @@ function sections(lang: Language, nowMs: number, prefix: "" | "English · "): st
     item(c.about[0], `${base}/sello`, c.about[1]),
     item(c.manifesto[0], `${base}/manifiesto`, c.manifesto[1]),
     item(c.catalogue[0], `${base}/catalogo`, c.catalogue[1]),
+    item(c.services[0], `${base}/servicios`, c.services[1]),
     "",
     `${heading}${c.artists}`,
     "",
@@ -124,6 +129,7 @@ function sections(lang: Language, nowMs: number, prefix: "" | "English · "): st
     "",
     item(c.contactPage[0], `${base}/contacto`, c.contactPage[1]),
     item(c.booking[0], `${base}/contacto?topic=booking`, c.booking[1]),
+    item(c.servicesQuote[0], `${base}/contacto?topic=servicios`, c.servicesQuote[1]),
     ...LABEL_SAME_AS.map((url) => item(socialName(url), url)),
     "",
   ];

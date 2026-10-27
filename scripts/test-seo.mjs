@@ -316,6 +316,10 @@ for (const lang of LANGS) {
   const relative = [...text.matchAll(/\]\((?!https:\/\/)([^)]*)\)/g)].map((m) => m[1]);
   report("URLs absolutas https", relative.length === 0, list(relative));
   report("enlace a /videos con la cantidad publicada", text.includes(`](${SITE}/es/videos): ${getPublishedVideos(now).length} `));
+  report(
+    "/servicios y su motivo de contacto en ES y EN (pendiente 18)",
+    ["es", "en"].every((l) => text.includes(`](${SITE}/${l}/servicios):`) && text.includes(`](${SITE}/${l}/contacto?topic=servicios):`)),
+  );
 }
 
 // ── htmlLimitedBots (next.config.mjs, lo aplica el integrador) ──
