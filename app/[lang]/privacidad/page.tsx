@@ -4,6 +4,7 @@ import { ArrowLeft } from "lucide-react";
 import { Navigation } from "@/components/landing/navigation";
 import { FooterSection } from "@/components/landing/footer-section";
 import { ConsentResetButton } from "@/components/consent/consent-reset-button";
+import { pageMetadata } from "@/lib/seo";
 
 type LangParams = { lang: string };
 
@@ -14,21 +15,14 @@ export async function generateMetadata(
 ): Promise<Metadata> {
   const { lang } = await params;
   const isEs = lang === "es";
-  return {
+  return pageMetadata({
+    lang,
+    path: "/privacidad",
     title: isEs ? "Política de privacidad" : "Privacy policy",
     description: isEs
       ? "Política de privacidad de PHŌNÉ Records: qué datos recolectamos, cómo los usamos, cookies y derechos del usuario bajo Ley 19.628 (Chile) y GDPR (UE)."
       : "PHŌNÉ Records privacy policy: what data we collect, how we use it, cookies and user rights under Ley 19.628 (Chile) and GDPR (EU).",
-    alternates: {
-      canonical: `https://phonerecords.cl/${lang}/privacidad`,
-      languages: {
-        es: "https://phonerecords.cl/es/privacidad",
-        en: "https://phonerecords.cl/en/privacidad",
-        "x-default": "https://phonerecords.cl/es/privacidad",
-      },
-    },
-    robots: { index: true, follow: true },
-  };
+  });
 }
 
 const copy = {

@@ -5,6 +5,8 @@ import { ArrowLeft, ArrowUpRight } from "lucide-react";
 import { Navigation } from "@/components/landing/navigation";
 import { PageHero } from "@/components/phone/page-hero";
 import { FooterSection } from "@/components/landing/footer-section";
+import { ORG_ID, WEBSITE_ID, organizationJsonLd, toJsonLd } from "@/lib/schema";
+import { pageMetadata } from "@/lib/seo";
 
 type LangParams = { lang: string };
 
@@ -13,20 +15,14 @@ export async function generateMetadata(
 ): Promise<Metadata> {
   const { lang } = await params;
   const isEs = lang === "es";
-  return {
+  return pageMetadata({
+    lang,
+    path: "/sello",
     title: isEs ? "Sobre el sello" : "About the label",
     description: isEs
       ? "PHŌNÉ Records: sello discográfico, management y producción musical en Santiago de Chile. Cinco artistas, ediciones en vinilo y digital, giras entre Chile y Europa."
       : "PHŌNÉ Records: record label, management and music production in Santiago, Chile. Five artists, vinyl and digital releases, tours between Chile and Europe.",
-    alternates: {
-      canonical: `https://phonerecords.cl/${lang}/sello`,
-      languages: {
-        es: "https://phonerecords.cl/es/sello",
-        en: "https://phonerecords.cl/en/sello",
-        "x-default": "https://phonerecords.cl/es/sello",
-      },
-    },
-  };
+  });
 }
 
 const copy = {
@@ -213,31 +209,20 @@ export default async function SelloPage({
   const c = lang === "es" ? copy.es : copy.en;
   const isEs = lang === "es";
 
+  // La organización sale de lib/schema.ts (misma entidad que la portada). La página
+  // trata sobre ella (`about`) y es parte del sitio (`isPartOf`, un CreativeWork).
   const schema = {
     "@context": "https://schema.org",
     "@graph": [
-      {
-        "@type": "MusicLabel",
-        "@id": "https://phonerecords.cl/#organization",
-        name: "PHŌNÉ Records",
-        url: "https://phonerecords.cl",
-        logo: "https://phonerecords.cl/brand/phone-logotipo.png",
-        foundingLocation: { "@type": "Place", name: "Santiago, Chile" },
-        address: {
-          "@type": "PostalAddress",
-          addressLocality: "Ñuñoa",
-          addressRegion: "Región Metropolitana",
-          addressCountry: "CL",
-        },
-        // Solo canales del sello: Bandcamp/Spotify son de Newen Afrobeat.
-        sameAs: ["https://www.instagram.com/phone_records/"],
-      },
+      organizationJsonLd(lang),
       {
         "@type": "AboutPage",
+        "@id": `https://phonerecords.cl/${lang}/sello`,
         url: `https://phonerecords.cl/${lang}/sello`,
         name: isEs ? "Sobre el sello" : "About the label",
         inLanguage: isEs ? "es-CL" : "en-US",
-        isPartOf: { "@id": "https://phonerecords.cl/#organization" },
+        about: { "@id": ORG_ID },
+        isPartOf: { "@id": WEBSITE_ID },
       },
       {
         "@type": "BreadcrumbList",
@@ -254,7 +239,7 @@ export default async function SelloPage({
       <main className="relative min-h-screen overflow-x-hidden noise-overlay">
         <script
           type="application/ld+json"
-          dangerouslySetInnerHTML={{ __html: JSON.stringify(schema) }}
+          dangerouslySetInnerHTML={{ __html: toJsonLd(schema) }}
         />
         <Navigation />
         <PageHero

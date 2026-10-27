@@ -4,6 +4,7 @@ import { ArrowLeft } from "lucide-react";
 import { Navigation } from "@/components/landing/navigation";
 import { PageHero } from "@/components/phone/page-hero";
 import { FooterSection } from "@/components/landing/footer-section";
+import { pageMetadata } from "@/lib/seo";
 
 type LangParams = { lang: string };
 
@@ -12,20 +13,14 @@ export async function generateMetadata(
 ): Promise<Metadata> {
   const { lang } = await params;
   const isEs = lang === "es";
-  return {
+  return pageMetadata({
+    lang,
+    path: "/manifiesto",
     title: isEs ? "Manifiesto" : "Manifesto",
     description: isEs
       ? "PHŌNÉ Records produce condiciones de existencia para la música independiente: marco, circulación y dirección autoral. Un sello, un atelier creativo, un dispositivo cultural."
       : "PHŌNÉ Records produces conditions of existence for independent music: framework, circulation and authorial direction. A label, a creative atelier, a cultural device.",
-    alternates: {
-      canonical: `https://phonerecords.cl/${lang}/manifiesto`,
-      languages: {
-        es: "https://phonerecords.cl/es/manifiesto",
-        en: "https://phonerecords.cl/en/manifiesto",
-        "x-default": "https://phonerecords.cl/es/manifiesto",
-      },
-    },
-  };
+  });
 }
 
 const copy = {

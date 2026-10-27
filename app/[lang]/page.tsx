@@ -6,6 +6,7 @@ import { FeaturesSection } from "@/components/landing/features-section";
 import { CtaSection } from "@/components/landing/cta-section";
 import { FooterSection } from "@/components/landing/footer-section";
 import { ReleaseBanner } from "@/components/phone/release-banner";
+import { organizationJsonLd, toJsonLd, websiteJsonLd } from "@/lib/schema";
 
 // El banner de lanzamiento rota por fecha (Pre-save → Escuchar a las 00:00 de
 // Santiago y relevo entre lanzamientos) sin redeploy. Hoy el root layout lee
@@ -70,67 +71,12 @@ export default async function Home({
   params: Promise<LangParams>;
 }) {
   const { lang } = await params;
-  const isEs = lang === "es";
 
-  // Schema.org JSON-LD: Organization that is also a MusicLabel.
-  // Helps Google Knowledge Graph render the label brand and its artists.
+  // Schema.org JSON-LD: la organización del sello (única definición, lib/schema.ts,
+  // con sus artistas como miembros) y el sitio que publica.
   const labelSchema = {
     "@context": "https://schema.org",
-    "@graph": [
-      {
-        "@type": ["Organization", "MusicLabel"],
-        "@id": "https://phonerecords.cl/#organization",
-        name: "PHŌNÉ Records",
-        url: "https://phonerecords.cl",
-        logo: "https://phonerecords.cl/brand/phone-logotipo.png",
-        description: isEs
-          ? "Sello cultural independiente con dirección autoral. Producción integral, management y curaduría de música independiente latinoamericana."
-          : "Independent cultural label with strong authorial direction. Integral production, management and curation of independent Latin American music.",
-        foundingLocation: {
-          "@type": "Place",
-          name: "Santiago, Chile",
-          address: {
-            "@type": "PostalAddress",
-            addressLocality: "Santiago",
-            addressRegion: "Región Metropolitana",
-            addressCountry: "CL",
-          },
-        },
-        // Solo canales del sello (= LABEL_SOCIAL de footer-section.tsx, módulo cliente que no se
-        // puede importar aquí). Bandcamp/Spotify son de Newen Afrobeat; @phone_records es del sello.
-        sameAs: [
-          "https://www.instagram.com/phone_records/",
-          "https://www.youtube.com/@phone_records",
-        ],
-        contactPoint: [
-          {
-            "@type": "ContactPoint",
-            contactType: "press",
-            url: `https://phonerecords.cl/${lang}/contacto`,
-          },
-          {
-            "@type": "ContactPoint",
-            contactType: "booking",
-            url: `https://phonerecords.cl/${lang}/contacto`,
-          },
-        ],
-        member: [
-          { "@type": "MusicGroup", name: "Newen Afrobeat", url: `https://phonerecords.cl/${lang}/artistas/newen-afrobeat` },
-          { "@type": "MusicGroup", name: "ecamhi", url: `https://phonerecords.cl/${lang}/artistas/ecamhi` },
-          { "@type": "MusicGroup", name: "Con.fusión", url: `https://phonerecords.cl/${lang}/artistas/con-fusion` },
-          { "@type": "MusicGroup", name: "Klaus B", url: `https://phonerecords.cl/${lang}/artistas/klaus-brantmayer` },
-          { "@type": "MusicGroup", name: "Rosario Lircay", url: `https://phonerecords.cl/${lang}/artistas/rosario-lircay` },
-        ],
-      },
-      {
-        "@type": "WebSite",
-        "@id": "https://phonerecords.cl/#website",
-        url: "https://phonerecords.cl",
-        name: "PHŌNÉ Records",
-        publisher: { "@id": "https://phonerecords.cl/#organization" },
-        inLanguage: ["es-CL", "en"],
-      },
-    ],
+    "@graph": [organizationJsonLd(lang), websiteJsonLd()],
   };
 
   return (
@@ -138,7 +84,7 @@ export default async function Home({
       <main className="relative min-h-screen overflow-x-hidden noise-overlay">
         <script
           type="application/ld+json"
-          dangerouslySetInnerHTML={{ __html: JSON.stringify(labelSchema) }}
+          dangerouslySetInnerHTML={{ __html: toJsonLd(labelSchema) }}
         />
         <Navigation />
         <ReleaseBanner lang={lang === "en" ? "en" : "es"} />
