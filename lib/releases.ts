@@ -73,7 +73,7 @@ Rosario Lircay is the stage name of Rosario Meléndez, a singer from the Ñuble 
     links: [
       { label: "Pre-save / Escuchar", href: "https://onerpm.link/105010589210" },
       { label: "Apple Music", href: "https://music.apple.com/us/album/en-vela-single/6821221086" },
-      // Del smartlink; verificado con el oEmbed de Spotify (título "En Vela"), 24-10-2026.
+      // Del smartlink; verificado con el oEmbed de Spotify (título "En Vela") el 24-10 y el 26-10-2026.
       { label: "Spotify", href: "https://open.spotify.com/album/5ONQBpFhxX31ruaLxwUMqw" },
     ],
   },
@@ -397,7 +397,7 @@ On this single, Klaus B is credited with composition, saxophone, flute and produ
     video: { youtubeId: "zEfVXTYtuo8", title: "Klaus B - Destellos De Ti [Videoclip Oficial]" },
     links: [
       { label: "Pre-save / Escuchar", href: "https://onerpm.link/102211016130" },
-      // Del smartlink; verificado con el oEmbed de Spotify (título "Destellos de Ti"), 24-10-2026.
+      // Del smartlink; verificado con el oEmbed de Spotify (título "Destellos de Ti") el 24-10 y el 26-10-2026.
       { label: "Spotify", href: "https://open.spotify.com/album/5loHWji5dshEXJv1LavbCF" },
     ],
   },
