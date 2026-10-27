@@ -46,7 +46,8 @@ export async function generateMetadata(
   return pageMetadata({
     lang,
     path: "/eventos",
-    title: isEs ? "Eventos · Gira" : "Events · Tour",
+    // Sin fechas, ni el título anuncia una gira: es lo primero que lee un lector de pantalla.
+    title: hasDates ? (isEs ? "Eventos · Gira" : "Events · Tour") : isEs ? "Eventos" : "Events",
     description: hasDates
       ? isEs
         ? "Calendario de gira PHŌNÉ Records. Newen Afrobeat — Europa 2026: Innsbruck, Frick, Frankfurt, Ginebra, Viena, Manchester, Londres y Nápoles."

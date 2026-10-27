@@ -133,15 +133,18 @@ for (const lang of LANGS) {
 
 // ── Las 7 páginas y el layout ──
 const PAGES = ["catalogo", "contacto", "eventos", "manifiesto", "privacidad", "sello", "videos"];
-const TITLE_RE = /title:\s*(?:isEs\s*\?\s*"([^"]+)"\s*:\s*"([^"]+)"|"([^"]+)")/;
+// Todos los literales de la línea `title:` de la llamada (también el título condicional de /eventos).
+const titlesOf = (call) => {
+  const line = /title:[^\n]*/.exec(call)?.[0] ?? "";
+  return [...line.matchAll(/"([^"]+)"/g)].map((m) => m[1]);
+};
 for (const p of PAGES) {
   const file = `app/[lang]/${p}/page.tsx`;
   const s = src(file);
   report(`${p}: usa pageMetadata(`, s.includes("pageMetadata("));
   report(`${p}: sin alternates:`, !s.includes("alternates:"));
   const call = s.slice(s.indexOf("pageMetadata("));
-  const m = TITLE_RE.exec(call);
-  const titles = m ? [m[1], m[2], m[3]].filter(Boolean) : [];
+  const titles = titlesOf(call);
   const tooLong = titles.filter((t) => titleLength(templatedTitle(t)) > TITLE_MAX);
   report(
     `${p}: títulos ≤ ${TITLE_MAX} con la plantilla`,
@@ -155,8 +158,9 @@ for (const p of PAGES) {
   report("app/layout.tsx sin es_CL, alternates ni canonical", bad.length === 0, list(bad));
   const ev = src("app/[lang]/eventos/page.tsx");
   report(
-    "eventos: noindex y estado vacío ES/EN con booking",
+    "eventos: noindex, título sin gira y estado vacío ES/EN con booking",
     ev.includes("noindex: !hasDates") &&
+      same(titlesOf(ev.slice(ev.indexOf("pageMetadata("))), ["Eventos · Gira", "Events · Tour", "Eventos", "Events"]) &&
       ev.includes("No hay fechas anunciadas por ahora.") &&
       ev.includes("No dates announced at the moment.") &&
       ev.includes("contacto?topic=booking"),
