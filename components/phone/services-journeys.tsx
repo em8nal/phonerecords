@@ -3,11 +3,20 @@ import type { JourneyView, ServicesCopy } from "@/lib/services";
 // "Tres recorridos de referencia": una escalera de bandas a lo ancho que crecen en contenido
 // (4 → 6 → 9 líneas), no tres tarjetas iguales. La regla roja de cada banda avanza un tercio
 // por recorrido. Lo heredado del recorrido anterior va atenuado; lo que suma, con "+".
-// Las listas usan columnas CSS (1 → 2 → 3), así que no hay celdas vacías. Server component.
+// Las listas usan columnas CSS, no celdas, y el número de columnas sigue al de ítems para que
+// ninguna quede en blanco (ver listClass). Server component.
 const PROGRESS = ["w-1/3", "w-2/3", "w-full"] as const;
 
 const LABEL = "font-mono text-xs uppercase tracking-widest text-muted-foreground";
-const LIST = "mt-3 gap-8 sm:columns-2 lg:columns-3";
+
+/**
+ * Columnas de una lista según cuántos ítems trae: 1 → una; 2 y 4 → dos (con tres, la tercera
+ * quedaría vacía: 1 + 1 + 0 o 2 + 2 + 0); el resto → dos desde sm y tres desde lg.
+ */
+function listClass(count: number): string {
+  const columns = count <= 1 ? "" : count === 2 || count === 4 ? "sm:columns-2" : "sm:columns-2 lg:columns-3";
+  return `mt-3 gap-8 ${columns}`;
+}
 
 type Props = {
   copy: ServicesCopy["journeys"];
@@ -17,7 +26,8 @@ type Props = {
 export function ServicesJourneys({ copy, journeys }: Props) {
   return (
     <>
-      <ol className="border-b border-foreground/15">
+      {/* role="list": con list-style none, Safari y VoiceOver le quitan la semántica de lista */}
+      <ol role="list" className="border-b border-foreground/15">
         {journeys.map((journey, i) => (
           <li
             key={journey.id}
@@ -29,14 +39,15 @@ export function ServicesJourneys({ copy, journeys }: Props) {
             />
             <div className="lg:col-span-3">
               <p className={LABEL}>{copy.stepLabel.replace("{n}", String(i + 1).padStart(2, "0"))}</p>
-              <h3 className="mt-3 font-display text-4xl tracking-tight lg:text-5xl">{journey.name}</h3>
+              {/* text-5xl recién en xl: a 1024 "Desarrollado" no cabe en las 3 columnas y pisaría el gap */}
+              <h3 className="mt-3 font-display text-4xl tracking-tight xl:text-5xl">{journey.name}</h3>
             </div>
 
             <div className="space-y-6 lg:col-span-9">
               {journey.previous && journey.inherited.length > 0 && (
                 <div>
                   <p className={LABEL}>{copy.inherited.replace("{name}", journey.previous)}</p>
-                  <ul className={`${LIST} text-base leading-relaxed text-muted-foreground`}>
+                  <ul role="list" className={`${listClass(journey.inherited.length)} text-base leading-relaxed text-muted-foreground`}>
                     {journey.inherited.map((item) => (
                       <li key={item} className="flex break-inside-avoid gap-3 py-1">
                         <span aria-hidden="true">—</span>
@@ -48,7 +59,7 @@ export function ServicesJourneys({ copy, journeys }: Props) {
               )}
               <div>
                 <p className={LABEL}>{journey.previous ? copy.adds : copy.includes}</p>
-                <ul className={`${LIST} text-lg leading-relaxed text-foreground`}>
+                <ul role="list" className={`${listClass(journey.adds.length)} text-lg leading-relaxed text-foreground`}>
                   {journey.adds.map((item) => (
                     <li key={item} className="flex break-inside-avoid gap-3 py-1">
                       <span aria-hidden="true" className="text-brand">

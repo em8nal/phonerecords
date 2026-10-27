@@ -11,7 +11,8 @@ import type { Language } from "@/lib/translations";
 // Fotos B/N recortadas a 3:2; la portada va completa y cuadrada sobre negro (el color vive
 // solo en el arte de lanzamiento). El pie y el crédito de la portada salen de lib/releases.ts.
 const PHOTO_SIZES = "(min-width: 1400px) 740px, (min-width: 1024px) 55vw, (min-width: 768px) 48vw, 100vw";
-const COVER_SIZES = "(min-width: 1400px) 420px, (min-width: 1024px) 30vw, (min-width: 768px) 26vw, 67vw";
+// Portada: el cuadrado mide 2/3 del ancho del marco menos el margen (a 390, unos 180 px ≈ 46vw).
+const COVER_SIZES = "(min-width: 1400px) 420px, (min-width: 1024px) 30vw, (min-width: 768px) 24vw, 48vw";
 
 const FOCUS =
   "rounded-sm focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand focus-visible:ring-offset-2 focus-visible:ring-offset-background";
@@ -78,7 +79,7 @@ export function ServicesPieces({ pieces, lang, contactHref }: Props) {
               <p className="mt-8 font-mono text-xs uppercase tracking-widest text-muted-foreground">
                 {pieces.includes}
               </p>
-              <ul className="mt-3 space-y-2 text-base leading-relaxed text-foreground/85">
+              <ul role="list" className="mt-3 space-y-2 text-base leading-relaxed text-foreground/85">
                 {piece.includes.map((item) => (
                   <li key={item.name ?? item.text} className="flex gap-3">
                     <span aria-hidden="true" className="text-muted-foreground">
