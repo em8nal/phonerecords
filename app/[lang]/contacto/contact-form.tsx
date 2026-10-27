@@ -50,6 +50,8 @@ type Copy = {
     min: string;
     email: string;
     links: string;
+    /** Enlaces con "servicios": son opcionales, el único error posible es el largo. */
+    linksServices: string;
     city: string;
     services: string;
     projectType: string;
@@ -94,6 +96,7 @@ const copy: Record<Lang, Copy> = {
       min: "Muy corto.",
       email: "Email inválido.",
       links: "Incluye al menos un enlace completo (https://…).",
+      linksServices: "La lista de enlaces es demasiado larga; acórtala un poco.",
       city: "Indica tu ciudad.",
       services: "Marca al menos una opción.",
       projectType: "Elige el tipo de proyecto.",
@@ -136,6 +139,7 @@ const copy: Record<Lang, Copy> = {
       min: "Too short.",
       email: "Invalid email.",
       links: "Include at least one full link (https://…).",
+      linksServices: "The list of links is too long; please shorten it.",
       city: "Tell us your city.",
       services: "Choose at least one option.",
       projectType: "Choose the project type.",
@@ -309,11 +313,18 @@ export function ContactForm({ lang }: { lang: Lang }) {
             <legend className={legendClass}>{c.services}</legend>
             <div className="mt-2 grid gap-x-6 sm:grid-cols-2">
               {serviceInterestValues.map((value) => (
-                <label key={value} className="flex min-h-11 cursor-pointer items-center gap-3 text-base">
+                <label
+                  key={value}
+                  // "Todavía no lo tengo claro" va sola en su fila: no queda huérfana y se separa del resto.
+                  className={`flex min-h-11 cursor-pointer items-center gap-3 text-base ${value === "por-definir" ? "sm:col-span-2" : ""}`}
+                >
                   <input
                     type="checkbox"
                     value={value}
                     aria-invalid={errors.services ? true : undefined}
+                    // El error también en cada casilla: el foco de shouldFocusError cae en la primera y
+                    // la descripción del fieldset no se anuncia igual en todos los lectores.
+                    aria-describedby={errors.services ? "services-error" : undefined}
                     {...register("services")}
                     className={choiceClass}
                   />
@@ -328,7 +339,7 @@ export function ContactForm({ lang }: { lang: Lang }) {
             )}
           </fieldset>
 
-          {/* Los radios no admiten aria-invalid: el error llega por el aria-describedby del grupo. */}
+          {/* Los radios no admiten aria-invalid: el error llega por el aria-describedby del grupo y de cada radio. */}
           <fieldset aria-describedby={errors.projectType ? "projectType-error" : undefined}>
             <legend className={legendClass}>{c.projectType}</legend>
             <div className="mt-2 grid grid-cols-2 gap-x-6 sm:grid-cols-4">
@@ -337,6 +348,7 @@ export function ContactForm({ lang }: { lang: Lang }) {
                   <input
                     type="radio"
                     value={value}
+                    aria-describedby={errors.projectType ? "projectType-error" : undefined}
                     {...register("projectType")}
                     className={choiceClass}
                   />
@@ -376,7 +388,7 @@ export function ContactForm({ lang }: { lang: Lang }) {
           id="links"
           label={isServices ? c.linksOptional : c.links}
           hint={isServices ? c.linksHintServices : c.linksHint}
-          error={errors.links ? c.errors.links : undefined}
+          error={errors.links ? (isServices ? c.errors.linksServices : c.errors.links) : undefined}
         >
           <textarea
             id="links"
@@ -495,9 +507,13 @@ function TopicFromQuery({ setValue }: { setValue: UseFormSetValue<FormValues> })
 /** Leyenda de un grupo de casillas o radios: mismo estilo que el label de los campos. */
 const legendClass = "block text-xs font-mono uppercase tracking-widest text-muted-foreground";
 
-/** Casillas y radios: tamaño fijo dentro de una fila de 44 px y el anillo de foco del sitio. */
+/**
+ * Casillas y radios: tamaño fijo dentro de una fila de 44 px y foco visible en el rojo del sitio.
+ * Con outline y no con ring: el ring es un box-shadow y WebKit (Safari de macOS y todo iOS) no lo
+ * pinta sobre checkbox y radio nativos; el outline sí se dibuja en todos los motores.
+ */
 const choiceClass =
-  "size-4 shrink-0 accent-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand focus-visible:ring-offset-2 focus-visible:ring-offset-background";
+  "size-4 shrink-0 accent-foreground focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-brand";
 
 const fieldClass =
   "w-full bg-transparent border border-foreground/15 rounded-xl px-4 h-12 text-base text-foreground placeholder:text-muted-foreground focus:outline-none focus:border-foreground/40 focus-visible:ring-2 focus-visible:ring-brand focus-visible:ring-offset-2 focus-visible:ring-offset-background transition-colors";
