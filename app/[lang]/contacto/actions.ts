@@ -87,19 +87,23 @@ export async function sendContactMessage(
       ? `[phonerecords.cl] Cotización de servicios — ${nameClean}`
       : `[phonerecords.cl] ${topicLabel} · ${nameClean}`;
 
+  // Correo de texto: los valores alineados en una columna (10 como siempre; 16 con "Fecha estimada:").
+  const labelWidth = isServices ? "Fecha estimada: ".length : "Nombre:   ".length;
+  const field = (label: string, value: string) => `${`${label}:`.padEnd(labelWidth)}${value}`;
+
   const text = [
     `Nuevo mensaje desde phonerecords.cl`,
     ``,
-    `Nombre:   ${name}`,
-    `Email:    ${email}`,
-    `Asunto:   ${topicLabel}`,
-    `Idioma:   ${lang}`,
-    ...(isProposal ? [`Ciudad:   ${cityClean}`] : []),
+    field("Nombre", name),
+    field("Email", email),
+    field("Asunto", topicLabel),
+    field("Idioma", lang),
+    ...(isProposal ? [field("Ciudad", cityClean)] : []),
     ...(isServices
       ? [
-          `Servicios: ${servicesClean}`,
-          `Proyecto: ${projectClean}`,
-          `Fecha estimada: ${releaseClean}`,
+          field("Servicios", servicesClean),
+          field("Proyecto", projectClean),
+          field("Fecha estimada", releaseClean),
         ]
       : []),
     ...(hasLinks
