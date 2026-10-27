@@ -13,8 +13,10 @@ type LangParams = { lang: string };
 // llega a ser estática, se regenera cada hora y el estado vacío no queda congelado.
 export const revalidate = 3600;
 
+// Solo el anillo de foco, sin `rounded-*`: con `rounded-full` en la misma lista, Tailwind 4
+// emite `.rounded-sm` después y gana (--radius-sm = 0), y la píldora quedaba con esquinas rectas.
 const LINK_FOCUS =
-  "rounded-sm focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand focus-visible:ring-offset-2";
+  "focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand focus-visible:ring-offset-2";
 
 /** Estado vacío (M19): sin fechas próximas no se anuncia una gira que ya pasó. */
 const EMPTY = {
