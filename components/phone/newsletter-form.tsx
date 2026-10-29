@@ -4,6 +4,7 @@ import { useEffect, useId, useRef, useState, useTransition } from "react";
 import Link from "next/link";
 import { subscribeAction } from "@/app/actions/newsletter";
 import { translations } from "@/lib/translations";
+import { track } from "@/lib/analytics/events";
 
 type Props = {
   lang: "es" | "en";
@@ -56,6 +57,7 @@ export function NewsletterForm({ lang, source, variant = "default", className }:
       if (res.ok) {
         setState({ kind: "ok", msg: n.success });
         form.reset();
+        track("newsletter_signup", { source });
       } else {
         setState({
           kind: "err",
