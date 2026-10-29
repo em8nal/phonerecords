@@ -55,7 +55,8 @@ export async function subscribe(input: SubscribeInput): Promise<SubscribeResult>
       return { ok: true, status: await upsertSubscriber(data) };
     } catch (err) {
       // Nunca exponemos detalles al cliente; probamos el respaldo por correo.
-      console.error("[newsletter] db upsert failed, falling back to mail", err);
+      // Solo clase y códigos: el mensaje de DrizzleQueryError copia los parámetros (correo, consentimiento, hash de IP).
+      console.error("[newsletter] db upsert failed, falling back to mail", errorInfo(err));
     }
   }
 
@@ -141,11 +142,42 @@ async function queueByMail(data: Parsed): Promise<SubscribeResult> {
         source: data.source,
         at: new Date().toISOString(),
       }),
-      err,
+      errorInfo(err),
     );
     return { ok: false, error: "unavailable" };
   }
   return { ok: true, status: "queued" };
+}
+
+/** Un código solo se registra si tiene forma de código (EAUTH, 57P01, ERR_X): nunca texto libre. */
+const CODE = /^[A-Za-z0-9_]{1,40}$/;
+/** Verbo SMTP de nodemailer ("AUTH PLAIN", "RCPT TO", "DATA", "CONN"…): fijo, sin direcciones. */
+const SMTP_COMMAND = /^[A-Z][A-Z0-9 -]{0,30}$/;
+
+/**
+ * Resumen de un error para console.error: clase y códigos, nunca el mensaje, la respuesta ni los
+ * parámetros. nodemailer copia ahí la respuesta del servidor SMTP y las direcciones, y
+ * DrizzleQueryError los parámetros de la consulta (correo, texto de consentimiento, hash de IP).
+ */
+export function errorInfo(err: unknown): Record<string, string | number> {
+  if (!(err instanceof Error)) return { type: err === null ? "null" : typeof err };
+  const e = err as Error & {
+    code?: unknown;
+    originalCode?: unknown;
+    responseCode?: unknown;
+    command?: unknown;
+  };
+  const cause = (typeof e.cause === "object" && e.cause !== null ? e.cause : {}) as { code?: unknown };
+  const className = e.constructor?.name || e.name;
+  const info: Record<string, string | number> = { name: CODE.test(className) ? className : "Error" };
+  if (typeof e.code === "string" && CODE.test(e.code)) info.code = e.code;
+  // nodemailer guarda aquí el código de sistema que envolvió (ECONNREFUSED, ENOTFOUND…).
+  if (typeof e.originalCode === "string" && CODE.test(e.originalCode)) info.originalCode = e.originalCode;
+  if (typeof e.responseCode === "number") info.responseCode = e.responseCode;
+  if (typeof e.command === "string" && SMTP_COMMAND.test(e.command)) info.command = e.command;
+  // SQLSTATE de Postgres o código de sistema en la causa.
+  if (typeof cause.code === "string" && CODE.test(cause.code)) info.causeCode = cause.code;
+  return info;
 }
 
 function maskEmail(email: string): string {

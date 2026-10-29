@@ -1,7 +1,7 @@
 "use server";
 
 import { z } from "zod";
-import { getClientIp, hashIp, subscribe } from "@/lib/newsletter";
+import { errorInfo, getClientIp, hashIp, subscribe } from "@/lib/newsletter";
 import { translations } from "@/lib/translations";
 
 const MIN_FILL_MS = 2000;
@@ -49,9 +49,10 @@ export async function subscribeAction(
     // El status interno (created/already/reactivated) solo va al log:
     // la UI responde igual para no permitir enumerar suscriptores.
     if (res.ok) console.info("[newsletter] subscribe", source, res.status);
-    return res.ok ? { ok: true, status: "queued" } : res;
+    // Objeto nuevo en los dos casos: nada de lo que devuelva subscribe() pasa tal cual al navegador.
+    return res.ok ? { ok: true, status: "queued" } : { ok: false, error: res.error };
   } catch (err) {
-    console.error("[newsletter] action failed", err);
+    console.error("[newsletter] action failed", errorInfo(err));
     return { ok: false, error: "unavailable" };
   }
 }

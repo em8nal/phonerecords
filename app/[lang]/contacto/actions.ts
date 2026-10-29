@@ -2,7 +2,7 @@
 
 import type { z } from "zod";
 import { sendContactMail } from "@/lib/mail";
-import { getClientIp, hashIp, subscribe } from "@/lib/newsletter";
+import { errorInfo, getClientIp, hashIp, subscribe } from "@/lib/newsletter";
 import { translations } from "@/lib/translations";
 import {
   contactActionSchema,
@@ -17,9 +17,8 @@ const MIN_FILL_MS = 2000;
 
 export type ContactInput = z.infer<typeof contactActionSchema>;
 
-export type ContactResult =
-  | { ok: true }
-  | { ok: false; error: "invalid" | "send_failed"; details?: string };
+// Lo único que llega al navegador: sin mensajes de error internos (el payload de una server action es público).
+export type ContactResult = { ok: true } | { ok: false; error: "invalid" | "send_failed" };
 
 const topicLabels = {
   general: { es: "General", en: "General" },
@@ -162,12 +161,9 @@ export async function sendContactMessage(
   try {
     await sendContactMail({ subject, text, html, replyTo: email });
   } catch (err) {
-    console.error("[contact] sendMail failed", err);
-    return {
-      ok: false,
-      error: "send_failed",
-      details: err instanceof Error ? err.message : String(err),
-    };
+    // Solo clase y códigos: el mensaje de nodemailer copia la respuesta SMTP y las direcciones.
+    console.error("[contact] sendMail failed", errorInfo(err));
+    return { ok: false, error: "send_failed" };
   }
 
   // Opt-in opcional: si falla, se registra y el contacto igual se da por enviado.
@@ -183,7 +179,7 @@ export async function sendContactMessage(
       });
       if (!res.ok) console.error("[contact] newsletter opt-in rejected", res.error);
     } catch (err) {
-      console.error("[contact] newsletter opt-in failed", err);
+      console.error("[contact] newsletter opt-in failed", errorInfo(err));
     }
   }
 
