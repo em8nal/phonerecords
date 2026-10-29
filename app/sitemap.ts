@@ -41,14 +41,14 @@ type StaticPath = "" | (typeof STATIC_PAGES)[number];
 const STATIC_LASTMOD: Record<StaticPath, string | undefined> = {
   "": "2026-10-26",
   "/manifiesto": "2026-10-26",
-  "/sello": "2026-10-26",
+  "/sello": "2026-10-29",
   "/servicios": "2026-10-26", // pendiente 18: fecha del commit que crea la página
   "/catalogo": "2026-10-26",
   "/videos": "2026-10-26",
   "/eventos": undefined,
   "/contacto": "2026-10-26",
   "/privacidad": "2026-10-26",
-  "/press-kit": "2026-10-26",
+  "/press-kit": "2026-10-29",
 };
 
 type Entry = MetadataRoute.Sitemap[number];

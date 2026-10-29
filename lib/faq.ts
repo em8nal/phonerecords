@@ -185,7 +185,7 @@ export const FAQ: Record<FaqPage, Record<Language, FaqItem[]>> = {
         a: [
           "En el ",
           { text: "catálogo", href: "/catalogo" },
-          ", con la ficha de cada lanzamiento y sus enlaces para escuchar, y en ",
+          ", con fichas y enlaces para escuchar, y en ",
           { text: "Videos", href: "/videos" },
           ".",
         ],
@@ -230,7 +230,7 @@ export const FAQ: Record<FaqPage, Record<Language, FaqItem[]>> = {
         a: [
           "In the ",
           { text: "catalogue", href: "/catalogo" },
-          ", with a page for each release and its listening links, and on the ",
+          ", with release pages and listening links, and on the ",
           { text: "Videos", href: "/videos" },
           " page.",
         ],

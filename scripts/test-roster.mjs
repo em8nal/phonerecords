@@ -9,7 +9,7 @@
 // Carril N (p19): R1 primera oración de cada bio (nombre, lugar y año de `origin`); R2 `role`;
 //   R3 enlaces https en el orden de ARTIST_PLATFORMS con su etiqueta; R4 rel="me" e íconos;
 //   R5 `sameAs` (MusicBrainz y Wikidata); R6 press kit ES · EN (PDF, mapa de tamaños, nombre
-//   de descarga); R7 "Datos clave" con relojes fijos.
+//   de descarga); R7 "Datos clave" con relojes fijos; R8 ningún PDF con enlaces a localhost.
 // Los archivos TSX no se pueden importar desde Node (alias @/, JSX): se leen como texto.
 import { readFileSync, existsSync, statSync } from "node:fs";
 import { artists, getArtist, ARTIST_PLATFORMS, linkPlatform, artistLinkRel, artistSameAs } from "../lib/artists.ts";
@@ -244,6 +244,21 @@ for (const a of artists) {
     "R6 los botones llevan hrefLang, type=application/pdf y download",
     comp.includes("hrefLang={") && comp.includes('type="application/pdf"') && comp.includes("download={pressKitDownloadName("),
   );
+}
+
+// R8: los PDF se imprimen desde el servidor local (scripts/generate-press-pdfs.sh); un href
+// relativo queda como http://localhost:<puerto>/… en las anotaciones /URI del PDF.
+{
+  const local = [];
+  for (const key of Object.keys(PRESS_KIT_BYTES)) {
+    for (const lang of ["es", "en"]) {
+      const file = new URL(`../public${pressKitHref(key === "press-kit" ? null : key, lang)}`, import.meta.url);
+      if (!existsSync(file)) continue;
+      const raw = readFileSync(file).toString("latin1");
+      if (/\/URI\s*\(\s*https?:\/\/(localhost|127\.0\.0\.1)/.test(raw)) local.push(`${key}-${lang}`);
+    }
+  }
+  report("R8 ningún PDF enlaza a localhost", local.length === 0, local.join(", "));
 }
 
 process.exit(ok ? 0 : 1);

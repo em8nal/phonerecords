@@ -57,7 +57,7 @@ export function NewsletterForm({ lang, source, variant = "default", className }:
       if (res.ok) {
         setState({ kind: "ok", msg: n.success });
         form.reset();
-        track("newsletter_signup", { source });
+        if (!website) track("newsletter_signup", { source });
       } else {
         setState({
           kind: "err",

@@ -11,7 +11,7 @@ import { getArtistEntries } from "@/lib/catalog";
 import { ARTIST_PORTRAIT } from "@/lib/artist-media";
 import { pageMetadata } from "@/lib/seo";
 import type { Language } from "@/lib/translations";
-import { ORG_ID, WEBSITE_ID, toJsonLd } from "@/lib/schema";
+import { ORG_ID, SITE, WEBSITE_ID, toJsonLd } from "@/lib/schema";
 import { FAQ, faqMainEntity } from "@/lib/faq";
 import { FaqList } from "@/components/phone/faq-list";
 
@@ -264,8 +264,11 @@ export default async function PressKitPage({
                     <div className="lg:col-span-9 space-y-3">
                       <div className="flex items-baseline gap-4 flex-wrap">
                         <h3 className="text-2xl lg:text-3xl font-display tracking-tight">
+                          {/* URL absolutas: esta página se imprime al PDF del sello desde localhost
+                              (scripts/generate-press-pdfs.sh) y un href relativo quedaba como
+                              http://localhost:3108/… en los enlaces del PDF. */}
                           <Link
-                            href={`/${lang}/artistas/${r.slug}`}
+                            href={`${SITE}/${lang}/artistas/${r.slug}`}
                             className="hover:text-foreground/70 transition-colors"
                           >
                             {r.name}
@@ -284,7 +287,7 @@ export default async function PressKitPage({
                       <div className="flex flex-wrap gap-3 pt-2 text-xs font-mono uppercase tracking-widest text-muted-foreground">
                         <span>{c.individualPress}</span>
                         <Link
-                          href={`/press/${lang}/${r.slug}`}
+                          href={`${SITE}/press/${lang}/${r.slug}`}
                           className="text-foreground/80 hover:text-foreground transition-colors underline underline-offset-4"
                         >
                           /press/{lang}/{r.slug}

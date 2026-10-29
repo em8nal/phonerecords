@@ -4,6 +4,7 @@ import Link from "next/link";
 import { ArrowLeft } from "lucide-react";
 import { artistSlugs, getArtist } from "@/lib/artists";
 import { getArtistEntries } from "@/lib/catalog";
+import { formatReleaseLabel } from "@/lib/release-date";
 import type { Language } from "@/lib/translations";
 import { DownloadPdfButton } from "@/components/download-pdf-button";
 import { pressKitDownloadName, pressKitHref } from "@/lib/press-kits";
@@ -151,7 +152,12 @@ export default async function PressKitPage({
       title: e.title,
       meta: [
         !year && t.inProduction,
-        e.upcoming && t.comingSoon,
+        // En el PDF (estático) "Próximamente" caducaba con el estreno; la fecha no. Solo las
+        // fichas de lib/releases.ts tienen fecha real (las livianas traen YYYY-00-00 para ordenar).
+        e.upcoming &&
+          (e.releaseSlug
+            ? `${isEs ? "Lanzamiento" : "Release"}: ${formatReleaseLabel(e.releaseDate, isEs ? "es" : "en")}`
+            : t.comingSoon),
         e.artistSlug !== slug && t.collaboration,
         e.artistName !== artist.name && e.artistName,
         e.format !== "—" && localizeFormat(e.format, isEs),

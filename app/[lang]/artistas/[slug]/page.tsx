@@ -151,8 +151,8 @@ export default async function ArtistPage({
   const isEs = lang === "es";
   const bio = isEs ? artist.bio.es : artist.bio.en;
   const labels = isEs
-    ? { back: "Volver al roster", releases: "Discografía", links: "Enlaces", origin: "Origen", genre: "Género", stats: "Métricas", listenSpotify: "Escuchar en Spotify", catalogue: "Catálogo", viewRelease: "Ver release", listen: "Escuchar", buy: "Comprar" }
-    : { back: "Back to roster", releases: "Discography", links: "Links", origin: "Origin", genre: "Genre", stats: "Metrics", listenSpotify: "Listen on Spotify", catalogue: "Catalogue", viewRelease: "View release", listen: "Listen", buy: "Buy" };
+    ? { back: "Volver al roster", releases: "Discografía", links: "Enlaces", origin: "Origen", genre: "Género", stats: "Métricas", listenSpotify: "Escuchar en Spotify", catalogue: "Catálogo", viewRelease: "Ver release", listen: "Escuchar", buy: "Comprar", newTab: " (se abre en pestaña nueva)" }
+    : { back: "Back to roster", releases: "Discography", links: "Links", origin: "Origin", genre: "Genre", stats: "Metrics", listenSpotify: "Listen on Spotify", catalogue: "Catalogue", viewRelease: "View release", listen: "Listen", buy: "Buy", newTab: " (opens in new tab)" };
   const numberLocale = isEs ? "es-CL" : "en-US";
   const url = `https://phonerecords.cl/${lang}/artistas/${slug}`;
   const spotifyArtistId = extractSpotifyArtistId(artist.links);
@@ -507,7 +507,9 @@ export default async function ArtistPage({
                               rel="noopener noreferrer"
                               className="inline-flex items-center justify-center gap-1.5 px-3.5 h-9 text-xs font-mono font-bold uppercase tracking-widest rounded-full bg-foreground text-background hover:bg-foreground/85 transition-colors w-full sm:w-auto"
                             >
-                              ▶ {listenAction.href.includes("onerpm.link") && isUpcoming(r.releaseDate) ? "Pre-save" : labels.listen}
+                              <span aria-hidden="true">▶</span>
+                              {listenAction.href.includes("onerpm.link") && isUpcoming(r.releaseDate) ? "Pre-save" : labels.listen}
+                              <span className="sr-only">{` — ${r.title}${labels.newTab}`}</span>
                             </a>
                           )}
                           {buyAction && (
@@ -517,7 +519,9 @@ export default async function ArtistPage({
                               rel="noopener noreferrer"
                               className="inline-flex items-center justify-center gap-1.5 px-3.5 h-9 text-xs font-mono font-bold uppercase tracking-widest rounded-full border border-foreground/20 text-foreground hover:bg-foreground hover:text-background transition-colors w-full sm:w-auto"
                             >
-                              {labels.buy} <ExternalLink className="w-3 h-3" />
+                              {labels.buy}
+                              <span className="sr-only">{` — ${r.title}${labels.newTab}`}</span>
+                              <ExternalLink className="w-3 h-3" aria-hidden />
                             </a>
                           )}
                         </div>
