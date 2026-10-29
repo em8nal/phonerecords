@@ -175,12 +175,12 @@ export default async function VideoPage({
 
   return (
     <>
-      <Navigation />
       <main id="contenido" tabIndex={-1} className="relative min-h-screen overflow-x-hidden noise-overlay">
         <script
           type="application/ld+json"
           dangerouslySetInnerHTML={{ __html: JSON.stringify(schema) }}
         />
+        <Navigation />
 
         {/* Sin PageHero: la facade del video es el hero. pt-32 deja libre el menú fijo. */}
         <article className="max-w-[1200px] mx-auto px-6 lg:px-12 pt-32 lg:pt-40 pb-8 lg:pb-12">

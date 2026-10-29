@@ -239,12 +239,12 @@ export default async function ArtistPage({
 
   return (
     <>
-      <Navigation />
       <main id="contenido" tabIndex={-1} className="relative min-h-screen overflow-x-hidden noise-overlay">
         <script
           type="application/ld+json"
           dangerouslySetInnerHTML={{ __html: JSON.stringify(schema) }}
         />
+        <Navigation />
 
         {/* Hero fotográfico ancho: contiene el h1 (nombre) y el eyebrow (géneros) */}
         {hero && (

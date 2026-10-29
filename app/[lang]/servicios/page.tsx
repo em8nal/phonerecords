@@ -75,12 +75,12 @@ export default async function ServiciosPage({
 
   return (
     <>
-      <Navigation />
       <main id="contenido" tabIndex={-1} className="relative min-h-screen overflow-x-hidden noise-overlay">
         <script
           type="application/ld+json"
           dangerouslySetInnerHTML={{ __html: toJsonLd(servicesJsonLd(lang)) }}
         />
+        <Navigation />
 
         {/* 1 · Apertura asimétrica: titular a la izquierda (7/12), tira de portadas a la derecha (5/12) */}
         <section aria-labelledby="servicios-title" className="pb-20 pt-28 lg:pb-28 lg:pt-36">

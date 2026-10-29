@@ -92,12 +92,12 @@ export default async function VideosPage({
 
   return (
     <>
-      <Navigation />
       <main id="contenido" tabIndex={-1} className="relative min-h-screen overflow-x-hidden noise-overlay">
         <script
           type="application/ld+json"
           dangerouslySetInnerHTML={{ __html: JSON.stringify(schema) }}
         />
+        <Navigation />
         {/* Foto B/N del archivo (saturación 0): la misma del carrusel y del hero de la ficha de
             Rosario Lircay (lib/artist-media.ts); /sello y /eventos usan otras fotos. */}
         <PageHero
