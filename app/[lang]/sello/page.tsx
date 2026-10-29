@@ -236,12 +236,12 @@ export default async function SelloPage({
 
   return (
     <>
+      <Navigation />
       <main id="contenido" tabIndex={-1} className="relative min-h-screen overflow-x-hidden noise-overlay">
         <script
           type="application/ld+json"
           dangerouslySetInnerHTML={{ __html: toJsonLd(schema) }}
         />
-        <Navigation />
         <PageHero
           image={{
             desktop: "/media/sello/sello-hero.jpg",

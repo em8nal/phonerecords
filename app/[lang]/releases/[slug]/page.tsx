@@ -196,12 +196,12 @@ export default async function ReleasePage({
 
   return (
     <>
+      <Navigation />
       <main id="contenido" tabIndex={-1} className="relative min-h-screen overflow-x-hidden noise-overlay">
         <script
           type="application/ld+json"
           dangerouslySetInnerHTML={{ __html: JSON.stringify(albumSchema) }}
         />
-        <Navigation />
 
         {/* Hero: portada desenfocada de fondo, portada nítida, h1, badge y CTA primario */}
         <ReleaseHero release={release} lang={uiLang} initialReleased={initiallyReleased} />
