@@ -1,5 +1,5 @@
 import type { ReactNode } from "react";
-import { Instrument_Sans, Instrument_Serif, JetBrains_Mono, Fraunces } from "next/font/google";
+import { Instrument_Sans, Instrument_Serif, JetBrains_Mono } from "next/font/google";
 import { Analytics } from "@vercel/analytics/next";
 import { SpeedInsights } from "@vercel/speed-insights/next";
 import { GoogleTagManager, GoogleAnalytics } from "@next/third-parties/google";
@@ -9,7 +9,8 @@ import { ConsentManager } from "@/components/consent/consent-manager";
 // Esqueleto <html>/<body> de los dos root layouts (H2): app/[lang]/layout.tsx y
 // app/press/[lang]/layout.tsx. El idioma llega por props desde el segmento de la URL, sin
 // headers() ni cookies(), así que las páginas pueden prerenderizarse y servirse desde la
-// caché (ISR). Server component.
+// caché (ISR). Server component. Las tres fuentes base se precargan en todo el sitio;
+// Fraunces no está aquí: vive en lib/fraunces.ts y solo la cargan la portada y los press kits.
 
 const instrumentSans = Instrument_Sans({
   subsets: ["latin"],
@@ -27,13 +28,6 @@ const jetbrainsMono = JetBrains_Mono({
   variable: "--font-jetbrains",
 });
 
-const fraunces = Fraunces({
-  subsets: ["latin"],
-  style: ["italic", "normal"],
-  weight: ["400", "500", "600"],
-  variable: "--font-fraunces",
-});
-
 export function SiteDocument({
   lang,
   className,
@@ -48,7 +42,6 @@ export function SiteDocument({
     instrumentSans.variable,
     instrumentSerif.variable,
     jetbrainsMono.variable,
-    fraunces.variable,
     "font-sans antialiased bg-background",
     className,
   ]

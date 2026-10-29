@@ -1,6 +1,7 @@
 import type { Metadata, Viewport } from "next";
 import type { ReactNode } from "react";
 import { SiteDocument } from "@/components/site-document";
+import { fraunces } from "@/lib/fraunces";
 import { SITE_METADATA, SITE_VIEWPORT } from "@/lib/site-metadata";
 import "../../globals.css";
 
@@ -10,6 +11,9 @@ import "../../globals.css";
 // dynamicParams = false: el generateStaticParams de la página ya cubre idioma × slug, así que
 // cualquier otra combinación responde 404 (antes /press/fr/<slug> pintaba la página en inglés
 // con lang="es").
+//
+// La variable de Fraunces va en el <body>: el nombre del artista y el título del bloque del
+// sello (.press-artist-name y .press-label-title de app/globals.css) la usan.
 export const dynamicParams = false;
 
 export const metadata: Metadata = SITE_METADATA;
@@ -23,5 +27,9 @@ export default async function PressLayout({
   params: Promise<{ lang: string }>;
 }) {
   const { lang } = await params;
-  return <SiteDocument lang={lang === "en" ? "en" : "es"}>{children}</SiteDocument>;
+  return (
+    <SiteDocument lang={lang === "en" ? "en" : "es"} className={fraunces.variable}>
+      {children}
+    </SiteDocument>
+  );
 }
