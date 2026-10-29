@@ -10,6 +10,7 @@
     "test:releases": "node --import ./scripts/ts-resolve-hook.mjs scripts/test-releases.mjs",
     "test:seo": "node --import ./scripts/ts-resolve-hook.mjs scripts/test-seo.mjs",
     "test:servicios": "node --import ./scripts/ts-resolve-hook.mjs scripts/test-servicios.mjs",
+    "test:locale": "node --import ./scripts/ts-resolve-hook.mjs scripts/test-locale.mjs",
     "build": "next build",
     "dev": "next dev",
     "lint": "eslint .",

@@ -56,7 +56,9 @@ export function SiteDocument({
     .join(" ");
 
   return (
-    <html lang={lang}>
+    // data-scroll-behavior: con scroll-behavior: smooth en globals.css, Next 16 solo lo pasa a
+    // auto durante la navegación entre rutas si <html> lleva este atributo (guía de la v16).
+    <html lang={lang} data-scroll-behavior="smooth">
       {/* La regla apunta al router de pages/ y solo exime archivos bajo app/: este esqueleto lo
           usan únicamente los root layouts de app/, como el <head> que antes vivía en app/layout.tsx. */}
       {/* eslint-disable-next-line @next/next/no-head-element */}

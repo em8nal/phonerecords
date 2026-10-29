@@ -99,7 +99,7 @@ export async function generateMetadata(
 ): Promise<Metadata> {
   const { lang, slug } = await params;
   const artist = getArtist(slug);
-  if (!artist) return { title: "Artista no encontrado" };
+  if (!artist) return { title: lang === "en" ? "Artist not found" : "Artista no encontrado" };
   const isEs = lang === "es";
   const desc = trimToLength(isEs ? artist.bio.es : artist.bio.en, 158);
   // Same URL for og:image and twitter:image (the ./opengraph-image route of this

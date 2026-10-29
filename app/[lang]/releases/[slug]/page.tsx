@@ -73,7 +73,7 @@ export async function generateMetadata(
 ): Promise<Metadata> {
   const { lang, slug } = await params;
   const release = getRelease(slug);
-  if (!release) return { title: "Release no encontrado" };
+  if (!release) return { title: lang === "en" ? "Release not found" : "Release no encontrado" };
   const isEs = lang === "es";
   const fullDescription = isEs ? release.description.es : release.description.en;
   // Collapse paragraph breaks so the snippet reads as one line.

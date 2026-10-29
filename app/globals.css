@@ -90,6 +90,11 @@
   body {
     @apply bg-background text-foreground;
   }
+  /* Destino de "Saltar al contenido" (tabIndex -1): recibe el foco, pero no es un control y un
+     contorno alrededor de toda la página no ayuda. El enlace de salto lleva su propio anillo. */
+  #contenido:focus {
+    outline: none;
+  }
   /* Solo si el sistema no pide movimiento reducido: con "reduce", las anclas saltan sin animar. */
   @media (prefers-reduced-motion: no-preference) {
     html {

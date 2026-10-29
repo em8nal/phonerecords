@@ -1068,7 +1068,7 @@ export function isPhoneRelease(r: Pick<Release, "label">): boolean {
 }
 
 /**
- * Sufijo que agrega la plantilla de título de app/layout.tsx (`'%s — PHŌNÉ Records'`).
+ * Sufijo que agrega la plantilla de título de lib/site-metadata.ts (`'%s — PHŌNÉ Records'`).
  * `pnpm test:releases` comprueba que ambos coincidan.
  */
 export const TITLE_SUFFIX = " — PHŌNÉ Records";

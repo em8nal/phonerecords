@@ -6,7 +6,7 @@ import type { Metadata } from "next";
 import { LABEL_NAME, SITE, toLang } from "./schema";
 import { isReleased } from "./release-date";
 
-/** Plantilla de títulos de app/layout.tsx. */
+/** Plantilla de títulos de lib/site-metadata.ts (la usan los root layouts). */
 export const TITLE_TEMPLATE = `%s — ${LABEL_NAME}`;
 /** Largo máximo del <title> final, contando la plantilla. */
 export const TITLE_MAX = 60;
