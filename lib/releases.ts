@@ -32,8 +32,7 @@ export type Release = {
   featuredArtistSlugs?: string[];
   /** Pre-save / listen smart link (e.g. ONErpm). Drives the primary button on the release page. */
   smartLink?: string;
-  /** Official video, embedded under the description (YouTube id only). */
-  video?: { youtubeId: string; title: string };
+  // Sin campo `video`: el video de la ficha sale de lib/videos.ts (releaseVideo, 16c).
 };
 
 export const releases: Release[] = [
@@ -405,7 +404,6 @@ On this single, Klaus B is credited with composition, saxophone, flute and produ
       { role: "Sello, difusión y prensa", name: "PHŌNÉ Records" },
       { role: "Distribución", name: "ONErpm" },
     ],
-    video: { youtubeId: "zEfVXTYtuo8", title: "Klaus B - Destellos De Ti [Videoclip Oficial]" },
     links: [
       { label: "Todas las plataformas", href: "https://onerpm.link/102211016130" },
       // Del smartlink; verificado con el oEmbed de Spotify (título "Destellos de Ti") el 24-10 y el 26-10-2026.
@@ -865,7 +863,6 @@ On this single, Klaus B is credited with composition, saxophone, flute and produ
     format: "Single · digital",
     label: "PHŌNÉ Records",
     cover: "/releases/con-fusion-cuantas-veces.jpg",
-    video: { youtubeId: "lPXsqrH4SU4", title: "Cuántas veces - Con.fusión ft. NuVee (prod. ecamhi)" },
     description: {
       es: `"Cuántas veces" es el single con el que PHŌNÉ Records abre su catálogo 2026, y una declaración de lo que viene. Con.fusión, la voz que fusiona hip hop, jazz y neosoul, se encuentra con el saxofón de NuVee sobre una producción de ecamhi que trabaja el espacio como un instrumento más. Los sonidos aparecen, se alejan y se envuelven unos en otros, y la voz está tratada de una forma poco habitual: estirada, desplazada, puesta en lugares donde no se la espera. El resultado es una canción de sensibilidad indie, envolvente y atmosférica, donde el saxo y la voz conversan en vez de competir.
 

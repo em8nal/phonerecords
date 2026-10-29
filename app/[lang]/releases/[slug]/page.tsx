@@ -15,6 +15,7 @@ import {
 import { getArtist } from "@/lib/artists";
 import { SpotifyEmbed } from "@/components/spotify-embed";
 import { YouTubeEmbed } from "@/components/youtube-embed";
+import { releaseVideo, videoDisplayTitle } from "@/lib/videos";
 import { ReleaseHero } from "@/components/phone/release-hero";
 import { ReleaseCardGrid } from "@/components/phone/release-card-grid";
 import { isReleased, formatReleaseLabel } from "@/lib/release-date";
@@ -130,6 +131,10 @@ export default async function ReleasePage({
   // Los componentes cliente vuelven a mirar el reloj para el badge y el label del CTA.
   const initiallyReleased = isReleased(release.releaseDate);
   const uiLang: Language = isEs ? "es" : "en";
+  // Video de la ficha derivado de lib/videos.ts (16c): videoclip > lyric > visualizer > sesión…
+  // Mira el reloj al renderizar: un video con fecha futura aparece desde las 00:00 de ese día
+  // (con `revalidate`, en la primera regeneración posterior).
+  const video = releaseVideo(release.slug);
 
   const labels = isEs
     ? { back: "Volver al catálogo", tracklist: "Tracklist", credits: "Créditos", links: "Escuchar", releaseDate: initiallyReleased ? "Fecha" : "Fecha de lanzamiento", format: "Formato", label: "Sello", track: "Track" }
@@ -237,9 +242,14 @@ export default async function ReleasePage({
                   {text}
                 </p>
               ))}
-              {release.video && (
+              {video && (
                 <div className="pt-6">
-                  <YouTubeEmbed youtubeId={release.video.youtubeId} title={release.video.title} />
+                  <YouTubeEmbed
+                    youtubeId={video.youtubeId}
+                    title={videoDisplayTitle(video, uiLang)}
+                    lang={uiLang}
+                    initialThumb={video.thumb ?? "maxresdefault"}
+                  />
                 </div>
               )}
             </div>

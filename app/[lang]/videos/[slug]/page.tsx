@@ -17,13 +17,14 @@ import {
   formatVideoDate,
   getVideo,
   isoDuration,
+  videoDisplayTitle,
   videoExcerpt,
+  videoMetaTitle,
   videoSlugs,
   videoThumb,
   videoThumbSize,
   videoThumbs,
   youtubeWatchUrl,
-  type Video,
 } from "@/lib/videos";
 
 type VideoParams = { lang: string; slug: string };
@@ -44,13 +45,6 @@ export function generateStaticParams() {
   return LANGS.flatMap((lang) => videoSlugs.map((slug) => ({ lang, slug })));
 }
 
-/** Título de la página: el oficial, más el artista si el título no lo nombra. */
-function pageTitle(v: Video): string {
-  return v.title.toLowerCase().includes(v.artistName.toLowerCase())
-    ? v.title
-    : `${v.title} — ${v.artistName}`;
-}
-
 export async function generateMetadata(
   { params }: { params: Promise<VideoParams> }
 ): Promise<Metadata> {
@@ -61,13 +55,14 @@ export async function generateMetadata(
   // no debe adelantar título, description ni OG.
   if (!v || !isReleased(v.date)) return { title: isEs ? "Video no encontrado" : "Video not found" };
   const uiLang: Language = isEs ? "es" : "en";
-  const title = pageTitle(v);
+  // <title> ≤ 60 con la plantilla: el oficial si cabe; si no, el visible (16a, videoMetaTitle).
+  const { title, absolute } = videoMetaTitle(v, uiLang);
   const description = videoExcerpt(v, uiLang);
   const url = `https://phonerecords.cl/${lang}/videos/${slug}`;
   const thumb = videoThumb(v);
   const { width, height } = videoThumbSize(v);
   return {
-    title,
+    title: absolute ? { absolute: title } : title,
     description,
     alternates: {
       canonical: url,
@@ -84,7 +79,7 @@ export async function generateMetadata(
       description,
       url,
       locale: isEs ? "es_CL" : "en_US",
-      images: [{ url: thumb, width, height, alt: v.title }],
+      images: [{ url: thumb, width, height, alt: videoDisplayTitle(v, uiLang) }],
     },
     twitter: {
       card: "summary_large_image",
@@ -109,6 +104,8 @@ export default async function VideoPage({
   const uiLang: Language = isEs ? "es" : "en";
   const t = translations[uiLang].videos;
   const kindLabel = VIDEO_KIND_LABEL[uiLang][v.kind];
+  // Título visible (h1, facade, migas); el oficial queda en VideoObject.name.
+  const displayTitle = videoDisplayTitle(v, uiLang);
   const paragraphs = v.description[uiLang]
     .split(/\n{2,}/)
     .map((p) => p.trim())
@@ -167,7 +164,7 @@ export default async function VideoPage({
         itemListElement: [
           { "@type": "ListItem", position: 1, name: "PHŌNÉ Records", item: `https://phonerecords.cl/${lang}` },
           { "@type": "ListItem", position: 2, name: "Videos", item: `https://phonerecords.cl/${lang}/videos` },
-          { "@type": "ListItem", position: 3, name: v.title, item: url },
+          { "@type": "ListItem", position: 3, name: displayTitle, item: url },
         ],
       },
     ],
@@ -196,7 +193,7 @@ export default async function VideoPage({
           <div className="mb-8 lg:mb-12">
             <YouTubeEmbed
               youtubeId={v.youtubeId}
-              title={v.title}
+              title={displayTitle}
               lang={uiLang}
               sizes={FACADE_SIZES}
               priority
@@ -207,7 +204,7 @@ export default async function VideoPage({
           <header className="mb-12 lg:mb-16">
             <p className="font-mono text-xs uppercase tracking-widest text-muted-foreground mb-4">{kindLabel}</p>
             <h1 className="text-4xl lg:text-6xl font-display tracking-tight leading-[0.95] text-balance mb-6">
-              {v.title}
+              {displayTitle}
             </h1>
             <dl className="flex flex-wrap gap-x-8 gap-y-2 font-mono text-sm uppercase tracking-widest text-muted-foreground">
               <div>

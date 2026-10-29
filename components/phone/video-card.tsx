@@ -1,31 +1,11 @@
 import Link from "next/link";
 import type { Language } from "@/lib/translations";
-import type { Video } from "@/lib/videos";
+import type { VideoCardData } from "@/lib/videos";
 import { VideoThumb } from "@/components/phone/video-thumb";
 
-/**
- * Lo que una tarjeta necesita del video. /videos pasa esta forma reducida al
- * componente cliente de la grilla, así los textos largos ES/EN no viajan en el
- * payload RSC ni entran al bundle del navegador.
- */
-export type VideoCardData = Pick<
-  Video,
-  "slug" | "youtubeId" | "title" | "artistSlug" | "artistName" | "kind" | "date" | "recordedYear" | "thumb"
->;
-
-export function toVideoCardData(v: Video): VideoCardData {
-  return {
-    slug: v.slug,
-    youtubeId: v.youtubeId,
-    title: v.title,
-    artistSlug: v.artistSlug,
-    artistName: v.artistName,
-    kind: v.kind,
-    date: v.date,
-    recordedYear: v.recordedYear,
-    thumb: v.thumb,
-  };
-}
+// La forma reducida (`VideoCardData`) y `toVideoCardData` viven en lib/videos.ts: este
+// archivo entra al bundle del navegador por la grilla cliente de /videos y solo importa tipos.
+export type { VideoCardData };
 
 // Foco sobre fondo claro: anillo interior en el rojo PHŌNÉ (único acento), como ReleaseCardGrid.
 const FOCUS_LIGHT =

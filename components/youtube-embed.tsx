@@ -25,6 +25,11 @@ type YouTubeEmbedProps = {
   priority?: boolean;
   /** Calidad inicial de la miniatura; "hqdefault" para las subidas sin maxresdefault (evita un 404). */
   initialThumb?: Thumb;
+  /**
+   * Id del aviso común de la sección (YouTubeSectionNotice). Si viene, la facade no pinta
+   * el suyo y el botón apunta a ese con aria-describedby. Sin la prop, aviso propio (16d).
+   */
+  sharedNoticeId?: string;
 };
 
 /**
@@ -40,12 +45,14 @@ export function YouTubeEmbed({
   sizes = "(min-width: 1200px) 700px, (min-width: 1024px) 62vw, 100vw",
   priority = false,
   initialThumb = "maxresdefault",
+  sharedNoticeId,
 }: YouTubeEmbedProps) {
   const copy = facadeCopy[useFacadeLang(lang)];
   const [playing, setPlaying] = useState(false);
   const [thumb, setThumb] = useState<Thumb>(initialThumb);
   const iframeRef = useRef<HTMLIFrameElement>(null);
-  const noticeId = useId();
+  // Se llama siempre (regla de hooks), aunque la sección traiga su aviso común.
+  const ownNoticeId = useId();
 
   useEffect(() => {
     if (playing) iframeRef.current?.focus();
@@ -75,7 +82,7 @@ export function YouTubeEmbed({
         type="button"
         onClick={play}
         aria-label={copy.ytPlay(title)}
-        aria-describedby={noticeId}
+        aria-describedby={sharedNoticeId ?? ownNoticeId}
         className={`group relative block w-full aspect-video cursor-pointer overflow-hidden border border-foreground/10 bg-neutral-950 text-white ${FACADE_FOCUS}`}
       >
         <Image
@@ -101,7 +108,7 @@ export function YouTubeEmbed({
           <PlayGlyph className="h-7 w-7 translate-x-0.5" />
         </span>
       </button>
-      <FacadeNotice id={noticeId}>{copy.ytNotice}</FacadeNotice>
+      {!sharedNoticeId && <FacadeNotice id={ownNoticeId}>{copy.ytNotice}</FacadeNotice>}
       <noscript>
         <a href={`https://www.youtube.com/watch?v=${youtubeId}`} rel="noopener noreferrer">
           {copy.ytNoscript}
@@ -109,4 +116,15 @@ export function YouTubeEmbed({
       </noscript>
     </div>
   );
+}
+
+/**
+ * Aviso único de una sección con varias facades de YouTube (16d): mismo texto que el
+ * aviso por embed. Va en este módulo cliente porque un server component no puede leer
+ * `facadeCopy` de un módulo "use client". Cada facade de la sección recibe
+ * `sharedNoticeId={id}`.
+ */
+export function YouTubeSectionNotice({ id, lang }: { id: string; lang?: FacadeLang }) {
+  const copy = facadeCopy[useFacadeLang(lang)];
+  return <FacadeNotice id={id}>{copy.ytNotice}</FacadeNotice>;
 }

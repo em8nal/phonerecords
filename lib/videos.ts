@@ -13,6 +13,7 @@
 
 import type { Language } from "./translations";
 import { formatReleaseLabel, isReleased } from "./release-date";
+import { TITLE_MAX, templatedTitle, titleLength } from "./seo";
 
 export type VideoKind =
   | "videoclip"
@@ -31,6 +32,13 @@ export type Video = {
   youtubeId: string;
   /** Título oficial del video, tal como está en YouTube. */
   title: string;
+  /**
+   * Título limpio para tarjetas, h1, alt y facade (16a). Sin el artista de la entrada,
+   * sin etiquetas ("Video Oficial", "Visualizer", "Prod by"…) ni mayúsculas sostenidas;
+   * nombres como en `description`. Objeto solo si cambia por idioma ("con"/"with").
+   * El oficial (`title`) sigue en el `name` del VideoObject y en el <title> si cabe.
+   */
+  displayTitle?: string | { es: string; en: string };
   /** Debe existir en lib/artists.ts. Dúo Gestosimple & Klaus B → "klaus-b". */
   artistSlug: string;
   artistName: string;
@@ -99,6 +107,7 @@ const RAW: Video[] = [
     slug: "newen-afrobeat-live-in-liverpool",
     youtubeId: "yyKGWQ7RwKk",
     title: "Newen Afrobeat - Live In Liverpool (Live Session)",
+    displayTitle: "Live In Liverpool",
     artistSlug: "newen-afrobeat",
     artistName: "Newen Afrobeat",
     kind: "en-vivo",
@@ -130,6 +139,7 @@ With four pieces back to back and no cuts, it is a good way into the band's curr
     slug: "newen-afrobeat-upside-down-tony-allen-paris-2015",
     youtubeId: "N6ifkm3SxLI",
     title: "Newen Afrobeat feat Tony Allen - Upside Down / Live in Paris, 2015",
+    displayTitle: "Upside Down (feat. Tony Allen)",
     artistSlug: "newen-afrobeat",
     artistName: "Newen Afrobeat",
     kind: "en-vivo",
@@ -160,6 +170,7 @@ As the band tells it, that concert with Les Frères Smith was part of their firs
     slug: "newen-afrobeat-voraz-kaliningrad-city-jazz",
     youtubeId: "6qu-6HQWGF4",
     title: "Voraz - Newen Afrobeat  |  Live At Kaliningrad City Jazz",
+    displayTitle: "Voraz · Kaliningrad City Jazz",
     artistSlug: "newen-afrobeat",
     artistName: "Newen Afrobeat",
     kind: "en-vivo",
@@ -184,6 +195,7 @@ Together with Live In Liverpool, it is one of the recordings from that tour publ
     slug: "newen-afrobeat-grietas-lyric-video",
     youtubeId: "WMspQ2-zy8M",
     title: "\"Grietas\" Lyric Video (Oficial) / Newen Afrobeat & Lido Pimienta",
+    displayTitle: { es: "Grietas (con Lido Pimienta)", en: "Grietas (with Lido Pimienta)" },
     artistSlug: "newen-afrobeat",
     artistName: "Newen Afrobeat",
     kind: "lyric",
@@ -213,6 +225,7 @@ The album page has the full credits and the rest of the tracklist.`,
     slug: "newen-afrobeat-somos-el-presente",
     youtubeId: "q4aNa3rpnO4",
     title: "SOMOS EL PRESENTE (Video Oficial) Newen Afrobeat ft. Joe Vasconcellos",
+    displayTitle: "Somos el Presente (feat. Joe Vasconcellos)",
     artistSlug: "newen-afrobeat",
     artistName: "Newen Afrobeat",
     kind: "videoclip",
@@ -245,6 +258,7 @@ Alongside the "Grietas" lyric video, it is one of the album's videos.`,
     slug: "newen-afrobeat-zombie-seun-kuti",
     youtubeId: "YCZZWu9WR5s",
     title: "Newen Afrobeat & Seun Kuti - Zombie (Fela Kuti)",
+    displayTitle: { es: "Zombie (con Seun Kuti)", en: "Zombie (with Seun Kuti)" },
     artistSlug: "newen-afrobeat",
     artistName: "Newen Afrobeat",
     kind: "sesion",
@@ -277,6 +291,7 @@ The band reads the song as a premonition of what would happen in Chile in Octobe
     youtubeId: "Xq8IgOcJ2qQ",
     thumb: "hqdefault", // sin maxresdefault (curl -I, 21-10-2026)
     title: "Newen Afrobeat - No les creeré (Video Oficial)",
+    displayTitle: "No les creeré",
     artistSlug: "newen-afrobeat",
     artistName: "Newen Afrobeat",
     kind: "videoclip",
@@ -304,6 +319,7 @@ It is one of the most directly political pieces on the band's channel and does n
     slug: "newen-afrobeat-cantaros",
     youtubeId: "vStU79dfil4",
     title: "Newen Afrobeat - Cántaros (Video Oficial)",
+    displayTitle: "Cántaros",
     artistSlug: "newen-afrobeat",
     artistName: "Newen Afrobeat",
     kind: "videoclip",
@@ -336,6 +352,7 @@ It is the Curiche video most tied to territory: the song and the place speak of 
     slug: "newen-afrobeat-open-your-eyes",
     youtubeId: "VwtjivFAjpU",
     title: "Newen Afrobeat Ft. Kologbo - Open Your Eyes (Video Oficial)",
+    displayTitle: "Open Your Eyes (feat. Kologbo)",
     artistSlug: "newen-afrobeat",
     artistName: "Newen Afrobeat",
     kind: "videoclip",
@@ -366,6 +383,7 @@ It is the most-watched video on the band's channel after the full debut album, a
     slug: "newen-afrobeat-chaltumay",
     youtubeId: "AuMApxUYohk",
     title: "Newen Afrobeat - Chaltumay (Video Oficial)",
+    displayTitle: "Chaltumay",
     artistSlug: "newen-afrobeat",
     artistName: "Newen Afrobeat",
     kind: "videoclip",
@@ -398,6 +416,7 @@ With "Cántaros" and "Open Your Eyes" it forms the trilogy of Curiche videos.`,
     slug: "klaus-b-destellos-de-ti",
     youtubeId: "zEfVXTYtuo8",
     title: "Klaus B - Destellos De Ti [Videoclip Oficial]",
+    displayTitle: "Destellos de ti",
     artistSlug: "klaus-b",
     artistName: "Klaus B",
     kind: "videoclip",
@@ -430,6 +449,7 @@ The official description presents the song as images, sensations and intuitions 
     slug: "klaus-b-those-days-far-away-lyric-visualizer",
     youtubeId: "6Geg_XVD_Uc",
     title: "Klaus B - Those Days Far Away feat. Mr.Li, Seven Star, Racecar (Lyric Visualizer)",
+    displayTitle: "Those Days Far Away",
     artistSlug: "klaus-b",
     artistName: "Klaus B",
     kind: "lyric",
@@ -453,6 +473,7 @@ Within Klaus B's catalogue it marks the turn towards cross-continental collabora
     slug: "klaus-b-el-secreto-visualizer",
     youtubeId: "6rkl5zVTii8",
     title: "Klaus B - El Secreto (Visualizer)",
+    displayTitle: "El Secreto",
     artistSlug: "klaus-b",
     artistName: "Klaus B",
     kind: "visualizer",
@@ -476,6 +497,7 @@ It is the first of the two visualizers the artist published in 2025; the second 
     slug: "gestosimple-klaus-b-requiem-estudios-del-maipo",
     youtubeId: "2OL4vyx-3iQ",
     title: "Gestosimple & Klaus B - Requiem (J Dilla) / Estudios del Maipo: Live Session",
+    displayTitle: { es: "Requiem (con Gestosimple)", en: "Requiem (with Gestosimple)" },
     artistSlug: "klaus-b",
     artistName: "Klaus B",
     kind: "sesion",
@@ -506,6 +528,7 @@ Together with "Desde La Emisora", captured in the same session, it is the visibl
     slug: "gestosimple-klaus-b-desde-la-emisora-estudios-del-maipo",
     youtubeId: "0D-YOGVmCVc",
     title: "Gestosimple & Klaus B - Desde La Emisora / Estudios del Maipo: Live Session",
+    displayTitle: { es: "Desde La Emisora (con Gestosimple)", en: "Desde La Emisora (with Gestosimple)" },
     artistSlug: "klaus-b",
     artistName: "Klaus B",
     kind: "sesion",
@@ -537,6 +560,7 @@ It is the most-watched video on the duo's channel and brings together two PHŌN�
     slug: "gestosimple-klaus-b-el-rayo-mas-calido",
     youtubeId: "m1Gw-BL7vcs",
     title: "Gestosimple & Klaus B - EL RAYO MÁS CÁLIDO feat Celeste Shaw, Cidtronyck, Felamusic, Ecamhi",
+    displayTitle: { es: "El Rayo Más Cálido (con Gestosimple)", en: "El Rayo Más Cálido (with Gestosimple)" },
     artistSlug: "klaus-b",
     artistName: "Klaus B",
     kind: "videoclip",
@@ -567,6 +591,7 @@ The lyrics look for "the warmest ray" crossing "the desert in bloom or barren", 
     slug: "gestosimple-klaus-b-viaje-sin-tiempo",
     youtubeId: "pNQM33Qz4Fo",
     title: "Gestosimple & Klaus B - VIAJE SIN TIEMPO feat Fran Ri, DJ Dacel, Felamusic",
+    displayTitle: { es: "Viaje Sin Tiempo (con Gestosimple)", en: "Viaje Sin Tiempo (with Gestosimple)" },
     artistSlug: "klaus-b",
     artistName: "Klaus B",
     kind: "videoclip",
@@ -599,6 +624,7 @@ It is the video introduction to the Gestosimple & Klaus B project and the first 
     youtubeId: "1vIGdzmOELU",
     thumb: "hqdefault", // sin maxresdefault (curl -I, 21-10-2026)
     title: "Klaus B feat Fran Ri & Newen Afrobeat - Quisiera Entender",
+    displayTitle: "Quisiera Entender (feat. Fran Ri & Newen Afrobeat)",
     artistSlug: "klaus-b",
     artistName: "Klaus B",
     kind: "videoclip",
@@ -631,6 +657,7 @@ It is the most direct crossing between Klaus B's solo project and the band he be
     slug: "con-fusion-cuantas-veces",
     youtubeId: "lPXsqrH4SU4",
     title: "Cuántas veces - Con.fusion ft NuVee (Prod by ecamhi)",
+    displayTitle: "Cuántas veces (feat. NuVee)",
     artistSlug: "con-fusion",
     artistName: "Con.fusión",
     kind: "videoclip",
@@ -662,6 +689,7 @@ It is Con.fusión's first video as a label artist and the start of the road to "
     slug: "con-fusion-la-banca-oido-alterno",
     youtubeId: "QZ4IAyPVfP0",
     title: "CON.FUSIÓN FT DJ PÉREZ - LA BANCA / CUARTA TEMPORADA",
+    displayTitle: "La Banca (feat. DJ Pérez)",
     artistSlug: "con-fusion",
     artistName: "Con.fusión",
     kind: "sesion",
@@ -690,6 +718,7 @@ It is Con.fusión's most recent live recording and the piece that best shows her
     slug: "con-fusion-zul-marino",
     youtubeId: "1iuDkdB9caM",
     title: "ZUL MARINO - CON.FUSIÓN & FAT JOTA (VIDEOCLIP OFICIAL)",
+    displayTitle: { es: "Zul Marino (con Fat Jota)", en: "Zul Marino (with Fat Jota)" },
     artistSlug: "con-fusion",
     artistName: "Con.fusión",
     kind: "videoclip",
@@ -715,6 +744,7 @@ Together with the Tiny Plants session, it is one of the recordings of the duo wi
     youtubeId: "NmguTXmKM2o",
     thumb: "hqdefault", // sin maxresdefault (curl -I, 21-10-2026)
     title: "TINY PLANTS CON.FUSION & FAT JOTA",
+    displayTitle: { es: "Tiny Plants (con Fat Jota)", en: "Tiny Plants (with Fat Jota)" },
     artistSlug: "con-fusion",
     artistName: "Con.fusión",
     kind: "sesion",
@@ -737,6 +767,7 @@ For anyone arriving from "Cuántas veces", it is the best way to hear where the 
     slug: "con-fusion-sesiones-bugambilia",
     youtubeId: "DRzNfMD8O9E",
     title: "Sesiones BUGAMBILIA - Con.fusión ft Simon Squalo & Dj ESETÉ",
+    displayTitle: "Sesiones Bugambilia (feat. Simon Squalo & DJ Eseté)",
     artistSlug: "con-fusion",
     artistName: "Con.fusión",
     kind: "sesion",
@@ -759,6 +790,7 @@ It is included as a record of that network of collaborations. The video carries 
     slug: "con-fusion-que-aburrido",
     youtubeId: "muAkr2Re2Ks",
     title: "Con.fusión - Qué Aburrido!",
+    displayTitle: "Qué Aburrido!",
     artistSlug: "con-fusion",
     artistName: "Con.fusión",
     kind: "videoclip",
@@ -789,6 +821,7 @@ Published in July 2020, it predates the archive the artist uploaded to her chann
     youtubeId: "suwNLQSkQEY",
     thumb: "hqdefault", // sin maxresdefault (curl -I, 21-10-2026)
     title: "ecamhi - Planet Earth",
+    displayTitle: "Planet Earth",
     artistSlug: "ecamhi",
     artistName: "ecamhi",
     kind: "videoclip",
@@ -812,6 +845,7 @@ It is the earliest entry into ecamhi's universe, prior to the EP "en viaje" he i
     slug: "ecamhi-not-my-birthday",
     youtubeId: "ZgzvAWP8N7g",
     title: "ecamhi - Not My Birthday",
+    displayTitle: "Not My Birthday",
     artistSlug: "ecamhi",
     artistName: "ecamhi",
     kind: "videoclip",
@@ -837,6 +871,7 @@ Today ecamhi is preparing the album "εποχή" and the EP "en viaje", conceive
     slug: "rosario-lircay-a-ti",
     youtubeId: "7HFurHmwCcs",
     title: "a ti - Rosario Lircay",
+    displayTitle: "a ti",
     artistSlug: "rosario-lircay",
     artistName: "Rosario Lircay",
     kind: "videoclip",
@@ -860,6 +895,7 @@ It is the first music video for the album's songs, prior to the artist's arrival
     slug: "rosario-lircay-ya-me-tienes-visualizer",
     youtubeId: "KE76q5V9t48",
     title: "ya me tienes - Rosario Lircay (visualizer)",
+    displayTitle: "ya me tienes",
     artistSlug: "rosario-lircay",
     artistName: "Rosario Lircay",
     kind: "visualizer",
@@ -890,6 +926,7 @@ It is the first video of the "La Piel" period and the one that sets the audiovis
     slug: "rosario-lircay-behind-the-scenes-la-piel",
     youtubeId: "GjfKRwgpRkI",
     title: "Behind the Scenes - Photoshoot \"La Piel\" -  Rosario Lircay",
+    displayTitle: { es: "Detrás de cámara: sesión de fotos de \"La Piel\"", en: "Behind the Scenes: \"La Piel\" Photoshoot" },
     artistSlug: "rosario-lircay",
     artistName: "Rosario Lircay",
     kind: "documental",
@@ -930,6 +967,67 @@ export function getVideo(slug: string): Video | undefined {
   return videos.find((v) => v.slug === slug);
 }
 
+/** Título visible (tarjetas, h1, alt, facade): `displayTitle` del idioma o, si falta, el oficial. */
+export function videoDisplayTitle(v: Pick<Video, "title" | "displayTitle">, lang: Language): string {
+  const d = v.displayTitle;
+  if (!d) return v.title;
+  return typeof d === "string" ? d : d[lang];
+}
+
+/** El título más el artista si no lo nombra ya (minúsculas, sin plegar tildes). */
+export function withArtist(title: string, artistName: string): string {
+  return title.toLowerCase().includes(artistName.toLowerCase()) ? title : `${title} — ${artistName}`;
+}
+
+/**
+ * <title> de la ficha de video, ≤ TITLE_MAX contando la plantilla del layout. Primera
+ * opción que cabe: 1) oficial (+ artista) con plantilla; 2) visible + artista con
+ * plantilla; 3) visible + artista sin plantilla; 4) visible con plantilla; 5) visible
+ * sin plantilla. El oficial solo queda si cabe; si no, el artista gana a la marca.
+ * `absolute: true` = va sin plantilla ({ absolute } en Metadata).
+ */
+export function videoMetaTitle(
+  v: Pick<Video, "title" | "displayTitle" | "artistName">,
+  lang: Language,
+): { title: string; absolute: boolean } {
+  const display = videoDisplayTitle(v, lang);
+  const options: { title: string; absolute: boolean }[] = [
+    { title: withArtist(v.title, v.artistName), absolute: false },
+    { title: withArtist(display, v.artistName), absolute: false },
+    { title: withArtist(display, v.artistName), absolute: true },
+    { title: display, absolute: false },
+    { title: display, absolute: true },
+  ];
+  const fits = (o: { title: string; absolute: boolean }) =>
+    titleLength(o.absolute ? o.title : templatedTitle(o.title)) <= TITLE_MAX;
+  return options.find(fits) ?? options[options.length - 1];
+}
+
+/**
+ * Lo que una tarjeta de video necesita, con `title` ya resuelto al visible del idioma.
+ * /videos pasa esta forma reducida a su grilla cliente: los textos largos ES/EN no
+ * viajan en el payload RSC. Vive aquí (no en video-card.tsx, que entra al bundle del
+ * navegador por la grilla) para que ese archivo solo importe tipos de este módulo.
+ */
+export type VideoCardData = Pick<
+  Video,
+  "slug" | "youtubeId" | "title" | "artistSlug" | "artistName" | "kind" | "date" | "recordedYear" | "thumb"
+>;
+
+export function toVideoCardData(v: Video, lang: Language): VideoCardData {
+  return {
+    slug: v.slug,
+    youtubeId: v.youtubeId,
+    title: videoDisplayTitle(v, lang),
+    artistSlug: v.artistSlug,
+    artistName: v.artistName,
+    kind: v.kind,
+    date: v.date,
+    recordedYear: v.recordedYear,
+    thumb: v.thumb,
+  };
+}
+
 export function getVideosByArtist(artistSlug: string): Video[] {
   return videos.filter((v) => v.artistSlug === artistSlug);
 }
@@ -937,6 +1035,40 @@ export function getVideosByArtist(artistSlug: string): Video[] {
 /** Solo videos cuya fecha ya llegó (00:00 America/Santiago); se evalúa por petición. */
 export function getPublishedVideos(nowMs: number = Date.now()): Video[] {
   return videos.filter((v) => isReleased(v.date, nowMs));
+}
+
+/** Prioridad de tipo para el video de una ficha de lanzamiento (menor gana). */
+const RELEASE_VIDEO_RANK: Record<VideoKind, number> = {
+  videoclip: 0,
+  lyric: 1,
+  visualizer: 2,
+  sesion: 3,
+  "en-vivo": 4,
+  documental: 5,
+  entrevista: 6,
+};
+
+/**
+ * Video principal de la ficha de lanzamiento `releaseSlug` (16c): entre los videos ya
+ * publicados (isReleased, 00:00 America/Santiago) con ese `releaseSlug`, gana el tipo
+ * (videoclip > lyric > visualizer > sesión > en vivo > documental > entrevista); a igual
+ * tipo, `featured`; luego la fecha más reciente; al final el slug (determinista).
+ * Sin override manual: un videoclip nuevo cargado aquí aparece solo en su ficha.
+ */
+export function releaseVideo(
+  releaseSlug: string,
+  nowMs: number = Date.now(),
+  list: readonly Video[] = videos,
+): Video | undefined {
+  return list
+    .filter((v) => v.releaseSlug === releaseSlug && isReleased(v.date, nowMs))
+    .sort(
+      (a, b) =>
+        RELEASE_VIDEO_RANK[a.kind] - RELEASE_VIDEO_RANK[b.kind] ||
+        Number(Boolean(b.featured)) - Number(Boolean(a.featured)) ||
+        b.date.localeCompare(a.date) ||
+        a.slug.localeCompare(b.slug),
+    )[0];
 }
 
 /** Videos de un artista para su ficha: publicados, destacados primero, hasta `limit`. */
