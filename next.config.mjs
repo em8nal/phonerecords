@@ -9,6 +9,8 @@ const nextConfig = {
       // Andrés Abrigo salió del roster (21-10-2026): sus URLs van al roster y al press kit.
       { source: "/:lang(es|en)/artistas/andres-abrigo", destination: "/:lang#roster", permanent: true },
       { source: "/press/:lang(es|en)/andres-abrigo", destination: "/:lang/press-kit", permanent: true },
+      // Lote 4 (carril Q): su PDF viejo daba 404; va al press kit del sello.
+      { source: "/press-kits/andres-abrigo-:lang(es|en).pdf", destination: "/press-kits/press-kit-:lang.pdf", permanent: true },
       // A9: Claudio Solís, retirado del roster; GA4 aún registra visitas a sus URLs.
       { source: "/:lang(es|en)/artistas/claudio-solis", destination: "/:lang#roster", permanent: true },
       { source: "/press/:lang(es|en)/claudio-solis", destination: "/:lang/press-kit", permanent: true },
