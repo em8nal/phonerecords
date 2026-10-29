@@ -95,7 +95,8 @@ export const BANNER_ENTRIES: BannerEntry[] = [
     secondaryHref: "/releases/rosario-lircay-en-vela",
   },
   {
-    // En Vela (Rosario Lircay) · recién publicado: tras La Fuerza y Destellos
+    // En Vela (Rosario Lircay) · ya publicado: tras La Fuerza y Klaus B (Destellos hasta el 31-10,
+    // luego Un Rezo en pre-save; Un Rezo va antes por startsAt más reciente)
     slug: "rosario-lircay-en-vela",
     priority: 2,
     artist: "Rosario Lircay",
@@ -131,7 +132,8 @@ export const BANNER_ENTRIES: BannerEntry[] = [
     secondaryHref: "/releases/newen-afrobeat-la-fuerza",
   },
   {
-    // La Fuerza (Newen) · primero hasta que salga Un Rezo (el estreno más próximo manda)
+    // La Fuerza (Newen) · primero hasta que salga Un Rezo. Del 31-10 al 05-11 el estreno más próximo
+    // es Un Rezo, pero por decisión de Claudio (29-10) La Fuerza sigue primera en su semana de estreno.
     slug: "newen-afrobeat-la-fuerza",
     priority: 1,
     artist: "Newen Afrobeat",
@@ -167,6 +169,8 @@ export const BANNER_ENTRIES: BannerEntry[] = [
     secondaryHref: "/releases/newen-afrobeat-la-fuerza",
   },
   {
+    // Destellos de ti (Klaus B) · hasta el 31-10: Klaus B conserva un solo lugar y desde ahí lo
+    // ocupa el pre-save de Un Rezo (máx. 4 slides).
     slug: "klaus-b-destellos-de-ti",
     priority: 1,
     artist: "Klaus B",
@@ -174,7 +178,7 @@ export const BANNER_ENTRIES: BannerEntry[] = [
     eyebrow: { es: "Nuevo single · 22 de octubre", en: "New single · October 22" },
     releaseDate: "2026-10-22",
     startsAt: "2026-10-20T00:00:00-03:00",
-    endsAt: "2026-11-05T00:00:00-03:00",
+    endsAt: "2026-10-31T00:00:00-03:00",
     image: IMAGE,
     cta: {
       href: "https://onerpm.link/102211016130",
@@ -184,6 +188,27 @@ export const BANNER_ENTRIES: BannerEntry[] = [
     secondaryHref: "/releases/klaus-b-destellos-de-ti",
   },
   {
+    // Un Rezo (Klaus B) · pre-save del 31-10 al estreno, segundo tras La Fuerza. Misma foto que la
+    // entrada del 05-11: la portada es cuadrada y el recorte 16:9 / 4:5 le cortaría el título, y
+    // Destellos sale del carrusel en el mismo instante, así que la foto no se repite.
+    slug: "klaus-b-un-rezo",
+    priority: 2,
+    artist: "Klaus B",
+    title: { es: "Un Rezo", en: "Un Rezo" },
+    eyebrow: { es: "Nuevo single · 5 de noviembre", en: "New single · November 5" },
+    releaseDate: "2026-11-05",
+    startsAt: "2026-10-31T00:00:00-03:00",
+    endsAt: "2026-11-05T00:00:00-03:00",
+    image: IMAGE,
+    cta: {
+      href: "https://onerpm.link/106214256083",
+      beforeRelease: { es: "Pre-save", en: "Pre-save" },
+      afterRelease: { es: "Escuchar", en: "Listen" },
+    },
+    secondaryHref: "/releases/klaus-b-un-rezo",
+  },
+  {
+    // Un Rezo (Klaus B) · publicado: primero hasta el álbum
     slug: "klaus-b-un-rezo",
     priority: 1,
     artist: "Klaus B",
