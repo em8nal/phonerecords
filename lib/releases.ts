@@ -226,6 +226,7 @@ The recording is ℗ 2026 Newen Afrobeat and the release © 2026 PHŌNÉ Records
     ],
     links: [
       { label: "Bandcamp", href: "https://newenafrobeat.bandcamp.com/album/curiche" },
+      { label: "Discogs", href: "https://www.discogs.com/release/22496618-Newen-Afrobeat-Curiche" },
           { label: "Spotify", href: "https://open.spotify.com/album/6lhHBFeEds0AxMPKbVZD7U" },
 ],
   },
@@ -252,6 +253,7 @@ The recording is ℗ 2026 Newen Afrobeat and the release © 2026 PHŌNÉ Records
     ],
     links: [
       { label: "Bandcamp", href: "https://newenafrobeat.bandcamp.com/album/newen-plays-fela" },
+      { label: "Discogs", href: "https://www.discogs.com/release/10585070-Newen-Afrobeat-Newen-Plays-Fela" },
           { label: "Spotify", href: "https://open.spotify.com/album/38wiZ5NMBVnXPLwk8dUiVL" },
 ],
   },
@@ -273,8 +275,8 @@ The recording is ℗ 2026 Newen Afrobeat and the release © 2026 PHŌNÉ Records
         "Limited 12\" vinyl edition of the Newen Plays Fela EP, pressed in Chile by PHŌNÉ Records in 2023. Gathers the original EP compositions (2017) in physical format.",
     },
     links: [
+      { label: "Bandcamp", href: "https://officehomerecords.bandcamp.com/album/newen-plays-fela" },
       { label: "Discogs", href: "https://www.discogs.com/release/29051536" },
-          { label: "Bandcamp", href: "https://officehomerecords.bandcamp.com/album/newen-plays-fela" },
 ],
   },
   {
@@ -304,6 +306,7 @@ The recording is ℗ 2026 Newen Afrobeat and the release © 2026 PHŌNÉ Records
     ],
     links: [
       { label: "Bandcamp", href: "https://newenafrobeat.bandcamp.com/album/newen-afrobeat" },
+      { label: "Discogs", href: "https://www.discogs.com/release/8178920-Newen-Afrobeat-Newen-Afrobeat" },
           { label: "Spotify", href: "https://open.spotify.com/album/7kbrxZhgajOSi6rT5o3pkC" },
 ],
   },
