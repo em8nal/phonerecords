@@ -5,7 +5,12 @@ import { getRelease } from "@/lib/releases";
 
 export const alt = "PHŌNÉ Records — Release";
 export const size = { width: 1200, height: 630 };
-export const contentType = "image/png";
+// JPEG, no PNG: con la portada fotográfica el PNG de ImageResponse (el único formato que
+// produce en Next 16.4.2) pesaba 275 KB–1,18 MB (Destellos 492 949 B en producción) y achicar
+// la portada solo ahorraba 5–11 %. Re-codificado con sharp a calidad 85 y croma 4:4:4 (bordes
+// del texto y rojo intactos) queda entre 29 y 203 KB, PSNR 35–43 dB contra el PNG.
+// Medición sin servidor: node scripts/measure-og.mjs (carril M, p19).
+export const contentType = "image/jpeg";
 
 type Params = { lang: string; slug: string };
 
@@ -87,125 +92,136 @@ export default async function OG({ params }: { params: Promise<Params> }) {
   const renderedText = `${title}${artist}${label}${year} ·`;
   const fraunces = await loadFraunces(renderedText).catch(() => null);
 
-  return new ImageResponse(
-    (
+  const card = (
+    <div
+      style={{
+        background: "#0a0a0a",
+        width: "100%",
+        height: "100%",
+        display: "flex",
+        color: "#ffffff",
+        fontFamily: "Fraunces, Georgia, 'Times New Roman', serif",
+        position: "relative",
+      }}
+    >
+      {/* Cover panel */}
       <div
         style={{
-          background: "#0a0a0a",
-          width: "100%",
-          height: "100%",
+          width: 630,
+          height: 630,
           display: "flex",
-          color: "#ffffff",
-          fontFamily: "Fraunces, Georgia, 'Times New Roman', serif",
-          position: "relative",
+          background: "#111",
+          alignItems: "center",
+          justifyContent: "center",
+          flexShrink: 0,
         }}
       >
-        {/* Cover panel */}
-        <div
-          style={{
-            width: 630,
-            height: 630,
-            display: "flex",
-            background: "#111",
-            alignItems: "center",
-            justifyContent: "center",
-            flexShrink: 0,
-          }}
-        >
-          {cover ? (
-             
-            <img
-              src={cover}
-              alt=""
-              width={630}
-              height={630}
-              style={{ objectFit: "cover", width: 630, height: 630 }}
-            />
-          ) : (
-            <div
-              style={{
-                fontSize: 160,
-                letterSpacing: 28,
-                fontWeight: 600,
-                opacity: 0.4,
-                display: "flex",
-              }}
-            >
-              PHŌNÉ
-            </div>
-          )}
-        </div>
-
-        {/* Text panel */}
-        <div
-          style={{
-            flex: 1,
-            padding: "70px 60px",
-            display: "flex",
-            flexDirection: "column",
-            justifyContent: "space-between",
-          }}
-        >
-          <div style={{ display: "flex", flexDirection: "column" }}>
-            <div
-              style={{
-                fontSize: 18,
-                letterSpacing: 8,
-                textTransform: "uppercase",
-                opacity: 0.55,
-                fontFamily: "monospace",
-                marginBottom: 28,
-                display: "flex",
-              }}
-            >
-              {year && <span>{year}</span>}
-              {year && label && <span style={{ margin: "0 12px" }}>·</span>}
-              {label && <span>{label}</span>}
-            </div>
-            <div
-              style={{
-                fontSize: 72,
-                lineHeight: 1.02,
-                fontWeight: 500,
-                letterSpacing: -2,
-                marginBottom: 28,
-                display: "flex",
-              }}
-            >
-              {title}
-            </div>
-            {artist && (
-              <div
-                style={{
-                  fontSize: 30,
-                  opacity: 0.75,
-                  display: "flex",
-                }}
-              >
-                {artist}
-              </div>
-            )}
-          </div>
+        {cover ? (
+          <img
+            src={cover}
+            alt=""
+            width={630}
+            height={630}
+            style={{ objectFit: "cover", width: 630, height: 630 }}
+          />
+        ) : (
           <div
             style={{
-              fontSize: 16,
+              fontSize: 160,
+              letterSpacing: 28,
+              fontWeight: 600,
               opacity: 0.4,
-              letterSpacing: 4,
-              fontFamily: "monospace",
-              textTransform: "uppercase",
               display: "flex",
             }}
           >
-            PHŌNÉ Records
+            PHŌNÉ
           </div>
+        )}
+      </div>
+
+      {/* Text panel */}
+      <div
+        style={{
+          flex: 1,
+          padding: "70px 60px",
+          display: "flex",
+          flexDirection: "column",
+          justifyContent: "space-between",
+        }}
+      >
+        <div style={{ display: "flex", flexDirection: "column" }}>
+          <div
+            style={{
+              fontSize: 18,
+              letterSpacing: 8,
+              textTransform: "uppercase",
+              opacity: 0.55,
+              fontFamily: "monospace",
+              marginBottom: 28,
+              display: "flex",
+            }}
+          >
+            {year && <span>{year}</span>}
+            {year && label && <span style={{ margin: "0 12px" }}>·</span>}
+            {label && <span>{label}</span>}
+          </div>
+          <div
+            style={{
+              fontSize: 72,
+              lineHeight: 1.02,
+              fontWeight: 500,
+              letterSpacing: -2,
+              marginBottom: 28,
+              display: "flex",
+            }}
+          >
+            {title}
+          </div>
+          {artist && (
+            <div
+              style={{
+                fontSize: 30,
+                opacity: 0.75,
+                display: "flex",
+              }}
+            >
+              {artist}
+            </div>
+          )}
+        </div>
+        <div
+          style={{
+            fontSize: 16,
+            opacity: 0.4,
+            letterSpacing: 4,
+            fontFamily: "monospace",
+            textTransform: "uppercase",
+            display: "flex",
+          }}
+        >
+          PHŌNÉ Records
         </div>
       </div>
-    ),
-    {
-      ...size,
-      fonts: fraunces
-        ? [{ name: "Fraunces", data: fraunces, style: "normal", weight: 500 }]
-        : [],
-    },
+    </div>
   );
+  const fonts = fraunces
+    ? [{ name: "Fraunces", data: fraunces, style: "normal" as const, weight: 500 as const }]
+    : [];
+
+  const png = Buffer.from(await new ImageResponse(card, { ...size, fonts }).arrayBuffer());
+  // Mismo cache-control que ImageResponse en next 16.4.2 (server/og/image-response.js).
+  const headers = (type: string) => ({
+    "content-type": type,
+    "cache-control":
+      process.env.NODE_ENV === "development" ? "no-cache, no-store" : "public, max-age=0, must-revalidate",
+  });
+  try {
+    // Import literal: Turbopack lo traza (sharp está en serverExternalPackages por defecto).
+    const { default: sharp } = await import("sharp");
+    const jpg = await sharp(png).jpeg({ quality: 85, chromaSubsampling: "4:4:4" }).toBuffer();
+    return new Response(new Uint8Array(jpg), { headers: headers("image/jpeg") });
+  } catch {
+    // Nunca un 500 por el codificador: sin sharp, el PNG de siempre (más pesado).
+    return new Response(new Uint8Array(png), { headers: headers("image/png") });
+  }
 }
