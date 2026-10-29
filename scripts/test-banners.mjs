@@ -11,11 +11,14 @@
 //      la ficha tiene smartLink y el CTA no es YouTube, cta.href === smartLink; si el eyebrow lleva
 //      fecha, la lleva en los dos idiomas ("22 de octubre" / "October 22", nunca "22 October") y es
 //      el día de releaseDate.
+//   5. regla de fechas (lib/release-date.ts): un día completo se publica a las 00:00 de Santiago;
+//      una fecha parcial ("YYYY" / "YYYY-MM") solo cuando su período terminó, nunca por el reloj
+//      mientras siga en curso o en el futuro; las parciales pasadas siguen publicadas.
 // Con --dias imprime el carrusel de cada día del 29-10 al 02-12 (a las 12:00) para el reporte:
 //   node --import ./scripts/ts-resolve-hook.mjs scripts/test-banners.mjs --dias
 import { BANNER_ENTRIES, getActiveBanners, isReleased } from "../lib/banner.ts";
 import { releases } from "../lib/releases.ts";
-import { releaseStartMs } from "../lib/release-date.ts";
+import { isReleased as isReleasedDate, isUpcoming, releaseLiveMs, releaseStartMs } from "../lib/release-date.ts";
 
 let ok = true;
 const report = (label, pass, detail) => {
@@ -84,7 +87,7 @@ const SWEEP_TO = Date.parse("2026-12-31T23:00:00-03:00");
 const ONE_ARTIST_FROM = Date.parse("2026-10-21T00:00:00-03:00");
 const instants = new Set();
 for (let t = SWEEP_FROM; t <= SWEEP_TO; t += 3_600_000) instants.add(t);
-const borders = BANNER_ENTRIES.flatMap((b) => [Date.parse(b.startsAt), b.endsAt ? Date.parse(b.endsAt) : null, releaseStartMs(b.releaseDate)]);
+const borders = BANNER_ENTRIES.flatMap((b) => [Date.parse(b.startsAt), b.endsAt ? Date.parse(b.endsAt) : null, releaseLiveMs(b.releaseDate)]);
 for (const t of borders) {
   if (t === null) continue;
   for (const d of [-1000, 0, 1000]) if (t + d >= SWEEP_FROM && t + d <= SWEEP_TO) instants.add(t + d);
@@ -113,7 +116,7 @@ for (const b of BANNER_ENTRIES) {
   const start = Date.parse(b.startsAt);
   const end = b.endsAt ? Date.parse(b.endsAt) : Infinity;
   if (!(start < end)) entryProblems.push(`${id}: ventana vacía`);
-  const releaseAt = releaseStartMs(b.releaseDate);
+  const releaseAt = releaseLiveMs(b.releaseDate);
   if (releaseAt !== null && end <= releaseAt) {
     if (!(start < releaseAt)) entryProblems.push(`${id}: ventana de pre-save que no empieza antes del estreno`);
     if (b.cta.beforeRelease.es !== "Pre-save" || b.cta.beforeRelease.en !== "Pre-save") entryProblems.push(`${id}: ventana de pre-save sin CTA "Pre-save"`);
@@ -166,6 +169,63 @@ report(
   entryProblems.length === 0,
   entryProblems.join(" · "),
 );
+
+// --- 5. Regla de fechas (lib/release-date.ts) --------------------------------------------
+{
+  const P = (iso) => Date.parse(iso);
+  const TODAY = P("2026-10-29T12:00:00-03:00");
+  /** [fecha, instante, esperado] */
+  const dateCases = [
+    // "2027": ni el 01-01-2027 ni el último segundo del año la publican; sí el 01-01-2028.
+    ["2027", TODAY, false],
+    ["2027", P("2027-01-01T00:00:00-03:00"), false],
+    ["2027", P("2027-12-31T23:59:59-03:00"), false],
+    ["2027", P("2028-01-01T00:00:00-03:00") - 1, false],
+    ["2027", P("2028-01-01T00:00:00-03:00"), true],
+    // Mes en curso = futuro; el mes siguiente a las 00:00 de Santiago lo publica.
+    ["2026-10", TODAY, false],
+    ["2026-10", P("2026-11-01T00:00:00-03:00") - 1, false],
+    ["2026-10", P("2026-11-01T00:00:00-03:00"), true],
+    ["2026-12", P("2027-01-01T00:00:00-03:00") - 1, false],
+    ["2026-12", P("2027-01-01T00:00:00-03:00"), true],
+    // Septiembre arranca en horario de invierno (-04:00).
+    ["2026-08", P("2026-09-01T00:00:00-04:00") - 1, false],
+    ["2026-08", P("2026-09-01T00:00:00-04:00"), true],
+    // Parciales pasadas, también con "00" (entradas livianas del catálogo).
+    ["2023", TODAY, true],
+    ["2026-06", TODAY, true],
+    ["2020-10", TODAY, true],
+    ["2026-06-00", TODAY, true],
+    ["2023-00-00", TODAY, true],
+    // Día completo: sin cambios (00:00 de Santiago de ese día).
+    ["2026-11-05", P("2026-11-04T23:59:59-03:00"), false],
+    ["2026-11-05", P("2026-11-05T00:00:00-03:00"), true],
+    // No-fechas: siempre publicadas.
+    ["in production", TODAY, true],
+    ["0000-00-00", TODAY, true],
+  ];
+  const bad = [];
+  for (const [d, t, expected] of dateCases) {
+    const got = isReleasedDate(d, t);
+    if (got !== expected) bad.push(`${d} @ ${new Date(t).toISOString()}: ${got} (esperado ${expected})`);
+    if (isUpcoming(d, t) !== !got) bad.push(`${d} @ ${new Date(t).toISOString()}: isUpcoming ≠ !isReleased`);
+  }
+  report(`regla de fechas: ${dateCases.length} casos (parciales futuras y en curso sin publicar, pasadas publicadas)`, bad.length === 0, bad.join(" · "));
+  report(
+    "día completo: releaseLiveMs === releaseStartMs",
+    releaseLiveMs("2026-11-05") === releaseStartMs("2026-11-05") && releaseLiveMs("2026-10-30") === releaseStartMs("2026-10-30"),
+  );
+  report(
+    "no-fechas: releaseLiveMs null",
+    releaseLiveMs("in production") === null && releaseLiveMs("0000-00-00") === null,
+  );
+  const enViaje = releases.find((r) => r.slug === "ecamhi-en-viaje");
+  report(
+    'datos: ecamhi-en-viaje ("2027") sigue próximo el 15-06-2027',
+    Boolean(enViaje) && isUpcoming(enViaje.releaseDate, P("2027-06-15T12:00:00-04:00")),
+    enViaje?.releaseDate,
+  );
+}
 
 // --- Tabla por día (--dias) --------------------------------------------------------------
 if (process.argv.includes("--dias")) {

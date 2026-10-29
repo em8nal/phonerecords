@@ -1,8 +1,11 @@
 // Release-date helpers shared by the release page and the catalogue grid.
 //
-// A release "goes live" at 00:00 America/Santiago on its `releaseDate`.
-// Partial dates are supported: "YYYY" goes live on January 1st and "YYYY-MM" on
-// the 1st of that month (also at 00:00 America/Santiago). Month "00" / day "00"
+// A release with a full date ("YYYY-MM-DD") goes live at 00:00 America/Santiago
+// on that day. Partial dates ("YYYY" / "YYYY-MM") only count as released once the
+// whole period is over: "2027" from 2028-01-01 and "2026-10" from 2026-11-01
+// (00:00 America/Santiago). The current year or month is still the future, so a
+// partial date never turns into "released" by the clock alone while it may still
+// be ahead; a partial date in the past stays released. Month "00" / day "00"
 // (used by the lightweight catalogue entries) count as "unknown" and fall back
 // to the coarser precision.
 //
@@ -54,24 +57,52 @@ function parseReleaseDate(raw: string): ParsedDate | null {
 }
 
 /**
- * UTC timestamp (ms) at which the release goes live: 00:00 America/Santiago on the
- * release day (or on the first day of the month / year for partial dates).
- * Returns null when the string is not a date at all.
+ * UTC timestamp (ms) of 00:00 America/Santiago on the given local day.
+ * `monthIndex` is 0-based and may overflow (12 = January of the next year):
+ * Date.UTC normalises it.
  */
-export function releaseStartMs(releaseDate: string): number | null {
-  const p = parseReleaseDate(releaseDate);
-  if (!p) return null;
-  const localAsUtc = Date.UTC(p.year, (p.month ?? 1) - 1, p.day ?? 1);
+function santiagoMidnightMs(year: number, monthIndex: number, day: number): number {
+  const localAsUtc = Date.UTC(year, monthIndex, day);
   // Two passes so the result is right even when a DST change falls on that day.
   let t = localAsUtc - santiagoOffsetMs(localAsUtc);
   t = localAsUtc - santiagoOffsetMs(t);
   return t;
 }
 
-/** True when the release date has been reached (>= 00:00 Santiago) or is not a date. */
+/**
+ * UTC timestamp (ms) at which the release period starts: 00:00 America/Santiago on
+ * the release day (or on the first day of the month / year for partial dates).
+ * Returns null when the string is not a date at all.
+ */
+export function releaseStartMs(releaseDate: string): number | null {
+  const p = parseReleaseDate(releaseDate);
+  if (!p) return null;
+  return santiagoMidnightMs(p.year, (p.month ?? 1) - 1, p.day ?? 1);
+}
+
+/**
+ * UTC timestamp (ms) from which the release counts as released.
+ * - "YYYY-MM-DD": 00:00 Santiago that day (same as releaseStartMs).
+ * - "YYYY-MM": 00:00 Santiago on the 1st of the NEXT month.
+ * - "YYYY": 00:00 Santiago on January 1st of the NEXT year.
+ * Returns null when the string is not a date at all.
+ */
+export function releaseLiveMs(releaseDate: string): number | null {
+  const p = parseReleaseDate(releaseDate);
+  if (!p) return null;
+  if (p.month === undefined) return santiagoMidnightMs(p.year + 1, 0, 1);
+  if (p.day === undefined) return santiagoMidnightMs(p.year, p.month, 1);
+  return santiagoMidnightMs(p.year, p.month - 1, p.day);
+}
+
+/**
+ * True when the release counts as released (see releaseLiveMs) or the string is
+ * not a date ("in production"…). A partial date in the current or a future
+ * period is never released.
+ */
 export function isReleased(releaseDate: string, nowMs: number = Date.now()): boolean {
-  const start = releaseStartMs(releaseDate);
-  return start === null ? true : nowMs >= start;
+  const live = releaseLiveMs(releaseDate);
+  return live === null ? true : nowMs >= live;
 }
 
 /** True only for a (full or partial) date that is still in the future. */
