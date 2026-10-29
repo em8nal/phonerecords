@@ -1,13 +1,12 @@
 import React from "react"
 import type { Metadata, Viewport } from 'next'
-import { cookies, headers } from 'next/headers'
+import { headers } from 'next/headers'
 import { Instrument_Sans, Instrument_Serif, JetBrains_Mono, Fraunces } from 'next/font/google'
 import { Analytics } from '@vercel/analytics/next'
 import { SpeedInsights } from '@vercel/speed-insights/next'
 import { GoogleTagManager, GoogleAnalytics } from '@next/third-parties/google'
 import { ConsentDefaultScript } from '@/components/consent/consent-default-script'
 import { ConsentManager } from '@/components/consent/consent-manager'
-import { CONSENT_COOKIE, parseConsent } from '@/components/consent/consent-cookie'
 import { TITLE_TEMPLATE } from '@/lib/seo'
 import './globals.css'
 
@@ -77,11 +76,6 @@ export default async function RootLayout({
   const h = await headers()
   const locale = h.get('x-phone-locale') === 'en' ? 'en' : 'es'
 
-  // Consent decision (phone_consent=granted|denied). Read on the server so the
-  // banner is never rendered when a decision already exists (no flicker, and it
-  // can't become the LCP element for returning visitors).
-  const consent = parseConsent((await cookies()).get(CONSENT_COOKIE)?.value)
-
   return (
     <html lang={locale}>
       <head>
@@ -97,7 +91,7 @@ export default async function RootLayout({
         {/* GTM + GA4 stay (team decision) but are governed by Consent Mode above. */}
         <GoogleAnalytics gaId="G-EG3K77X96Y" />
         {/* Banner (only while undecided) + Ahrefs Analytics (only after "granted"). */}
-        <ConsentManager lang={locale} initialDecision={consent} />
+        <ConsentManager lang={locale} />
       </body>
     </html>
   )
