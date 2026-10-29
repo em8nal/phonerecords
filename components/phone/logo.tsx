@@ -40,3 +40,41 @@ export function Logo({ height, className, ...props }: LogoProps) {
     </svg>
   );
 }
+
+// Los 4 triángulos del logotipo (primeros 4 subtrazos de LOGOTIPO_PATH), sin la caja "Phōné".
+const ISOTIPO_PATH =
+  "M282.976 67.996V.347l-43.591 34.078Zm-43.594 0V.347l-32.069 34.078Zm-32.07 0V.347l-22.048 34.078Zm-22.047 0V.347l-10.524 34.078Z";
+// Cuadrado centrado en los triángulos, con la proporción de public/phone-logo-dark.png
+// (triángulos al ~57 % del ancho).
+const ISO_SIDE = 190.2;
+const ISO_X = 228.859 - ISO_SIDE / 2;
+const ISO_Y = 34.172 - ISO_SIDE / 2;
+
+type IsotipoProps = Omit<SVGProps<SVGSVGElement>, "height" | "width" | "viewBox"> & {
+  /** Lado en px. */
+  size?: number;
+};
+
+/**
+ * Isotipo PHŌNÉ: triángulos blancos sobre un cuadrado negro, el mismo dibujo que
+ * public/phone-logo-dark.png, pero vectorial e inline. Colores fijos (no currentColor): en
+ * el PDF de los press kits se imprime igual que en pantalla.
+ */
+export function Isotipo({ size = 32, className, ...props }: IsotipoProps) {
+  return (
+    <svg
+      xmlns="http://www.w3.org/2000/svg"
+      viewBox={`${ISO_X} ${ISO_Y} ${ISO_SIDE} ${ISO_SIDE}`}
+      role="img"
+      aria-label="PHŌNÉ Records"
+      focusable="false"
+      className={className}
+      width={size}
+      height={size}
+      {...props}
+    >
+      <rect x={ISO_X} y={ISO_Y} width={ISO_SIDE} height={ISO_SIDE} fill="#000" />
+      <path fill="#fff" d={ISOTIPO_PATH} />
+    </svg>
+  );
+}
