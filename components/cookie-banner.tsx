@@ -28,9 +28,10 @@ const COPY = {
 
 /**
  * Presentational consent banner. Rendered by ConsentManager only while the
- * visitor has no phone_consent decision (se monta en el cliente, después de leer
- * la cookie: no viaja en el HTML; es fijo, así que no mueve el contenido). Accept and Reject carry the same
- * size/weight on purpose (refusing must be as easy as accepting).
+ * visitor has no phone_consent decision. It mounts on the client after the
+ * cookie is read, so it is not in the HTML; it is fixed, so it causes no
+ * layout shift. Accept and Reject carry the same size/weight on purpose
+ * (refusing must be as easy as accepting).
  */
 export function CookieBanner({ lang, onAccept, onReject }: Props) {
   const c = COPY[lang];
