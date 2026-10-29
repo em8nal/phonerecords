@@ -14,10 +14,10 @@ export const PRESS_KIT_LANGS: readonly Language[] = ["es", "en"];
 
 /** Bytes de public/press-kits/<clave>-<idioma>.pdf; la clave del sello es "press-kit". */
 export const PRESS_KIT_BYTES: Record<string, Record<Language, number>> = {
-  "press-kit": { es: 1025696, en: 1024687 },
-  "newen-afrobeat": { es: 229225, en: 225026 },
-  "klaus-b": { es: 236636, en: 235717 },
-  ecamhi: { es: 241362, en: 238036 },
+  "press-kit": { es: 1025716, en: 1024707 },
+  "newen-afrobeat": { es: 230680, en: 227002 },
+  "klaus-b": { es: 237072, en: 235946 },
+  ecamhi: { es: 242878, en: 239562 },
   "con-fusion": { es: 217454, en: 217121 },
   "rosario-lircay": { es: 212109, en: 211590 },
 };
