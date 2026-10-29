@@ -1,0 +1,26 @@
+{
+  "slug": "con-fusion-aua",
+  "order": 290,
+  "title": "Aüa",
+  "artistSlug": "con-fusion",
+  "artistName": "Con.fusión",
+  "releaseDate": "2021-02-26",
+  "year": 2021,
+  "type": "single",
+  "format": "Single · digital",
+  "cover": "https://is1-ssl.mzstatic.com/image/thumb/Music125/v4/cd/61/ca/cd61ca54-884f-8045-cf53-78550b4b960c/0.jpg/1000x1000bb.jpg",
+  "description": {
+    "es": "Single de Con.fusión en colaboración con Fat Jota, publicado en febrero 2021. La voz de Catalina Aguilera opera como instrumento sobre beats orgánicos en una pieza corta que ya muestra el método del proyecto: hip hop, jazz y neo soul cruzados sin obediencia a ninguno. Aüa es uno de los primeros singles donde se articula formalmente el lenguaje del proyecto, anterior a la entrada en producción del LP Tulpa. Marca el inicio público del catálogo.",
+    "en": "Con.fusión single in collaboration with Fat Jota, released February 2021. Catalina Aguilera's voice operates as instrument over organic beats in a short piece that already shows the project's method: hip hop, jazz and neo soul crossed without obedience to any. Aüa is one of the first singles where the project's language is formally articulated, prior to the Tulpa LP entering production. Marks the public start of the catalogue."
+  },
+  "links": [
+    {
+      "label": "Apple Music",
+      "href": "https://music.apple.com/us/album/a%C3%BCa/1565365860"
+    },
+    {
+      "label": "Spotify",
+      "href": "https://open.spotify.com/album/0GwDOXlD8aVBp5kH6HrK3U"
+    }
+  ]
+}

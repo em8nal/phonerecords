@@ -1,0 +1,67 @@
+{
+  "slug": "newen-afrobeat-debut",
+  "order": 80,
+  "title": "Newen Afrobeat",
+  "artistSlug": "newen-afrobeat",
+  "artistName": "Newen Afrobeat",
+  "releaseDate": "2014-06-22",
+  "year": 2014,
+  "type": "album",
+  "format": "LP debut · 7 tracks (57 min)",
+  "cover": "https://f4.bcbits.com/img/a1477748070_10.jpg",
+  "description": {
+    "es": "Álbum debut de Newen Afrobeat, publicado de forma independiente el 22 de junio de 2014 en CD de edición limitada y en digital. Siete temas en 57 minutos, de \"Santiago\" a \"Que Sabemos\".",
+    "en": "Newen Afrobeat's debut album, self-released on June 22, 2014 as a limited-edition CD and digitally. Seven tracks over 57 minutes, from \"Santiago\" to \"Que Sabemos\"."
+  },
+  "tracklist": [
+    {
+      "n": 1,
+      "title": "Santiago",
+      "duration": "13:31"
+    },
+    {
+      "n": 2,
+      "title": "Caminante",
+      "duration": "6:37"
+    },
+    {
+      "n": 3,
+      "title": "Rojo Carmín",
+      "duration": "4:57"
+    },
+    {
+      "n": 4,
+      "title": "Polvo de Inti",
+      "duration": "5:00"
+    },
+    {
+      "n": 5,
+      "title": "P.D.T.N. (prostituto de transnacional)",
+      "duration": "6:42"
+    },
+    {
+      "n": 6,
+      "title": "Nación Nueva",
+      "duration": "9:39"
+    },
+    {
+      "n": 7,
+      "title": "Que Sabemos",
+      "duration": "10:25"
+    }
+  ],
+  "links": [
+    {
+      "label": "Bandcamp",
+      "href": "https://newenafrobeat.bandcamp.com/album/newen-afrobeat"
+    },
+    {
+      "label": "Discogs",
+      "href": "https://www.discogs.com/release/8178920-Newen-Afrobeat-Newen-Afrobeat"
+    },
+    {
+      "label": "Spotify",
+      "href": "https://open.spotify.com/album/7kbrxZhgajOSi6rT5o3pkC"
+    }
+  ]
+}

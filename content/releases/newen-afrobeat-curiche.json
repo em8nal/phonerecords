@@ -1,0 +1,67 @@
+{
+  "slug": "newen-afrobeat-curiche",
+  "order": 50,
+  "title": "Curiche",
+  "artistSlug": "newen-afrobeat",
+  "artistName": "Newen Afrobeat",
+  "releaseDate": "2019-05-10",
+  "year": 2019,
+  "type": "album",
+  "format": "2° LP · 7 tracks (48 min)",
+  "cover": "https://f4.bcbits.com/img/a2154521327_10.jpg",
+  "description": {
+    "es": "Segundo álbum de larga duración. Documenta la exploración continua del afrobeat y los viajes a Lagos, Nigeria para estudiar con maestros del género. Tematiza desigualdad, migración, rol femenino, culturas indígenas. Grabado, mezclado y masterizado en Santuario Sónico, Santiago de Chile. Participaciones de Oghene Kologbo, Enrique Camhi (ecamhi) y Diego Alarcón.",
+    "en": "Second full-length album. Documents the continued exploration of afrobeat music and travels to Lagos, Nigeria to study with masters of the genre. Themes: inequality, migration, women's roles, indigenous cultures. Recorded, mixed and mastered at Santuario Sónico, Santiago, Chile. Participations by Oghene Kologbo, Enrique Camhi (ecamhi) and Diego Alarcón."
+  },
+  "tracklist": [
+    {
+      "n": 1,
+      "title": "Vuela junto a mi",
+      "duration": "6:35"
+    },
+    {
+      "n": 2,
+      "title": "Curiche",
+      "duration": "6:09"
+    },
+    {
+      "n": 3,
+      "title": "Voraz",
+      "duration": "5:27"
+    },
+    {
+      "n": 4,
+      "title": "Cántaros",
+      "duration": "7:12"
+    },
+    {
+      "n": 5,
+      "title": "Open your eyes",
+      "duration": "7:59"
+    },
+    {
+      "n": 6,
+      "title": "Chaltumay",
+      "duration": "5:56"
+    },
+    {
+      "n": 7,
+      "title": "Come y calla",
+      "duration": "9:00"
+    }
+  ],
+  "links": [
+    {
+      "label": "Bandcamp",
+      "href": "https://newenafrobeat.bandcamp.com/album/curiche"
+    },
+    {
+      "label": "Discogs",
+      "href": "https://www.discogs.com/release/22496618-Newen-Afrobeat-Curiche"
+    },
+    {
+      "label": "Spotify",
+      "href": "https://open.spotify.com/album/6lhHBFeEds0AxMPKbVZD7U"
+    }
+  ]
+}

@@ -1,0 +1,98 @@
+{
+  "slug": "klaus-b-viaje-sin-tiempo",
+  "order": 130,
+  "title": "Viaje Sin Tiempo",
+  "artistSlug": "klaus-b",
+  "artistName": "Gestosimple & Klaus B",
+  "releaseDate": "2024-06-12",
+  "year": 2024,
+  "type": "album",
+  "format": "LP · 12 tracks",
+  "cover": "https://f4.bcbits.com/img/a0044868647_10.jpg",
+  "description": {
+    "es": "Primer LP largo del dúo Gestosimple & Klaus B. Doce tracks con featurings de Fran Ri, DJ Dacel, Valentina Marinkovic, Cidtronyck, Celeste Shaw, Wagabond, Senciyo Samuel HuiZa y 22Ruzz. Articula la red de productores que comparten el lenguaje rap-jazz / future funk en Santiago de Chile, con Klaus como punto de convergencia técnica. Es el disco más extendido del catálogo Klaus y el manifiesto colectivo del proyecto Gestosimple.",
+    "en": "First long LP from the duo Gestosimple & Klaus B. Twelve tracks featuring Fran Ri, DJ Dacel, Valentina Marinkovic, Cidtronyck, Celeste Shaw, Wagabond, Senciyo Samuel HuiZa and 22Ruzz. Articulates the network of producers sharing the rap-jazz / future funk language in Santiago de Chile, with Klaus as technical convergence point. Klaus's most extended record and the collective manifesto of the Gestosimple project."
+  },
+  "tracklist": [
+    {
+      "n": 1,
+      "title": "Dentro De Mí",
+      "duration": "4:47"
+    },
+    {
+      "n": 2,
+      "title": "Viaje Sin Tiempo (feat. Fran Ri, DJ Dacel)",
+      "duration": "3:51"
+    },
+    {
+      "n": 3,
+      "title": "Elévame (feat. Senciyo Samuel HuiZa)",
+      "duration": "4:15"
+    },
+    {
+      "n": 4,
+      "title": "1988 (feat. Cidtronyck)",
+      "duration": "1:40"
+    },
+    {
+      "n": 5,
+      "title": "Tu Camino (feat. Lister Rossel)",
+      "duration": "4:01"
+    },
+    {
+      "n": 6,
+      "title": "Nuestro Espejo (feat. 22Ruzz)",
+      "duration": "4:25"
+    },
+    {
+      "n": 7,
+      "title": "El Tiempo Vuela (feat. Wagabond)",
+      "duration": "2:55"
+    },
+    {
+      "n": 8,
+      "title": "El Misterio (feat. Valentina Marinkovic)",
+      "duration": "3:01"
+    },
+    {
+      "n": 9,
+      "title": "Ya No Estás Aquí (feat. DJ Dacel)",
+      "duration": "4:04"
+    },
+    {
+      "n": 10,
+      "title": "La Inspiración",
+      "duration": "1:23"
+    },
+    {
+      "n": 11,
+      "title": "El Rayo Más Cálido (feat. Celeste Shaw, Cidtronyck)",
+      "duration": "5:45"
+    },
+    {
+      "n": 12,
+      "title": "Desde La Emisora",
+      "duration": "5:19"
+    }
+  ],
+  "credits": [
+    {
+      "role": "Rap · letras",
+      "name": "Gestosimple"
+    },
+    {
+      "role": "Flauta · alto sax · vocoder · composición · producción",
+      "name": "Klaus B"
+    }
+  ],
+  "links": [
+    {
+      "label": "Bandcamp",
+      "href": "https://klausb.bandcamp.com/album/viaje-sin-tiempo"
+    },
+    {
+      "label": "Spotify",
+      "href": "https://open.spotify.com/album/16r8e8DumGptUVPVXngllB"
+    }
+  ]
+}

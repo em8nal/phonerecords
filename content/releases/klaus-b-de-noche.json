@@ -1,0 +1,26 @@
+{
+  "slug": "klaus-b-de-noche",
+  "order": 190,
+  "title": "De Noche",
+  "artistSlug": "klaus-b",
+  "artistName": "Klaus B",
+  "releaseDate": "2021-08-12",
+  "year": 2021,
+  "type": "single",
+  "format": "Single",
+  "cover": "https://f4.bcbits.com/img/a1553461504_10.jpg",
+  "description": {
+    "es": "Segundo single del proyecto Klaus B, publicado en agosto 2021. Es la entrega más temprana del lenguaje nocturno que el catálogo va a explorar durante los siguientes años: groove pausado, atmósfera densa, flauta como voz principal sin recurrir a vocalistas humanos. Junto a Viento Radiante define el método dual del proyecto —diurno/nocturno, claro/oscuro— que se sostiene como eje hasta la mixtape Memorias.",
+    "en": "Second single of the Klaus B project, released August 2021. The earliest delivery of the nocturnal language the catalogue will explore over the following years: paused groove, dense atmosphere, flute as main voice without resorting to human vocalists. Together with Viento Radiante it defines the project's dual method — diurnal/nocturnal, light/dark — that holds as axis through the Memorias mixtape."
+  },
+  "links": [
+    {
+      "label": "Bandcamp",
+      "href": "https://klausb.bandcamp.com/track/de-noche"
+    },
+    {
+      "label": "Spotify",
+      "href": "https://open.spotify.com/album/0LZBjCeS3MQkhxahbxXqMJ"
+    }
+  ]
+}

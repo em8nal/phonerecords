@@ -1,0 +1,26 @@
+{
+  "slug": "ecamhi-mad-summer",
+  "order": 240,
+  "title": "Mad Summer",
+  "artistSlug": "ecamhi",
+  "artistName": "Alejandro Camhi & Enrique Camhi",
+  "releaseDate": "2024-07-03",
+  "year": 2024,
+  "type": "single",
+  "format": "Single · digital",
+  "cover": "https://is1-ssl.mzstatic.com/image/thumb/Music221/v4/ce/a0/f2/cea0f2b6-47f9-8d1e-5646-a29f601424be/artwork.jpg/1000x1000bb.jpg",
+  "description": {
+    "es": "Single firmado por Alejandro Camhi y Enrique Camhi —dúo familiar— publicado en julio 2024. Es la única colaboración documentada entre ambos hermanos: electrónica estival con trompeta encima, pieza corta y sin gancho convencional, hecha para escucha de estación más que para playlist. Funciona como entrada secundaria al catálogo de ecamhi y como documento personal del eje familiar dentro de su práctica musical.",
+    "en": "Single signed by Alejandro Camhi and Enrique Camhi —familial duo— released July 2024. The only documented collaboration between the brothers: summery electronics with trumpet on top, a short piece without conventional hook, made for seasonal listening rather than for playlist. Functions as secondary entry into the ecamhi catalogue and as personal document of the familial axis within his musical practice."
+  },
+  "links": [
+    {
+      "label": "Apple Music",
+      "href": "https://music.apple.com/us/album/mad-summer/1752686994"
+    },
+    {
+      "label": "Spotify",
+      "href": "https://open.spotify.com/album/5oz3aK8wTsaB7BE7Po5s8i"
+    }
+  ]
+}
