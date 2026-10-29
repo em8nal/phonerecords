@@ -11,6 +11,7 @@
     "test:seo": "node --import ./scripts/ts-resolve-hook.mjs scripts/test-seo.mjs",
     "test:servicios": "node --import ./scripts/ts-resolve-hook.mjs scripts/test-servicios.mjs",
     "test:locale": "node --import ./scripts/ts-resolve-hook.mjs scripts/test-locale.mjs",
+    "test:share": "node --import ./scripts/ts-resolve-hook.mjs scripts/test-share.mjs",
     "build": "next build",
     "dev": "next dev",
     "lint": "eslint .",

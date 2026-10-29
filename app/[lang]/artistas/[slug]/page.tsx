@@ -14,6 +14,7 @@ import { ArtistCardGrid } from "@/components/phone/artist-card-grid";
 import { getArtistHero, getArtistPortrait } from "@/lib/artist-media";
 import { ArtistVideosSection } from "@/components/phone/video-artist-section";
 import { ArtistKeyFacts } from "@/components/phone/artist-key-facts";
+import { ShareBar } from "@/components/share-bar";
 import { PlatformIcon } from "@/components/phone/platform-icon";
 import { PressKitDownloads } from "@/components/phone/press-kit-downloads";
 import { splitOrigin } from "@/lib/artist-facts";
@@ -52,7 +53,7 @@ function pickReleaseActions(
 }
 import { SpotifyArtistEmbed } from "@/components/spotify-embed";
 import type { Language } from "@/lib/translations";
-import { SITE, ORG_ID, artistId as artistLdId, absUrl, toJsonLd } from "@/lib/schema";
+import { SITE, ORG_ID, artistId as artistLdId, absUrl, toJsonLd, releaseId } from "@/lib/schema";
 
 function extractSpotifyArtistId(links: { href: string }[]): string | null {
   const sp = links.find((l) => l.href.includes("open.spotify.com/artist/"));
@@ -204,7 +205,7 @@ export default async function ArtistPage({
                   "@type": "MusicAlbum",
                   ...(e.releaseSlug
                     ? {
-                        "@id": `${SITE}/${lang}/releases/${e.releaseSlug}#album`,
+                        "@id": releaseId(e.releaseSlug),
                         url: `${SITE}/${lang}/releases/${e.releaseSlug}`,
                       }
                     : {}),
@@ -270,7 +271,17 @@ export default async function ArtistPage({
           {/* Con hero, el nombre y los géneros ya van sobre la foto (h1 del PageHero) y la ficha
               abre con "Datos clave"; sin hero, "Datos clave" va justo después del header. */}
           {hero ? (
-            <ArtistKeyFacts slug={slug} lang={uiLang} className="mb-16 lg:mb-20" />
+            <>
+              <ShareBar
+                className="mb-12"
+                url={url}
+                title={`${artist.name} — PHŌNÉ Records`}
+                lang={uiLang}
+                contentType="artist"
+                itemId={artist.slug}
+              />
+              <ArtistKeyFacts slug={slug} lang={uiLang} className="mb-16 lg:mb-20" />
+            </>
           ) : (
             <>
             <header className={`mb-16 lg:mb-24 ${portrait ? "grid lg:grid-cols-12 gap-8 lg:gap-12 items-end" : ""}`}>
@@ -284,6 +295,14 @@ export default async function ArtistPage({
                 <div className="font-mono text-sm text-muted-foreground">
                   {labels.origin} · {artist.origin}
                 </div>
+                <ShareBar
+                  className="mt-6"
+                  url={url}
+                  title={`${artist.name} — PHŌNÉ Records`}
+                  lang={uiLang}
+                  contentType="artist"
+                  itemId={artist.slug}
+                />
               </div>
               {portrait && (
                 <div className="lg:col-span-5 order-1 lg:order-2">
@@ -381,7 +400,7 @@ export default async function ArtistPage({
                             href={link.href}
                             target="_blank"
                             rel={artistLinkRel(link.href)}
-                            className="inline-flex min-h-8 items-center gap-2.5 text-sm hover:text-foreground/70 transition-colors rounded-sm focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand"
+                            className="inline-flex min-h-8 items-center gap-2.5 text-sm hover:text-foreground/70 transition-colors rounded-sm focus-visible:outline-2 focus-visible:outline-transparent focus-visible:ring-2 focus-visible:ring-brand"
                           >
                             {platform && <PlatformIcon platform={platform.id} />}
                             {link.label}
@@ -402,7 +421,7 @@ export default async function ArtistPage({
                 <PressKitDownloads slug={slug} uiLang={uiLang} layout="stack" />
                 <Link
                   href={`/press/${lang}/${slug}`}
-                  className="mt-4 inline-flex min-h-8 items-center font-mono text-xs uppercase tracking-widest text-muted-foreground underline underline-offset-4 hover:text-foreground transition-colors rounded-sm focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand"
+                  className="mt-4 inline-flex min-h-8 items-center font-mono text-xs uppercase tracking-widest text-muted-foreground underline underline-offset-4 hover:text-foreground transition-colors rounded-sm focus-visible:outline-2 focus-visible:outline-transparent focus-visible:ring-2 focus-visible:ring-brand"
                 >
                   {isEs ? "Versión web" : "View online"}
                 </Link>

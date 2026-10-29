@@ -2,6 +2,7 @@
 // con hreflang, nombre de archivo explícito y el tamaño aproximado (mapa de lib/press-kits.ts).
 // El del idioma de la página va con relleno y el otro con contorno. Componente de servidor.
 import { Download } from "lucide-react";
+import { TrackedLink } from "@/components/tracked-link";
 import {
   PRESS_KIT_LANGS,
   formatPdfSize,
@@ -35,12 +36,14 @@ export function PressKitDownloads({ slug, uiLang, layout = "row", className = ""
         const current = l === uiLang;
         return (
           <li key={l}>
-            <a
+            <TrackedLink
+              event="pdf_download"
+              params={{ artist: slug ?? "phone-records", lang: l }}
               href={pressKitHref(slug, l)}
               hrefLang={l}
               type="application/pdf"
               download={pressKitDownloadName(slug, l)}
-              className={`inline-flex h-11 items-center gap-2.5 px-5 text-sm rounded-full transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand focus-visible:ring-offset-2 focus-visible:ring-offset-background ${
+              className={`inline-flex h-11 items-center gap-2.5 px-5 text-sm rounded-full transition-colors focus-visible:outline-2 focus-visible:outline-transparent focus-visible:ring-2 focus-visible:ring-brand focus-visible:ring-offset-2 focus-visible:ring-offset-background ${
                 current
                   ? "bg-foreground text-background hover:bg-foreground/90"
                   : "border border-foreground/20 text-foreground hover:bg-foreground/5"
@@ -49,12 +52,12 @@ export function PressKitDownloads({ slug, uiLang, layout = "row", className = ""
               <Download className="w-4 h-4 shrink-0" aria-hidden />
               <span>
                 Press kit {l.toUpperCase()}
-                <span className="sr-only"> — {LANG_NAME[uiLang][l]}</span>
-              </span>
+                <span className="sr-only"> — {LANG_NAME[uiLang][l]}, </span>
+              </span>{" "}
               <span className={`font-mono text-xs ${current ? "text-background/70" : "text-muted-foreground"}`}>
                 {bytes != null ? formatPdfSize(bytes, uiLang) : "PDF"}
               </span>
-            </a>
+            </TrackedLink>
           </li>
         );
       })}

@@ -37,7 +37,7 @@ function packSpans(widths: number[], cols: number): number[] {
 }
 
 const LINK =
-  "underline decoration-foreground/30 underline-offset-4 hover:decoration-foreground transition-colors rounded-sm focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand";
+  "underline decoration-foreground/30 underline-offset-4 hover:decoration-foreground transition-colors rounded-sm focus-visible:outline-2 focus-visible:outline-transparent focus-visible:ring-2 focus-visible:ring-brand";
 
 type Props = { slug: string; lang: Language; className?: string };
 

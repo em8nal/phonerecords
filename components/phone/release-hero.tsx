@@ -143,6 +143,7 @@ export function ReleaseHero({ release, lang, initialReleased }: Props) {
                   releaseDate={release.releaseDate}
                   initialReleased={initialReleased}
                   lang={lang}
+                  release={release.slug}
                   className={`bg-white text-black hover:bg-white/90 ${FOCUS_DARK}`}
                 />
               </div>

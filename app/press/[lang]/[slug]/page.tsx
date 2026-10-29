@@ -6,6 +6,7 @@ import { artistSlugs, getArtist } from "@/lib/artists";
 import { getArtistEntries } from "@/lib/catalog";
 import type { Language } from "@/lib/translations";
 import { DownloadPdfButton } from "@/components/download-pdf-button";
+import { pressKitDownloadName, pressKitHref } from "@/lib/press-kits";
 import { Isotipo } from "@/components/phone/logo";
 
 // Max releases to print in the discography section (keeps press kit ≤ 2 pages).
@@ -185,8 +186,8 @@ export default async function PressKitPage({
           <span className="text-xs text-black/50 hidden sm:block">{t.downloadHint}</span>
           <DownloadPdfButton
             label={t.download}
-            href={`/press-kits/${slug}-${lang}.pdf`}
-            filename={`${slug}-press-kit-${lang}.pdf`}
+            href={pressKitHref(slug, isEs ? "es" : "en")}
+            filename={pressKitDownloadName(slug, isEs ? "es" : "en")}
           />
         </div>
       </div>

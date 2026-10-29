@@ -13,7 +13,7 @@ export function FaqList({ items, lang, className = "" }: Props) {
     <div className={`border-t border-foreground/10 ${className}`}>
       {items.map((item) => (
         <details key={item.id} id={`faq-${item.id}`} className="group border-b border-foreground/10">
-          <summary className="flex min-h-11 cursor-pointer list-none items-start justify-between gap-6 py-5 font-display text-lg lg:text-xl tracking-tight [&::-webkit-details-marker]:hidden rounded-sm focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand focus-visible:ring-offset-2 focus-visible:ring-offset-background">
+          <summary className="flex min-h-11 cursor-pointer list-none items-start justify-between gap-6 py-5 font-display text-lg lg:text-xl tracking-tight [&::-webkit-details-marker]:hidden rounded-sm focus-visible:outline-2 focus-visible:outline-transparent focus-visible:ring-2 focus-visible:ring-brand focus-visible:ring-offset-2 focus-visible:ring-offset-background">
             <span>{item.q}</span>
             <span
               aria-hidden="true"
@@ -30,7 +30,7 @@ export function FaqList({ items, lang, className = "" }: Props) {
                 ) : (
                   <Link
                     href={`/${lang}${seg.href}`}
-                    className="underline decoration-foreground/30 underline-offset-4 hover:decoration-foreground transition-colors rounded-sm focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand"
+                    className="underline decoration-foreground/50 underline-offset-4 hover:decoration-foreground transition-colors rounded-sm focus-visible:outline-2 focus-visible:outline-transparent focus-visible:ring-2 focus-visible:ring-brand"
                   >
                     {seg.text}
                   </Link>
