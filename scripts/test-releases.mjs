@@ -5,16 +5,18 @@
 //   BANNER_ENTRIES existe en lib/artists.ts; ningún .ts(x) de lib/ contiene un slug viejo
 //   de LEGACY_ARTIST_SLUGS salvo lib/artist-slugs.ts (las claves se leen del módulo); los
 //   destinos de los alias existen y no son a su vez slugs viejos; spotifyRefFromLinks lee
-//   todo enlace de Spotify que no sea un perfil /artist/; ninguna descripción ES/EN ni etiqueta
-//   de enlace contiene una frase relativa al momento ("sale el", "out Friday", "pre-save"…:
-//   lista TEMPORAL documentada abajo, con casos positivos y negativos); cada etiqueta de enlace
-//   es una clave de LINK_LABEL_EN o un nombre de plataforma; releaseTitle ≤ 60 caracteres con
-//   el sufijo de la plantilla de app/layout.tsx; getArtistEntries sin duplicados y ninguna
-//   entrada liviana de lib/artists.ts repite una ficha; redirects de next.config.mjs: todos
-//   permanentes, las 5 formas por slug viejo y las 2 de claudio-solis, en un solo salto
-//   (probado con getPathMatch y compile de Next, como los aplica el servidor); la ficha de
-//   lanzamiento se renderiza por petición (app/layout.tsx lee headers() o cookies()) o
-//   declara revalidate/dynamic, porque corta el reproductor y datePublished con isReleased().
+//   todo enlace de Spotify que no sea un perfil /artist/; ninguna descripción ES/EN de
+//   lib/releases.ts o lib/videos.ts, bio de lib/artists.ts ni etiqueta de enlace contiene una
+//   frase relativa al momento ("sale el", "saldrá el", "out Friday", "out November 20", "will be
+//   released", "pre-save"…: lista TEMPORAL documentada abajo, con casos positivos y negativos);
+//   cada etiqueta de enlace es una clave de LINK_LABEL_EN o un nombre de plataforma;
+//   releaseTitle ≤ 60 caracteres con el sufijo de la plantilla de app/layout.tsx;
+//   getArtistEntries sin duplicados y ninguna entrada liviana de lib/artists.ts repite una
+//   ficha; redirects de next.config.mjs: todos permanentes, las 5 formas por slug viejo y las
+//   2 de claudio-solis, en un solo salto (probado con getPathMatch y compile de Next, como los
+//   aplica el servidor); la ficha de lanzamiento se renderiza por petición (app/layout.tsx lee
+//   headers() o cookies()) o declara revalidate/dynamic, porque corta el reproductor y
+//   datePublished con isReleased().
 // Avisos (WARN, no fallan): ficha ya publicada (isReleased de lib/release-date.ts) sin Spotify
 //   reproducible (spotifyRefFromLinks nulo), con un aviso distinto si además falta Apple Music;
 //   RELEASES_NOW=<ISO> simula la fecha; artista sin public/press-kits/<slug>-{es,en}.pdf.
@@ -37,6 +39,7 @@ import { TITLE_TEMPLATE } from "../lib/seo.ts";
 import { artists, LEGACY_ARTIST_SLUGS, resolveArtistSlug } from "../lib/artists.ts";
 import { BANNER_ENTRIES } from "../lib/banner.ts";
 import { getArtistEntries } from "../lib/catalog.ts";
+import { videos } from "../lib/videos.ts";
 import { isReleased } from "../lib/release-date.ts";
 import nextConfig from "../next.config.mjs";
 
@@ -116,23 +119,45 @@ report("spotifyRefFromLinks ignora perfiles /artist/", artistOnly === null);
 // La ficha cambia sola a las 00:00 del estreno (CTA Pre-save → Escuchar, reproductor), pero los
 // textos no: "sale el viernes 23" o "el pre-save ya está disponible" dejan de ser ciertos al día
 // siguiente. Cada familia de TEMPORAL es un tipo de frase que caduca al pasar la fecha. Se aplica a
-// description.es, description.en y links[].label de todas las fichas; una coincidencia es FAIL.
-// Redacción neutra que pasa: "con fecha de lanzamiento el jueves 5 de noviembre de 2026", "with
-// release date Friday, October 30, 2026", 'el enlace de la sección "Escuchar" lleva a todas las
-// plataformas', "Qobuz (hi-res)".
+// description.es, description.en y links[].label de todas las fichas, a description.es y
+// description.en de todos los videos de lib/videos.ts y a bio.es y bio.en de lib/artists.ts; una
+// coincidencia es FAIL.
+// Redacción neutra que pasa: "con fecha de lanzamiento el jueves 5 de noviembre de 2026" / "with a
+// release date of Thursday, November 5, 2026"; si ya salió, el pasado vale para siempre: "publicado
+// el viernes 23 de octubre de 2026" / "released on Friday, October 23, 2026"; 'el enlace de la
+// sección "Escuchar" lleva a todas las plataformas', "Qobuz (hi-res)".
 // - \b de JS solo reconoce ASCII: ninguna regex termina en una vocal con tilde seguida de \b.
 // - Fuera a propósito: "próximo", "upcoming", "prepara" y "actualmente". Describen proyectos sin
 //   fecha ("en viaje", 2027; "los próximos conciertos") que no caducan en un día conocido.
+// - "llegará", "se lanzará", "se publicará" y "se estrenará" se exigen con tilde: sin ella son el
+//   pretérito de subjuntivo ("un día después de que la canción llegara a plataformas el 22 de
+//   octubre"), que narra algo ya pasado. "saldrá" y "estará" no tienen ese doble: van con o sin tilde.
+// - "May" y "March" también son palabras comunes del inglés ("what they worked out may surprise"):
+//   en MONTH_EN solo cuentan seguidas de un número ("out May 8").
 // - Si una frase nueva calza sin ser temporal, agrégala a NEUTRAL y ajusta la familia; no la borres.
 const DAY_ES = "(?:lunes|martes|mi[eé]rcoles|jueves|viernes|s[aá]bado|domingo)";
 const DAY_EN = "(?:Monday|Tuesday|Wednesday|Thursday|Friday|Saturday|Sunday)";
+const MONTH_EN =
+  "(?:January|February|March(?=\\s+\\d)|April|May(?=\\s+\\d)|June|July|August|September|October|November|December)";
 const TEMPORAL = [
-  // "sale el viernes 23", "llega el 30 de", "se publica el viernes": futuro con fecha.
-  ["es-sale-llega", new RegExp(`\\b(?:sale|llega|se publica|se estrena|estar[aá] disponible)\\s+(?:este\\s+|el\\s+)?(?:${DAY_ES}|\\d{1,2}\\s+de\\b)`, "i")],
+  // Futuro o presente con fecha: "sale el viernes 23", "saldrá el viernes 20 de", "llegará a
+  // plataformas el 20 de", "llega a todas las plataformas el viernes 30", "se lanza / se lanzará el
+  // 20 de", "se publica el viernes", "estará disponible el 30 de".
+  [
+    "es-sale-llega",
+    new RegExp(
+      `\\b(?:saldr[aá]|llegará|sale|llega|se\\s+(?:lanza|lanzará|publica|publicará|estrena|estrenará)|estar[aá]\\s+disponible)` +
+        `\\s+(?:(?:a\\s+(?:todas\\s+las\\s+)?plataformas|a\\s+la\\s+venta)\\s+)?(?:este\\s+|el\\s+)?(?:${DAY_ES}|\\d{1,2}\\s+de\\b)`,
+      "i",
+    ),
+  ],
+  // "disponible desde el viernes 30", "disponible a partir del 30 de octubre": promesa con fecha.
+  ["es-disponible-desde", new RegExp(`\\bdisponible\\s+(?:desde|a\\s+partir\\s+del?)\\s+(?:el\\s+)?(?:${DAY_ES}|\\d{1,2}\\s+de\\b)`, "i")],
   // "pre-save" en cualquier idioma: el enlace sigue, pero después del estreno ya no es pre-save.
   ["pre-save", /\bpre-?saves?\b/i],
-  // "reserva", "puede reservarse" (Qobuz): solo vale antes de la salida.
-  ["es-reserva", /\breserv(?:a|ar|arse|able)\b/i],
+  // "puede reservarse", "reservarlo", "reserva ya", "(reserva · hi-res)" (Qobuz): solo valen antes de
+  // la salida. El sustantivo suelto no cuenta ("Reserva Nacional Los Flamencos", "Gran Reserva").
+  ["es-reserva", /\breserv(?:ar|arse|arl[oa]s?|able)\b|\(\s*reserva\b|\breserva\s*·|\breserva\s+(?:ya|ahora|tu|tus)\b/i],
   // "ya está disponible", "ya puede": afirma el estado de hoy.
   ["es-ya", /\bya\s+(?:est[aá]\s+)?disponible\b|\bya\s+(?:se\s+)?puede\b/i],
   // "desde la fecha de salida", "desde el estreno": promete algo que todavía no pasa.
@@ -141,8 +166,25 @@ const TEMPORAL = [
   ["es-pronto", /\b(?:pr[oó]ximamente|muy\s+pronto|acaba\s+de\s+(?:salir|publicarse|lanzarse)|reci[eé]n\s+(?:salid|lanzad|publicad)[oa])\b/i],
   // "el nuevo single", "su nuevo álbum": deja de ser nuevo con el siguiente lanzamiento.
   ["es-nuevo", /\b(?:el|su)\s+nuev[oa]\s+(?:single|sencillo|[aá]lbum|EP|disco)\b/i],
-  // "out Friday", "out on Friday", "out now", "out this/next …".
-  ["en-out", new RegExp(`\\bout\\s+(?:on\\s+)?(?:${DAY_EN}|now|this|next)\\b`, "i")],
+  // "out Friday", "out on November 20", "out October 30", "out now", "out this Friday", "out next
+  // week". "out this" y "out next" sueltos no bastan: "stands out next to", "carved out this".
+  [
+    "en-out",
+    new RegExp(
+      `\\bout\\s+(?:on\\s+)?(?:${DAY_EN}|${MONTH_EN})\\b|\\bout\\s+now\\b|\\bout\\s+(?:this|next)\\s+(?:${DAY_EN}|week|month)\\b`,
+      "i",
+    ),
+  ],
+  // "will be released", "will be out", "will be available": futuro del lanzamiento. "will be
+  // published once the band confirms" (créditos) no depende de la fecha y no calza.
+  ["en-will-be", /\bwill\s+be\s+(?:released|out|available)\b/i],
+  // "available from October 30", "streaming on Friday": promesa con fecha.
+  ["en-available-from", new RegExp(`\\b(?:available|streaming)\\s+(?:from|on)\\s+(?:${DAY_EN}|${MONTH_EN})\\b`, "i")],
+  // "releases this Friday", "arrives on November 5", "drops next Friday", "lands October 30".
+  [
+    "en-releases-on",
+    new RegExp(`\\b(?:releases|arrives|drops|lands)\\s+(?:on\\s+)?(?:this\\s+|next\\s+)?(?:${DAY_EN}|${MONTH_EN})\\b`, "i"),
+  ],
   // "coming out on", "comes out", "coming soon".
   ["en-coming", /\b(?:coming|comes)\s+out\b|\bcoming\s+soon\b/i],
   // "pre-order", "can be pre-ordered".
@@ -183,9 +225,24 @@ const KNOWN_BAD = [
   '"Destellos de ti" is the new single from Klaus B, with release date Thursday, October 22, 2026.',
   "Pre-save / Escuchar",
   "Qobuz (reserva · hi-res)",
+  // Formas probables de la próxima ficha (Una Cuota De Caos, 20-11) que la primera versión dejaba
+  // pasar: futuro, fecha con mes y sin nombre del día, "a (todas las) plataformas" en medio.
+  "el álbum saldrá el viernes 20 de noviembre de 2026",
+  "llegará a plataformas el 20 de noviembre",
+  "se lanza el 20 de noviembre",
+  "se lanzará el 20 de noviembre",
+  "llega a todas las plataformas el viernes 30",
+  "disponible a partir del 30 de octubre",
+  "Reserva ya el vinilo en Qobuz.",
+  "The album will be released on Friday, November 20, 2026.",
+  "out on November 20",
+  "out October 30 on all platforms",
+  "out May 8",
+  "available from October 30",
+  "The single releases this Friday.",
 ];
 const missed = KNOWN_BAD.filter((s) => temporalHits(s).length === 0);
-report(`TEMPORAL detecta las ${KNOWN_BAD.length} frases y etiquetas viejas conocidas`, missed.length === 0, list(missed.map((s) => `«${s.slice(0, 60)}»`)));
+report(`TEMPORAL detecta las ${KNOWN_BAD.length} frases y etiquetas viejas o probables`, missed.length === 0, list(missed.map((s) => `«${s.slice(0, 60)}»`)));
 
 // Frases neutras o ya corregidas: ninguna familia puede calzar (sin falsos positivos).
 const NEUTRAL = [
@@ -199,6 +256,15 @@ const NEUTRAL = [
   '"Destellos de ti" llega tres semanas después de "Cuántas veces"',
   'the video asks for whom and for what water is "reserved".',
   'It is the band\'s first new song since "Liverpool Session" (2025)',
+  // Idiomáticos que no caducan, y falsos positivos de la primera versión de en-out y es-reserva.
+  "Full composition, recording, mixing and mastering credits will be published once the band confirms them.",
+  '"En Vela" was released on Friday, October 23, 2026.',
+  "a horn line that stands out next to the drums",
+  "the space the band has carved out this year",
+  "What the band worked out may surprise longtime listeners.",
+  "La portada evoca la Reserva Nacional Los Flamencos.",
+  "un vino Gran Reserva",
+  "un día después de que la canción llegara a plataformas el 22 de octubre de 2026",
   // Textos nuevos de esta corrección (lib/releases.ts y lib/videos.ts).
   'y su primer lanzamiento con PHŌNÉ Records, con fecha de salida el viernes 23 de octubre de 2026; el enlace de la sección "Escuchar" lleva a todas las plataformas.',
   'and her first release with PHŌNÉ Records, with release date Friday, October 23, 2026; the link in the "Listen" section takes you to every platform.',
@@ -220,16 +286,26 @@ const NEUTRAL = [
 const falsePos = NEUTRAL.flatMap((s) => temporalHits(s).map((h) => `${h.id} «${h.excerpt}»`));
 report(`TEMPORAL sin falsos positivos en ${NEUTRAL.length} frases neutras`, falsePos.length === 0, list(falsePos));
 
-const temporalFields = releases.flatMap((r) => [
-  { slug: r.slug, field: "es", text: r.description.es },
-  { slug: r.slug, field: "en", text: r.description.en },
-  ...(r.links ?? []).map((l) => ({ slug: r.slug, field: "label", text: l.label })),
-]);
+const temporalFields = [
+  ...releases.flatMap((r) => [
+    { slug: r.slug, field: "es", text: r.description.es },
+    { slug: r.slug, field: "en", text: r.description.en },
+    ...(r.links ?? []).map((l) => ({ slug: r.slug, field: "label", text: l.label })),
+  ]),
+  ...videos.flatMap((v) => [
+    { slug: `video:${v.slug}`, field: "es", text: v.description.es },
+    { slug: `video:${v.slug}`, field: "en", text: v.description.en },
+  ]),
+  ...artists.flatMap((a) => [
+    { slug: `artista:${a.slug}`, field: "bio.es", text: a.bio.es },
+    { slug: `artista:${a.slug}`, field: "bio.en", text: a.bio.en },
+  ]),
+];
 const temporalFound = temporalFields.flatMap((f) => temporalHits(f.text).map((h) => ({ ...f, ...h })));
 report(
-  `ninguna descripción ni etiqueta de enlace con frases relativas al momento (${temporalFields.length} campos, ${TEMPORAL.length} familias)`,
+  `ninguna descripción (fichas, videos, bios) ni etiqueta de enlace con frases relativas al momento (${temporalFields.length} campos: ${releases.length} fichas, ${videos.length} videos, ${artists.length} bios; ${TEMPORAL.length} familias)`,
   temporalFound.length === 0,
-  temporalFound.length ? `${temporalFound.length} coincidencias en ${new Set(temporalFound.map((h) => h.slug)).size} fichas` : "",
+  temporalFound.length ? `${temporalFound.length} coincidencias en ${new Set(temporalFound.map((h) => h.slug)).size} fichas, videos o bios` : "",
 );
 for (const h of temporalFound) console.log(`       ${h.slug} [${h.field}] ${h.id} «${h.excerpt}»`);
 
