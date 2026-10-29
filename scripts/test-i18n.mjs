@@ -4,18 +4,22 @@
 // Fuente de verdad: lib/i18n/<sección>.ts (un objeto { en, es } por sección); lib/translations.ts es
 // el barril que arma `translations` con la misma forma, claves y orden que antes de D0.
 // Los idiomas salen de Object.keys(translations) y `es` es la referencia (un idioma nuevo, X18, entra
-// en todas las comprobaciones sin tocar este archivo; su lista blanca de I4 se revisa entonces).
+// en I1-I4 e I6 sin tocar este archivo; I5 pide actualizar LANG_ORDER y todos los hashes, y su
+// lista blanca de I4 se revisa entonces).
 // Comprueba (FAIL):
 //   I1 forma: cada idioma tiene las mismas claves que `es` a cualquier profundidad, con índices de
 //     arreglo, el mismo largo y el mismo tipo de hoja. Se informa la ruta (footer.links.artists.3.href).
-//   I2 sin vacíos: ningún string vacío o solo con espacios, ningún arreglo u objeto vacío.
+//   I2 sin vacíos: ningún string vacío o solo con espacios, ninguna hoja null o undefined (I1 solo
+//     compara tipos: si las dos son null, pasa), ningún arreglo u objeto vacío.
 //   I3 marcadores: por hoja, el mismo conjunto de {x} y el mismo número de saltos de línea.
 //   I4 traducido: ninguna hoja igual a la de `es`, salvo rutas y cifras (STRUCTURAL), nombres
 //     propios (SAME_OK_PATHS) y préstamos (SAME_OK_VALUES). Una entrada de la lista blanca que no
 //     explica ninguna hoja falla como "entrada muerta".
-//   I5 hash por sección: SHA-256 de cada sección con todos los idiomas, en el orden del objeto, y
-//     el orden de las secciones. Si un texto cambia a propósito, se actualiza SOLO la línea de esa
-//     sección en SECTION_SHA256 (el FAIL imprime el valor nuevo). INFO con el hash completo.
+//   I5 hash por sección: SHA-256 de cada sección con todos los idiomas, en el orden del objeto; el
+//     orden de los idiomas (LANG_ORDER) y el de las secciones. Si un texto cambia a propósito, se
+//     actualiza SOLO la línea de esa sección en SECTION_SHA256 (el FAIL imprime el valor nuevo). Si
+//     cambia el orden de los idiomas, cambian todos los hashes y el FAIL lo dice. INFO con el hash
+//     completo.
 //   I6 barril: cada lib/i18n/*.ts (salvo shape.ts) exporta una constante con su mismo nombre, con
 //     claves exactamente los idiomas, y translations[idioma][sección] es esa misma referencia; cada
 //     sección de translations tiene su archivo; sin comentarios, el barril no tiene más literales
@@ -43,6 +47,9 @@ const sha256 = (text) => createHash("sha256").update(text).digest("hex");
 
 const LANGS = Object.keys(translations);
 const REF = "es";
+// Orden de los idiomas en el barril con el que se calcularon los hashes de SECTION_SHA256. Si se
+// invierte o entra un idioma (X18), cambian TODOS los hashes: no se arregla línea por línea.
+const LANG_ORDER = ["en", "es"];
 
 // SHA-256 de JSON.stringify(Object.fromEntries(LANGS.map((l) => [l, translations[l][sección]]))),
 // en el orden de las secciones del objeto. Calculados en cc266a8 (antes de D0); se actualiza a
@@ -95,8 +102,9 @@ function shapeDiffs(ref, other, at = "") {
   return [];
 }
 
-/** I2: strings vacíos o solo con espacios, arreglos y objetos vacíos. */
+/** I2: strings vacíos o solo con espacios, hojas null o undefined, arreglos y objetos vacíos. */
 function emptyIssues(v, at = "") {
+  if (v === null || v === undefined) return [`${at || "(raíz)"}: ${v === null ? "null" : "undefined"}`];
   if (Array.isArray(v)) return v.length === 0 ? [`${at}: arreglo vacío`] : v.flatMap((x, i) => emptyIssues(x, join(at, i)));
   if (v && typeof v === "object") {
     const entries = Object.entries(v);
@@ -169,6 +177,8 @@ function sameIssues(ref, other, allow) {
     ["I1 tipo distinto", shapeDiffs(valid.es, variant((en) => (en.c = "x"))), "c: objeto ≠ string"],
     ["I2 solo espacios", emptyIssues(variant((en) => (en.a = "  "))), "a: vacío"],
     ["I2 arreglo vacío", emptyIssues(variant((en) => (en.b = []))), "b: arreglo vacío"],
+    ["I2 null", emptyIssues(variant((en) => (en.c.d = null))), "c.d: null"],
+    ["I2 undefined", emptyIssues(variant((en) => (en.b[0] = undefined))), "b.0: undefined"],
     ["I3 {title} → {titulo}", markerDiffs({ a: "Ver {title}" }, { a: "View {titulo}" }), "a: {title} ≠ {titulo}"],
     ["I3 saltos de línea", markerDiffs(valid.es, variant((en) => (en.b[1] = "two three"))), "b.1: 1 ≠ 0 saltos de línea"],
     ["I4 en = es fuera de la lista", sameIssues(valid.es, variant((en) => (en.a = "Hola {name}")), allow).issues, 'a: "Hola {name}"'],
@@ -217,6 +227,14 @@ for (const l of LANGS) {
 
 // ── I5 hash por sección ──
 {
+  const langsOk = JSON.stringify(LANGS) === JSON.stringify(LANG_ORDER);
+  report(
+    `I5 idiomas en el orden registrado (${LANG_ORDER.join(", ")})`,
+    langsOk,
+    langsOk
+      ? ""
+      : `${LANGS.join(", ")}: cambian todos los hashes; restaura el orden en ${BARREL} o, si es a propósito (X18), actualiza LANG_ORDER y todo SECTION_SHA256`,
+  );
   const expected = Object.keys(SECTION_SHA256);
   const badOrder = LANGS.filter((l) => JSON.stringify(Object.keys(translations[l])) !== JSON.stringify(expected));
   report(
@@ -226,11 +244,10 @@ for (const l of LANGS) {
   );
   for (const k of expected) {
     const got = sha256(JSON.stringify(Object.fromEntries(LANGS.map((l) => [l, translations[l][k]]))));
-    report(
-      `I5 hash de ${k}`,
-      got === SECTION_SHA256[k],
-      got === SECTION_SHA256[k] ? "" : `nuevo ${got}: si el cambio de texto es a propósito, actualiza solo la línea "${k}" de SECTION_SHA256`,
-    );
+    const hint = langsOk
+      ? `si el cambio de texto es a propósito, actualiza solo la línea "${k}" de SECTION_SHA256`
+      : `cambió el orden de los idiomas (ver "I5 idiomas"): no actualices esta línea sola`;
+    report(`I5 hash de ${k}`, got === SECTION_SHA256[k], got === SECTION_SHA256[k] ? "" : `nuevo ${got}: ${hint}`);
   }
   const full = JSON.stringify(translations);
   info("hash completo de JSON.stringify(translations)", `${sha256(full)} (${Buffer.byteLength(full)} bytes)`);
