@@ -86,15 +86,16 @@ export default async function ArtistasPage({
           dangerouslySetInnerHTML={{ __html: toJsonLd(rosterJsonLd(l)) }}
         />
         {/* La foto colectiva B/N de /sello (La Banca). En la altura "short" el recorte de escritorio
-            baja a los dos de adelante; el móvil 4:5 entra casi entero. El alt es el mismo de /sello
-            (carril Q, 4b7c31f): si cambia allí, cambiarlo aquí. */}
+            muestra el jockey del hombre, la cara de la mujer y el torso del DJ con bufanda (sin su
+            cabeza ni los micrófonos); el móvil 4:5 suma el micrófono de ella. El alt nombra solo lo
+            que se ve en los dos recortes (revisado con capturas a 1280 y 390, 29-10). */}
         <PageHero
           image={{
             desktop: "/media/sello/sello-hero.jpg",
             mobile: "/media/sello/sello-hero-mobile.jpg",
             alt: {
-              es: "Con.fusión e invitados en la sesión La Banca: delante, un hombre con jockey que canta al micrófono y una mujer de pelo largo y rizado con otro micrófono; detrás, a la izquierda, un DJ de pie con gorro de lana junto a la tornamesa; escenario oscuro, foto en blanco y negro",
-              en: "Con.fusión and guests at the La Banca session: in front, a man in a baseball cap singing into a microphone and a woman with long curly hair holding another microphone; behind them, on the left, a DJ in a beanie standing at the turntable; dark stage, black-and-white photo",
+              es: "Con.fusión e invitados en la sesión La Banca: en primer plano, un hombre con jockey y una mujer de pelo largo y rizado; detrás, en penumbra, un DJ con bufanda; escenario oscuro, foto en blanco y negro",
+              en: "Con.fusión and guests at the La Banca session: in the foreground, a man in a baseball cap and a woman with long curly hair; behind them, in shadow, a DJ in a scarf; dark stage, black-and-white photo",
             },
           }}
           title={c.title}

@@ -453,10 +453,11 @@ export const PIECE_IMAGE: Record<PieceId, PieceImage> = {
   prensa: {
     src: "/media/sello/sello-hero.jpg",
     kind: "photo",
-    // El mismo alt que la foto tiene en /sello.
+    // Aquí la foto se ve casi entera (a diferencia del hero recortado de /sello), así que el alt
+    // describe la escena completa (revisado con capturas a 1280 y 390, 29-10).
     alt: {
-      es: "Con.fusión e invitados en la sesión La Banca: tres personas alrededor de una banca de plaza en un escenario oscuro, dos sentadas con micrófonos y una de pie detrás; foto en blanco y negro",
-      en: "Con.fusión and guests at the La Banca session: three people around a park bench on a dark stage, two seated with microphones and one standing behind; black-and-white photo",
+      es: "Con.fusión e invitados en la sesión La Banca: delante, sentados en bancas de plaza, un hombre con jockey que canta al micrófono y una mujer de pelo largo y rizado con otro micrófono; detrás, un DJ de pie con gorro de lana junto a la tornamesa; escenario oscuro, foto en blanco y negro",
+      en: "Con.fusión and guests at the La Banca session: in front, seated on park benches, a man in a baseball cap singing into a microphone and a woman with long curly hair holding another microphone; behind them, a DJ in a beanie standing at the turntable; dark stage, black-and-white photo",
     },
   },
 };
