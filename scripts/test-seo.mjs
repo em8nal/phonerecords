@@ -343,4 +343,75 @@ for (const lang of LANGS) {
   }
 }
 
+// ── Carril N: preguntas frecuentes ──
+// /sello y /press-kit (pendiente 17h): 5–7 preguntas por página e idioma con respuestas del
+// contenido del sitio, sin año de fundación (X27) ni valores; FAQPage con los mismos textos.
+{
+  const { FAQ, faqMainEntity, faqPlainAnswer } = await import("../lib/faq.ts");
+  const FAQ_PAGES = { sello: "app/[lang]/sello/page.tsx", pressKit: "app/[lang]/press-kit/page.tsx" };
+  const YEAR_RE = /\b(19|20)\d{2}\b/;
+  const MONEY_RE = /[$€]|\bCLP\b|\bUSD\b|\bUF\b|\d{1,3}([.,]\d{3})+/;
+  const segText = (s) => (typeof s === "string" ? s : s.text);
+  for (const [page, file] of Object.entries(FAQ_PAGES)) {
+    const ids = {};
+    for (const lang of LANGS) {
+      const items = FAQ[page]?.[lang] ?? [];
+      ids[lang] = items.map((i) => i.id);
+      // S1
+      report(`S1 [${lang}] ${page}: entre 5 y 7 preguntas`, items.length >= 5 && items.length <= 7, String(items.length));
+      // S2
+      const badQ = items.filter((i) => !i.q.trim().endsWith("?") || (lang === "es" && !i.q.trim().startsWith("¿"))).map((i) => i.id);
+      report(`S2 [${lang}] ${page}: preguntas con ${lang === "es" ? "¿…?" : "…?"}`, badQ.length === 0, list(badQ));
+      // S3
+      const texts = items.flatMap((i) => [i.q, ...i.a.map(segText)]);
+      const years = texts.filter((t) => YEAR_RE.test(t));
+      const money = texts.filter((t) => MONEY_RE.test(t));
+      report(`S3 [${lang}] ${page}: sin años (X27) ni valores`, years.length === 0 && money.length === 0, list([...years, ...money].map((t) => `«${t.slice(0, 50)}»`)));
+      // S4
+      const hrefs = items.flatMap((i) => i.a.filter((s) => typeof s !== "string").map((s) => s.href));
+      const badHref = hrefs.filter((h) => !h.startsWith("/") || /^\/(es|en)(\/|$)/.test(h));
+      report(`S4 [${lang}] ${page}: enlaces internos sin idioma`, hrefs.length > 0 && badHref.length === 0, list(badHref));
+      if (page === "sello") {
+        const need = ["topic=propuesta", "topic=booking", "/servicios", "/press-kit"];
+        const missing = need.filter((n) => !hrefs.some((h) => h.includes(n)));
+        report(`S4 [${lang}] sello enlaza a propuesta, booking, /servicios y /press-kit`, missing.length === 0, list(missing));
+      }
+      // S5
+      const roster = items.find((i) => i.id === "artistas");
+      const rosterText = roster ? faqPlainAnswer(roster.a) : "";
+      const unnamed = artists.filter((a) => !rosterText.includes(a.name)).map((a) => a.slug);
+      report(`S5 [${lang}] ${page}: la respuesta "artistas" nombra a todo el roster`, Boolean(roster) && unnamed.length === 0, list(unnamed));
+      // S6
+      const entity = faqMainEntity(page, lang);
+      const badEntity = items.filter((it, n) => {
+        const e = entity[n];
+        return (
+          !e ||
+          e["@type"] !== "Question" ||
+          e.name !== it.q ||
+          e.acceptedAnswer?.["@type"] !== "Answer" ||
+          e.acceptedAnswer.text !== faqPlainAnswer(it.a) ||
+          e.acceptedAnswer.text.includes("<")
+        );
+      });
+      report(
+        `S6 [${lang}] ${page}: FAQPage = preguntas y respuestas visibles`,
+        entity.length === items.length && badEntity.length === 0 && same(JSON.parse(toJsonLd(entity)), entity),
+        list(badEntity.map((i) => i.id)),
+      );
+    }
+    report(`S1 ${page}: ES y EN con los mismos id en el mismo orden`, same(ids.es, ids.en), `${list(ids.es)} | ${list(ids.en)}`);
+    // S7
+    const code = src(file);
+    report(
+      `S7 ${file}: FAQPage, faqMainEntity("${page}" y <FaqList`,
+      code.includes('"FAQPage"') && code.includes(`faqMainEntity("${page}"`) && code.includes("<FaqList"),
+    );
+    if (page === "pressKit") {
+      const section = /<section[^>]*aria-labelledby="faq-heading"[^>]*>/.exec(code)?.[0] ?? "";
+      report("S7 la sección de preguntas de /press-kit lleva print:hidden (el PDF no cambia)", section.includes("print:hidden"), section);
+    }
+  }
+}
+
 process.exit(ok ? 0 : 1);

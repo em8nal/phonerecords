@@ -5,8 +5,10 @@ import { ArrowLeft, ArrowUpRight } from "lucide-react";
 import { Navigation } from "@/components/landing/navigation";
 import { PageHero } from "@/components/phone/page-hero";
 import { FooterSection } from "@/components/landing/footer-section";
-import { ORG_ID, WEBSITE_ID, organizationJsonLd, toJsonLd } from "@/lib/schema";
+import { ORG_ID, WEBSITE_ID, organizationJsonLd, toJsonLd, toLang } from "@/lib/schema";
 import { pageMetadata } from "@/lib/seo";
+import { FAQ, faqMainEntity } from "@/lib/faq";
+import { FaqList } from "@/components/phone/faq-list";
 
 type LangParams = { lang: string };
 
@@ -210,19 +212,21 @@ export default async function SelloPage({
   const isEs = lang === "es";
 
   // La organización sale de lib/schema.ts (misma entidad que la portada). La página
-  // trata sobre ella (`about`) y es parte del sitio (`isPartOf`, un CreativeWork).
+  // trata sobre ella (`about`) y es parte del sitio (`isPartOf`, un CreativeWork). También es
+  // un FAQPage: `mainEntity` lleva las preguntas frecuentes visibles (lib/faq.ts).
   const schema = {
     "@context": "https://schema.org",
     "@graph": [
       organizationJsonLd(lang),
       {
-        "@type": "AboutPage",
+        "@type": ["AboutPage", "FAQPage"],
         "@id": `https://phonerecords.cl/${lang}/sello`,
         url: `https://phonerecords.cl/${lang}/sello`,
         name: isEs ? "Sobre el sello" : "About the label",
         inLanguage: isEs ? "es-CL" : "en-US",
         about: { "@id": ORG_ID },
         isPartOf: { "@id": WEBSITE_ID },
+        mainEntity: faqMainEntity("sello", lang),
       },
       {
         "@type": "BreadcrumbList",
@@ -394,6 +398,14 @@ export default async function SelloPage({
                 </a>
               ))}
             </div>
+          </section>
+
+          {/* Preguntas frecuentes: los mismos textos van al FAQPage del JSON-LD */}
+          <section aria-labelledby="faq-heading" className="mb-20 lg:mb-28">
+            <h2 id="faq-heading" className="text-3xl lg:text-5xl font-display tracking-tight mb-12">
+              {isEs ? "Preguntas frecuentes" : "Frequently asked questions"}
+            </h2>
+            <FaqList items={FAQ.sello[toLang(lang)]} lang={toLang(lang)} />
           </section>
 
           {/* Legal */}

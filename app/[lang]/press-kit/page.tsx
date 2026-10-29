@@ -11,6 +11,9 @@ import { getArtistEntries } from "@/lib/catalog";
 import { ARTIST_PORTRAIT } from "@/lib/artist-media";
 import { pageMetadata } from "@/lib/seo";
 import type { Language } from "@/lib/translations";
+import { ORG_ID, WEBSITE_ID, toJsonLd } from "@/lib/schema";
+import { FAQ, faqMainEntity } from "@/lib/faq";
+import { FaqList } from "@/components/phone/faq-list";
 
 type LangParams = { lang: string };
 
@@ -139,15 +142,20 @@ export default async function PressKitPage({
 
   const totalReleases = rosterRows.reduce((s, r) => s + r.releaseCount, 0);
 
+  // La página trata sobre el sello (`about`), es parte del sitio (`isPartOf`, un CreativeWork)
+  // y es un FAQPage: `mainEntity` lleva las preguntas frecuentes visibles (lib/faq.ts).
   const schema = {
     "@context": "https://schema.org",
     "@graph": [
       {
-        "@type": "AboutPage",
+        "@type": ["AboutPage", "FAQPage"],
         "@id": `https://phonerecords.cl/${lang}/press-kit`,
+        url: `https://phonerecords.cl/${lang}/press-kit`,
         name: "Press Kit — PHŌNÉ Records",
         inLanguage: isEs ? "es-CL" : "en-US",
-        isPartOf: { "@id": "https://phonerecords.cl/#organization" },
+        about: { "@id": ORG_ID },
+        isPartOf: { "@id": WEBSITE_ID },
+        mainEntity: faqMainEntity("pressKit", lang),
       },
       {
         "@type": "BreadcrumbList",
@@ -165,7 +173,7 @@ export default async function PressKitPage({
       <main id="contenido" tabIndex={-1} className="relative min-h-screen overflow-x-hidden noise-overlay print:noise-overlay-none">
         <script
           type="application/ld+json"
-          dangerouslySetInnerHTML={{ __html: JSON.stringify(schema) }}
+          dangerouslySetInnerHTML={{ __html: toJsonLd(schema) }}
         />
         <PageHero
           image={{
@@ -309,6 +317,17 @@ export default async function PressKitPage({
                 ))}
               </dl>
               <p className="mt-6 text-sm italic text-foreground/70">{c.contactNote}</p>
+            </div>
+          </section>
+
+          {/* Preguntas frecuentes (fuera del PDF, que se imprime desde esta página); los mismos
+              textos van al FAQPage del JSON-LD */}
+          <section aria-labelledby="faq-heading" className="mb-16 grid lg:grid-cols-12 gap-6 lg:gap-12 print:hidden">
+            <h2 id="faq-heading" className="lg:col-span-4 text-2xl lg:text-3xl font-display tracking-tight text-foreground/70">
+              {isEs ? "Preguntas frecuentes" : "Frequently asked questions"}
+            </h2>
+            <div className="lg:col-span-8">
+              <FaqList items={FAQ.pressKit[uiLang]} lang={uiLang} />
             </div>
           </section>
 
