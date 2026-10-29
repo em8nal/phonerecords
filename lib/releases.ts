@@ -287,13 +287,13 @@ The recording is ℗ 2026 Newen Afrobeat and the release © 2026 PHŌNÉ Records
     releaseDate: "2014-06-22",
     year: 2014,
     type: "album",
-    format: "LP debut · 7 tracks (74 min)",
+    format: "LP debut · 7 tracks (57 min)",
     cover: "https://f4.bcbits.com/img/a1477748070_10.jpg",
     description: {
       es:
-        "Edición limitada en vinilo 12\" prensada por PHŌNÉ Records en 2023, seis años después del EP digital original. Recupera las composiciones de Fela —Upside Down y Opposite People— en formato físico con dirección de arte revisada para el prensaje. Marca el primer prensaje del sello PHŌNÉ con cat# PHONELTD001 y abre la línea de reediciones físicas del catálogo de Newen Afrobeat. Edición agotada en gran parte tras la gira europea.",
+        "Álbum debut de Newen Afrobeat, publicado de forma independiente el 22 de junio de 2014 en CD de edición limitada y en digital. Siete temas en 57 minutos, de \"Santiago\" a \"Que Sabemos\".",
       en:
-        "Limited 12\" vinyl edition pressed by PHŌNÉ Records in 2023, six years after the original digital EP. Recovers Fela's compositions — Upside Down and Opposite People — in physical format with revised art direction for the pressing. Marks PHŌNÉ Records' first pressing with cat# PHONELTD001 and opens the line of physical reissues from Newen Afrobeat's catalogue. Largely sold out after the European tour.",
+        "Newen Afrobeat's debut album, self-released on June 22, 2014 as a limited-edition CD and digitally. Seven tracks over 57 minutes, from \"Santiago\" to \"Que Sabemos\".",
     },
     tracklist: [
       { n: 1, title: "Santiago", duration: "13:31" },
