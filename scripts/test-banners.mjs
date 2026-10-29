@@ -8,7 +8,9 @@
 //   4. por entrada: ventana no vacía; las ventanas de pre-save (endsAt ≤ estreno) empiezan antes del
 //      estreno y dicen "Pre-save"; las ventanas de un mismo slug son contiguas (sin huecos ni
 //      solapes); si secondaryHref es /releases/<slug>, la ficha existe y es la del mismo slug, y si
-//      la ficha tiene smartLink y el CTA no es YouTube, cta.href === smartLink.
+//      la ficha tiene smartLink y el CTA no es YouTube, cta.href === smartLink; si el eyebrow lleva
+//      fecha, la lleva en los dos idiomas ("22 de octubre" / "October 22", nunca "22 October") y es
+//      el día de releaseDate.
 // Con --dias imprime el carrusel de cada día del 29-10 al 02-12 (a las 12:00) para el reporte:
 //   node --import ./scripts/ts-resolve-hook.mjs scripts/test-banners.mjs --dias
 import { BANNER_ENTRIES, getActiveBanners, isReleased } from "../lib/banner.ts";
@@ -128,6 +130,27 @@ for (const b of BANNER_ENTRIES) {
     }
   }
 }
+// Fecha del eyebrow: "D de <mes>" en ES y "<Month> D" en EN, igual a releaseDate.
+const MESES = ["enero", "febrero", "marzo", "abril", "mayo", "junio", "julio", "agosto", "septiembre", "octubre", "noviembre", "diciembre"];
+const MONTHS = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"];
+const esDateRe = new RegExp(`\\b(\\d{1,2}) de (${MESES.join("|")})\\b`);
+const enDateRe = new RegExp(`\\b(${MONTHS.join("|")}) (\\d{1,2})\\b`);
+const enDayFirstRe = new RegExp(`\\b\\d{1,2} (?:${MONTHS.join("|")})\\b`);
+for (const b of BANNER_ENTRIES) {
+  if (!b.eyebrow) continue;
+  const id = `${b.slug}@${b.startsAt}`;
+  const es = esDateRe.exec(b.eyebrow.es);
+  const en = enDateRe.exec(b.eyebrow.en);
+  if (enDayFirstRe.test(b.eyebrow.en)) entryProblems.push(`${id}: eyebrow en «${b.eyebrow.en}» con el día antes del mes`);
+  if (!!es !== !!en) entryProblems.push(`${id}: eyebrow con fecha en un solo idioma («${b.eyebrow.es}» / «${b.eyebrow.en}»)`);
+  const [, mm, dd] = /^\d{4}-(\d{2})-(\d{2})$/.exec(b.releaseDate) ?? [];
+  if (es && mm && (Number(es[1]) !== Number(dd) || MESES.indexOf(es[2]) + 1 !== Number(mm))) {
+    entryProblems.push(`${id}: eyebrow es «${b.eyebrow.es}» ≠ releaseDate ${b.releaseDate}`);
+  }
+  if (en && mm && (Number(en[2]) !== Number(dd) || MONTHS.indexOf(en[1]) + 1 !== Number(mm))) {
+    entryProblems.push(`${id}: eyebrow en «${b.eyebrow.en}» ≠ releaseDate ${b.releaseDate}`);
+  }
+}
 const bySlug = new Map();
 for (const b of BANNER_ENTRIES) bySlug.set(b.slug, [...(bySlug.get(b.slug) ?? []), b]);
 for (const [slug, entries] of bySlug) {
@@ -139,7 +162,7 @@ for (const [slug, entries] of bySlug) {
   }
 }
 report(
-  `reglas por entrada (${BANNER_ENTRIES.length}): ventanas no vacías, pre-save antes del estreno, ventanas contiguas por slug, ficha y smart link`,
+  `reglas por entrada (${BANNER_ENTRIES.length}): ventanas no vacías, pre-save antes del estreno, ventanas contiguas por slug, ficha, smart link y fecha del eyebrow`,
   entryProblems.length === 0,
   entryProblems.join(" · "),
 );
