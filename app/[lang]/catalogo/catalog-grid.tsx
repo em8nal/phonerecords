@@ -48,7 +48,13 @@ const EMPTY_QUERY: Query = new URLSearchParams();
  * /catalogo es estática con ISR (H2) y useSearchParams solo se resuelve en el cliente: sin un
  * límite de Suspense el build falla, y con fallback={null} el HTML saldría sin grilla. El
  * fallback es la misma grilla sin filtros (todas las entradas, orden reciente), así que el HTML
- * trae las tarjetas y los enlaces a cada ficha; al hidratar se aplican los filtros de la URL.
+ * trae las tarjetas y los enlaces a cada ficha. Al prerenderizar, useSearchParams lanza
+ * BailoutToCSRError y el límite queda marcado para renderizarse en el cliente: en CADA visita,
+ * con filtros o sin ellos, React descarta las tarjetas del HTML y crea la grilla de nuevo al
+ * hidratar (las imágenes se montan otra vez, desde la caché). Leer location.search con
+ * useSyncExternalStore lo evitaría, pero router.replace (history.replaceState) no emite ningún
+ * evento al que suscribirse: sin más trabajo, los chips y los enlaces con ?artist= dejarían de
+ * filtrar.
  */
 export function CatalogGrid(props: CatalogGridProps) {
   return (
