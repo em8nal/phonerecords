@@ -91,7 +91,7 @@ export default async function ContactoPage({
 
   return (
     <>
-      <main className="relative min-h-screen overflow-x-hidden noise-overlay">
+      <main id="contenido" tabIndex={-1} className="relative min-h-screen overflow-x-hidden noise-overlay">
         <script
           type="application/ld+json"
           dangerouslySetInnerHTML={{ __html: JSON.stringify(schema) }}

@@ -161,7 +161,7 @@ export default async function PressKitPage({
 
   return (
     <>
-      <main className="relative min-h-screen overflow-x-hidden noise-overlay print:noise-overlay-none">
+      <main id="contenido" tabIndex={-1} className="relative min-h-screen overflow-x-hidden noise-overlay print:noise-overlay-none">
         <script
           type="application/ld+json"
           dangerouslySetInnerHTML={{ __html: JSON.stringify(schema) }}

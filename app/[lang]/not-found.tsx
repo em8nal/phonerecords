@@ -48,7 +48,7 @@ export default function NotFound() {
 
   return (
     <>
-      <main className="relative min-h-screen overflow-x-hidden noise-overlay">
+      <main id="contenido" tabIndex={-1} className="relative min-h-screen overflow-x-hidden noise-overlay">
         <Navigation />
 
         <article className="max-w-[1000px] mx-auto px-6 lg:px-12 pt-32 lg:pt-40 pb-24">

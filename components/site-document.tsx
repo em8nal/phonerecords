@@ -28,6 +28,13 @@ const jetbrainsMono = JetBrains_Mono({
   variable: "--font-jetbrains",
 });
 
+// "Saltar al contenido" (WCAG 2.4.1): primer elemento enfocable del <body>, oculto hasta
+// recibir foco. Lleva al <main id="contenido" tabIndex={-1}> de cada página (y de la 404).
+// z-[70]: por encima del banner de cookies (z-[60]) y del menú fijo (z-50).
+const SKIP_LABEL = { es: "Saltar al contenido", en: "Skip to content" } as const;
+const SKIP_CLASS =
+  "sr-only focus:not-sr-only focus:fixed focus:left-4 focus:top-4 focus:z-[70] focus:inline-flex focus:min-h-11 focus:items-center focus:rounded-full focus:bg-foreground focus:px-5 focus:text-sm focus:text-background focus:outline-none focus-visible:ring-2 focus-visible:ring-brand focus-visible:ring-offset-2 focus-visible:ring-offset-background print:hidden";
+
 export function SiteDocument({
   lang,
   className,
@@ -56,6 +63,9 @@ export function SiteDocument({
       </head>
       <GoogleTagManager gtmId="GTM-NXRBTN9P" />
       <body className={bodyClass}>
+        <a href="#contenido" className={SKIP_CLASS}>
+          {SKIP_LABEL[lang]}
+        </a>
         {children}
         {/* Vercel Analytics / Speed Insights are cookieless: no consent needed. */}
         <Analytics />

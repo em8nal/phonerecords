@@ -192,7 +192,7 @@ export default async function PressKitPage({
       </div>
 
       {/* Document — A4 layout */}
-      <div className="press-document mx-auto bg-white">
+      <main id="contenido" tabIndex={-1} className="press-document mx-auto bg-white">
         {/* Header */}
         <header className="press-header">
           <div className="press-logo">
@@ -322,7 +322,7 @@ export default async function PressKitPage({
             PHŌNÉ Records · Santiago de Chile · {t.generated}: {today}
           </div>
         </section>
-      </div>
+      </main>
     </div>
   );
 }
