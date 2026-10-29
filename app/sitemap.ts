@@ -5,6 +5,7 @@ import { releases as releaseList } from "../lib/releases";
 import { getPublishedVideos } from "../lib/videos";
 import { getArtistEntries, getCatalogEntries } from "../lib/catalog";
 import { getUpcomingEvents } from "../lib/events";
+import { getPublishedPieces, publishedDay } from "../lib/journal";
 import { SITE } from "../lib/schema";
 import { exactPastDate, latestDate } from "../lib/seo";
 
@@ -28,7 +29,7 @@ function withAlternates(path: string) {
   };
 }
 
-const STATIC_PAGES = ["/manifiesto", "/sello", "/servicios", "/catalogo", "/videos", "/eventos", "/contacto", "/privacidad", "/press-kit"] as const;
+const STATIC_PAGES = ["/artistas", "/manifiesto", "/sello", "/servicios", "/catalogo", "/videos", "/eventos", "/contacto", "/privacidad", "/press-kit"] as const;
 type StaticPath = "" | (typeof STATIC_PAGES)[number];
 
 /**
@@ -40,6 +41,10 @@ type StaticPath = "" | (typeof STATIC_PAGES)[number];
  */
 const STATIC_LASTMOD: Record<StaticPath, string | undefined> = {
   "": "2026-10-26",
+  // p19 carril R: fecha del commit que crea el índice. La página es estática (cambia solo con un
+  // deploy), así que no toma fechas de "Aparece en": una colaboración futura ya está listada desde
+  // el deploy y su fecha no es un cambio de la página. Al sumar una, actualizar esta fecha.
+  "/artistas": "2026-10-29",
   "/manifiesto": "2026-10-26",
   "/sello": "2026-10-29",
   "/servicios": "2026-10-26", // pendiente 18: fecha del commit que crea la página
@@ -109,7 +114,18 @@ export default function sitemap(): MetadataRoute.Sitemap {
     (path) => entries(path, latestDate([STATIC_LASTMOD[path], dataLastmod[path]]), "monthly", 0.7),
   );
 
-  const rest = [...editorial, ...artists, ...releases, ...videos];
+  // Journal: solo con piezas publicadas (sin piezas, el índice lleva noindex y queda fuera). Una
+  // pieza entra a la hora de su publishAt, en paridad con su página (404 hasta entonces).
+  const pieces = getPublishedPieces(now);
+  const journal =
+    pieces.length > 0
+      ? [
+          ...entries("/journal", latestDate(pieces.map((p) => exactPastDate(publishedDay(p), now))), "weekly", 0.7),
+          ...pieces.flatMap((p) => entries(`/journal/${p.slug}`, exactPastDate(publishedDay(p), now), "monthly", 0.6)),
+        ]
+      : [];
+
+  const rest = [...editorial, ...journal, ...artists, ...releases, ...videos];
 
   // Portada: el último cambio de todo el sitio.
   const home = entries(

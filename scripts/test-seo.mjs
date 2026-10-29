@@ -153,6 +153,25 @@ for (const p of PAGES) {
     titles.map((t) => `${templatedTitle(t)} (${titleLength(templatedTitle(t))})`).join(" | "),
   );
 }
+// Carril R (p19): el índice /artistas y el journal, con las mismas tres comprobaciones y sin APIs
+// de petición (estáticas o ISR; los comentarios se ignoran).
+const NEW_PAGES = ["artistas", "journal"];
+for (const p of NEW_PAGES) {
+  const file = `app/[lang]/${p}/page.tsx`;
+  const s = src(file);
+  report(`${p}: usa pageMetadata(`, s.includes("pageMetadata("));
+  report(`${p}: sin alternates:`, !s.includes("alternates:"));
+  const titles = titlesOf(s.slice(s.indexOf("pageMetadata(")));
+  const tooLong = titles.filter((t) => titleLength(templatedTitle(t)) > TITLE_MAX);
+  report(
+    `${p}: títulos ≤ ${TITLE_MAX} con la plantilla`,
+    titles.length > 0 && tooLong.length === 0,
+    titles.map((t) => `${templatedTitle(t)} (${titleLength(templatedTitle(t))})`).join(" | "),
+  );
+  const codeOnly = s.replace(/\/\*[\s\S]*?\*\//g, "").replace(/^\s*\/\/.*$/gm, "");
+  const dyn = ["headers(", "cookies(", "searchParams", "force-dynamic", "next/headers"].filter((d) => codeOnly.includes(d));
+  report(`${p}: sin headers(), cookies(), searchParams ni force-dynamic`, dyn.length === 0, list(dyn));
+}
 {
   const layout = src("lib/site-metadata.ts");
   const bad = ["es_CL", "alternates", "canonical", "alternateLocale"].filter((k) => layout.includes(k));
@@ -319,6 +338,104 @@ for (const lang of LANGS) {
   report("artistas: lo más reciente entre discografía y videos publicados", badArtist.length === 0, list(badArtist.map((a) => a.slug)));
   const unpaired = sm.filter((e) => !byUrl.has(e.url.replace(/^(https:\/\/[^/]+\/)(es|en)/, (_, h, l) => `${h}${other(l)}`)));
   report("cada URL tiene su par en el otro idioma", unpaired.length === 0, list(unpaired.map((e) => e.url)));
+}
+
+// ── Índice /artistas (M13, carril R del p19) ──
+// getAppearances ("Aparece en"), JSON-LD del índice, description y entrada del sitemap. Import
+// dinámico para no tocar la cabecera.
+{
+  const { getAppearances, rosterJsonLd, rosterDescription, appearanceDate } = await import("../app/[lang]/artistas/roster-index.ts");
+  const ap = getAppearances();
+  const bySlug = new Map(ap.map((a) => [a.artist.slug, a.releases.map((r) => r.slug)]));
+  // Regla, en las dos direcciones: r aparece bajo s ⇔ s está en r.featuredArtistSlugs y s ≠ r.artistSlug.
+  const expected = new Map();
+  for (const r of releases) {
+    for (const s of r.featuredArtistSlugs ?? []) {
+      if (s === r.artistSlug) continue;
+      expected.set(s, [...(expected.get(s) ?? []), r.slug]);
+    }
+  }
+  const missing = [...expected].flatMap(([s, slugs]) => slugs.filter((x) => !bySlug.get(s)?.includes(x)).map((x) => `${s}:${x}`));
+  const extra = ap.flatMap((a) =>
+    a.releases
+      .filter((r) => r.artistSlug === a.artist.slug || !(r.featuredArtistSlugs ?? []).includes(a.artist.slug))
+      .map((r) => `${a.artist.slug}:${r.slug}`),
+  );
+  report("getAppearances: featuredArtistSlugs en las dos direcciones, sin apariciones propias", missing.length === 0 && extra.length === 0, list([...missing, ...extra]));
+  const unsorted = ap.filter((a) => a.releases.some((r, i) => i > 0 && a.releases[i - 1].releaseDate < r.releaseDate)).map((a) => a.artist.slug);
+  report("getAppearances: de la más reciente a la más antigua", unsorted.length === 0, list(unsorted));
+  const order = ap.map((a) => artists.findIndex((x) => x.slug === a.artist.slug));
+  report("getAppearances: en el orden de lib/artists.ts y sin artistas vacíos", order.every((n, i) => n >= 0 && (i === 0 || n > order[i - 1])) && ap.every((a) => a.releases.length > 0));
+  console.log(`INFO "Aparece en" -> ${ap.map((a) => `${a.artist.slug} ${a.releases.length}`).join(", ") || "sin apariciones"}`);
+
+  for (const lang of LANGS) {
+    const doc = rosterJsonLd(lang);
+    const graph = doc["@graph"] ?? [];
+    const page = graph.find((n) => n["@type"] === "CollectionPage") ?? {};
+    const url = `${SITE}/${lang}/artistas`;
+    const items = page.mainEntity?.itemListElement ?? [];
+    const members = organizationJsonLd(lang).member;
+    const badItems = artists.filter((a, i) => {
+      const it = items[i];
+      return (
+        it?.position !== i + 1 ||
+        it?.item?.["@type"] !== "MusicGroup" ||
+        it.item["@id"] !== artistId(a.slug) ||
+        it.item["@id"] !== members[i]?.["@id"] ||
+        it.item.name !== a.name ||
+        it.item.url !== `${SITE}/${lang}/artistas/${a.slug}` ||
+        /\/(es|en)\//.test(it.item["@id"])
+      );
+    });
+    report(
+      `[${lang}] /artistas: CollectionPage + ItemList de MusicGroup (artistId = member de la organización, orden de artists)`,
+      page["@id"] === url &&
+        page.url === url &&
+        page.isPartOf?.["@id"] === WEBSITE_ID &&
+        page.mainEntity?.["@type"] === "ItemList" &&
+        page.mainEntity.numberOfItems === artists.length &&
+        items.length === artists.length &&
+        badItems.length === 0,
+      list(badItems.map((a) => a.slug)),
+    );
+    const crumbs = graph.find((n) => n["@type"] === "BreadcrumbList")?.itemListElement ?? [];
+    report(
+      `[${lang}] /artistas: miga de 2 niveles (Inicio → Artistas)`,
+      crumbs.length === 2 && crumbs[0].item === `${SITE}/${lang}` && crumbs[1].item === url && crumbs.every((c, i) => c.position === i + 1),
+    );
+    const d = rosterDescription(lang);
+    const unnamed = artists.filter((a) => !d.includes(a.name)).map((a) => a.slug);
+    report(`[${lang}] /artistas: description ≤ 160 con todo el roster`, titleLength(d) <= 160 && unnamed.length === 0, `${titleLength(d)} · ${list(unnamed)}`);
+    report(`[${lang}] /artistas: JSON-LD sin "<" literal tras toJsonLd`, !toJsonLd(doc).includes("<"));
+  }
+
+  const now = Date.now();
+  const sm = sitemapModule.default();
+  const rows = LANGS.map((l) => sm.find((e) => e.url === `${SITE}/${l}/artistas`));
+  report(
+    "sitemap: /es/artistas y /en/artistas con el mismo lastmod verdadero",
+    rows.every((e) => e && typeof e.lastModified === "string" && exactPastDate(e.lastModified, now) === e.lastModified) &&
+      rows[0].lastModified === rows[1].lastModified,
+    rows.map((e) => e?.lastModified).join(" | "),
+  );
+  // La página es estática: su lastmod es solo STATIC_LASTMOD. Una fecha de "Aparece en" lo haría
+  // saltar cuando pasa el día de una colaboración futura, sin que la página haya cambiado.
+  const smCode = src("app/sitemap.ts").replace(/\/\*[\s\S]*?\*\//g, "").replace(/^\s*\/\/.*$/gm, "");
+  report("sitemap: /artistas sin fechas de \"Aparece en\" (solo STATIC_LASTMOD)", !smCode.includes("getAppearances") && !smCode.includes("roster-index"));
+
+  // "Aparece en" en una página estática: el año si ya salió; la fecha (no "Próximamente") si es futuro.
+  const t0 = Date.UTC(2026, 9, 29, 15);
+  const cases = [
+    [{ releaseDate: "2026-10-01", year: 2026 }, "es", "2026"],
+    [{ releaseDate: "2026-11-10", year: 2026 }, "es", "10 de noviembre de 2026"],
+    [{ releaseDate: "2026-11-10", year: 2026 }, "en", "November 10, 2026"],
+    [{ releaseDate: "2023", year: 2023 }, "en", "2023"],
+  ];
+  const badDates = cases
+    .map(([r, l, want]) => [appearanceDate(r, l, t0), want])
+    .filter(([got, want]) => got !== want)
+    .map(([got, want]) => `«${got}»≠«${want}»`);
+  report("\"Aparece en\": año si ya salió, fecha completa si es futuro (sin \"Próximamente\")", badDates.length === 0, list(badDates));
 }
 
 // ── /llms.txt ──
