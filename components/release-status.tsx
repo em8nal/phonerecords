@@ -9,6 +9,7 @@
 import { useSyncExternalStore } from "react";
 import { ArrowUpRight } from "lucide-react";
 import { formatReleaseLabel, isReleased } from "@/lib/release-date";
+import { platformFromHref, releaseSlugFromPath, track } from "@/lib/analytics/events";
 import { cn } from "@/lib/utils";
 
 const listeners = new Set<() => void>();
@@ -37,18 +38,25 @@ export function useReleased(releaseDate: string, initialReleased: boolean): bool
   );
 }
 
-/** Primary button: "Pre-save" before the release date, "Escuchar" / "Listen" after it. */
+/**
+ * Primary button: "Pre-save" before the release date, "Escuchar" / "Listen" after it.
+ * Al hacer clic registra `presave_click` o `listen_click` (lib/analytics/events.ts) según el
+ * estado de ese momento, con la plataforma del destino y el slug del lanzamiento.
+ */
 export function ReleaseCta({
   href,
   releaseDate,
   initialReleased,
   lang,
+  release,
   className,
 }: {
   href: string;
   releaseDate: string;
   initialReleased: boolean;
   lang: string;
+  /** Slug del lanzamiento para el evento; si falta, se toma de la ruta /(es|en)/releases/<slug>. */
+  release?: string;
   /** Clases extra (p. ej. variante blanca sobre foto); se fusionan con tailwind-merge. */
   className?: string;
 }) {
@@ -61,6 +69,12 @@ export function ReleaseCta({
       target="_blank"
       rel="noopener"
       data-state={released ? "released" : "presave"}
+      onClick={() =>
+        track(released ? "listen_click" : "presave_click", {
+          platform: platformFromHref(href),
+          release: release ?? releaseSlugFromPath(window.location.pathname) ?? "unknown",
+        })
+      }
       className={cn(
         "inline-flex items-center justify-center gap-2 px-8 h-12 text-sm font-mono font-bold uppercase tracking-widest rounded-full bg-foreground text-background hover:bg-foreground/90 transition-colors",
         className,

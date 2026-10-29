@@ -18,9 +18,12 @@ import { YouTubeEmbed } from "@/components/youtube-embed";
 import { releaseVideo, videoDisplayTitle } from "@/lib/videos";
 import { ReleaseHero } from "@/components/phone/release-hero";
 import { ReleaseCardGrid } from "@/components/phone/release-card-grid";
+import { ShareBar } from "@/components/share-bar";
+import { TrackedLink } from "@/components/tracked-link";
+import { platformFromHref } from "@/lib/analytics/events";
 import { isReleased, formatReleaseLabel } from "@/lib/release-date";
 import type { Language } from "@/lib/translations";
-import { SITE, ORG_ID, artistId as artistLdId, absUrl } from "@/lib/schema";
+import { SITE, ORG_ID, artistId as artistLdId, absUrl, releaseId } from "@/lib/schema";
 
 type ReleaseParams = { lang: string; slug: string };
 
@@ -137,8 +140,8 @@ export default async function ReleasePage({
   const video = releaseVideo(release.slug);
 
   const labels = isEs
-    ? { back: "Volver al catálogo", tracklist: "Tracklist", credits: "Créditos", links: "Escuchar", releaseDate: initiallyReleased ? "Fecha" : "Fecha de lanzamiento", format: "Formato", label: "Sello", track: "Track" }
-    : { back: "Back to catalogue", tracklist: "Tracklist", credits: "Credits", links: "Listen", releaseDate: initiallyReleased ? "Released" : "Release date", format: "Format", label: "Label", track: "Track" };
+    ? { back: "Volver al catálogo", tracklist: "Tracklist", credits: "Créditos", links: "Escuchar", releaseDate: initiallyReleased ? "Fecha" : "Fecha de lanzamiento", format: "Formato", label: "Sello", track: "Track", newTab: " (se abre en pestaña nueva)" }
+    : { back: "Back to catalogue", tracklist: "Tracklist", credits: "Credits", links: "Listen", releaseDate: initiallyReleased ? "Released" : "Release date", format: "Format", label: "Label", track: "Track", newTab: " (opens in new tab)" };
 
   // JSON-LD MusicAlbum schema
   const url = `${SITE}/${lang}/releases/${slug}`;
@@ -151,7 +154,8 @@ export default async function ReleasePage({
     "@graph": [
       {
         "@type": "MusicAlbum",
-        "@id": `${url}#album`,
+        // Sin idioma (17i): ES y EN describen la misma entidad; la `url` sí va por idioma.
+        "@id": releaseId(release.slug),
         name: release.title,
         url,
         // Solo ya publicado; cambia a las 00:00 de Santiago (render por petición, ver initiallyReleased).
@@ -225,6 +229,15 @@ export default async function ReleasePage({
               <span>{labels.format}: {release.format}</span>
               {release.label && <span>{labels.label}: {release.label}</span>}
             </div>
+            {/* Compartir (17g): bajo el hero y su CTA; no cambia el LCP (la portada del hero). */}
+            <ShareBar
+              className="mt-6"
+              url={url}
+              title={`${release.title} — ${release.artistName}`}
+              lang={uiLang}
+              contentType="release"
+              itemId={release.slug}
+            />
           </header>
 
           {/* Description */}
@@ -262,15 +275,18 @@ export default async function ReleasePage({
                 <ul className="space-y-2">
                   {release.links.map((link) => (
                     <li key={link.href}>
-                      <a
+                      <TrackedLink
+                        event="outbound_platform"
+                        params={{ platform: platformFromHref(link.href), release: release.slug }}
                         href={link.href}
                         target="_blank"
                         rel="noopener noreferrer"
                         className="inline-flex items-center gap-2 text-sm hover:text-foreground/70 transition-colors group"
                       >
                         {releaseLinkLabel(link.label, uiLang)}
-                        <ExternalLink className="w-3 h-3 opacity-50 group-hover:opacity-100 transition-opacity" />
-                      </a>
+                        <span className="sr-only">{labels.newTab}</span>
+                        <ExternalLink className="w-3 h-3 opacity-50 group-hover:opacity-100 transition-opacity" aria-hidden />
+                      </TrackedLink>
                     </li>
                   ))}
                 </ul>

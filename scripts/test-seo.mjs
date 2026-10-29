@@ -221,6 +221,40 @@ for (const lang of LANGS) {
   }
 }
 
+// ── @id de lanzamiento sin idioma (17i, carril O) ──
+// Importes dinámicos para no tocar la cabecera (la comparte el carril N). Sin build: el @id se
+// comprueba en lib/schema.ts y en el código de las fichas; el curl del integrador lo confirma
+// en el HTML de ES y EN.
+{
+  const { releaseId } = await import("../lib/schema.ts");
+  const { readdirSync, statSync } = await import("node:fs");
+  report("releaseId recibe solo el slug (no puede variar con el idioma)", typeof releaseId === "function" && releaseId.length === 1);
+  const rids = releases.map((r) => releaseId(r.slug));
+  const badRid = releases.filter((r, i) => rids[i] !== `${SITE}/#release-${r.slug}` || /\/(es|en)\//.test(rids[i])).map((r) => r.slug);
+  report(`releaseId(slug) = ${SITE}/#release-<slug>, sin /es/ ni /en/ (${rids.length} fichas)`, badRid.length === 0, list(badRid));
+  report("releaseId único por ficha", new Set(rids).size === rids.length);
+  const clash = rids.filter((id) => id === ORG_ID || id === WEBSITE_ID || artists.some((a) => artistId(a.slug) === id));
+  report("releaseId distinto de ORG_ID, WEBSITE_ID y de todo artistId", clash.length === 0, list(clash));
+  for (const file of ["app/[lang]/releases/[slug]/page.tsx", "app/[lang]/videos/[slug]/page.tsx"]) {
+    const s = src(file);
+    const uses = [...s.matchAll(/"@id":\s*releaseId\(([^)]*)\)/g)].map((m) => m[1]);
+    report(
+      `${file}: un "@id": releaseId(<slug>) sin lang y sin #album`,
+      uses.length === 1 && !/lang/i.test(uses[0]) && !s.includes("#album"),
+      uses.length === 1 ? `releaseId(${uses[0]})` : `${uses.length} usos`,
+    );
+  }
+  const walk = (dir) =>
+    readdirSync(path.join(ROOT, dir)).flatMap((name) => {
+      const rel = path.join(dir, name);
+      return statSync(path.join(ROOT, rel)).isDirectory() ? walk(rel) : /\.(ts|tsx)$/.test(name) ? [rel] : [];
+    });
+  const ARTIST_PAGE = path.join("app", "[lang]", "artistas", "[slug]", "page.tsx");
+  const album = ["app", "components"].flatMap(walk).filter((f) => src(f).includes("#album"));
+  report("ningún #album en app/ ni components/ (salvo la ficha de artista)", album.every((f) => f === ARTIST_PAGE), list(album.filter((f) => f !== ARTIST_PAGE)));
+  if (album.includes(ARTIST_PAGE)) warn(`${ARTIST_PAGE} aún usa #album`, "lo cambia el integrador por releaseId(e.releaseSlug)");
+}
+
 // ── robots ──
 {
   report("app/robots.ts solo exporta default", same(Object.keys(robotsModule).sort(), ["default"]));

@@ -8,9 +8,11 @@ import { Navigation } from "@/components/landing/navigation";
 import { FooterSection } from "@/components/landing/footer-section";
 import { YouTubeEmbed } from "@/components/youtube-embed";
 import { VideoCardGrid } from "@/components/phone/video-card-grid";
+import { ShareBar } from "@/components/share-bar";
 import { getRelease } from "@/lib/releases";
 import { isReleased } from "@/lib/release-date";
 import { translations, type Language } from "@/lib/translations";
+import { releaseId } from "@/lib/schema";
 import {
   VIDEO_KIND_LABEL,
   formatDuration,
@@ -153,7 +155,8 @@ export default async function VideoPage({
           ? {
               about: {
                 "@type": "MusicAlbum",
-                "@id": `https://phonerecords.cl/${lang}/releases/${release.slug}#album`,
+                // El mismo @id que la ficha de lanzamiento, sin idioma (17i).
+                "@id": releaseId(release.slug),
                 name: release.title,
               },
             }
@@ -231,6 +234,15 @@ export default async function VideoPage({
                 </div>
               ) : null}
             </dl>
+            {/* Compartir (17g): bajo la facade (el LCP) y la meta; no la mueve. */}
+            <ShareBar
+              className="mt-6"
+              url={url}
+              title={`${displayTitle} — ${v.artistName}`}
+              lang={uiLang}
+              contentType="video"
+              itemId={v.slug}
+            />
           </header>
 
           <section className="grid lg:grid-cols-12 gap-12 lg:gap-16 mb-20">

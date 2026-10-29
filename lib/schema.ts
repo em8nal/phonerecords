@@ -39,6 +39,12 @@ export const absUrl = (src: string): string =>
 /** `@id` estable de cada artista; las fichas de artista usan este mismo formato. */
 export const artistId = (slug: string): string => `${SITE}/#artist-${slug}`;
 
+/**
+ * `@id` estable de cada lanzamiento (17i): el mismo en ES y EN, a diferencia de su `url`, que va
+ * por idioma. Lo usan la ficha de lanzamiento, el `about` del video y la discografía del artista.
+ */
+export const releaseId = (slug: string): string => `${SITE}/#release-${slug}`;
+
 /** La organización del sello. Sin `foundingDate` (año pendiente con el equipo, X27) ni calle. */
 export function organizationJsonLd(lang: string) {
   const l = toLang(lang);

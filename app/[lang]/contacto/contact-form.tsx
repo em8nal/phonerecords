@@ -7,6 +7,7 @@ import type { z } from "zod";
 import Link from "next/link";
 import { useSearchParams } from "next/navigation";
 import { translations } from "@/lib/translations";
+import { track } from "@/lib/analytics/events";
 import { sendContactMessage } from "./actions";
 import {
   contactFormSchema,
@@ -218,6 +219,7 @@ export function ContactForm({ lang }: { lang: Lang }) {
       if (res.ok) {
         setServerState({ kind: "ok" });
         reset();
+        track("contact_submit_success", { topic: values.topic });
       } else if (res.error === "invalid") {
         setServerState({ kind: "err", msg: c.errorInvalid });
       } else {
