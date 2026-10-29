@@ -237,6 +237,15 @@ const allPageText = pageAndComponents.map((x) => x.text).join("\n");
   const clean = ["planificación estratégica", "Ley de 2026", "ep", "dos rondas"].filter((t) => hits(t, [...PRICE, ...VOCAB]).length > 0);
   report("autocontrol: sin falsos positivos en textos limpios", clean.length === 0, list(clean));
 
+  // Textos de interfaz: el barril y todo lib/i18n/**, con subcarpetas (el mismo recorrido que J6 de
+  // test:journal). Sin la carpeta, la lista queda vacía y la línea siguiente falla en vez de pasar en vacío.
+  const walk = (rel) =>
+    readdirSync(path.join(ROOT, rel), { withFileTypes: true }).flatMap((d) =>
+      d.isDirectory() ? walk(`${rel}/${d.name}`) : /\.(ts|tsx)$/.test(d.name) ? [`${rel}/${d.name}`] : [],
+    );
+  const i18nFiles = existsSync(path.join(ROOT, "lib/i18n")) ? walk("lib/i18n") : [];
+  report(`sin valores: lib/i18n/** tiene archivos (${i18nFiles.length})`, i18nFiles.length > 0, i18nFiles.length ? "" : "lib/i18n/ no existe o está vacía");
+
   const scanned = [
     { label: "SERVICES (ES y EN)", text: JSON.stringify(SERVICES), rules: [...PRICE, ...VOCAB] },
     { label: "JSON-LD (ES y EN)", text: LANGS.map((l) => JSON.stringify(servicesJsonLd(l))).join("\n"), rules: PRICE },
@@ -251,8 +260,8 @@ const allPageText = pageAndComponents.map((x) => x.text).join("\n");
       { label: `translations.${l}.features`, text: JSON.stringify(translations[l].features), rules: PRICE },
       { label: `translations.${l}.footer`, text: JSON.stringify(translations[l].footer), rules: PRICE },
     ]),
-    // Todo translations.ts, sin la regla de miles (las cifras de seguidores de la portada la disparan).
-    { label: "lib/translations.ts (sin regla de miles)", text: src("lib/translations.ts"), rules: PRICE_NO_THOUSANDS },
+    // Todos los textos de interfaz, sin la regla de miles (las cifras de seguidores de hero.stats la disparan).
+    ...["lib/translations.ts", ...i18nFiles].map((f) => ({ label: `${f} (sin regla de miles)`, text: src(f), rules: PRICE_NO_THOUSANDS })),
     { label: "app/[lang]/privacidad/page.tsx (sin regla de miles)", text: src("app/[lang]/privacidad/page.tsx"), rules: PRICE_NO_THOUSANDS },
   ];
   if (process.env.SERVICIOS_EXTRA_FILE) {

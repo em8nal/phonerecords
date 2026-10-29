@@ -18,7 +18,7 @@
 // El índice sale de la carpeta (nunca de una lista escrita a mano): Keystatic escribe y borra
 // archivos sueltos, y el build regenera el índice antes de next build. `pnpm test:content` (C5)
 // falla si el índice versionado no coincide con la carpeta.
-import { existsSync, mkdirSync, readdirSync, readFileSync, writeFileSync } from "node:fs";
+import { existsSync, mkdirSync, readdirSync, readFileSync, realpathSync, writeFileSync } from "node:fs";
 import path from "node:path";
 import { fileURLToPath } from "node:url";
 
@@ -139,5 +139,14 @@ function main() {
 
 // Solo escribe cuando se ejecuta directo (test-content.mjs importa buildIndexes). NFC en los dos
 // lados: la ruta del repo lleva "É" y macOS la entrega descompuesta en import.meta.url.
-const isMain = (p) => Boolean(p) && path.resolve(p).normalize("NFC") === fileURLToPath(import.meta.url).normalize("NFC");
+// realpath en los dos lados: una ruta que pasa por un symlink (p. ej. /tmp en macOS) salía sin
+// escribir nada y sin aviso, y con --check eso era un falso verde.
+const real = (p) => {
+  try {
+    return realpathSync(p).normalize("NFC");
+  } catch {
+    return path.resolve(p).normalize("NFC");
+  }
+};
+const isMain = (p) => Boolean(p) && real(p) === real(fileURLToPath(import.meta.url));
 if (isMain(process.argv[1])) main();
