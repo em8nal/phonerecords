@@ -11,11 +11,13 @@
 //   Guardas de fuente: cada punto de medición llama a su evento; DownloadPdfButton sigue en el
 //     servidor; la ShareBar no carga SDK ni scripts de terceros; las dos fichas siguen estáticas
 //     (sin next/headers, cookies(), headers() ni searchParams; revalidate = 300); nadie más que
-//     lib/analytics/events.ts, media-facade.tsx y consent/** empuja a dataLayer.
+//     lib/analytics/events.ts, media-facade.tsx y consent/** empuja a dataLayer; todo enlace a
+//     /press-kits/*.pdf mide pdf_download (DownloadPdfButton o el evento en el mismo archivo), y
+//     components/phone/press-kit-downloads.tsx (carril N), si existe, registra pdf_download.
 //   Discogs: URLs /release/<id> o /master/<id> sin ids repetidos; orden estándar de enlaces
 //     (Bandcamp · Discogs · Apple Music · Spotify · YouTube) en las fichas de Newen Afrobeat.
 // Avisos (WARN): orden estándar en las demás fichas (hoy klaus-b-memorias-mixtape).
-import { readFileSync, readdirSync, statSync } from "node:fs";
+import { existsSync, readFileSync, readdirSync, statSync } from "node:fs";
 import { fileURLToPath } from "node:url";
 import path from "node:path";
 import { shareLinks, SHARE_METHODS } from "../lib/share.ts";
@@ -234,6 +236,23 @@ const same = (a, b) => JSON.stringify(a) === JSON.stringify(b);
   const ALLOWED = (f) => f === path.join("lib", "analytics", "events.ts") || f === path.join("components", "phone", "media-facade.tsx") || f.startsWith(path.join("components", "consent") + path.sep);
   const pushers = ["app", "components", "lib"].flatMap(walk).filter((f) => !ALLOWED(f) && /dataLayer\??\.push/.test(src(f)));
   report("solo lib/analytics/events.ts, media-facade.tsx y consent/** empujan a dataLayer", pushers.length === 0, list(pushers));
+
+  // Todo enlace a un press kit en PDF mide pdf_download: o va por DownloadPdfButton o el archivo
+  // registra el evento él mismo (TrackedLink o track). Lo de N (PressKitDownloads, en /press-kit y
+  // en la ficha de artista) tiene que pasar su <a> a TrackedLink al integrarse.
+  const PDF_HREF = /href=\{\s*(?:pressKitHref\(|`\/press-kits\/|"\/press-kits\/)|href="\/press-kits\//;
+  const pdfFiles = ["app", "components"].flatMap(walk).filter((f) => f.endsWith(".tsx") && PDF_HREF.test(src(f)));
+  const pdfUnmeasured = pdfFiles.filter((f) => !src(f).includes("pdf_download") && !/<DownloadPdfButton\b/.test(src(f)));
+  report(
+    `enlaces a press kits en PDF con pdf_download o DownloadPdfButton (${pdfFiles.length} archivos)`,
+    pdfFiles.length > 0 && pdfUnmeasured.length === 0,
+    list(pdfUnmeasured),
+  );
+  const PKD = path.join("components", "phone", "press-kit-downloads.tsx");
+  if (existsSync(path.join(ROOT, PKD))) {
+    const pkd = src(PKD);
+    report(`${PKD} (carril N): sus enlaces registran pdf_download`, pkd.includes("pdf_download"));
+  }
 }
 
 // ── Discogs ──
