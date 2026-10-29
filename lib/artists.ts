@@ -83,6 +83,8 @@ export type Artist = {
   /** Otros nombres con que se le conoce o busca (JSON-LD `alternateName`). */
   alternateName?: string[];
   genres: string[];
+  /** Géneros en inglés, solo si alguno se escribe distinto que en español. */
+  genresEn?: string[];
   origin: string;
   /**
    * Formación o instrumento principal, tal como lo dice la bio ("Datos clave" de la ficha,
@@ -156,6 +158,7 @@ In 2026 the group is preparing a new studio album that will mark a new sonic sta
     slug: "ecamhi",
     name: "ecamhi",
     genres: ["Instrumental", "Jazz", "Interdisciplinar"],
+    genresEn: ["Instrumental", "Jazz", "Interdisciplinary"],
     origin: "Santiago, Chile",
     role: {
       es: "Trompeta, producción y composición (proyecto solista)",
@@ -263,6 +266,7 @@ He has played on stages and at festivals around the world — Brazil, Colombia, 
     slug: "rosario-lircay",
     name: "Rosario Lircay",
     genres: ["R&B", "Pop alternativo", "Hip hop", "Soul"],
+    genresEn: ["R&B", "Alternative pop", "Hip hop", "Soul"],
     origin: "Ñuble · Santiago, Chile",
     role: { es: "Voz", en: "Vocals" },
     bio: {
@@ -296,6 +300,11 @@ Her debut album, "La Piel", gathers ten short songs born from beats and then pla
 ];
 
 export const artistSlugs = artists.map((a) => a.slug);
+
+/** Géneros en el idioma de la página (los de `genres` sirven para los dos si no hay `genresEn`). */
+export function artistGenres(artist: Pick<Artist, "genres" | "genresEn">, lang: string): string[] {
+  return lang === "en" && artist.genresEn ? artist.genresEn : artist.genres;
+}
 
 export function getArtist(slug: string): Artist | undefined {
   return artists.find((a) => a.slug === slug);

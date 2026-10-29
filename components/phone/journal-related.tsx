@@ -35,7 +35,7 @@ export function JournalRelated({ piece, lang }: { piece: JournalPiece; lang: Lan
         <h2 id="journal-related-heading" className="mb-8 lg:mb-12 text-3xl lg:text-5xl font-display tracking-tight">
           {t.heading}
         </h2>
-        <ul className="grid grid-cols-2 lg:grid-cols-4 gap-x-6 gap-y-10">
+        <ul role="list" className="grid grid-cols-2 lg:grid-cols-4 gap-x-6 gap-y-10">
           {releases.map((r) => {
             const released = isReleased(r.releaseDate);
             return (

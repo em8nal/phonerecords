@@ -800,9 +800,9 @@ On this single, Klaus B is credited with composition, saxophone, flute and produ
     cover: "https://is1-ssl.mzstatic.com/image/thumb/Music221/v4/4d/5f/c4/4d5fc454-7958-7218-cfc5-fe5922a2da7a/199502158057_cover.jpg/1000x1000bb.jpg",
     description: {
       es:
-        "Single firmado por 4Yo4U y Enrique Camhi, publicado en agosto 2025. La trompeta de Camhi se inserta sobre una base de electrónica contemporánea con eco directo al lenguaje del EP en viaje (2024, PHŌNÉ): trompeta filtrada, sintetizadores densos, ausencia de gancho pop. Documenta el desplazamiento de Camhi hacia colaboraciones con productores más jóvenes y la expansión de su trompeta a circuitos electrónicos no jazz.",
+        "Single firmado por 4Yo4U y Enrique Camhi, publicado en agosto 2025. La trompeta de Camhi se inserta sobre una base de electrónica contemporánea: trompeta filtrada, sintetizadores densos, ausencia de gancho pop. Documenta el desplazamiento de Camhi hacia colaboraciones con productores más jóvenes y la expansión de su trompeta a circuitos electrónicos no jazz.",
       en:
-        "Single signed by 4Yo4U and Enrique Camhi, released August 2025. Camhi's trumpet inserts itself over a contemporary electronic base with direct echo to the language of the en viaje EP (2024, PHŌNÉ): filtered trumpet, dense synths, absence of pop hook. Documents Camhi's drift toward collaborations with younger producers and the expansion of his trumpet into non-jazz electronic circuits.",
+        "Single signed by 4Yo4U and Enrique Camhi, released August 2025. Camhi's trumpet inserts itself over a contemporary electronic base: filtered trumpet, dense synths, absence of pop hook. Documents Camhi's drift toward collaborations with younger producers and the expansion of his trumpet into non-jazz electronic circuits.",
     },
     links: [
       { label: "Apple Music", href: "https://music.apple.com/us/album/fake-money/1831169551" },
@@ -821,9 +821,9 @@ On this single, Klaus B is credited with composition, saxophone, flute and produ
     cover: "https://is1-ssl.mzstatic.com/image/thumb/Music124/v4/4e/bf/78/4ebf78f4-a3bb-02f6-9374-436c8719d001/cover.jpg/1000x1000bb.jpg",
     description: {
       es:
-        "Single co-firmado por Enrique Camhi y Felipe Cortes, publicado en abril 2021. Es el primer registro oficial bajo el nombre Enrique Camhi, anterior al EP en viaje (2024) y a Move To (2022). Pone en marcha la línea solista del proyecto antes de que tome forma como cuerpo de obra coherente: la trompeta opera sobre una base de electrónica de cámara con Cortes como co-productor. Documento de origen del Camhi solista.",
+        "Single co-firmado por Enrique Camhi y Felipe Cortes, publicado en abril 2021. Es el primer registro oficial bajo el nombre Enrique Camhi, anterior a Move To (2022) y al EP en viaje, previsto para 2027. Pone en marcha la línea solista del proyecto antes de que tome forma como cuerpo de obra coherente: la trompeta opera sobre una base de electrónica de cámara con Cortes como co-productor. Documento de origen del Camhi solista.",
       en:
-        "Single co-signed by Enrique Camhi and Felipe Cortes, released April 2021. The first official record under the Enrique Camhi name, prior to the en viaje EP (2024) and Move To (2022). Launches the project's solo line before it takes shape as coherent body of work: trumpet operates over a chamber electronics base with Cortes as co-producer. Origin document of the solo Camhi.",
+        "Single co-signed by Enrique Camhi and Felipe Cortes, released April 2021. The first official record under the Enrique Camhi name, prior to Move To (2022) and the en viaje EP, planned for 2027. Launches the project's solo line before it takes shape as coherent body of work: trumpet operates over a chamber electronics base with Cortes as co-producer. Origin document of the solo Camhi.",
     },
     links: [
       { label: "Apple Music", href: "https://music.apple.com/us/album/fake-love-single/1558646526" },

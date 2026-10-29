@@ -5,7 +5,7 @@ import Link from "next/link";
 import { ArrowLeft, ExternalLink } from "lucide-react";
 import { Navigation } from "@/components/landing/navigation";
 import { FooterSection } from "@/components/landing/footer-section";
-import { artistLinkRel, artistSameAs, artistSlugs, getArtist, linkPlatform } from "@/lib/artists";
+import { artistGenres, artistLinkRel, artistSameAs, artistSlugs, getArtist, linkPlatform } from "@/lib/artists";
 import { getArtistEntries } from "@/lib/catalog";
 import { getRelease, isPhoneRelease } from "@/lib/releases";
 import { isUpcoming } from "@/lib/release-date";
@@ -182,7 +182,7 @@ export default async function ArtistPage({
         name: artist.name,
         ...(artist.alternateName?.length ? { alternateName: artist.alternateName } : {}),
         description: bio,
-        genre: artist.genres,
+        genre: artistGenres(artist, uiLang),
         url,
         ...(sameAs.length ? { sameAs } : {}),
         ...(portrait ? { image: absUrl(portrait) } : {}),
@@ -234,6 +234,12 @@ export default async function ArtistPage({
           {
             "@type": "ListItem",
             position: 2,
+            name: isEs ? "Artistas" : "Artists",
+            item: `${SITE}/${lang}/artistas`,
+          },
+          {
+            "@type": "ListItem",
+            position: 3,
             name: artist.name,
             item: url,
           },
@@ -253,7 +259,7 @@ export default async function ArtistPage({
 
         {/* Hero fotográfico ancho: contiene el h1 (nombre) y el eyebrow (géneros) */}
         {hero && (
-          <PageHero image={hero} title={artist.name} eyebrow={artist.genres.join(" · ")} lang={uiLang} />
+          <PageHero image={hero} title={artist.name} eyebrow={artistGenres(artist, uiLang).join(" · ")} lang={uiLang} />
         )}
 
         <article
@@ -287,7 +293,7 @@ export default async function ArtistPage({
             <header className={`mb-16 lg:mb-24 ${portrait ? "grid lg:grid-cols-12 gap-8 lg:gap-12 items-end" : ""}`}>
               <div className={portrait ? "lg:col-span-7 order-2 lg:order-1" : ""}>
                 <div className="font-mono text-xs text-muted-foreground tracking-widest uppercase mb-6">
-                  {labels.genre} · {artist.genres.join(" · ")}
+                  {labels.genre} · {artistGenres(artist, uiLang).join(" · ")}
                 </div>
                 <h1 className="text-5xl lg:text-8xl font-display tracking-tight leading-[0.9] mb-8">
                   {artist.name}

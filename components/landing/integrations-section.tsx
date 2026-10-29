@@ -9,10 +9,10 @@ import { getArtistPortrait } from "@/lib/artist-media";
 // Mismo orden y nombres que lib/artists.ts (lo vigila `pnpm test:roster`).
 export const roster = [
   { slug: "newen-afrobeat", name: "Newen Afrobeat", genre: "Afrobeat · Afrofunk", country: "Chile / international" },
-  { slug: "ecamhi", name: "ecamhi", genre: "Instrumental · Interdisciplinary", country: "Santiago, Chile" },
+  { slug: "ecamhi", name: "ecamhi", genre: "Instrumental · Interdisciplinar", genreEn: "Instrumental · Interdisciplinary", country: "Santiago, Chile" },
   { slug: "con-fusion", name: "Con.fusión", genre: "Hip hop · Jazz · Neo soul", country: "Santiago, Chile" },
   { slug: "klaus-b", name: "Klaus B", genre: "Nu-jazz · Hip-hop jazz", country: "Santiago, Chile" },
-  { slug: "rosario-lircay", name: "Rosario Lircay", genre: "R&B · Pop alternativo", country: "Ñuble · Santiago, Chile" },
+  { slug: "rosario-lircay", name: "Rosario Lircay", genre: "R&B · Pop alternativo", genreEn: "R&B · Alternative pop", country: "Ñuble · Santiago, Chile" },
 ];
 
 export function IntegrationsSection() {
@@ -107,7 +107,7 @@ export function IntegrationsSection() {
                 <h3 className="text-xl md:text-2xl font-display tracking-tight mb-3 motion-safe:group-hover:translate-x-1 transition-transform">
                   {artist.name}
                 </h3>
-                <p className="text-sm text-foreground/70 mb-2">{artist.genre}</p>
+                <p className="text-sm text-foreground/70 mb-2">{(language === "en" && "genreEn" in artist && artist.genreEn) || artist.genre}</p>
                 <p className="text-xs font-mono text-muted-foreground uppercase tracking-wider">
                   {artist.country}
                 </p>

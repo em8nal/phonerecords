@@ -4,7 +4,7 @@
 // Vive fuera de lib/artists.ts porque usa lib/catalog.ts, que importa lib/artists.ts (sería
 // un import circular). Módulo puro, sin JSX, con imports relativos e `import type`:
 // scripts/test-roster.mjs lo importa desde Node sin el alias @/.
-import { getArtist } from "./artists";
+import { artistGenres, getArtist } from "./artists";
 import { getArtistEntries } from "./catalog";
 import { PHONE_LABEL, isPhoneRelease } from "./releases";
 import { isUpcoming } from "./release-date";
@@ -93,7 +93,7 @@ export function artistKeyFacts(slug: string, lang: Language, nowMs: number = Dat
   if (year) facts.push({ id: "formed", label: t.formed, value: year });
   facts.push(
     { id: "role", label: t.role, value: artist.role[lang] },
-    { id: "genres", label: t.genres, value: artist.genres.join(" · ") },
+    { id: "genres", label: t.genres, value: artistGenres(artist, lang).join(" · ") },
     { id: "label", label: t.label, value: PHONE_LABEL, href: `/${lang}/sello` },
   );
   if (releases.length) facts.push({ id: "releases", label: t.releases, items: releases });

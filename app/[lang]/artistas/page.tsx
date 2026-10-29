@@ -50,7 +50,7 @@ const copy = {
     title: "Artists",
     backHome: "Back to home",
     intro:
-      "The artists PHŌNÉ Records releases, produces and tours with. Each profile has the biography, discography, official links and press kit; further down, the records where their paths cross.",
+      "The artists PHŌNÉ Records releases, produces and manages tours for. Each profile has the biography, discography, official links and press kit; further down, the records where their paths cross.",
     appears: {
       title: "Appears on",
       intro: "Releases by other artists on the label that also credit them.",
@@ -149,7 +149,7 @@ export default async function ArtistasPage({
                         {artist.name}
                       </Link>
                     </h3>
-                    <ul aria-labelledby={`appears-${artist.slug}`} className="mt-4 border-t border-foreground/10">
+                    <ul role="list" aria-labelledby={`appears-${artist.slug}`} className="mt-4 border-t border-foreground/10">
                       {releases.map((r) => (
                         <li key={r.slug} className="border-b border-foreground/10">
                           <Link

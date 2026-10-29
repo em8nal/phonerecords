@@ -37,10 +37,10 @@ export function LanguageSelector({ compact = false }: { compact?: boolean }) {
       <select
         value={language}
         onChange={(e) => handleChange(e.target.value as Locale)}
-        className={`bg-transparent border-none cursor-pointer focus:outline-none focus:ring-0 appearance-none pr-4 ${
+        className={`bg-transparent border-none cursor-pointer appearance-none pr-4 rounded-sm focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand focus-visible:ring-offset-2 focus-visible:ring-offset-background ${
           compact ? "text-xs" : "text-sm"
         } text-foreground/70 hover:text-foreground transition-colors`}
-        aria-label="Select language"
+        aria-label={language === "es" ? "Idioma" : "Language"}
       >
         <option value="en" className="bg-background text-foreground">EN</option>
         <option value="es" className="bg-background text-foreground">ES</option>

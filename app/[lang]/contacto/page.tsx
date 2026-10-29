@@ -131,7 +131,7 @@ export default async function ContactoPage({
               >
                 <h2
                   id="newsletter-heading"
-                  className="text-sm font-mono uppercase tracking-widest text-muted-foreground mb-4"
+                  className="scroll-mt-24 text-sm font-mono uppercase tracking-widest text-muted-foreground mb-4"
                 >
                   {translations[formLang].newsletter.title}
                 </h2>

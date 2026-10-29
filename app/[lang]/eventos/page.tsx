@@ -353,7 +353,7 @@ export default async function EventosPage({
                 {group.title}
               </h2>
               <p className="text-sm text-muted-foreground mb-6">{group.artists}</p>
-              <ol className="border-t border-foreground/10">
+              <ol role="list" className="border-t border-foreground/10">
                 {group.list.map((ev) => (
                   <li
                     key={ev.slug}

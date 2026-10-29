@@ -1,6 +1,6 @@
 import Image from "next/image";
 import Link from "next/link";
-import { artists } from "@/lib/artists";
+import { artistGenres, artists } from "@/lib/artists";
 import { getArtistPortrait } from "@/lib/artist-media";
 import type { Language } from "@/lib/translations";
 import { GridFillers, lgColsClass, pickLgCols } from "@/components/phone/grid-fillers";
@@ -107,7 +107,7 @@ export function ArtistCardGrid({
                 <div className="p-4 lg:p-6">
                   <h3 className="font-display text-xl lg:text-2xl tracking-tight">{a.name}</h3>
                   <p className="mt-1 font-mono text-xs uppercase tracking-wider text-muted-foreground">
-                    {a.genres.slice(0, 3).join(" · ")}
+                    {artistGenres(a, lang).slice(0, 3).join(" · ")}
                   </p>
                 </div>
               </Link>

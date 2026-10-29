@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useEffect, useRef } from "react";
+import { useState, useEffect, useRef, type MouseEvent as ReactMouseEvent } from "react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { Button } from "@/components/ui/button";
@@ -15,18 +15,23 @@ import { Logo } from "@/components/phone/logo";
  * body. Se lleva al destino, como haría un ancla nativa. Entre páginas no hace nada: el foco tras
  * una navegación lo decide el layout (ver carrilQ-report.md).
  */
-function focusSamePageAnchor(href: string) {
+function focusSamePageAnchor(href: string, e: ReactMouseEvent<HTMLElement>) {
+  // Cmd/Ctrl/Shift/Alt+clic abre otra pestaña o ventana: next/link no navega aquí.
+  if (e.metaKey || e.ctrlKey || e.shiftKey || e.altKey) return;
   const [path, id] = href.split("#");
   if (!id || path !== window.location.pathname) return;
   // Con query (p. ej. /contacto?topic=booking) el href del menú es otra URL: Next hace una
-  // navegación suave (el motivo elegido se conserva) pero no desplaza al ancla, así que el
-  // desplazamiento va aquí, después de que la URL cambió. Sin query, Next desplaza solo.
+  // navegación suave (el motivo elegido se conserva) pero no desplaza al ancla. Si la URL ya es
+  // la misma (ya estabas en #newsletter-heading), Next la trata como un refresh y tampoco
+  // desplaza. En esos dos casos el desplazamiento va aquí; con solo un cambio de hash, Next
+  // desplaza solo.
   const withQuery = window.location.search !== "";
+  const sameUrl = window.location.hash === `#${id}`;
   const focus = () => {
     const target = document.getElementById(id);
     if (!target) return;
     if (!target.hasAttribute("tabindex")) target.setAttribute("tabindex", "-1");
-    if (withQuery) target.scrollIntoView({ block: "start" });
+    if (withQuery || sameUrl) target.scrollIntoView({ block: "start" });
     // El foco no vuelve a desplazar (Next o la línea de arriba ya lo hicieron).
     target.focus({ preventScroll: true });
   };
@@ -63,9 +68,9 @@ export function Navigation() {
   // aria-current solo en la página exacta (usePathname en un componente cliente no vuelve dinámica la ruta).
   const current = (href: string) => (pathname === href ? ("page" as const) : undefined);
   const closeMenu = () => setIsMobileMenuOpen(false);
-  const closeMenuAndFocus = (href: string) => {
+  const closeMenuAndFocus = (href: string, e: ReactMouseEvent<HTMLElement>) => {
     setIsMobileMenuOpen(false);
-    focusSamePageAnchor(href);
+    focusSamePageAnchor(href, e);
   };
 
   useEffect(() => {
@@ -147,7 +152,7 @@ export function Navigation() {
               size="sm"
               className={`bg-foreground hover:bg-foreground/90 text-background rounded-full transition-all duration-500 ${isScrolled ? "px-4 h-8 text-xs" : "px-6"}`}
             >
-              <Link href={newsletterHref} prefetch={false} onClick={() => focusSamePageAnchor(newsletterHref)}>
+              <Link href={newsletterHref} prefetch={false} onClick={(e) => focusSamePageAnchor(newsletterHref, e)}>
                 {t.nav.startCreating}
               </Link>
             </Button>
@@ -178,14 +183,14 @@ export function Navigation() {
       <div
         id="menu-movil"
         inert={!isMobileMenuOpen}
-        className={`lg:hidden fixed inset-0 bg-background z-40 transition-all duration-500 ${
+        className={`lg:hidden fixed inset-0 overflow-y-auto overscroll-contain bg-background z-40 transition-all duration-500 ${
           isMobileMenuOpen 
             ? "opacity-100 pointer-events-auto" 
             : "opacity-0 pointer-events-none"
         }`}
         style={{ top: 0 }}
       >
-        <div className="flex flex-col h-full px-8 pt-28 pb-8">
+        <div className="flex flex-col min-h-full px-8 pt-28 pb-8">
           {/* Language Selector Mobile */}
           <div className="mb-8">
             <LanguageSelector />
@@ -233,7 +238,7 @@ export function Navigation() {
             <Button
               asChild
               className="flex-1 bg-foreground text-background rounded-full h-14 text-base"
-              onClick={() => closeMenuAndFocus(newsletterHref)}
+              onClick={(e) => closeMenuAndFocus(newsletterHref, e)}
             >
               <Link href={newsletterHref} prefetch={false}>
                 {t.nav.startCreating}
