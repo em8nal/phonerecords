@@ -10,8 +10,7 @@ import { ConsentManager } from "@/components/consent/consent-manager";
 // app/press/[lang]/layout.tsx. El idioma llega por props desde el segmento de la URL, sin
 // headers() ni cookies(), así que las páginas pueden prerenderizarse y servirse desde la
 // caché (ISR). Server component. Las tres fuentes base se precargan en todo el sitio;
-// la cursiva Fraunces no está aquí: tiene su propio módulo en lib/ y solo la cargan la portada
-// y los press kits.
+// Fraunces no está aquí: vive en lib/fraunces.ts y solo la cargan la portada y los press kits.
 
 const instrumentSans = Instrument_Sans({
   subsets: ["latin"],
@@ -30,7 +29,7 @@ const jetbrainsMono = JetBrains_Mono({
 });
 
 // "Saltar al contenido" (WCAG 2.4.1): primer elemento enfocable del <body>, oculto hasta
-// recibir foco. Lleva al <main> de cada página y de la 404, que tiene ese id y tabIndex={-1}.
+// recibir foco. Lleva al <main id="contenido" tabIndex={-1}> de cada página (y de la 404).
 // z-[70]: por encima del banner de cookies (z-[60]) y del menú fijo (z-50).
 const SKIP_LABEL = { es: "Saltar al contenido", en: "Skip to content" } as const;
 const SKIP_CLASS =

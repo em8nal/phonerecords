@@ -71,9 +71,7 @@ report('LOCALE_COOKIE = "phone_lang" (lo escribe también components/language-se
 const proxySrc = readFileSync(path.join(ROOT, "proxy.ts"), "utf8");
 const literal = /matcher:\s*\[\s*("(?:[^"\\]|\\.)*")\s*,?\s*\]/.exec(proxySrc)?.[1];
 report("proxy.ts: matcher con un solo literal", Boolean(literal));
-// El nombre de la cabecera vieja se arma por partes para que un grep de ese nombre dé vacío en el repo.
-const OLD_LOCALE_HEADER = ["x", "phone", "locale"].join("-");
-report(`proxy.ts: ya no manda ${OLD_LOCALE_HEADER}`, !proxySrc.includes(OLD_LOCALE_HEADER));
+report("proxy.ts: ya no manda x-phone-locale", !proxySrc.includes("x-phone-locale"));
 report('proxy.ts: importa ./lib/locale (ruta relativa)', /from\s+["']\.\/lib\/locale["']/.test(proxySrc));
 
 if (literal) {
