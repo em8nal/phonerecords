@@ -298,9 +298,15 @@ The site is not aimed at children under 14. If we learn that we received data fr
   },
 };
 
-// El correo del sello y la URL del formulario se vuelven enlaces dentro del texto.
+// El correo del sello, la URL del formulario y la mención del botón de la §4 (en la §8) se
+// vuelven enlaces dentro del texto.
 const EMAIL_PATTERN = LABEL_EMAIL.replace(/[.*+?^${}()|[\]\\]/g, "\\$&");
-const INLINE_LINK_RE = new RegExp(`(${EMAIL_PATTERN}|phonerecords\\.cl/(?:es|en)/contacto)`, "g");
+const CONSENT_BUTTON_ID = "decision-cookies";
+const CONSENT_BUTTON_REF = /^(?:el botón de la sección 4|the button in section 4)$/;
+const INLINE_LINK_RE = new RegExp(
+  `(${EMAIL_PATTERN}|phonerecords\\.cl/(?:es|en)/contacto|el botón de la sección 4|the button in section 4)`,
+  "g",
+);
 const INLINE_LINK_CLASS = "underline underline-offset-4 decoration-foreground/30 hover:decoration-foreground";
 
 function withLinks(text: string, lang: string): ReactNode[] {
@@ -319,8 +325,53 @@ function withLinks(text: string, lang: string): ReactNode[] {
         </Link>
       );
     }
+    if (CONSENT_BUTTON_REF.test(part)) {
+      // Ancla nativa: el navegador lleva el punto de partida del Tab al contenedor del botón.
+      return (
+        <a key={i} href={`#${CONSENT_BUTTON_ID}`} className={INLINE_LINK_CLASS}>
+          {part}
+        </a>
+      );
+    }
     return part;
   });
+}
+
+const LIST_MARK = "— ";
+
+/**
+ * Un bloque del texto (separado por línea en blanco). Las líneas que empiezan con "— " se agrupan en
+ * un <ul> para que el lector de pantalla anuncie la lista y cuántos elementos tiene; la raya queda
+ * visible pero oculta al lector, así que el aspecto es el mismo que con el <p> en pre-line.
+ */
+function TextBlock({ text, lang }: { text: string; lang: string }) {
+  const groups: { list: boolean; lines: string[] }[] = [];
+  for (const line of text.split("\n")) {
+    const list = line.startsWith(LIST_MARK);
+    const last = groups.at(-1);
+    if (last && last.list === list) last.lines.push(line);
+    else groups.push({ list, lines: [line] });
+  }
+  return (
+    <div>
+      {groups.map((g, j) =>
+        g.list ? (
+          <ul key={j}>
+            {g.lines.map((line, k) => (
+              <li key={k}>
+                <span aria-hidden="true">{LIST_MARK}</span>
+                {withLinks(line.slice(LIST_MARK.length), lang)}
+              </li>
+            ))}
+          </ul>
+        ) : (
+          <p key={j} className="whitespace-pre-line">
+            {withLinks(g.lines.join("\n"), lang)}
+          </p>
+        ),
+      )}
+    </div>
+  );
 }
 
 export default async function PrivacyPage({
@@ -405,13 +456,14 @@ export default async function PrivacyPage({
                   {section.title}
                 </h2>
                 <div className="lg:col-span-8 space-y-5 text-base leading-relaxed text-foreground/90">
-                  {section.body.split(/\n{2,}/).map((p, i) => (
-                    <p key={i} className="whitespace-pre-line">
-                      {withLinks(p, lang)}
-                    </p>
+                  {section.body.split(/\n{2,}/).map((block, i) => (
+                    <TextBlock key={i} text={block} lang={lang} />
                   ))}
                   {section.consentButton && (
-                    <ConsentResetButton label={section.consentButton} />
+                    // Destino del enlace "el botón de la sección 4" de la §8; scroll-mt deja libre el menú fijo.
+                    <div id={CONSENT_BUTTON_ID} className="scroll-mt-32">
+                      <ConsentResetButton label={section.consentButton} />
+                    </div>
                   )}
                 </div>
               </section>
