@@ -8,13 +8,19 @@
 //   description.es/.en con 60–200 palabras, distintas entre sí y sin URLs;
 //   `videos` ordenado por fecha desc; ≤6 `featured` por artista; créditos con role y name;
 //   `thumb` solo "hqdefault"; `recordedYear` entero entre 1990 y el año de `date`.
+//   16a: `displayTitle` obligatorio si el oficial trae etiquetas ("Video Oficial",
+//   "Visualizer", "Prod by"…), MAYÚSCULAS sostenidas, " - ", "|" o el artista; cada
+//   displayTitle limpio (sin etiquetas, mayúsculas, separadores ni artista, 1–60
+//   caracteres, ES ≠ EN si es objeto); <title> final (videoMetaTitle) ≤ TITLE_MAX en
+//   ES y EN; casos exactos de videoDisplayTitle y videoMetaTitle.
 // Avisos (WARN, no fallan): fecha futura; releaseSlug de otro artista; primeros
 //   60 caracteres de description.es repetidos entre videos; frases autorreferenciales
 //   que se vuelven falsas al crecer el catálogo ("en el sitio", "el único video"…);
 //   notas internas o hedging en copy público ("por confirmar", "lo que sugiere"…).
-import { videos, VIDEO_KINDS } from "../lib/videos.ts";
+import { videos, VIDEO_KINDS, getVideo, videoDisplayTitle, videoMetaTitle } from "../lib/videos.ts";
 import { artists } from "../lib/artists.ts";
 import { releaseSlugs, getRelease } from "../lib/releases.ts";
+import { templatedTitle, titleLength, TITLE_MAX } from "../lib/seo.ts";
 
 let ok = true;
 const report = (label, pass, detail) => {
@@ -87,6 +93,81 @@ report('thumb solo "hqdefault" (si viene)', badThumb.length === 0, list(badThumb
 
 const badRec = videos.filter((v) => v.recordedYear !== undefined && !(Number.isInteger(v.recordedYear) && v.recordedYear >= 1990 && v.recordedYear <= Number(v.date.slice(0, 4))));
 report("recordedYear entero entre 1990 y el año de date (si viene)", badRec.length === 0, list(badRec.map((v) => `${v.slug}:${v.recordedYear}`)));
+
+// ── 16a: displayTitle y <title> ≤ 60 ──
+// Etiquetas de YouTube y mayúsculas sostenidas (dos o más palabras en mayúsculas seguidas).
+// `\b` no sirve con tildes: los bordes se miran con \p{L}.
+const TAGS = /prod\.?\s*by|visuali[sz]er|lyric video|video\s*oficial|videoclip\s*oficial|official video|live session/i;
+const SHOUT = /(?<!\p{L})\p{Lu}{3,}(?:[\s.&\/-]+\p{Lu}{2,})+(?!\p{L})/u;
+const LANGS = ["es", "en"];
+const needsDisplay = (v) =>
+  TAGS.test(v.title) || SHOUT.test(v.title) || v.title.includes(" - ") || v.title.includes("|") ||
+  v.title.toLowerCase().includes(v.artistName.toLowerCase());
+const missingDisplay = videos.filter((v) => needsDisplay(v) && !v.displayTitle);
+report(
+  `displayTitle donde el oficial trae etiquetas, MAYÚSCULAS, " - ", "|" o el artista (${videos.filter(needsDisplay).length} videos)`,
+  missingDisplay.length === 0,
+  list(missingDisplay.map((v) => v.slug)),
+);
+
+const badDisplay = [];
+for (const v of videos) {
+  if (v.displayTitle === undefined) continue;
+  const d = v.displayTitle;
+  if (typeof d !== "string" && !(d && typeof d.es === "string" && typeof d.en === "string")) {
+    badDisplay.push(`${v.slug}: forma inválida`);
+    continue;
+  }
+  if (typeof d !== "string" && d.es === d.en) badDisplay.push(`${v.slug}: es = en (usar string)`);
+  for (const lang of LANGS) {
+    const t = typeof d === "string" ? d : d[lang];
+    const problems = [];
+    if (t !== t.trim() || /\s{2,}/.test(t)) problems.push("espacios");
+    if (titleLength(t) < 1 || titleLength(t) > 60) problems.push(`largo ${titleLength(t)}`);
+    if (TAGS.test(t)) problems.push("etiqueta");
+    if (SHOUT.test(t)) problems.push("mayúsculas");
+    if (t.includes(" - ") || t.includes("|")) problems.push("separador");
+    if (t.toLowerCase().includes(v.artistName.toLowerCase())) problems.push("nombra al artista");
+    if (problems.length) badDisplay.push(`${v.slug} [${lang}] "${t}": ${problems.join(", ")}`);
+  }
+}
+report("displayTitle limpio: sin etiquetas, MAYÚSCULAS, separadores ni artista; 1–60; ES ≠ EN si es objeto", badDisplay.length === 0, list(badDisplay));
+
+const longTitles = [];
+let maxTitle = 0;
+let absCount = { es: 0, en: 0 };
+for (const v of videos) {
+  for (const lang of LANGS) {
+    const { title, absolute } = videoMetaTitle(v, lang);
+    const n = titleLength(absolute ? title : templatedTitle(title));
+    maxTitle = Math.max(maxTitle, n);
+    if (absolute) absCount[lang]++;
+    if (n > TITLE_MAX) longTitles.push(`${v.slug} [${lang}] ${n}`);
+  }
+}
+report(
+  `<title> de la ficha de video ≤ ${TITLE_MAX} con la plantilla (${videos.length} × es/en)`,
+  longTitles.length === 0,
+  longTitles.length ? list(longTitles) : `máx ${maxTitle} · sin plantilla: es ${absCount.es}, en ${absCount.en}`,
+);
+
+const eq = (a, b) => JSON.stringify(a) === JSON.stringify(b);
+const vid = (slug) => {
+  const v = getVideo(slug);
+  if (!v) throw new Error(`falta el video ${slug}`);
+  return v;
+};
+const displayCases = [
+  [videoDisplayTitle(vid("klaus-b-destellos-de-ti"), "es"), "Destellos de ti", "videoDisplayTitle(destellos, es)"],
+  [videoDisplayTitle(vid("newen-afrobeat-grietas-lyric-video"), "en"), "Grietas (with Lido Pimienta)", "videoDisplayTitle(grietas-lyric, en)"],
+  [videoDisplayTitle({ title: "X" }, "es"), "X", "videoDisplayTitle sin displayTitle → oficial"],
+  [videoMetaTitle(vid("klaus-b-destellos-de-ti"), "es"), { title: "Destellos de ti — Klaus B", absolute: false }, "videoMetaTitle(destellos, es)"],
+  [videoMetaTitle(vid("klaus-b-el-secreto-visualizer"), "es"), { title: "Klaus B - El Secreto (Visualizer)", absolute: false }, "videoMetaTitle(el-secreto, es): el oficial cabe"],
+  [videoMetaTitle(vid("con-fusion-cuantas-veces"), "es"), { title: "Cuántas veces (feat. NuVee) — Con.fusión", absolute: false }, "videoMetaTitle(cuantas-veces, es)"],
+  [videoMetaTitle(vid("klaus-b-quisiera-entender"), "es"), { title: "Quisiera Entender (feat. Fran Ri & Newen Afrobeat) — Klaus B", absolute: true }, "videoMetaTitle(quisiera-entender, es): sin plantilla"],
+  [videoMetaTitle(vid("con-fusion-sesiones-bugambilia"), "es"), { title: "Sesiones Bugambilia (feat. Simon Squalo & DJ Eseté)", absolute: true }, "videoMetaTitle(sesiones-bugambilia, es): sin artista ni plantilla"],
+];
+for (const [got, want, label] of displayCases) report(label, eq(got, want), eq(got, want) ? "" : `${JSON.stringify(got)} ≠ ${JSON.stringify(want)}`);
 
 // ── Avisos ──
 const today = new Date().toISOString().slice(0, 10);

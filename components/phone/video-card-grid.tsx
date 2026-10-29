@@ -1,8 +1,8 @@
 import Link from "next/link";
-import { getPublishedVideos, VIDEO_KIND_LABEL } from "@/lib/videos";
+import { getPublishedVideos, toVideoCardData, VIDEO_KIND_LABEL } from "@/lib/videos";
 import { translations, type Language } from "@/lib/translations";
 import { GridFillers } from "@/components/phone/grid-fillers";
-import { VideoCard, toVideoCardData } from "@/components/phone/video-card";
+import { VideoCard } from "@/components/phone/video-card";
 
 type Props = {
   lang: Language;
@@ -47,7 +47,7 @@ export function VideoCardGrid({ lang, currentSlug, artistSlug, limit = 4 }: Prop
 
         <div className="grid grid-cols-2 lg:grid-cols-4 gap-px bg-foreground/10 border border-foreground/10">
           {picks.map((v) => (
-            <VideoCard key={v.slug} video={toVideoCardData(v)} lang={lang} kindLabel={kindLabel[v.kind]} />
+            <VideoCard key={v.slug} video={toVideoCardData(v, lang)} lang={lang} kindLabel={kindLabel[v.kind]} />
           ))}
           <GridFillers count={picks.length} cols={4} />
         </div>

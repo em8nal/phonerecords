@@ -1,6 +1,6 @@
 import Link from "next/link";
 import { YouTubeEmbed } from "@/components/youtube-embed";
-import { pickArtistVideos, VIDEO_KIND_LABEL } from "@/lib/videos";
+import { pickArtistVideos, videoDisplayTitle, VIDEO_KIND_LABEL } from "@/lib/videos";
 import { translations, type Language } from "@/lib/translations";
 
 type Props = {
@@ -44,7 +44,7 @@ export function ArtistVideosSection({ artistSlug, lang }: Props) {
           <div key={v.slug}>
             <YouTubeEmbed
               youtubeId={v.youtubeId}
-              title={v.title}
+              title={videoDisplayTitle(v, lang)}
               lang={lang}
               sizes="(min-width: 1200px) 370px, (min-width: 1024px) 33vw, (min-width: 640px) 50vw, 100vw"
             />
@@ -53,7 +53,7 @@ export function ArtistVideosSection({ artistSlug, lang }: Props) {
                 href={`/${lang}/videos/${v.slug}`}
                 className={`hover:text-muted-foreground transition-colors ${LINK_FOCUS}`}
               >
-                {v.title}
+                {videoDisplayTitle(v, lang)}
               </Link>
             </h3>
             <p className="mt-1 font-mono text-xs uppercase tracking-widest text-muted-foreground">

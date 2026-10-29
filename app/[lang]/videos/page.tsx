@@ -7,8 +7,7 @@ import { PageHero } from "@/components/phone/page-hero";
 import { FooterSection } from "@/components/landing/footer-section";
 import { artists } from "@/lib/artists";
 import { translations, type Language } from "@/lib/translations";
-import { VIDEO_KINDS, VIDEO_KIND_LABEL, getPublishedVideos, youtubeThumb } from "@/lib/videos";
-import { toVideoCardData } from "@/components/phone/video-card";
+import { VIDEO_KINDS, VIDEO_KIND_LABEL, getPublishedVideos, toVideoCardData, youtubeThumb } from "@/lib/videos";
 import { pageMetadata } from "@/lib/seo";
 import { VideosGrid } from "./videos-grid";
 
@@ -41,7 +40,8 @@ export default async function VideosPage({
 
   // Solo videos ya publicados (00:00 America/Santiago), evaluado por petición.
   const published = getPublishedVideos();
-  const entries = published.map(toVideoCardData);
+  // Tarjetas con el título visible del idioma (displayTitle); el ItemList de abajo lleva el oficial.
+  const entries = published.map((v) => toVideoCardData(v, uiLang));
 
   // Chips de artista en el orden del roster (no por conteo), solo con videos.
   const counts = new Map<string, number>();
