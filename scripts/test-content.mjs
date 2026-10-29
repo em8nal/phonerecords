@@ -300,8 +300,6 @@ for (const { name } of COLLECTIONS) {
 }
 
 // ── C8 la API sale de content/ ───────────────────────────────────────────────────────────────
-// Migración en curso (un commit por colección): las que faltan se saltan con INFO.
-const PENDING = new Set(["journal"]);
 {
   const fileSlugs = (name) => disk[name].entries.map((e) => e.data?.slug);
   const byOrder = (name) =>
@@ -320,10 +318,6 @@ const PENDING = new Set(["journal"]);
     journal: () => [`journalPieces = archivos (${journalPieces.length})`, same(slugsOf(journalPieces), fileSlugs("journal"))],
   };
   for (const { name } of COLLECTIONS) {
-    if (PENDING.has(name)) {
-      info(`C8 ${name}: migración pendiente, sigue en ${MODULE_OF[name]}`);
-      continue;
-    }
     const [label, pass, detail] = API[name]();
     report(`C8 ${label}`, pass, detail);
     const wired = readFileSync(path.join(ROOT, MODULE_OF[name]), "utf8").includes(`from "../content/generated/${name}"`);
@@ -343,8 +337,8 @@ const PENDING = new Set(["journal"]);
     .flatMap(walk)
     .filter((f) => readFileSync(path.join(ROOT, f), "utf8").includes("content/generated"))
     .sort();
-  const allowed = COLLECTIONS.filter((c) => !PENDING.has(c.name)).map((c) => MODULE_OF[c.name]).sort();
-  report("C8 content/generated solo lo importan los módulos de lib/ de cada colección", same(importers, allowed), importers.join(", "));
+  const allowed = Object.values(MODULE_OF).sort();
+  report("C8 content/generated solo lo importan los 5 módulos de lib/", same(importers, allowed), importers.join(", "));
 }
 
 // ── C9 deriva entre los tipos TS y los esquemas ──────────────────────────────────────────────
