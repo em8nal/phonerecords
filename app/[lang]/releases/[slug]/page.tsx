@@ -140,8 +140,8 @@ export default async function ReleasePage({
   const video = releaseVideo(release.slug);
 
   const labels = isEs
-    ? { back: "Volver al catálogo", tracklist: "Tracklist", credits: "Créditos", links: "Escuchar", releaseDate: initiallyReleased ? "Fecha" : "Fecha de lanzamiento", format: "Formato", label: "Sello", track: "Track" }
-    : { back: "Back to catalogue", tracklist: "Tracklist", credits: "Credits", links: "Listen", releaseDate: initiallyReleased ? "Released" : "Release date", format: "Format", label: "Label", track: "Track" };
+    ? { back: "Volver al catálogo", tracklist: "Tracklist", credits: "Créditos", links: "Escuchar", releaseDate: initiallyReleased ? "Fecha" : "Fecha de lanzamiento", format: "Formato", label: "Sello", track: "Track", newTab: " (se abre en pestaña nueva)" }
+    : { back: "Back to catalogue", tracklist: "Tracklist", credits: "Credits", links: "Listen", releaseDate: initiallyReleased ? "Released" : "Release date", format: "Format", label: "Label", track: "Track", newTab: " (opens in new tab)" };
 
   // JSON-LD MusicAlbum schema
   const url = `${SITE}/${lang}/releases/${slug}`;
@@ -284,7 +284,8 @@ export default async function ReleasePage({
                         className="inline-flex items-center gap-2 text-sm hover:text-foreground/70 transition-colors group"
                       >
                         {releaseLinkLabel(link.label, uiLang)}
-                        <ExternalLink className="w-3 h-3 opacity-50 group-hover:opacity-100 transition-opacity" />
+                        <span className="sr-only">{labels.newTab}</span>
+                        <ExternalLink className="w-3 h-3 opacity-50 group-hover:opacity-100 transition-opacity" aria-hidden />
                       </TrackedLink>
                     </li>
                   ))}
