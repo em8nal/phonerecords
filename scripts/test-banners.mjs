@@ -231,30 +231,70 @@ report(
 }
 
 // --- 6. Eventos: próximas y archivo (lib/events.ts) ----------------------------------------
+// Sin conteos fijos: las expectativas salen de los datos de lib/events.ts, así la prueba sigue
+// valiendo cuando otro carril agrega, mueve o quita fechas.
 {
-  const NAPLES = "newen-2026-09-11-naples";
   const slugs = (list) => list.map((e) => e.slug);
-  // 22:00 de Santiago del 11-09 ya es 12-09 en UTC: Nápoles sigue siendo hoy.
-  const late = new Date("2026-09-11T22:00:00-03:00");
-  const next = new Date("2026-09-12T00:00:00-03:00");
+  const sameSet = (a, b) => a.length === b.length && a.every((s) => b.includes(s));
+  const SANTIAGO = new Intl.DateTimeFormat("en-CA", {
+    timeZone: "America/Santiago",
+    year: "numeric",
+    month: "2-digit",
+    day: "2-digit",
+    hour: "2-digit",
+    minute: "2-digit",
+    hourCycle: "h23",
+  });
+  /** Instante de `date` a la hora `hhmm` en Santiago (-03:00 o -04:00); null si esa hora no existe. */
+  const santiagoAt = (date, hhmm) => {
+    for (const off of ["-03:00", "-04:00"]) {
+      const t = new Date(`${date}T${hhmm}:00${off}`);
+      const p = Object.fromEntries(SANTIAGO.formatToParts(t).map((x) => [x.type, x.value]));
+      if (`${p.year}-${p.month}-${p.day}` === date && `${p.hour}:${p.minute}` === hhmm) return t;
+    }
+    return null;
+  };
+  const nextDay = (date) => new Date(Date.parse(`${date}T12:00:00Z`) + 86_400_000).toISOString().slice(0, 10);
+
+  // Cada fecha confirmada: a las 22:00 de su día en Santiago (ya el día siguiente en UTC) sigue
+  // próxima; desde el primer instante del día siguiente (00:00, o 01:00 si el cambio de hora se
+  // salta la medianoche) pasa al archivo.
+  const scheduled = events.filter((e) => e.status === "scheduled");
+  const edgeBad = [];
+  for (const ev of scheduled) {
+    const late = santiagoAt(ev.date, "22:00");
+    const next = santiagoAt(nextDay(ev.date), "00:00") ?? santiagoAt(nextDay(ev.date), "01:00");
+    if (!late || !next) {
+      edgeBad.push(`${ev.slug}: sin instante en Santiago`);
+      continue;
+    }
+    if (!slugs(getUpcomingEvents(late)).includes(ev.slug) || slugs(getPastEvents(late)).includes(ev.slug))
+      edgeBad.push(`${ev.slug} a las 22:00 de su día`);
+    if (slugs(getUpcomingEvents(next)).includes(ev.slug) || !slugs(getPastEvents(next)).includes(ev.slug))
+      edgeBad.push(`${ev.slug} a las 00:00 del día siguiente`);
+  }
   report(
-    "Nápoles el 11-09 a las 22:00 de Santiago: próxima, no pasada",
-    slugs(getUpcomingEvents(late)).includes(NAPLES) && !slugs(getPastEvents(late)).includes(NAPLES),
+    `bordes por el día de Santiago: ${scheduled.length} fechas confirmadas (próxima a las 22:00, archivo desde las 00:00 siguientes)`,
+    edgeBad.length === 0,
+    edgeBad.join(" · "),
   );
-  report(
-    "Nápoles el 12-09 a las 00:00 de Santiago: pasada, no próxima",
-    !slugs(getUpcomingEvents(next)).includes(NAPLES) && slugs(getPastEvents(next)).includes(NAPLES),
-  );
+
   const today = new Date("2026-10-29T12:00:00-03:00");
+  const TODAY_STR = "2026-10-29";
   const past = getPastEvents(today);
+  const upcoming = getUpcomingEvents(today);
   const dates = past.map((e) => e.date);
+  const expectedPast = events.filter((e) => e.status === "scheduled" && e.date < TODAY_STR).map((e) => e.slug);
+  const expectedUp = events.filter((e) => e.status !== "cancelled" && e.date >= TODAY_STR).map((e) => e.slug);
   report(
-    "29-10-2026: 8 fechas pasadas en orden ascendente y 0 próximas",
-    past.length === 8 && dates.every((d, i) => i === 0 || dates[i - 1] <= d) && getUpcomingEvents(today).length === 0,
-    `${past.length} pasadas · ${getUpcomingEvents(today).length} próximas`,
+    "29-10-2026: archivo = confirmadas anteriores a hoy, en orden ascendente; próximas = no canceladas desde hoy",
+    sameSet(slugs(past), expectedPast) &&
+      dates.every((d, i) => i === 0 || dates[i - 1] <= d) &&
+      sameSet(slugs(upcoming), expectedUp),
+    `${past.length} pasadas · ${upcoming.length} próximas`,
   );
   const overlaps = [];
-  const instantsEv = [today, late, next, ...events.map((e) => new Date(`${e.date}T12:00:00-03:00`))];
+  const instantsEv = [today, ...events.flatMap((e) => [santiagoAt(e.date, "22:00"), new Date(`${e.date}T12:00:00-03:00`)])].filter(Boolean);
   for (const t of instantsEv) {
     const up = new Set(slugs(getUpcomingEvents(t)));
     for (const s of slugs(getPastEvents(t))) if (up.has(s)) overlaps.push(`${t.toISOString()}: ${s}`);
