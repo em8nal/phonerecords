@@ -86,36 +86,39 @@ export default async function JournalPiecePage({
           type="application/ld+json"
           dangerouslySetInnerHTML={{ __html: toJsonLd(journalArticleJsonLd(p, l)) }}
         />
-        {/* La portada es el hero y el LCP (eager + prioridad alta en PageHero). */}
-        <PageHero
-          image={{ desktop: p.cover.src, mobile: p.cover.src, alt: p.cover.alt }}
-          title={p.title[l]}
-          eyebrow={`${JOURNAL_FORMAT_LABEL[p.format]} · ${date}`}
-          titleClassName="text-4xl lg:text-7xl"
-          imagePosition={p.cover.position}
-          lang={l}
-        />
+        {/* El article envuelve el hero: su h1 (el título de la pieza) es el encabezado del article. */}
+        <article>
+          {/* La portada es el hero y el LCP (eager + prioridad alta en PageHero). */}
+          <PageHero
+            image={{ desktop: p.cover.src, mobile: p.cover.src, alt: p.cover.alt }}
+            title={p.title[l]}
+            eyebrow={`${JOURNAL_FORMAT_LABEL[p.format]} · ${date}`}
+            titleClassName="text-4xl lg:text-7xl"
+            imagePosition={p.cover.position}
+            lang={l}
+          />
 
-        <article className="max-w-[1200px] mx-auto px-6 lg:px-12 pt-12 lg:pt-16 pb-16 lg:pb-24">
-          <Link
-            href={`/${l}/journal`}
-            className="inline-flex items-center gap-2 text-sm text-muted-foreground hover:text-foreground transition-colors mb-12 group"
-          >
-            <ArrowLeft className="w-4 h-4 group-hover:-translate-x-1 transition-transform" aria-hidden />
-            {t.back}
-          </Link>
+          <div className="max-w-[1200px] mx-auto px-6 lg:px-12 pt-12 lg:pt-16 pb-16 lg:pb-24">
+            <Link
+              href={`/${l}/journal`}
+              className="inline-flex items-center gap-2 text-sm text-muted-foreground hover:text-foreground transition-colors mb-12 group"
+            >
+              <ArrowLeft className="w-4 h-4 group-hover:-translate-x-1 transition-transform" aria-hidden />
+              {t.back}
+            </Link>
 
-          <header className={`${READING_COLUMN} mb-12 lg:mb-16`}>
-            <p className="text-xl lg:text-2xl text-foreground/85 leading-relaxed">{p.excerpt[l]}</p>
-            <p className="mt-6 font-mono text-xs uppercase tracking-widest text-muted-foreground">
-              {t.by} {p.author} · <time dateTime={p.publishAt}>{date}</time>
-            </p>
-            <p className="mt-2 text-sm text-muted-foreground">
-              {t.coverPhoto}: {p.cover.credit}
-            </p>
-          </header>
+            <header className={`${READING_COLUMN} mb-12 lg:mb-16`}>
+              <p className="text-xl lg:text-2xl text-foreground/85 leading-relaxed">{p.excerpt[l]}</p>
+              <p className="mt-6 font-mono text-xs uppercase tracking-widest text-muted-foreground">
+                {t.by} {p.author} · <time dateTime={p.publishAt}>{date}</time>
+              </p>
+              <p className="mt-2 text-sm text-muted-foreground">
+                {t.coverPhoto}: {p.cover.credit}
+              </p>
+            </header>
 
-          <JournalBody blocks={p.body[l]} lang={l} />
+            <JournalBody blocks={p.body[l]} lang={l} />
+          </div>
         </article>
 
         <JournalRelated piece={p} lang={l} />

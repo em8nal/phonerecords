@@ -100,7 +100,9 @@ export function JournalBody({ blocks, lang }: { blocks: readonly JournalBlock[];
                     <span className="mt-1 block text-sm text-muted-foreground">
                       {t.by} {r.artistName} · {r.year}
                     </span>
-                    <span className="mt-2 block text-sm text-foreground/80">{t.view} →</span>
+                    <span className="mt-2 block text-sm text-foreground/80">
+                      {t.view} <span aria-hidden="true">→</span>
+                    </span>
                   </span>
                 </Link>
               </div>

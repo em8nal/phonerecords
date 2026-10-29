@@ -9,7 +9,7 @@ const FOCUS =
 
 /**
  * Tarjeta de pieza del índice /journal: portada 16:9, formato, fecha y título (el enlace), con la
- * bajada fuera del enlace para que su nombre accesible sea corto. Server component; la portada
+ * bajada fuera del enlace para que su nombre accesible sea corto y empiece por el título. Server component; la portada
  * se carga diferida (el LCP del índice es el hero). El formato va en español en los dos idiomas.
  */
 export function JournalCard({ piece, lang }: { piece: JournalPiece; lang: Language }) {
@@ -26,14 +26,18 @@ export function JournalCard({ piece, lang }: { piece: JournalPiece; lang: Langua
             className="object-cover transition-transform duration-500 motion-safe:group-hover:scale-[1.02]"
           />
         </div>
-        <p className="mt-5 font-mono text-xs uppercase tracking-widest text-muted-foreground">
-          <span lang={lang === "en" ? "es" : undefined}>{JOURNAL_FORMAT_LABEL[piece.format]}</span>
-          {" · "}
-          <time dateTime={piece.publishAt}>{formatPublishDate(piece, lang)}</time>
-        </p>
-        <h2 className="mt-3 font-display text-2xl lg:text-3xl tracking-tight text-balance group-hover:text-muted-foreground transition-colors">
-          {piece.title[lang]}
-        </h2>
+        {/* El título va primero en el DOM (el nombre accesible del enlace empieza por él); la meta
+            queda arriba solo a la vista (flex-col-reverse). */}
+        <div className="mt-5 flex flex-col-reverse gap-3">
+          <h2 className="font-display text-2xl lg:text-3xl tracking-tight text-balance group-hover:text-muted-foreground transition-colors">
+            {piece.title[lang]}
+          </h2>
+          <p className="font-mono text-xs uppercase tracking-widest text-muted-foreground">
+            <span lang={lang === "en" ? "es" : undefined}>{JOURNAL_FORMAT_LABEL[piece.format]}</span>
+            {" · "}
+            <time dateTime={piece.publishAt}>{formatPublishDate(piece, lang)}</time>
+          </p>
+        </div>
       </Link>
       <p className="mt-3 text-base text-foreground/75 leading-relaxed">{piece.excerpt[lang]}</p>
     </article>
