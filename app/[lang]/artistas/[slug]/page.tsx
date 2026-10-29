@@ -13,6 +13,8 @@ import { PageHero } from "@/components/phone/page-hero";
 import { ArtistCardGrid } from "@/components/phone/artist-card-grid";
 import { getArtistHero, getArtistPortrait } from "@/lib/artist-media";
 import { ArtistVideosSection } from "@/components/phone/video-artist-section";
+import { ArtistKeyFacts } from "@/components/phone/artist-key-facts";
+import { splitOrigin } from "@/lib/artist-facts";
 
 type ActionLink = { href: string; kind: "listen" | "buy" };
 
@@ -62,8 +64,6 @@ type ArtistParams = { lang: string; slug: string };
 
 /** Fecha ISO completa o parcial ("2026", "2026-06", "2026-06-12"); deja fuera "in production". */
 const LD_DATE_RE = /^\d{4}(-\d{2}){0,2}$/;
-/** Origen con año de formación: "Santiago, Chile · 2009" → lugar + año. */
-const ORIGIN_YEAR_RE = /^(.*\S)\s*·\s*(\d{4})$/;
 
 /**
  * Sello que edita el lanzamiento, para `recordLabel`: PHŌNÉ con el @id de la
@@ -164,7 +164,7 @@ export default async function ArtistPage({
   // @id estable e igual en ES y EN (la url sí va por idioma); el mismo que usa el
   // `member` del sello en la portada y el `byArtist` de las fichas de lanzamiento.
   const artistId = artistLdId(slug);
-  const originMatch = ORIGIN_YEAR_RE.exec(artist.origin);
+  const origin = splitOrigin(artist.origin);
   // `album` solo con los lanzamientos propios: las colaboraciones (otro artista
   // principal) ya cuelgan del grafo de ese artista.
   const ownEntries = allEntries.filter((e) => e.artistSlug === slug);
@@ -182,11 +182,11 @@ export default async function ArtistPage({
         ...(artist.links.length ? { sameAs: artist.links.map((l) => l.href) } : {}),
         ...(portrait ? { image: absUrl(portrait) } : {}),
         // Un Place es un lugar: el año de "Santiago, Chile · 2009" va solo en foundingDate.
-        location: { "@type": "Place", name: originMatch?.[1] ?? artist.origin },
-        ...(originMatch
+        location: { "@type": "Place", name: origin.place },
+        ...(origin.year
           ? {
-              foundingLocation: { "@type": "Place", name: originMatch[1] },
-              foundingDate: originMatch[2],
+              foundingLocation: { "@type": "Place", name: origin.place },
+              foundingDate: origin.year,
             }
           : {}),
         // Inverso del `member` de la organización. MusicGroup no tiene `recordLabel`.
@@ -263,14 +263,12 @@ export default async function ArtistPage({
             {labels.back}
           </Link>
 
-          {/* Header: con hero, el nombre y los géneros ya van sobre la foto (h1 del PageHero) */}
+          {/* Con hero, el nombre y los géneros ya van sobre la foto (h1 del PageHero) y la ficha
+              abre con "Datos clave"; sin hero, "Datos clave" va justo después del header. */}
           {hero ? (
-            <header className="mb-12 lg:mb-16">
-              <p className="font-mono text-sm text-muted-foreground">
-                {labels.origin} · {artist.origin}
-              </p>
-            </header>
+            <ArtistKeyFacts slug={slug} lang={uiLang} className="mb-16 lg:mb-20" />
           ) : (
+            <>
             <header className={`mb-16 lg:mb-24 ${portrait ? "grid lg:grid-cols-12 gap-8 lg:gap-12 items-end" : ""}`}>
               <div className={portrait ? "lg:col-span-7 order-2 lg:order-1" : ""}>
                 <div className="font-mono text-xs text-muted-foreground tracking-widest uppercase mb-6">
@@ -299,6 +297,8 @@ export default async function ArtistPage({
                 </div>
               )}
             </header>
+            <ArtistKeyFacts slug={slug} lang={uiLang} className="mb-16 lg:mb-20" />
+            </>
           )}
 
           {/* Bio */}

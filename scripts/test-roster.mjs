@@ -9,6 +9,7 @@
 // El archivo TSX no se puede importar desde Node (alias @/, JSX): se lee como texto.
 import { readFileSync } from "node:fs";
 import { artists } from "../lib/artists.ts";
+import { artistKeyFacts, splitOrigin } from "../lib/artist-facts.ts";
 import { translations } from "../lib/translations.ts";
 
 const expected = artists.map(({ slug, name }) => ({ slug, name }));
@@ -76,9 +77,7 @@ const norm = (s) => s.normalize("NFD").replace(/[̀-ͯ]/g, "").toLowerCase();
     return paragraph.match(/^.*?[.!?](?=\s|$)/)?.[0] ?? paragraph;
   };
   for (const a of artists) {
-    const m = /^(.*\S)\s*·\s*(\d{4})$/.exec(a.origin);
-    const place = m ? m[1] : a.origin;
-    const year = m?.[2];
+    const { place, year } = splitOrigin(a.origin);
     const places = place.split(/[,·]/).map((p) => norm(p.trim())).filter(Boolean);
     for (const lang of LANGS) {
       const first = firstSentence(a.bio[lang]);
@@ -94,6 +93,60 @@ const norm = (s) => s.normalize("NFD").replace(/[̀-ͯ]/g, "").toLowerCase();
         missing.length ? `falta ${list(missing)} en «${first}»` : "",
       );
     }
+  }
+}
+
+// R2. Formación o instrumento ("Datos clave"), en los dos idiomas.
+for (const a of artists) {
+  const empty = LANGS.filter((l) => !a.role?.[l]?.trim());
+  report(`R2 ${a.slug}: role.es y role.en`, empty.length === 0, empty.length ? `vacío en ${list(empty)}` : "");
+}
+
+// R7. "Datos clave" de la ficha con relojes fijos (no depende del día en que corre la prueba).
+{
+  const OCT29 = Date.UTC(2026, 9, 29, 15);
+  const NOV1 = Date.UTC(2026, 10, 1);
+  const fact = (slug, lang, now, id) => artistKeyFacts(slug, lang, now).find((f) => f.id === id);
+  const titles = (slug, lang, now) => (fact(slug, lang, now, "releases")?.items ?? []).map((i) => i.text);
+  const sameList = (got, want) => JSON.stringify(got) === JSON.stringify(want);
+  for (const lang of LANGS) {
+    const formed = artists.filter((a) => fact(a.slug, lang, OCT29, "formed")).map((a) => a.slug);
+    report(
+      `R7 [${lang}] año de formación solo en Newen (2009)`,
+      sameList(formed, ["newen-afrobeat"]) && fact("newen-afrobeat", lang, OCT29, "formed")?.value === "2009",
+      list(formed),
+    );
+    const cases = [
+      ["newen-afrobeat", OCT29, ['Newen Plays Fela (12" Vinyl)']],
+      ["newen-afrobeat", NOV1, ["La Fuerza", 'Newen Plays Fela (12" Vinyl)']],
+      ["klaus-b", OCT29, ["Destellos de ti"]],
+      ["ecamhi", OCT29, ["Cuántas veces — Con.fusión"]],
+    ];
+    for (const [slug, now, want] of cases) {
+      const got = titles(slug, lang, now);
+      report(
+        `R7 [${lang}] ${slug} al ${new Date(now).toISOString().slice(0, 10)}: lanzamientos con PHŌNÉ`,
+        sameList(got, want),
+        got.join(" | "),
+      );
+    }
+    const releaseHrefs = artists.flatMap((a) => fact(a.slug, lang, OCT29, "releases")?.items ?? []).map((i) => i.href);
+    const badRel = releaseHrefs.filter((h) => !new RegExp(`^/${lang}/releases/[a-z0-9-]+$`).test(h));
+    report(`R7 [${lang}] lanzamientos enlazan a /${lang}/releases/<slug>`, releaseHrefs.length > 0 && badRel.length === 0, list(badRel));
+    const tooMany = artists.filter((a) => (fact(a.slug, lang, NOV1, "releases")?.items.length ?? 0) > 3).map((a) => a.slug);
+    report(`R7 [${lang}] máximo 3 lanzamientos`, tooMany.length === 0, list(tooMany));
+    const badBooking = artists
+      .filter((a) => fact(a.slug, lang, OCT29, "booking")?.href !== `/${lang}/contacto?topic=booking`)
+      .map((a) => a.slug);
+    report(`R7 [${lang}] booking → /${lang}/contacto?topic=booking`, badBooking.length === 0, list(badBooking));
+    const badLabel = artists.filter((a) => fact(a.slug, lang, OCT29, "label")?.href !== `/${lang}/sello`).map((a) => a.slug);
+    report(`R7 [${lang}] sello → /${lang}/sello`, badLabel.length === 0, list(badLabel));
+    const order = artistKeyFacts("newen-afrobeat", lang, OCT29).map((f) => f.id).join(" > ");
+    report(
+      `R7 [${lang}] orden de las filas`,
+      order === "origin > formed > role > genres > label > releases > booking",
+      order,
+    );
   }
 }
 

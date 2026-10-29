@@ -32,6 +32,11 @@ export type Artist = {
   alternateName?: string[];
   genres: string[];
   origin: string;
+  /**
+   * Formación o instrumento principal, tal como lo dice la bio ("Datos clave" de la ficha,
+   * lib/artist-facts.ts). Obligatorio: un artista nuevo no compila sin él.
+   */
+  role: { es: string; en: string };
   bio: { es: string; en: string };
   links: ArtistLink[];
   /**
@@ -53,6 +58,7 @@ export const artists: Artist[] = [
     name: "Newen Afrobeat",
     genres: ["Afrobeat", "Afrofunk", "World Music"],
     origin: "Santiago, Chile · 2009",
+    role: { es: "Banda", en: "Band" },
     bio: {
       es:
         `Newen Afrobeat es una banda de afrobeat formada en Santiago de Chile en 2009 y una de las agrupaciones más influyentes de la escena afrobeat latinoamericana contemporánea. La banda ha construido una propuesta que combina la herencia del afrobeat de Fela Kuti con ritmos latinoamericanos, jazz, funk y sonidos de raíz, desarrollando una identidad propia marcada por la energía en vivo, la exploración musical y un fuerte contenido social y político.
@@ -85,6 +91,10 @@ In 2026 the group is preparing a new studio album that will mark a new sonic sta
     name: "ecamhi",
     genres: ["Instrumental", "Jazz", "Interdisciplinar"],
     origin: "Santiago, Chile",
+    role: {
+      es: "Trompeta, producción y composición (proyecto solista)",
+      en: "Trumpet, production and composition (solo project)",
+    },
     bio: {
       es:
         `ecamhi es el proyecto solista de Enrique Camhi, trompetista, productor y compositor chileno con una trayectoria ligada a distintos proyectos relevantes de la escena musical nacional. A lo largo de los años ha trabajado como músico y creativo junto a artistas y bandas como Newen Afrobeat y La Combo Tortuga, desarrollando una identidad artística marcada por la exploración sonora y la mezcla de géneros.
@@ -113,6 +123,10 @@ Upcoming releases: album εποχή (2026), EP "en viaje" (2027).`,
     alternateName: ["Con.fusion"],
     genres: ["Hip Hop", "Jazz", "Neo Soul"],
     origin: "Santiago, Chile",
+    role: {
+      es: "Voz: canto, rap y scat (proyecto solista)",
+      en: "Vocals: singing, rap and scat (solo project)",
+    },
     stats: { monthlyListeners: 8700 },
     bio: {
       es:
@@ -148,6 +162,10 @@ Latest release: "Cuántas veces" (October 2026), the single that opens the label
     alternateName: ["Klaus Brantmayer"],
     genres: ["Nu-jazz", "Hip-hop jazz", "Rap jazz", "Neo-soul"],
     origin: "Santiago, Chile",
+    role: {
+      es: "Saxofón, flauta, composición y producción",
+      en: "Saxophone, flute, composition and production",
+    },
     bio: {
       es:
         `Klaus B es un saxofonista, flautista, compositor y productor chileno. Realizó estudios independientes y académicos, tanto doctos como populares. Ha profundizado su desarrollo musical a través de la improvisación y de la experiencia en escenarios. Actualmente forma parte estable en diversos proyectos como Newen Afrobeat, Pascuala Ilabaca y Fauna, el dúo de hip-hop Gestosimple & Klaus B, Valentina Marinkovic, Fran Ri y Camila Bañados.
@@ -180,6 +198,7 @@ He has played on stages and at festivals around the world — Brazil, Colombia, 
     name: "Rosario Lircay",
     genres: ["R&B", "Pop alternativo", "Hip hop", "Soul"],
     origin: "Ñuble · Santiago, Chile",
+    role: { es: "Voz", en: "Vocals" },
     bio: {
       es:
         `Rosario Lircay es el nombre artístico de Rosario Meléndez, cantante chilena nacida en la Región de Ñuble y radicada en Santiago. Con formación en canto jazz y música popular y en producción musical, construyó su oficio en los escenarios como corista: hoy es voz estable en la banda de Alex Anwandter y ha acompañado a Brain Damage, Celeste Shaw, Con.fusión, Pau y LHMG, entre otros, en escenarios como Lollapalooza Chile, el Teatro Caupolicán, el Movistar Arena y el Teatro Gran Rex de Buenos Aires.
