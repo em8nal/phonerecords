@@ -88,9 +88,10 @@ export default async function JournalPiecePage({
         />
         {/* El article envuelve el hero: su h1 (el título de la pieza) es el encabezado del article. */}
         <article>
-          {/* La portada es el hero y el LCP (eager + prioridad alta en PageHero). */}
+          {/* La portada es el hero y el LCP (eager + prioridad alta en PageHero). En móvil, el recorte
+              4:5 si la pieza lo trae; si no, la misma 16:9. */}
           <PageHero
-            image={{ desktop: p.cover.src, mobile: p.cover.src, alt: p.cover.alt }}
+            image={{ desktop: p.cover.src, mobile: p.cover.mobile?.src ?? p.cover.src, alt: p.cover.alt }}
             title={p.title[l]}
             eyebrow={`${JOURNAL_FORMAT_LABEL[p.format]} · ${date}`}
             titleClassName="text-4xl lg:text-7xl"

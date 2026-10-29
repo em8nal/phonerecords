@@ -6,8 +6,10 @@
 //   J1 esquema: slug kebab y único; ES y EN completos (título ≤ 60, bajada ≤ 200, cuerpo, alt de
 //     portada); cada cuerpo con ≥ 1 párrafo y bloques conocidos; imágenes y portada locales en
 //     public/journal/<slug>/, existentes, con alt y crédito, width/height enteros; youtubeId de 11
-//     caracteres con título; lanzamientos y artistas existentes (≥ 1 artista); formato de
-//     JOURNAL_FORMATS; autor; publishAt válido y con el offset real de America/Santiago.
+//     caracteres con título (y `thumb` solo "hqdefault"); lanzamientos y artistas existentes
+//     (≥ 1 artista); formato de JOURNAL_FORMATS; autor; publishAt válido y con el offset real de
+//     America/Santiago; recorte móvil de la portada (opcional) 4:5, local y existente; `position`
+//     solo con clases object-[X%_Y%] (con md:/lg: opcional).
 //   J2 negativos: una fixture por error (slug con mayúsculas, sin EN, sin offset, offset de verano
 //     en julio, artista o lanzamiento inexistente, imagen sin crédito, video de 10 caracteres,
 //     archivo de portada inexistente); la fixture válida pasa.
@@ -19,12 +21,15 @@
 //     fuera, portada con el máximo y cada URL con su par; al quitar las fixtures no queda nada.
 //   J5 JSON-LD: BlogPosting completo en ES y EN, autor del sello = ORG_ID, about/mentions =
 //     artistId/releaseId, "<" escapado por toJsonLd, índice sin ItemList cuando no hay piezas.
+//     journalVideoThumb: la del bloque, la de lib/videos.ts o maxresdefault.
 //   J6 fuentes: las rutas con `revalidate = 300` y sin APIs de petición; /journal con noindex;
 //     [slug] con notFound() y getPublishedPiece(; la imagen OG con revalidate y la misma guarda;
-//     sin piezas publicadas, ni el menú ni el footer ni lib/translations.ts enlazan a /journal.
+//     sin piezas publicadas, ni el menú ni el footer ni lib/translations.ts ni lib/i18n/** enlazan
+//     a /journal; Tailwind 4 con detección automática (sin source(), lib/ y content/ fuera de
+//     .gitignore), para que las clases de `cover.position` lleguen al CSS.
 // Avisos (WARN, solo datos reales): bajada fuera de 140–160; cuerpo fuera de 300–700 palabras;
 //   sin lanzamientos relacionados; secuencia de bloques no textuales distinta entre ES y EN.
-import { readFileSync, existsSync } from "node:fs";
+import { readFileSync, existsSync, readdirSync } from "node:fs";
 import { fileURLToPath } from "node:url";
 import path from "node:path";
 import {
@@ -42,7 +47,9 @@ import {
   journalWordCount,
   journalArticleJsonLd,
   journalIndexJsonLd,
+  journalVideoThumb,
 } from "../lib/journal.ts";
+import { videos } from "../lib/videos.ts";
 import { artists } from "../lib/artists.ts";
 import { releases } from "../lib/releases.ts";
 import { SITE, ORG_ID, LABEL_NAME, artistId, releaseId, toJsonLd } from "../lib/schema.ts";
@@ -70,6 +77,8 @@ const other = (l) => (l === "es" ? "en" : "es");
 const SLUG_RE = /^[a-z0-9]+(?:-[a-z0-9]+)*$/;
 const YT_RE = /^[A-Za-z0-9_-]{11}$/;
 const IMAGE_EXT_RE = /\.(jpe?g|png|webp)$/i;
+// cover.position: una o más clases object-[X%_Y%], cada una con md: o lg: opcional.
+const POSITION_RE = /^(?:(?:md:|lg:)?object-\[\d{1,3}%_\d{1,3}%\])(?: (?:md:|lg:)?object-\[\d{1,3}%_\d{1,3}%\])*$/;
 const artistSet = new Set(artists.map((a) => a.slug));
 const releaseSet = new Set(releases.map((r) => r.slug));
 const words = (s) => String(s ?? "").trim().split(/\s+/).filter(Boolean).length;
@@ -130,6 +139,7 @@ function validatePiece(p, { fileExists = realFile } = {}) {
       if (b.type === "video") {
         if (!YT_RE.test(String(b.youtubeId))) err(`${at}: youtubeId inválido «${b.youtubeId}»`);
         if (!nonEmpty(b.title)) err(`${at}: video sin título`);
+        if ("thumb" in b && b.thumb !== "hqdefault") err(`${at}: thumb «${b.thumb}» (solo "hqdefault")`);
       }
       if (b.type === "release" && !releaseSet.has(b.slug)) err(`${at}: lanzamiento inexistente «${b.slug}»`);
     });
@@ -141,8 +151,17 @@ function validatePiece(p, { fileExists = realFile } = {}) {
     );
     if (n < 300 || n > 700) warns.push(`body.${l} con ${n} palabras (ideal 300–700)`);
   }
-  if (p.cover) checkImage(p.cover, "cover", dir, fileExists, err);
-  else err("sin cover");
+  if (p.cover) {
+    checkImage(p.cover, "cover", dir, fileExists, err);
+    if (p.cover.mobile !== undefined) {
+      checkImage({ ...p.cover.mobile, credit: p.cover.credit }, "cover.mobile", dir, fileExists, err);
+      const r = p.cover.mobile.width / p.cover.mobile.height;
+      if (!(Math.abs(r - 0.8) <= 0.01)) err(`cover.mobile: ${p.cover.mobile.width}×${p.cover.mobile.height} no es 4:5`);
+    }
+    if (p.cover.position !== undefined && !POSITION_RE.test(String(p.cover.position))) {
+      err(`cover.position «${p.cover.position}»: solo clases object-[X%_Y%] (md:/lg: opcional)`);
+    }
+  } else err("sin cover");
 
   if (!Array.isArray(p.artists) || p.artists.length === 0) err("sin artistas relacionados");
   else p.artists.filter((s) => !artistSet.has(s)).forEach((s) => err(`artista inexistente «${s}»`));
@@ -217,6 +236,8 @@ function fixture(slug, publishAt, overrides = {}) {
       height: 1080,
       credit: "Fotógrafa de prueba",
       alt: { es: "Klaus B con la flauta en la sala de grabación", en: "Klaus B with the flute in the recording room" },
+      position: "object-[50%_40%] md:object-[50%_35%]",
+      mobile: { src: `${dir}/portada-movil.jpg`, width: 1200, height: 1500 },
     },
     format: "track-by-track",
     ...overrides,
@@ -265,6 +286,10 @@ const baseSlugs = journalPieces.map((p) => p.slug);
     ["tipo de bloque desconocido", (p) => p.body.es.push({ type: "embed", html: "<iframe>" })],
     ["formato desconocido", (p) => (p.format = "noticia")],
     ["sin artistas", (p) => (p.artists = [])],
+    ["recorte móvil 16:9 (no 4:5)", (p) => (p.cover.mobile = { ...p.cover.mobile, width: 1920, height: 1080 })],
+    ["recorte móvil fuera de public/journal/<slug>/", (p) => (p.cover.mobile.src = "/media/sello/sello-hero-mobile.jpg")],
+    ["position con una clase que no es object-[X%_Y%]", (p) => (p.cover.position = "object-[50%_40%] scale-150")],
+    ["video con thumb distinto de hqdefault", (p) => (p.body.es[4].thumb = "sddefault")],
   ];
   const missed = NEGATIVE.filter(([, mutate]) => {
     const p = clone(valid);
@@ -273,7 +298,11 @@ const baseSlugs = journalPieces.map((p) => p.slug);
   }).map(([label]) => label);
   report(`J2 se rechaza cada una de las ${NEGATIVE.length} fixtures inválidas`, missed.length === 0, list(missed));
   const noFiles = validatePiece(valid).errors.filter((e) => e.includes("no existe public"));
-  report("J2 portada e imágenes (ES y EN) sin archivo en public/ se rechazan", noFiles.length === 3, list(noFiles));
+  report("J2 portada, recorte móvil e imágenes (ES y EN) sin archivo en public/ se rechazan", noFiles.length === 4, list(noFiles));
+  const noMobile = clone(valid);
+  delete noMobile.cover.mobile;
+  delete noMobile.cover.position;
+  report("J2 recorte móvil y position son opcionales", validatePiece(noMobile, { fileExists: fixtureFiles(FIXTURE_SLUG) }).errors.length === 0);
 }
 
 // ── J3: publishAt ──
@@ -444,6 +473,16 @@ const baseSlugs = journalPieces.map((p) => p.slug);
         list1.itemListElement[0].item.url === `${SITE}/${l}/journal/${p.slug}`,
     );
   }
+  const hq = videos.find((v) => v.thumb === "hqdefault");
+  const maxres = videos.find((v) => !v.thumb);
+  report(
+    "J5 journalVideoThumb: la del bloque, la de lib/videos.ts o maxresdefault",
+    journalVideoThumb({ youtubeId: "abcdefghijk", thumb: "hqdefault" }) === "hqdefault" &&
+      journalVideoThumb({ youtubeId: "abcdefghijk" }) === "maxresdefault" &&
+      (!hq || journalVideoThumb({ youtubeId: hq.youtubeId }) === "hqdefault") &&
+      (!maxres || journalVideoThumb({ youtubeId: maxres.youtubeId }) === "maxresdefault"),
+    hq ? `hq: ${hq.slug}` : "sin videos hqdefault en lib/videos.ts",
+  );
   const fields = journalTextFields(p).map((f) => f.field);
   report(
     "J5 journalTextFields cubre título, bajada, párrafo, subtítulo, cita, cite y pie de foto en ES y EN",
@@ -476,11 +515,40 @@ const baseSlugs = journalPieces.map((p) => p.slug);
   const og = code(OG);
   report("J6 imagen OG con revalidate = 300 y getPublishedPiece(", /export const revalidate = 300;/.test(og) && og.includes("getPublishedPiece("));
   if (getPublishedPieces(Date.now()).length === 0) {
-    const linked = ["components/landing/navigation.tsx", "components/landing/footer-section.tsx", "lib/translations.ts"].filter((f) => src(f).includes("/journal"));
-    report("J6 sin piezas publicadas: ni el menú, ni el footer, ni lib/translations.ts enlazan a /journal", linked.length === 0, list(linked));
+    // lib/i18n/** llega con el carril T (lib/translations.ts pasa a barril): se recorre si existe.
+    const walk = (rel) =>
+      readdirSync(path.join(ROOT, rel), { withFileTypes: true }).flatMap((d) =>
+        d.isDirectory() ? walk(`${rel}/${d.name}`) : /\.(ts|tsx)$/.test(d.name) ? [`${rel}/${d.name}`] : [],
+      );
+    const i18n = existsSync(path.join(ROOT, "lib/i18n")) ? walk("lib/i18n") : [];
+    const linked = ["components/landing/navigation.tsx", "components/landing/footer-section.tsx", "lib/translations.ts", ...i18n].filter((f) => src(f).includes("/journal"));
+    report(
+      `J6 sin piezas publicadas: ni el menú, ni el footer, ni lib/translations.ts, ni lib/i18n/** (${i18n.length} archivos) enlazan a /journal`,
+      linked.length === 0,
+      list(linked),
+    );
   } else {
     info("J6 hay piezas publicadas: enlazar /journal desde el menú y el footer lo decide el equipo");
   }
+}
+
+// Tailwind 4 (app/globals.css con @import "tailwindcss") genera las clases que encuentra en los
+// archivos del repo que no ignora git. cover.position vive en los datos (lib/journal.ts y, desde el
+// carril S, content/journal/*.json): si la detección se restringe con source(...) sin un @source que
+// cubra esas carpetas, o si git las ignora, el object-position de la portada se pierde sin aviso.
+{
+  const css = src("app/globals.css");
+  const restricted = /@import\s+["']tailwindcss["'][^;]*\bsource\(/.test(css);
+  const covers = (dir) => new RegExp(`@source\\s+["'][^"']*${dir}`).test(css);
+  const ignored = src(".gitignore")
+    .split("\n")
+    .map((l) => l.trim())
+    .filter((l) => /^\/?(lib|content)(\/|$)/.test(l));
+  report(
+    "J6 Tailwind ve lib/ y content/ (detección automática o @source) y git no los ignora",
+    (!restricted || (covers("lib") && covers("content"))) && ignored.length === 0,
+    restricted ? "source(...) restringido" : list(ignored),
+  );
 }
 
 process.exit(ok ? 0 : 1);

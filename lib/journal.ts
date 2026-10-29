@@ -17,6 +17,7 @@ import { LABEL_NAME, ORG_ID, SITE, WEBSITE_ID, absUrl, artistId, releaseId, toLa
 import { formatReleaseLabel } from "./release-date";
 import { getArtist } from "./artists";
 import { getRelease } from "./releases";
+import { videos } from "./videos";
 
 export type Localized = { es: string; en: string };
 
@@ -40,6 +41,9 @@ export type JournalImage = {
   credit: string;
 };
 
+/** Recorte 4:5 de la portada para el hero en móvil: mismo alt y crédito que la portada 16:9. */
+export type JournalImageCrop = { src: string; width: number; height: number };
+
 export const JOURNAL_BLOCK_TYPES = ["paragraph", "heading", "quote", "image", "video", "release"] as const;
 
 /** Bloques del cuerpo. `heading` (h2) no estaba en el brief: lo necesita el track-by-track. */
@@ -48,8 +52,11 @@ export type JournalBlock =
   | { type: "heading"; text: string }
   | { type: "quote"; text: string; cite?: string }
   | ({ type: "image"; alt: string; caption?: string } & JournalImage)
-  /** Video de YouTube por id (11 caracteres), con la facade del sitio. */
-  | { type: "video"; youtubeId: string; title: string }
+  /**
+   * Video de YouTube por id (11 caracteres), con la facade del sitio. `thumb: "hqdefault"` cuando
+   * la subida no tiene maxresdefault (curl -I); si el video está en lib/videos.ts, vale su `thumb`.
+   */
+  | { type: "video"; youtubeId: string; title: string; thumb?: "hqdefault" }
   /** Tarjeta de un lanzamiento de lib/releases.ts por slug. */
   | { type: "release"; slug: string };
 
@@ -71,8 +78,13 @@ export type JournalPiece = {
   artists: string[];
   /** Slugs de lib/releases.ts. */
   releases: string[];
-  /** Portada 16:9 (1920×1080 o más). `position`: clases object-position de Tailwind para el hero. */
-  cover: JournalImage & { alt: Localized; position?: string };
+  /**
+   * Portada 16:9 (1920×1080 o más). `position`: clases object-position de Tailwind para el hero
+   * (solo `object-[X%_Y%]`, con `md:`/`lg:` opcional; Tailwind 4 las encuentra en lib/ y content/).
+   * `mobile`: recorte 4:5 opcional (1200×1500 o más) para el hero en móvil; sin él, el hueco 4:5 de
+   * PageHero recorta la 16:9 por los lados.
+   */
+  cover: JournalImage & { alt: Localized; position?: string; mobile?: JournalImageCrop };
   format: JournalFormat;
 };
 
@@ -129,6 +141,14 @@ export function formatPublishDate(p: { publishAt: string }, lang: string): strin
   const label = formatReleaseLabel(day, lang);
   const year = day.slice(0, 4);
   return lang === "es" ? `${label} de ${year}` : `${label}, ${year}`;
+}
+
+/**
+ * Miniatura inicial de un bloque de video: la del bloque, la de lib/videos.ts si el video está en
+ * el catálogo, o maxresdefault. Así una subida sin maxres no pide primero una imagen que da 404.
+ */
+export function journalVideoThumb(b: { youtubeId: string; thumb?: "hqdefault" }): "maxresdefault" | "hqdefault" {
+  return b.thumb ?? videos.find((v) => v.youtubeId === b.youtubeId)?.thumb ?? "maxresdefault";
 }
 
 /** URL absoluta de la pieza en un idioma. */

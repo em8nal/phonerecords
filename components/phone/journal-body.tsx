@@ -2,7 +2,7 @@ import Image from "next/image";
 import Link from "next/link";
 import { YouTubeEmbed } from "@/components/youtube-embed";
 import { getRelease } from "@/lib/releases";
-import type { JournalBlock } from "@/lib/journal";
+import { journalVideoThumb, type JournalBlock } from "@/lib/journal";
 import type { Language } from "@/lib/translations";
 
 const copy = {
@@ -78,7 +78,13 @@ export function JournalBody({ blocks, lang }: { blocks: readonly JournalBlock[];
           case "video":
             return (
               <div key={i} className="my-10">
-                <YouTubeEmbed youtubeId={b.youtubeId} title={b.title} lang={lang} sizes={COLUMN_SIZES} />
+                <YouTubeEmbed
+                  youtubeId={b.youtubeId}
+                  title={b.title}
+                  lang={lang}
+                  sizes={COLUMN_SIZES}
+                  initialThumb={journalVideoThumb(b)}
+                />
               </div>
             );
           case "release": {
