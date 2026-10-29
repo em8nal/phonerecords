@@ -1,5 +1,7 @@
-// Shared by the server layout (reads the cookie) and the client consent
-// components (write it). No "use client" / "server-only": plain module.
+// Compartido por el snippet del <head> (nombre de la cookie) y los componentes
+// cliente de consentimiento, que leen la decisión al montar y la escriben al
+// elegir. El servidor ya no la lee: así el layout no usa cookies() y las páginas
+// pueden ser estáticas (H2). Módulo plano: sin "use client" ni "server-only".
 
 export const CONSENT_COOKIE = "phone_consent";
 export const CONSENT_MAX_AGE = 60 * 60 * 24 * 365; // one year
@@ -21,6 +23,21 @@ declare global {
 /** "; secure" on https (production); omitted on http://localhost so dev still works. */
 function secureAttr() {
   return window.location.protocol === "https:" ? "; secure" : "";
+}
+
+/**
+ * Decisión guardada en phone_consent (solo cliente; null si no hay o no se puede leer).
+ * Mismo criterio que el snippet de consent-default-script.tsx: separa por "; " y
+ * busca el nombre exacto.
+ */
+export function readConsentCookie(): ConsentDecision | null {
+  try {
+    const prefix = `${CONSENT_COOKIE}=`;
+    const entry = document.cookie.split("; ").find((c) => c.startsWith(prefix));
+    return parseConsent(entry?.slice(prefix.length));
+  } catch {
+    return null;
+  }
 }
 
 /** Persist the visitor's decision (client only). */

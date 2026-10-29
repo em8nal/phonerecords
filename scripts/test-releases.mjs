@@ -10,13 +10,14 @@
 //   frase relativa al momento ("sale el", "saldrá el", "out Friday", "out November 20", "will be
 //   released", "pre-save"…: lista TEMPORAL documentada abajo, con casos positivos y negativos);
 //   cada etiqueta de enlace es una clave de LINK_LABEL_EN o un nombre de plataforma;
-//   releaseTitle ≤ 60 caracteres con el sufijo de la plantilla de app/layout.tsx;
+//   releaseTitle ≤ 60 caracteres con el sufijo de la plantilla de lib/site-metadata.ts;
 //   getArtistEntries sin duplicados y ninguna entrada liviana de lib/artists.ts repite una
 //   ficha; redirects de next.config.mjs: todos permanentes, las 5 formas por slug viejo y las
 //   2 de claudio-solis, en un solo salto (probado con getPathMatch y compile de Next, como los
-//   aplica el servidor); la ficha de lanzamiento se renderiza por petición (app/layout.tsx lee
-//   headers() o cookies()) o declara revalidate/dynamic, porque corta el reproductor y
-//   datePublished con isReleased().
+//   aplica el servidor); render estático (H2): no existe app/layout.tsx, ningún root layout ni
+//   components/site-document.tsx importa next/headers, y la ficha de lanzamiento declara
+//   `export const revalidate` entre 1 y 300 s (sin force-dynamic), porque corta el reproductor
+//   y datePublished con isReleased().
 // Avisos (WARN, no fallan): ficha ya publicada (isReleased de lib/release-date.ts) sin Spotify
 //   reproducible (spotifyRefFromLinks nulo), con un aviso distinto si además falta Apple Music;
 //   RELEASES_NOW=<ISO> simula la fecha; artista sin public/press-kits/<slug>-{es,en}.pdf.
@@ -385,10 +386,11 @@ const labelI18nOk =
 report("releaseLinkLabel: traduce en /en, deja igual en /es y los nombres de plataforma", labelI18nOk);
 
 // --- Títulos -----------------------------------------------------------------------------
-// La plantilla vive en lib/seo.ts (TITLE_TEMPLATE) y app/layout.tsx la usa tal cual.
-const layoutSrc = readFileSync(path.join(ROOT, "app/layout.tsx"), "utf8");
+// La plantilla vive en lib/seo.ts (TITLE_TEMPLATE) y lib/site-metadata.ts (metadata de los dos
+// root layouts) la usa tal cual.
+const siteMetadataSrc = readFileSync(path.join(ROOT, "lib/site-metadata.ts"), "utf8");
 const template = TITLE_TEMPLATE.replace("%s", "");
-report("app/layout.tsx usa TITLE_TEMPLATE de lib/seo.ts", /template:\s*TITLE_TEMPLATE/.test(layoutSrc));
+report("lib/site-metadata.ts usa TITLE_TEMPLATE de lib/seo.ts", /template:\s*TITLE_TEMPLATE/.test(siteMetadataSrc));
 report("TITLE_SUFFIX coincide con la plantilla de lib/seo.ts", template === TITLE_SUFFIX, `plantilla "%s${template}"`);
 const titles = releases.map((r) => {
   const t = releaseTitle(r);
@@ -403,21 +405,33 @@ report(
 );
 
 // --- Corte de estreno ---------------------------------------------------------------------
-// La ficha de lanzamiento muestra el reproductor y datePublished solo si isReleased(). Es exacto
-// a las 00:00 de Santiago mientras la ruta se renderice por petición: hoy lo fuerza el layout raíz.
-// Si H2 quita headers()/cookies() del layout, la ruta pasa a estática y el corte se congela en el
-// build; entonces la página tiene que declarar `export const revalidate = 3600` (o dynamic).
-const releasePageSrc = readFileSync(path.join(ROOT, "app/[lang]/releases/[slug]/page.tsx"), "utf8");
-const layoutPerRequest = /\bawait\s+(?:headers|cookies)\(\)/.test(layoutSrc);
-const pageRevalidates = /export\s+const\s+(?:revalidate|dynamic)\s*=/.test(releasePageSrc);
+// La ficha de lanzamiento muestra el reproductor y datePublished solo si isReleased(). Desde H2
+// las páginas son estáticas con ISR: el layout ya no lee headers() ni cookies(), y el corte
+// llega con la regeneración (revalidate ≤ 300 s; stale-while-revalidate: 300 s más el tiempo
+// hasta la siguiente visita). Los componentes cliente vuelven a mirar el reloj.
+report("no existe app/layout.tsx (root layouts por segmento)", !existsSync(path.join(ROOT, "app/layout.tsx")));
+const shellFiles = ["app/[lang]/layout.tsx", "app/press/[lang]/layout.tsx", "components/site-document.tsx"];
+const shellWithHeaders = shellFiles.filter((f) => {
+  const file = path.join(ROOT, f);
+  return !existsSync(file) || /from\s+["']next\/headers["']/.test(readFileSync(file, "utf8"));
+});
 report(
-  "ficha de lanzamiento por petición o con revalidate (corte de isReleased)",
-  layoutPerRequest || pageRevalidates,
-  layoutPerRequest
-    ? "app/layout.tsx lee headers()/cookies()"
-    : pageRevalidates
-      ? "la página declara revalidate/dynamic"
-      : "app/layout.tsx ya no lee headers()/cookies(): agrega `export const revalidate = 3600` a app/[lang]/releases/[slug]/page.tsx",
+  "root layouts y SiteDocument existen y no importan next/headers",
+  shellWithHeaders.length === 0,
+  list(shellWithHeaders),
+);
+const releasePageSrc = readFileSync(path.join(ROOT, "app/[lang]/releases/[slug]/page.tsx"), "utf8");
+const revalidateMatch = /export\s+const\s+revalidate\s*=\s*(\d+)/.exec(releasePageSrc);
+const releaseRevalidate = revalidateMatch ? Number(revalidateMatch[1]) : null;
+const forceDynamic = /export\s+const\s+dynamic\s*=\s*["']force-dynamic["']/.test(releasePageSrc);
+report(
+  "ficha de lanzamiento con revalidate entre 1 y 300 s (corte de isReleased)",
+  releaseRevalidate !== null && releaseRevalidate >= 1 && releaseRevalidate <= 300 && !forceDynamic,
+  forceDynamic
+    ? "quita `dynamic = \"force-dynamic\"` de app/[lang]/releases/[slug]/page.tsx"
+    : releaseRevalidate === null
+      ? "agrega `export const revalidate = 300` a app/[lang]/releases/[slug]/page.tsx"
+      : `revalidate = ${releaseRevalidate}`,
 );
 
 // --- Discografía -------------------------------------------------------------------------

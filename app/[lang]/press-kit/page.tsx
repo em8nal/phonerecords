@@ -13,6 +13,10 @@ import { pageMetadata } from "@/lib/seo";
 
 type LangParams = { lang: string };
 
+// ISR (H2): la discografía marca lo que está por salir y el pie lleva el año en curso.
+// Basta con regenerar cada hora.
+export const revalidate = 3600;
+
 // Orden del press kit impreso (Newen, Klaus B, ecamhi, Con.fusión, Rosario
 // Lircay). Independiente del orden del roster de portada en lib/artists.ts;
 // un artista que no esté aquí va al final.
@@ -157,7 +161,7 @@ export default async function PressKitPage({
 
   return (
     <>
-      <main className="relative min-h-screen overflow-x-hidden noise-overlay print:noise-overlay-none">
+      <main id="contenido" tabIndex={-1} className="relative min-h-screen overflow-x-hidden noise-overlay print:noise-overlay-none">
         <script
           type="application/ld+json"
           dangerouslySetInnerHTML={{ __html: JSON.stringify(schema) }}

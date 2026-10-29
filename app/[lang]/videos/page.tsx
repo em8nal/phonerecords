@@ -14,6 +14,10 @@ import { VideosGrid } from "./videos-grid";
 
 type LangParams = { lang: string };
 
+// ISR (H2): getPublishedVideos() filtra por fecha de publicación. Se regenera con la primera
+// visita después de 5 minutos.
+export const revalidate = 300;
+
 export async function generateMetadata(
   { params }: { params: Promise<LangParams> },
 ): Promise<Metadata> {
@@ -88,7 +92,7 @@ export default async function VideosPage({
 
   return (
     <>
-      <main className="relative min-h-screen overflow-x-hidden noise-overlay">
+      <main id="contenido" tabIndex={-1} className="relative min-h-screen overflow-x-hidden noise-overlay">
         <script
           type="application/ld+json"
           dangerouslySetInnerHTML={{ __html: JSON.stringify(schema) }}
@@ -121,7 +125,9 @@ export default async function VideosPage({
             <p className="text-xl text-foreground/85 leading-relaxed">{t.intro}</p>
           </div>
 
-          {/* useSearchParams exige un límite de Suspense; el render es por petición, así que no hay fallback visible. */}
+          {/* useSearchParams exige un límite de Suspense. Con la página en ISR, los filtros se leen en el
+              cliente: el HTML lleva el fallback del límite más cercano. VideosGrid trae el suyo con la
+              grilla completa sin filtros (carrilL-videos-grid.patch); este queda de respaldo. */}
           <Suspense fallback={null}>
             <VideosGrid
               lang={uiLang}

@@ -32,6 +32,10 @@ const localizeLabel = (label: string, isEs: boolean) =>
 
 type PressParams = { lang: string; slug: string };
 
+// ISR (H2): la discografía marca lo que está por salir y el documento lleva la fecha del día.
+// Basta con regenerar cada hora.
+export const revalidate = 3600;
+
 export function generateStaticParams() {
   const langs: Language[] = ["es", "en"];
   return langs.flatMap((lang) =>
@@ -188,7 +192,7 @@ export default async function PressKitPage({
       </div>
 
       {/* Document — A4 layout */}
-      <div className="press-document mx-auto bg-white">
+      <main id="contenido" tabIndex={-1} className="press-document mx-auto bg-white">
         {/* Header */}
         <header className="press-header">
           <div className="press-logo">
@@ -318,7 +322,7 @@ export default async function PressKitPage({
             PHŌNÉ Records · Santiago de Chile · {t.generated}: {today}
           </div>
         </section>
-      </div>
+      </main>
     </div>
   );
 }

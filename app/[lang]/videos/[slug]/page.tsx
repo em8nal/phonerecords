@@ -36,6 +36,10 @@ const LINK_FOCUS =
 /** `sizes` de la facade grande (columna de 1104 px desde 1200 px); también lo usa el preload. */
 const FACADE_SIZES = "(min-width: 1200px) 1104px, 100vw";
 
+// ISR (H2): un video con fecha futura responde 404 hasta su publicación, y la grilla de cierre
+// solo lista los publicados. Se regenera con la primera visita después de 5 minutos.
+export const revalidate = 300;
+
 export function generateStaticParams() {
   return LANGS.flatMap((lang) => videoSlugs.map((slug) => ({ lang, slug })));
 }
@@ -171,7 +175,7 @@ export default async function VideoPage({
 
   return (
     <>
-      <main className="relative min-h-screen overflow-x-hidden noise-overlay">
+      <main id="contenido" tabIndex={-1} className="relative min-h-screen overflow-x-hidden noise-overlay">
         <script
           type="application/ld+json"
           dangerouslySetInnerHTML={{ __html: JSON.stringify(schema) }}

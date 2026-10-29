@@ -4,8 +4,9 @@ import { clearConsentCookie } from "./consent-cookie";
 
 /**
  * Lets visitors withdraw/change their cookie decision (privacy page).
- * Clears phone_consent and reloads so the server renders the banner again and
- * no analytics script from the previous choice stays loaded.
+ * Clears phone_consent and reloads: al montar, el cliente vuelve a leer la cookie
+ * (ya sin decisión) y muestra el banner, y no queda cargado ningún script de
+ * analítica de la elección anterior.
  */
 export function ConsentResetButton({ label }: { label: string }) {
   return (

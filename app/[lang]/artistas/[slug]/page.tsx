@@ -76,6 +76,10 @@ function recordLabelLd(label: string | undefined) {
     : { "@type": "Organization", name: label };
 }
 
+// ISR (H2): la discografía marca "Próximamente" con isUpcoming y la sección de videos solo
+// muestra los ya publicados. Se regenera con la primera visita después de 5 minutos.
+export const revalidate = 300;
+
 export function generateStaticParams() {
   const langs: Language[] = ["es", "en"];
   return langs.flatMap((lang) =>
@@ -201,7 +205,7 @@ export default async function ArtistPage({
                       }
                     : {}),
                   name: e.title,
-                  // `upcoming` se calcula en cada petición (app/layout.tsx lee headers() y cookies()).
+                  // `upcoming` se calcula en cada regeneración ISR (revalidate = 300).
                   ...(!e.upcoming && LD_DATE_RE.test(date) ? { datePublished: date } : {}),
                   ...(recordLabel ? { recordLabel } : {}),
                   ...(e.cover ? { image: absUrl(e.cover) } : {}),
@@ -235,7 +239,7 @@ export default async function ArtistPage({
 
   return (
     <>
-      <main className="relative min-h-screen overflow-x-hidden noise-overlay">
+      <main id="contenido" tabIndex={-1} className="relative min-h-screen overflow-x-hidden noise-overlay">
         <script
           type="application/ld+json"
           dangerouslySetInnerHTML={{ __html: JSON.stringify(schema) }}

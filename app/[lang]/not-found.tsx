@@ -3,8 +3,10 @@
 // 404 localizada (A8). Next la muestra cuando una página de /[lang] llama a notFound()
 // (ficha inexistente) y, gracias a app/[lang]/[...missing]/page.tsx, para cualquier
 // URL sin ruta bajo /es o /en. not-found no recibe props: el idioma sale del
-// LanguageProvider de app/[lang]/layout.tsx, que la envuelve. Sin metadata propia:
-// Next responde 404 e inyecta <meta name="robots" content="noindex">.
+// LanguageProvider de app/[lang]/layout.tsx (root layout), que la envuelve. Sin metadata
+// propia: Next responde 404 e inyecta <meta name="robots" content="noindex">; el <title>
+// en su idioma lo pone el generateMetadata de [...missing] (las fichas inexistentes usan
+// el de su página).
 import Link from "next/link";
 import { Navigation } from "@/components/landing/navigation";
 import { FooterSection } from "@/components/landing/footer-section";
@@ -48,9 +50,8 @@ export default function NotFound() {
 
   return (
     <>
-      <main className="relative min-h-screen overflow-x-hidden noise-overlay">
-        <Navigation />
-
+      <Navigation />
+      <main id="contenido" tabIndex={-1} className="relative min-h-screen overflow-x-hidden noise-overlay">
         <article className="max-w-[1000px] mx-auto px-6 lg:px-12 pt-32 lg:pt-40 pb-24">
           <header className="mb-16 lg:mb-20">
             <span className="inline-flex items-center gap-3 text-sm font-mono text-muted-foreground mb-8">

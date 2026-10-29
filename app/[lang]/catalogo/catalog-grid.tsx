@@ -1,6 +1,6 @@
 "use client";
 
-import { useMemo, useState, useTransition } from "react";
+import { Suspense, useMemo, useState, useTransition } from "react";
 import { useRouter, useSearchParams, usePathname } from "next/navigation";
 import Link from "next/link";
 import Image from "next/image";
@@ -31,20 +31,53 @@ type View = "grid" | "list";
 const CHIP_FOCUS =
   "focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand focus-visible:ring-offset-2";
 
-export function CatalogGrid({
-  lang,
-  entries,
-  artistsList,
-  labels,
-}: {
+type CatalogGridProps = {
   lang: string;
   entries: CatalogEntry[];
   artistsList: ArtistChip[];
   labels: Labels;
-}) {
+};
+
+/** Lo que la grilla lee de la URL: ReadonlyURLSearchParams o un URLSearchParams vacío. */
+type Query = Pick<URLSearchParams, "get" | "toString">;
+
+/** Sin filtros: lo que pinta el fallback mientras no se leen los params de la URL. */
+const EMPTY_QUERY: Query = new URLSearchParams();
+
+/**
+ * /catalogo es estática con ISR (H2) y useSearchParams solo se resuelve en el cliente: sin un
+ * límite de Suspense el build falla, y con fallback={null} el HTML saldría sin grilla. El
+ * fallback es la misma grilla sin filtros (todas las entradas, orden reciente), así que el HTML
+ * trae las tarjetas y los enlaces a cada ficha. Al prerenderizar, useSearchParams lanza
+ * BailoutToCSRError y el límite queda marcado para renderizarse en el cliente: en CADA visita,
+ * con filtros o sin ellos, React descarta las tarjetas del HTML y crea la grilla de nuevo al
+ * hidratar (las imágenes se montan otra vez, desde la caché). Leer location.search con
+ * useSyncExternalStore lo evitaría, pero router.replace (history.replaceState) no emite ningún
+ * evento al que suscribirse: sin más trabajo, los chips y los enlaces con ?artist= dejarían de
+ * filtrar.
+ */
+export function CatalogGrid(props: CatalogGridProps) {
+  return (
+    <Suspense fallback={<CatalogGridView {...props} query={EMPTY_QUERY} />}>
+      <CatalogGridWithQuery {...props} />
+    </Suspense>
+  );
+}
+
+function CatalogGridWithQuery(props: CatalogGridProps) {
+  const query = useSearchParams();
+  return <CatalogGridView {...props} query={query} />;
+}
+
+function CatalogGridView({
+  lang,
+  entries,
+  artistsList,
+  labels,
+  query: searchParams,
+}: CatalogGridProps & { query: Query }) {
   const router = useRouter();
   const pathname = usePathname();
-  const searchParams = useSearchParams();
   const [isPending, startTransition] = useTransition();
   const [pending, setPending] = useState<string | null>(null);
 

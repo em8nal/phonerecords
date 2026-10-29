@@ -10,6 +10,10 @@ import { CatalogGrid } from "./catalog-grid";
 
 type LangParams = { lang: string };
 
+// ISR (H2): las entradas por salir llevan "Próximamente" según la fecha. Se regenera con la
+// primera visita después de 5 minutos.
+export const revalidate = 300;
+
 export async function generateMetadata(
   { params }: { params: Promise<LangParams> },
 ): Promise<Metadata> {
@@ -118,7 +122,7 @@ export default async function CatalogoPage({
 
   return (
     <>
-      <main className="relative min-h-screen overflow-x-hidden noise-overlay">
+      <main id="contenido" tabIndex={-1} className="relative min-h-screen overflow-x-hidden noise-overlay">
         <script
           type="application/ld+json"
           dangerouslySetInnerHTML={{ __html: JSON.stringify(schema) }}

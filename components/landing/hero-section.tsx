@@ -4,6 +4,7 @@ import { useEffect, useState } from "react";
 import { Button } from "@/components/ui/button";
 import { ArrowRight } from "lucide-react";
 import { useLanguage } from "@/lib/language-context";
+import { fraunces } from "@/lib/fraunces";
 
 export function HeroSection() {
   const { t, language } = useLanguage();
@@ -68,7 +69,7 @@ export function HeroSection() {
             <span className="block">{t.hero.headline1}</span>
             <span className="block">
               {t.hero.headline2}{" "}
-              <span className="relative inline-block italic font-normal pr-[0.06em]" style={{ fontFamily: "var(--font-fraunces)", fontFeatureSettings: '"ss01" 1', fontVariationSettings: '"opsz" 144, "SOFT" 50, "WONK" 1' }}>
+              <span className={`${fraunces.variable} relative inline-block italic font-normal pr-[0.06em]`} style={{ fontFamily: "var(--font-fraunces)", fontFeatureSettings: '"ss01" 1', fontVariationSettings: '"opsz" 144, "SOFT" 50, "WONK" 1' }}>
                 <span
                   key={wordIndex}
                   className="inline-flex"
