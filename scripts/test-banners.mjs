@@ -14,10 +14,13 @@
 //   5. regla de fechas (lib/release-date.ts): un día completo se publica a las 00:00 de Santiago;
 //      una fecha parcial ("YYYY" / "YYYY-MM") solo cuando su período terminó, nunca por el reloj
 //      mientras siga en curso o en el futuro; las parciales pasadas siguen publicadas.
+//   6. eventos (lib/events.ts): próximas y pasadas se reparten por el día de hoy en Santiago, sin
+//      solaparse; el archivo va en orden ascendente.
 // Con --dias imprime el carrusel de cada día del 29-10 al 02-12 (a las 12:00) para el reporte:
 //   node --import ./scripts/ts-resolve-hook.mjs scripts/test-banners.mjs --dias
 import { BANNER_ENTRIES, getActiveBanners, isReleased } from "../lib/banner.ts";
 import { releases } from "../lib/releases.ts";
+import { events, getPastEvents, getUpcomingEvents } from "../lib/events.ts";
 import { isReleased as isReleasedDate, isUpcoming, releaseLiveMs, releaseStartMs } from "../lib/release-date.ts";
 
 let ok = true;
@@ -225,6 +228,38 @@ report(
     Boolean(enViaje) && isUpcoming(enViaje.releaseDate, P("2027-06-15T12:00:00-04:00")),
     enViaje?.releaseDate,
   );
+}
+
+// --- 6. Eventos: próximas y archivo (lib/events.ts) ----------------------------------------
+{
+  const NAPLES = "newen-2026-09-11-naples";
+  const slugs = (list) => list.map((e) => e.slug);
+  // 22:00 de Santiago del 11-09 ya es 12-09 en UTC: Nápoles sigue siendo hoy.
+  const late = new Date("2026-09-11T22:00:00-03:00");
+  const next = new Date("2026-09-12T00:00:00-03:00");
+  report(
+    "Nápoles el 11-09 a las 22:00 de Santiago: próxima, no pasada",
+    slugs(getUpcomingEvents(late)).includes(NAPLES) && !slugs(getPastEvents(late)).includes(NAPLES),
+  );
+  report(
+    "Nápoles el 12-09 a las 00:00 de Santiago: pasada, no próxima",
+    !slugs(getUpcomingEvents(next)).includes(NAPLES) && slugs(getPastEvents(next)).includes(NAPLES),
+  );
+  const today = new Date("2026-10-29T12:00:00-03:00");
+  const past = getPastEvents(today);
+  const dates = past.map((e) => e.date);
+  report(
+    "29-10-2026: 8 fechas pasadas en orden ascendente y 0 próximas",
+    past.length === 8 && dates.every((d, i) => i === 0 || dates[i - 1] <= d) && getUpcomingEvents(today).length === 0,
+    `${past.length} pasadas · ${getUpcomingEvents(today).length} próximas`,
+  );
+  const overlaps = [];
+  const instantsEv = [today, late, next, ...events.map((e) => new Date(`${e.date}T12:00:00-03:00`))];
+  for (const t of instantsEv) {
+    const up = new Set(slugs(getUpcomingEvents(t)));
+    for (const s of slugs(getPastEvents(t))) if (up.has(s)) overlaps.push(`${t.toISOString()}: ${s}`);
+  }
+  report(`ningún evento en las dos listas (${instantsEv.length} instantes)`, overlaps.length === 0, overlaps.join(" · "));
 }
 
 // --- Tabla por día (--dias) --------------------------------------------------------------

@@ -146,9 +146,29 @@ export const events: Event[] = [
   },
 ];
 
+/**
+ * Fecha de hoy en Santiago como "YYYY-MM-DD" (en-CA formatea así). Con toISOString(), desde
+ * las 21:00 de Santiago (00:00 UTC) la fecha del día ya figuraba como pasada.
+ */
+function santiagoToday(now: Date): string {
+  return new Intl.DateTimeFormat("en-CA", { timeZone: "America/Santiago" }).format(now);
+}
+
+/** Fechas de hoy en adelante (hora de Santiago), sin las canceladas, en orden ascendente. */
 export function getUpcomingEvents(now: Date = new Date()): Event[] {
-  const today = now.toISOString().slice(0, 10);
+  const today = santiagoToday(now);
   return events
     .filter((e) => e.date >= today && e.status !== "cancelled")
+    .sort((a, b) => a.date.localeCompare(b.date));
+}
+
+/**
+ * Fechas ya pasadas (antes de hoy en Santiago) que llegaron a confirmarse, en orden ascendente:
+ * el archivo de /eventos. No se solapa con getUpcomingEvents (date < hoy frente a date >= hoy).
+ */
+export function getPastEvents(now: Date = new Date()): Event[] {
+  const today = santiagoToday(now);
+  return events
+    .filter((e) => e.date < today && e.status === "scheduled")
     .sort((a, b) => a.date.localeCompare(b.date));
 }
