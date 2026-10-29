@@ -25,6 +25,7 @@ export type Release = {
   description: { es: string; en: string };
   tracklist?: Track[];
   credits?: ReleaseCredit[];
+  /** `label` en español o nombre de plataforma; /en la traduce con releaseLinkLabel (LINK_LABEL_EN). */
   links?: { label: string; href: string }[];
   cover?: string;
   /** Co-credited roster artists; release appears under their filter too. */
@@ -71,7 +72,7 @@ Rosario Lircay is the stage name of Rosario Meléndez, a singer from the Ñuble 
       { role: "℗", name: "2026 PHŌNÉ Records, bajo licencia exclusiva a ONErpm" },
     ],
     links: [
-      { label: "Pre-save / Escuchar", href: "https://onerpm.link/105010589210" },
+      { label: "Todas las plataformas", href: "https://onerpm.link/105010589210" },
       { label: "Apple Music", href: "https://music.apple.com/us/album/en-vela-single/6821221086" },
       // Del smartlink; verificado con el oEmbed de Spotify (título "En Vela") el 24-10 y el 26-10-2026.
       { label: "Spotify", href: "https://open.spotify.com/album/5ONQBpFhxX31ruaLxwUMqw" },
@@ -112,8 +113,8 @@ The recording is ℗ 2026 Newen Afrobeat and the release © 2026 PHŌNÉ Records
       { role: "©", name: "2026 PHŌNÉ Records" },
     ],
     links: [
-      { label: "Pre-save / Escuchar", href: "https://orcd.co/npk70nb" },
-      { label: "Qobuz (reserva · hi-res)", href: "https://www.qobuz.com/us-en/album/la-fuerza-newen-afrobeat/rkxyy8xslgx0o" },
+      { label: "Todas las plataformas", href: "https://orcd.co/npk70nb" },
+      { label: "Qobuz (hi-res)", href: "https://www.qobuz.com/us-en/album/la-fuerza-newen-afrobeat/rkxyy8xslgx0o" },
       { label: "Spotify (artista)", href: "https://open.spotify.com/artist/0PTJ848ulShbjTx2yqaAlb" },
     ],
   },
@@ -341,7 +342,7 @@ The album follows "Viaje Sin Tiempo" (2024), a record made together with Gestosi
       { role: "Sello, difusión y prensa", name: "PHŌNÉ Records" },
       { role: "Distribución", name: "ONErpm" },
     ],
-    links: [{ label: "Pre-save / Escuchar", href: "https://onerpm.link/106214256083" }],
+    links: [{ label: "Todas las plataformas", href: "https://onerpm.link/106214256083" }],
   },
   {
     slug: "klaus-b-destellos-de-ti",
@@ -396,7 +397,7 @@ On this single, Klaus B is credited with composition, saxophone, flute and produ
     ],
     video: { youtubeId: "zEfVXTYtuo8", title: "Klaus B - Destellos De Ti [Videoclip Oficial]" },
     links: [
-      { label: "Pre-save / Escuchar", href: "https://onerpm.link/102211016130" },
+      { label: "Todas las plataformas", href: "https://onerpm.link/102211016130" },
       // Del smartlink; verificado con el oEmbed de Spotify (título "Destellos de Ti") el 24-10 y el 26-10-2026.
       { label: "Spotify", href: "https://open.spotify.com/album/5loHWji5dshEXJv1LavbCF" },
     ],
@@ -1031,6 +1032,24 @@ export function spotifyRefFromLinks(links?: { href: string }[]): SpotifyRef | nu
     if (m) return { kind: m[1] as SpotifyRef["kind"], id: m[2] };
   }
   return null;
+}
+
+/**
+ * Etiquetas de `links` escritas en español que cambian en /en. Las demás son nombres de
+ * plataforma ("Spotify", "Apple Music", "Qobuz (hi-res)"…) y se muestran igual en ambos idiomas.
+ * "Todas las plataformas" nombra el smart link por su destino, no por una acción: "Pre-save" es
+ * falso después del estreno y "Escuchar", antes. `pnpm test:releases` exige que cada etiqueta sea
+ * una clave de este mapa o un nombre de plataforma conocido.
+ */
+export const LINK_LABEL_EN: Record<string, string> = {
+  "Todas las plataformas": "All platforms",
+  "Spotify (artista)": "Spotify (artist)",
+};
+
+/** Etiqueta de un enlace de la ficha en el idioma de la página. */
+export function releaseLinkLabel(label: string, lang: string): string {
+  if (lang === "es") return label;
+  return Object.hasOwn(LINK_LABEL_EN, label) ? LINK_LABEL_EN[label] : label;
 }
 
 /** Nombre del sello tal como aparece en `label` cuando PHŌNÉ edita el lanzamiento. */

@@ -10,6 +10,7 @@ import {
   spotifyRefFromLinks,
   releaseTitle,
   isPhoneRelease,
+  releaseLinkLabel,
 } from "@/lib/releases";
 import { getArtist } from "@/lib/artists";
 import { SpotifyEmbed } from "@/components/spotify-embed";
@@ -253,7 +254,7 @@ export default async function ReleasePage({
                         rel="noopener noreferrer"
                         className="inline-flex items-center gap-2 text-sm hover:text-foreground/70 transition-colors group"
                       >
-                        {isEs ? link.label : link.label.replace("Escuchar", "Listen")}
+                        {releaseLinkLabel(link.label, uiLang)}
                         <ExternalLink className="w-3 h-3 opacity-50 group-hover:opacity-100 transition-opacity" />
                       </a>
                     </li>
