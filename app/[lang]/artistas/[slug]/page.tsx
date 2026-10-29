@@ -5,7 +5,7 @@ import Link from "next/link";
 import { ArrowLeft, ExternalLink, FileText } from "lucide-react";
 import { Navigation } from "@/components/landing/navigation";
 import { FooterSection } from "@/components/landing/footer-section";
-import { artistSlugs, getArtist } from "@/lib/artists";
+import { artistLinkRel, artistSlugs, getArtist, linkPlatform } from "@/lib/artists";
 import { getArtistEntries } from "@/lib/catalog";
 import { getRelease, isPhoneRelease } from "@/lib/releases";
 import { isUpcoming } from "@/lib/release-date";
@@ -14,6 +14,7 @@ import { ArtistCardGrid } from "@/components/phone/artist-card-grid";
 import { getArtistHero, getArtistPortrait } from "@/lib/artist-media";
 import { ArtistVideosSection } from "@/components/phone/video-artist-section";
 import { ArtistKeyFacts } from "@/components/phone/artist-key-facts";
+import { PlatformIcon } from "@/components/phone/platform-icon";
 import { splitOrigin } from "@/lib/artist-facts";
 
 type ActionLink = { href: string; kind: "listen" | "buy" };
@@ -367,20 +368,25 @@ export default async function ArtistPage({
                   <h2 className="font-mono text-xs text-muted-foreground uppercase tracking-widest mb-4">
                     {labels.links}
                   </h2>
-                  <ul className="space-y-2">
-                    {artist.links.map((link) => (
-                      <li key={link.href}>
-                        <a
-                          href={link.href}
-                          target="_blank"
-                          rel="noopener noreferrer"
-                          className="inline-flex items-center gap-2 text-sm hover:text-foreground/70 transition-colors group"
-                        >
-                          {link.label}
-                          <ExternalLink className="w-3 h-3 opacity-50 group-hover:opacity-100 transition-opacity" />
-                        </a>
-                      </li>
-                    ))}
+                  {/* Orden y etiquetas: ARTIST_PLATFORMS (lib/artists.ts). rel="me" solo en los perfiles propios. */}
+                  <ul className="space-y-1">
+                    {artist.links.map((link) => {
+                      const platform = linkPlatform(link.href);
+                      return (
+                        <li key={link.href}>
+                          <a
+                            href={link.href}
+                            target="_blank"
+                            rel={artistLinkRel(link.href)}
+                            className="inline-flex min-h-8 items-center gap-2.5 text-sm hover:text-foreground/70 transition-colors rounded-sm focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand"
+                          >
+                            {platform && <PlatformIcon platform={platform.id} />}
+                            {link.label}
+                            <span className="sr-only">{isEs ? " (se abre en pestaña nueva)" : " (opens in new tab)"}</span>
+                          </a>
+                        </li>
+                      );
+                    })}
                   </ul>
                 </div>
               )}

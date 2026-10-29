@@ -8,7 +8,7 @@
 //      (slug + name) es exactamente la de `artists`.
 // El archivo TSX no se puede importar desde Node (alias @/, JSX): se lee como texto.
 import { readFileSync } from "node:fs";
-import { artists } from "../lib/artists.ts";
+import { artists, ARTIST_PLATFORMS, linkPlatform, artistLinkRel } from "../lib/artists.ts";
 import { artistKeyFacts, splitOrigin } from "../lib/artist-facts.ts";
 import { translations } from "../lib/translations.ts";
 
@@ -148,6 +148,46 @@ for (const a of artists) {
       order,
     );
   }
+}
+
+// R3. Enlaces del artista: https, plataforma conocida, etiqueta canónica y el orden del estándar
+// del 21-10 (plan 11a), que vive solo en ARTIST_PLATFORMS de lib/artists.ts.
+{
+  const order = ARTIST_PLATFORMS.map((p) => p.id);
+  for (const a of artists) {
+    const problems = [];
+    let last = -1;
+    for (const l of a.links) {
+      const p = linkPlatform(l.href);
+      if (!l.href.startsWith("https://")) problems.push(`${l.label}: no es https`);
+      if (!p) {
+        problems.push(`${l.label}: plataforma desconocida (${l.href})`);
+        continue;
+      }
+      if (l.label !== p.label) problems.push(`etiqueta «${l.label}» ≠ «${p.label}»`);
+      const idx = order.indexOf(p.id);
+      if (idx <= last) problems.push(`${p.label} fuera de orden o repetido`);
+      last = Math.max(last, idx);
+    }
+    report(`R3 ${a.slug}: enlaces en orden (${a.links.map((l) => l.label).join(" · ")})`, problems.length === 0, list(problems));
+  }
+}
+
+// R4. rel="me" solo en los perfiles propios (Discogs es una ficha de base de datos); la ficha
+// usa artistLinkRel y dibuja el ícono de cada plataforma.
+{
+  report("R4 artistLinkRel(Spotify) = me noopener noreferrer", artistLinkRel("https://open.spotify.com/artist/x") === "me noopener noreferrer");
+  report("R4 artistLinkRel(Discogs) = noopener noreferrer", artistLinkRel("https://www.discogs.com/artist/1") === "noopener noreferrer");
+  report("R4 artistLinkRel(desconocido) sin me", artistLinkRel("https://example.com/") === "noopener noreferrer");
+  const page = readFileSync(new URL("../app/[lang]/artistas/[slug]/page.tsx", import.meta.url), "utf8");
+  report("R4 la ficha usa artistLinkRel( y <PlatformIcon", page.includes("artistLinkRel(") && page.includes("<PlatformIcon"));
+  const icons = readFileSync(new URL("../components/phone/platform-icon.tsx", import.meta.url), "utf8");
+  const noIcon = ARTIST_PLATFORMS.filter((p) => !new RegExp(`["']?${p.id}["']?\\s*:\\s*"M`).test(icons)).map((p) => p.id);
+  report("R4 platform-icon.tsx trae un trazado por plataforma", noIcon.length === 0, list(noIcon));
+  report(
+    "R4 íconos monocromos y ocultos al lector",
+    icons.includes('fill="currentColor"') && icons.includes('aria-hidden="true"') && !/#[0-9a-f]{3,6}\b/i.test(icons),
+  );
 }
 
 process.exit(ok ? 0 : 1);

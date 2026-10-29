@@ -11,6 +11,58 @@ export type ArtistLink = {
   href: string;
 };
 
+export type ArtistPlatform =
+  | "spotify"
+  | "apple-music"
+  | "youtube"
+  | "bandcamp"
+  | "soundcloud"
+  | "instagram"
+  | "tiktok"
+  | "discogs";
+
+const hostIs = (...domains: string[]) => (host: string) =>
+  domains.some((d) => host === d || host.endsWith(`.${d}`));
+
+/**
+ * Plataformas de los enlaces del artista, en el orden del estándar del 21-10 (plan 11a):
+ * Spotify · Apple Music · YouTube · Bandcamp · SoundCloud · Instagram · TikTok, y Discogs al
+ * final. `links` sigue este orden y usa estas etiquetas (lo vigila `pnpm test:roster`).
+ * `official`: perfil propio del artista, que lleva `rel="me"`. Discogs no lo es: es una ficha
+ * de base de datos que cualquiera edita, y `rel="me"` afirma identidad.
+ */
+export const ARTIST_PLATFORMS: readonly {
+  id: ArtistPlatform;
+  label: string;
+  matchHost: (host: string) => boolean;
+  official: boolean;
+}[] = [
+  { id: "spotify", label: "Spotify", matchHost: hostIs("spotify.com"), official: true },
+  { id: "apple-music", label: "Apple Music", matchHost: hostIs("music.apple.com"), official: true },
+  { id: "youtube", label: "YouTube", matchHost: hostIs("youtube.com", "youtu.be"), official: true },
+  { id: "bandcamp", label: "Bandcamp", matchHost: hostIs("bandcamp.com"), official: true },
+  { id: "soundcloud", label: "SoundCloud", matchHost: hostIs("soundcloud.com"), official: true },
+  { id: "instagram", label: "Instagram", matchHost: hostIs("instagram.com"), official: true },
+  { id: "tiktok", label: "TikTok", matchHost: hostIs("tiktok.com"), official: true },
+  { id: "discogs", label: "Discogs", matchHost: hostIs("discogs.com"), official: false },
+];
+
+/** Plataforma de un enlace según su hostname; undefined si no es una de ARTIST_PLATFORMS. */
+export function linkPlatform(href: string): (typeof ARTIST_PLATFORMS)[number] | undefined {
+  let host: string;
+  try {
+    host = new URL(href).hostname.toLowerCase();
+  } catch {
+    return undefined;
+  }
+  return ARTIST_PLATFORMS.find((p) => p.matchHost(host));
+}
+
+/** `rel` del enlace en la ficha: "me" solo en los perfiles propios (no en Discogs ni en uno desconocido). */
+export function artistLinkRel(href: string): string {
+  return linkPlatform(href)?.official ? "me noopener noreferrer" : "noopener noreferrer";
+}
+
 export type Release = {
   year: string;
   title: string;
