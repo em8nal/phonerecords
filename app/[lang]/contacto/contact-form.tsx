@@ -1,7 +1,7 @@
 "use client";
 
 import { Suspense, useEffect, useRef, useState, useTransition } from "react";
-import { useForm, type UseFormSetValue } from "react-hook-form";
+import { useForm, useWatch, type UseFormSetValue } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import type { z } from "zod";
 import Link from "next/link";
@@ -20,7 +20,9 @@ import {
 
 type Lang = "es" | "en";
 
-type FormValues = z.infer<typeof contactFormSchema>;
+// zodResolver 5 distingue la entrada y la salida del esquema (hoy coinciden: solo hay trim).
+type FormInput = z.input<typeof contactFormSchema>;
+type FormValues = z.output<typeof contactFormSchema>;
 
 type Copy = {
   name: string;
@@ -163,10 +165,10 @@ export function ContactForm({ lang }: { lang: Lang }) {
     handleSubmit,
     reset,
     setValue,
-    watch,
+    control,
     clearErrors,
     formState: { errors },
-  } = useForm<FormValues>({
+  } = useForm<FormInput, unknown, FormValues>({
     resolver: zodResolver(contactFormSchema),
     defaultValues: {
       name: "",
@@ -185,7 +187,8 @@ export function ContactForm({ lang }: { lang: Lang }) {
 
   // Campos por asunto: enlaces y ciudad con "Propuesta de artista"; servicios de interés, tipo de
   // proyecto, fecha estimada y enlaces (opcionales) con "Dirección creativa, diseño y prensa".
-  const topic = watch("topic");
+  // useWatch y no watch(): React Compiler no puede memoizar watch() (react-hooks/incompatible-library).
+  const topic = useWatch({ control, name: "topic" });
   const isProposal = topic === "propuesta";
   const isServices = topic === "servicios";
 
@@ -233,7 +236,9 @@ export function ContactForm({ lang }: { lang: Lang }) {
 
   return (
     <form
-      onSubmit={handleSubmit(onSubmit)}
+      // handleSubmit se arma al enviar y no en el render: onSubmit lee renderedAt.current y, sin watch(),
+      // el compilador ya analiza el componente (react-hooks/refs lo marcaría como lectura de ref en el render).
+      onSubmit={(event) => handleSubmit(onSubmit)(event)}
       noValidate
       className="space-y-6"
       aria-busy={isPending}
@@ -494,7 +499,7 @@ export function ContactForm({ lang }: { lang: Lang }) {
 }
 
 /** Sincroniza el asunto con `?topic=` (valores desconocidos se ignoran). No pinta nada. */
-function TopicFromQuery({ setValue }: { setValue: UseFormSetValue<FormValues> }) {
+function TopicFromQuery({ setValue }: { setValue: UseFormSetValue<FormInput> }) {
   const wanted = useSearchParams().get("topic");
   useEffect(() => {
     if (wanted && (topicValues as readonly string[]).includes(wanted)) {
