@@ -8,7 +8,7 @@
 //      (slug + name) es exactamente la de `artists`.
 // El archivo TSX no se puede importar desde Node (alias @/, JSX): se lee como texto.
 import { readFileSync } from "node:fs";
-import { artists, ARTIST_PLATFORMS, linkPlatform, artistLinkRel } from "../lib/artists.ts";
+import { artists, getArtist, ARTIST_PLATFORMS, linkPlatform, artistLinkRel, artistSameAs } from "../lib/artists.ts";
 import { artistKeyFacts, splitOrigin } from "../lib/artist-facts.ts";
 import { translations } from "../lib/translations.ts";
 
@@ -188,6 +188,25 @@ for (const a of artists) {
     "R4 íconos monocromos y ocultos al lector",
     icons.includes('fill="currentColor"') && icons.includes('aria-hidden="true"') && !/#[0-9a-f]{3,6}\b/i.test(icons),
   );
+}
+
+// R5. sameAs: solo identificadores de MusicBrainz y Wikidata (no se muestran en la UI), sin
+// repetir `links`; Newen Afrobeat trae los tres que confirmó la búsqueda del 29-10.
+{
+  const SAME_AS_RE = /^https:\/\/(?:musicbrainz\.org\/artist\/[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}|www\.wikidata\.org\/wiki\/Q\d+)$/;
+  for (const a of artists) {
+    const ids = a.sameAs ?? [];
+    const bad = ids.filter((u) => !SAME_AS_RE.test(u));
+    const dup = ids.filter((u) => a.links.some((l) => l.href === u));
+    report(`R5 ${a.slug}: sameAs (${ids.length})`, bad.length === 0 && dup.length === 0, list([...bad, ...dup]));
+  }
+  const newen = artistSameAs(getArtist("newen-afrobeat"));
+  const want = ["e9f34d84-4b44-43d2-a2a2-00f5c235a2c1", "Q56879388", "discogs.com/artist/4910686"];
+  const miss = want.filter((w) => !newen.some((u) => u.includes(w)));
+  report("R5 artistSameAs(newen) con MusicBrainz, Wikidata y Discogs", miss.length === 0, list(miss));
+  report("R5 artistSameAs sin duplicados", new Set(newen).size === newen.length);
+  const page = readFileSync(new URL("../app/[lang]/artistas/[slug]/page.tsx", import.meta.url), "utf8");
+  report("R5 el JSON-LD de la ficha usa artistSameAs(", page.includes("artistSameAs("));
 }
 
 process.exit(ok ? 0 : 1);

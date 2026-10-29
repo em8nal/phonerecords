@@ -5,7 +5,7 @@ import Link from "next/link";
 import { ArrowLeft, ExternalLink, FileText } from "lucide-react";
 import { Navigation } from "@/components/landing/navigation";
 import { FooterSection } from "@/components/landing/footer-section";
-import { artistLinkRel, artistSlugs, getArtist, linkPlatform } from "@/lib/artists";
+import { artistLinkRel, artistSameAs, artistSlugs, getArtist, linkPlatform } from "@/lib/artists";
 import { getArtistEntries } from "@/lib/catalog";
 import { getRelease, isPhoneRelease } from "@/lib/releases";
 import { isUpcoming } from "@/lib/release-date";
@@ -51,7 +51,7 @@ function pickReleaseActions(
 }
 import { SpotifyArtistEmbed } from "@/components/spotify-embed";
 import type { Language } from "@/lib/translations";
-import { SITE, ORG_ID, artistId as artistLdId, absUrl } from "@/lib/schema";
+import { SITE, ORG_ID, artistId as artistLdId, absUrl, toJsonLd } from "@/lib/schema";
 
 function extractSpotifyArtistId(links: { href: string }[]): string | null {
   const sp = links.find((l) => l.href.includes("open.spotify.com/artist/"));
@@ -169,6 +169,8 @@ export default async function ArtistPage({
   // `album` solo con los lanzamientos propios: las colaboraciones (otro artista
   // principal) ya cuelgan del grafo de ese artista.
   const ownEntries = allEntries.filter((e) => e.artistSlug === slug);
+  // Enlaces de la ficha + MusicBrainz y Wikidata (que no se muestran).
+  const sameAs = artistSameAs(artist);
   const schema = {
     "@context": "https://schema.org",
     "@graph": [
@@ -180,7 +182,7 @@ export default async function ArtistPage({
         description: bio,
         genre: artist.genres,
         url,
-        ...(artist.links.length ? { sameAs: artist.links.map((l) => l.href) } : {}),
+        ...(sameAs.length ? { sameAs } : {}),
         ...(portrait ? { image: absUrl(portrait) } : {}),
         // Un Place es un lugar: el año de "Santiago, Chile · 2009" va solo en foundingDate.
         location: { "@type": "Place", name: origin.place },
@@ -244,7 +246,7 @@ export default async function ArtistPage({
       <main id="contenido" tabIndex={-1} className="relative min-h-screen overflow-x-hidden noise-overlay">
         <script
           type="application/ld+json"
-          dangerouslySetInnerHTML={{ __html: JSON.stringify(schema) }}
+          dangerouslySetInnerHTML={{ __html: toJsonLd(schema) }}
         />
 
         {/* Hero fotográfico ancho: contiene el h1 (nombre) y el eyebrow (géneros) */}

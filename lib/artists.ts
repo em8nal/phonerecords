@@ -92,6 +92,13 @@ export type Artist = {
   bio: { es: string; en: string };
   links: ArtistLink[];
   /**
+   * Identificadores en bases de datos públicas (MusicBrainz, Wikidata) que van al `sameAs`
+   * del JSON-LD junto con `links` (artistSameAs) y no se muestran en la ficha. Solo
+   * coincidencias inequívocas: mismo nombre, país y género o miembros, con la evidencia en
+   * el reporte del carril N (p19). Si hay duda, no se agrega.
+   */
+  sameAs?: string[];
+  /**
    * Solo lanzamientos SIN ficha en lib/releases.ts (singles de otros sellos, discos
    * en producción…). Lo que ya tiene ficha no se repite aquí: la discografía de la
    * ficha de artista y del press kit sale de getArtistEntries (lib/catalog.ts).
@@ -135,6 +142,13 @@ In 2026 the group is preparing a new studio album that will mark a new sonic sta
       { label: "YouTube", href: "https://www.youtube.com/channel/UCTHMwr5NTvQ0MWbq0nbeP-w" },
       { label: "Bandcamp", href: "https://newenafrobeat.bandcamp.com/music" },
       { label: "Instagram", href: "https://www.instagram.com/newenafrobeat/" },
+      // De las relaciones de MusicBrainz y de Wikidata (P1953), verificado el 29-10-2026.
+      { label: "Discogs", href: "https://www.discogs.com/artist/4910686" },
+    ],
+    // MusicBrainz (Group, CL, afrobeat; mismo canal de YouTube y Bandcamp) y Wikidata (P434 = ese MBID).
+    sameAs: [
+      "https://musicbrainz.org/artist/e9f34d84-4b44-43d2-a2a2-00f5c235a2c1",
+      "https://www.wikidata.org/wiki/Q56879388",
     ],
     stats: { spotifyFollowers: 66199, monthlyListeners: 28729, youtubeSubs: 44200 },
   },
@@ -285,4 +299,9 @@ export const artistSlugs = artists.map((a) => a.slug);
 
 export function getArtist(slug: string): Artist | undefined {
   return artists.find((a) => a.slug === slug);
+}
+
+/** `sameAs` del JSON-LD del artista: `links` + `sameAs`, sin duplicados. */
+export function artistSameAs(artist: Pick<Artist, "links" | "sameAs">): string[] {
+  return [...new Set([...artist.links.map((l) => l.href), ...(artist.sameAs ?? [])])];
 }
