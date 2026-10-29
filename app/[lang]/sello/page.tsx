@@ -250,9 +250,11 @@ export default async function SelloPage({
           image={{
             desktop: "/media/sello/sello-hero.jpg",
             mobile: "/media/sello/sello-hero-mobile.jpg",
+            // Un solo alt para los dos recortes (PageHero pinta un único <img>): solo lo que se ve en
+            // ambos. La banca queda fuera del recorte de escritorio y el móvil corta al DJ a medias.
             alt: {
-              es: "Con.fusión e invitados en la sesión La Banca: tres personas alrededor de una banca de plaza en un escenario oscuro, dos sentadas con micrófonos y una de pie detrás; foto en blanco y negro",
-              en: "Con.fusión and guests at the La Banca session: three people around a park bench on a dark stage, two seated with microphones and one standing behind; black-and-white photo",
+              es: "Con.fusión e invitados en la sesión La Banca: delante, un hombre con jockey que canta al micrófono y una mujer de pelo largo y rizado con otro micrófono; detrás, a la izquierda, un DJ de pie con gorro de lana junto a la tornamesa; escenario oscuro, foto en blanco y negro",
+              en: "Con.fusión and guests at the La Banca session: in front, a man in a baseball cap singing into a microphone and a woman with long curly hair holding another microphone; behind them, on the left, a DJ in a beanie standing at the turntable; dark stage, black-and-white photo",
             },
           }}
           title={c.headline}
