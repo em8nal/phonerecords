@@ -1037,6 +1037,40 @@ export function getPublishedVideos(nowMs: number = Date.now()): Video[] {
   return videos.filter((v) => isReleased(v.date, nowMs));
 }
 
+/** Prioridad de tipo para el video de una ficha de lanzamiento (menor gana). */
+const RELEASE_VIDEO_RANK: Record<VideoKind, number> = {
+  videoclip: 0,
+  lyric: 1,
+  visualizer: 2,
+  sesion: 3,
+  "en-vivo": 4,
+  documental: 5,
+  entrevista: 6,
+};
+
+/**
+ * Video principal de la ficha de lanzamiento `releaseSlug` (16c): entre los videos ya
+ * publicados (isReleased, 00:00 America/Santiago) con ese `releaseSlug`, gana el tipo
+ * (videoclip > lyric > visualizer > sesión > en vivo > documental > entrevista); a igual
+ * tipo, `featured`; luego la fecha más reciente; al final el slug (determinista).
+ * Sin override manual: un videoclip nuevo cargado aquí aparece solo en su ficha.
+ */
+export function releaseVideo(
+  releaseSlug: string,
+  nowMs: number = Date.now(),
+  list: readonly Video[] = videos,
+): Video | undefined {
+  return list
+    .filter((v) => v.releaseSlug === releaseSlug && isReleased(v.date, nowMs))
+    .sort(
+      (a, b) =>
+        RELEASE_VIDEO_RANK[a.kind] - RELEASE_VIDEO_RANK[b.kind] ||
+        Number(Boolean(b.featured)) - Number(Boolean(a.featured)) ||
+        b.date.localeCompare(a.date) ||
+        a.slug.localeCompare(b.slug),
+    )[0];
+}
+
 /** Videos de un artista para su ficha: publicados, destacados primero, hasta `limit`. */
 export function pickArtistVideos(artistSlug: string, limit = 6, nowMs: number = Date.now()): Video[] {
   const mine = getPublishedVideos(nowMs).filter((v) => v.artistSlug === artistSlug);

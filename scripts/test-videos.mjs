@@ -13,13 +13,16 @@
 //   displayTitle limpio (sin etiquetas, mayúsculas, separadores ni artista, 1–60
 //   caracteres, ES ≠ EN si es objeto); <title> final (videoMetaTitle) ≤ TITLE_MAX en
 //   ES y EN; casos exactos de videoDisplayTitle y videoMetaTitle.
+//   16c: releaseVideo (video de la ficha de lanzamiento) con casos reales y sintéticos
+//   (videoclip con fecha futura, visualizer destacado contra videoclip viejo) y
+//   ninguna ficha de lib/releases.ts con el campo manual `video`.
 // Avisos (WARN, no fallan): fecha futura; releaseSlug de otro artista; primeros
 //   60 caracteres de description.es repetidos entre videos; frases autorreferenciales
 //   que se vuelven falsas al crecer el catálogo ("en el sitio", "el único video"…);
 //   notas internas o hedging en copy público ("por confirmar", "lo que sugiere"…).
-import { videos, VIDEO_KINDS, getVideo, videoDisplayTitle, videoMetaTitle } from "../lib/videos.ts";
+import { videos, VIDEO_KINDS, getVideo, videoDisplayTitle, videoMetaTitle, releaseVideo } from "../lib/videos.ts";
 import { artists } from "../lib/artists.ts";
-import { releaseSlugs, getRelease } from "../lib/releases.ts";
+import { releases, releaseSlugs, getRelease } from "../lib/releases.ts";
 import { templatedTitle, titleLength, TITLE_MAX } from "../lib/seo.ts";
 
 let ok = true;
@@ -168,6 +171,36 @@ const displayCases = [
   [videoMetaTitle(vid("con-fusion-sesiones-bugambilia"), "es"), { title: "Sesiones Bugambilia (feat. Simon Squalo & DJ Eseté)", absolute: true }, "videoMetaTitle(sesiones-bugambilia, es): sin artista ni plantilla"],
 ];
 for (const [got, want, label] of displayCases) report(label, eq(got, want), eq(got, want) ? "" : `${JSON.stringify(got)} ≠ ${JSON.stringify(want)}`);
+
+// ── 16c: video de la ficha de lanzamiento derivado de lib/videos.ts ──
+const rv = (slug, nowMs, list) => releaseVideo(slug, nowMs, list);
+const releaseCases = [
+  [rv("klaus-b-destellos-de-ti")?.youtubeId, "zEfVXTYtuo8", "releaseVideo(destellos): el videoclip de la ficha manual"],
+  [rv("con-fusion-cuantas-veces")?.youtubeId, "lPXsqrH4SU4", "releaseVideo(cuantas-veces): el videoclip de la ficha manual"],
+  [rv("newen-afrobeat-grietas")?.slug, "newen-afrobeat-somos-el-presente", "releaseVideo(grietas): videoclip gana a lyric"],
+  [rv("newen-afrobeat-curiche")?.slug, "newen-afrobeat-cantaros", "releaseVideo(curiche): 3 videoclips sin featured, gana el más reciente"],
+  [rv("klaus-b-estudios-del-maipo")?.slug, "gestosimple-klaus-b-desde-la-emisora-estudios-del-maipo", "releaseVideo(estudios-del-maipo): featured gana a la fecha"],
+  [rv("newen-afrobeat-la-fuerza"), undefined, "releaseVideo(la-fuerza): sin video"],
+];
+// Sintéticos: el videoclip de Un Rezo cargado con su fecha (05-11) aparece solo a las 00:00 de
+// Santiago (03:00 UTC en noviembre); un visualizer destacado y más nuevo no le gana a un videoclip.
+const base = videos[0];
+const synth = (over) => ({ ...base, credits: undefined, featured: undefined, thumb: undefined, recordedYear: undefined, ...over });
+const unRezo = synth({ slug: "test-un-rezo-videoclip", youtubeId: "AAAAAAAAAAA", kind: "videoclip", date: "2026-11-05", releaseSlug: "klaus-b-un-rezo" });
+const withRezo = [...videos, unRezo];
+releaseCases.push(
+  [rv("klaus-b-un-rezo", Date.parse("2026-11-05T02:59:59Z"), withRezo), undefined, "releaseVideo(un-rezo) a las 23:59:59 del 04-11 (Santiago): nada"],
+  [rv("klaus-b-un-rezo", Date.parse("2026-11-05T03:00:00Z"), withRezo)?.youtubeId, "AAAAAAAAAAA", "releaseVideo(un-rezo) a las 00:00 del 05-11 (Santiago): el videoclip nuevo"],
+);
+const oldClip = synth({ slug: "test-videoclip-viejo", youtubeId: "BBBBBBBBBBB", kind: "videoclip", date: "2019-01-01", releaseSlug: "test-ficha" });
+const newViz = synth({ slug: "test-visualizer-nuevo", youtubeId: "CCCCCCCCCCC", kind: "visualizer", date: "2025-01-01", releaseSlug: "test-ficha", featured: true });
+releaseCases.push([rv("test-ficha", Date.now(), [newViz, oldClip])?.slug, "test-videoclip-viejo", "releaseVideo: videoclip viejo gana a visualizer destacado y nuevo"]);
+for (const [got, want, label] of releaseCases) report(label, got === want, got === want ? "" : `${got} ≠ ${want}`);
+
+const manualVideo = releases.filter((r) => "video" in r);
+report("ninguna ficha de lib/releases.ts con `video` manual (sale de releaseVideo)", manualVideo.length === 0, list(manualVideo.map((r) => r.slug)));
+const withVideo = releases.filter((r) => releaseVideo(r.slug));
+console.log(`INFO fichas de lanzamiento con video (${withVideo.length}): ${withVideo.map((r) => `${r.slug}=${releaseVideo(r.slug).slug}`).join(" · ")}`);
 
 // ── Avisos ──
 const today = new Date().toISOString().slice(0, 10);
