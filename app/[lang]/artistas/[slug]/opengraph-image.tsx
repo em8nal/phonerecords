@@ -1,5 +1,5 @@
 import { ImageResponse } from "next/og";
-import { getArtist } from "@/lib/artists";
+import { artistGenres, getArtist } from "@/lib/artists";
 
 export const alt = "PHŌNÉ Records artist";
 export const size = { width: 1200, height: 630 };
@@ -89,7 +89,7 @@ export default async function OG({
               display: "flex",
             }}
           >
-            {artist.genres.join(" · ")}
+            {artistGenres(artist, lang).join(" · ")}
           </div>
         </div>
 

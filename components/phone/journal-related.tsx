@@ -1,7 +1,7 @@
 import Image from "next/image";
 import Link from "next/link";
 import { ComingSoonBadge } from "@/components/release-status";
-import { getArtist, type Artist } from "@/lib/artists";
+import { artistGenres, getArtist, type Artist } from "@/lib/artists";
 import { getArtistPortrait } from "@/lib/artist-media";
 import { getRelease, type Release } from "@/lib/releases";
 import { isReleased } from "@/lib/release-date";
@@ -99,7 +99,7 @@ export function JournalRelated({ piece, lang }: { piece: JournalPiece; lang: Lan
                   <h3 className="mt-1 font-display text-lg lg:text-xl tracking-tight group-hover:text-muted-foreground transition-colors">
                     {a.name}
                   </h3>
-                  <p className="mt-1 text-sm text-muted-foreground">{a.genres.slice(0, 3).join(" · ")}</p>
+                  <p className="mt-1 text-sm text-muted-foreground">{artistGenres(a, lang).slice(0, 3).join(" · ")}</p>
                 </Link>
               </li>
             );

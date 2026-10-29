@@ -6,7 +6,7 @@ import { Navigation } from "@/components/landing/navigation";
 import { PageHero } from "@/components/phone/page-hero";
 import { FooterSection } from "@/components/landing/footer-section";
 import { PressKitDownloads } from "@/components/phone/press-kit-downloads";
-import { artists } from "@/lib/artists";
+import { artistGenres, artists } from "@/lib/artists";
 import { getArtistEntries } from "@/lib/catalog";
 import { ARTIST_PORTRAIT } from "@/lib/artist-media";
 import { pageMetadata } from "@/lib/seo";
@@ -130,7 +130,7 @@ export default async function PressKitPage({
     return {
       slug: a.slug,
       name: a.name,
-      genres: a.genres,
+      genres: artistGenres(a, isEs ? "es" : "en"),
       origin: a.origin,
       bio: isEs ? a.bio.es : a.bio.en,
       links: a.links,

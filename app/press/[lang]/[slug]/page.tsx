@@ -2,7 +2,7 @@ import type { Metadata } from "next";
 import { notFound } from "next/navigation";
 import Link from "next/link";
 import { ArrowLeft } from "lucide-react";
-import { artistSlugs, getArtist } from "@/lib/artists";
+import { artistGenres, artistSlugs, getArtist } from "@/lib/artists";
 import { getArtistEntries } from "@/lib/catalog";
 import { formatReleaseLabel } from "@/lib/release-date";
 import type { Language } from "@/lib/translations";
@@ -215,7 +215,7 @@ export default async function PressKitPage({
         {/* Artist title */}
         <section className="press-artist-block">
           <div className="press-eyebrow">
-            {artist.genres.join(" · ")} · {artist.origin}
+            {artistGenres(artist, isEs ? "es" : "en").join(" · ")} · {artist.origin}
           </div>
           <h1 className="press-artist-name">{artist.name}</h1>
         </section>
