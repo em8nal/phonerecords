@@ -364,6 +364,45 @@ report(
   list(notInData.map((s) => `«${s.slice(0, 60)}»`)),
 );
 
+// --- Journal (carril R, p19): la misma guardia TEMPORAL sobre las piezas ---------------------
+// Título, bajada, párrafos, subtítulos, citas (con su cite) y pies de foto de lib/journal.ts en ES y
+// EN (journalTextFields). Una coincidencia es FAIL, como en fichas, videos y bios. Import dinámico
+// para no tocar la cabecera (la comparte el carril Q).
+{
+  const { journalPieces, journalTextFields } = await import("../lib/journal.ts");
+  const journalFound = journalPieces.flatMap((p) =>
+    journalTextFields(p).flatMap((f) => temporalHits(f.text).map((h) => ({ slug: `journal:${p.slug}`, field: f.field, ...h }))),
+  );
+  report(
+    `ninguna pieza del journal con frases relativas al momento (${journalPieces.length} piezas)`,
+    journalFound.length === 0,
+    journalFound.length ? `${journalFound.length} coincidencias` : "",
+  );
+  for (const h of journalFound) console.log(`       ${h.slug} [${h.field}] ${h.id} «${h.excerpt}»`);
+  // Fixture (no entra a los datos): una cita en ES y un párrafo en EN con fecha relativa.
+  const fixture = {
+    slug: "fixture-temporal",
+    title: { es: "Pieza de prueba", en: "Test story" },
+    excerpt: { es: "Bajada neutra de la pieza de prueba.", en: "Neutral standfirst of the test story." },
+    body: {
+      es: [
+        { type: "paragraph", text: "Un párrafo neutro." },
+        { type: "quote", text: "El disco sale el viernes 23 de octubre de 2026.", cite: "Klaus B" },
+      ],
+      en: [{ type: "paragraph", text: "The record is out Friday, October 23, 2026." }],
+    },
+  };
+  const fixtureHits = journalTextFields(fixture).flatMap((f) => temporalHits(f.text).map((h) => `${f.field}:${h.id}`));
+  report(
+    "TEMPORAL detecta en el journal una cita ES y un párrafo EN con fecha (fixture, ≥ 2 coincidencias)",
+    fixtureHits.length >= 2 &&
+      fixtureHits.some((h) => h.startsWith("body.es[1].quote:")) &&
+      fixtureHits.some((h) => h.startsWith("body.en[0].paragraph:")) &&
+      !fixtureHits.some((h) => /^(title|excerpt)\./.test(h) || h.startsWith("body.es[0]")),
+    list(fixtureHits),
+  );
+}
+
 // --- Etiquetas de enlace -------------------------------------------------------------------
 // Cada etiqueta es una clave de LINK_LABEL_EN (texto en español que /en traduce) o un nombre de
 // plataforma, que se lee igual en ambos idiomas. Una etiqueta nueva en español va a LINK_LABEL_EN.
