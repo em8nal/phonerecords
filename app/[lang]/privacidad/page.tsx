@@ -11,8 +11,9 @@ import { LABEL_EMAIL } from "@/lib/schema";
 type LangParams = { lang: string };
 
 // Versión 2 (lote 4, carril Q): reescrita para lo que la Ley 21.719 exige informar desde el
-// 01-12-2026. El integrador ajusta LAST_UPDATED al día en que se publica. Revisión legal
-// recomendada antes del 01-12 (ver carrilQ-report.md: representante legal, menores, GA4).
+// 01-12-2026. El integrador ajusta LAST_UPDATED al día en que se publica y resuelve el TODO de la
+// §7 antes de publicar. Revisión legal recomendada antes del 01-12 (ver carrilQ-report.md:
+// representante legal, nivel adecuado de las transferencias, menores).
 const LAST_UPDATED = "2026-10-29";
 const POLICY_VERSION = "2";
 
@@ -51,7 +52,7 @@ Para cualquier asunto de privacidad o para ejercer tus derechos, escríbenos a $
         body: `Tratamos datos de tres grupos de personas: quienes visitan el sitio, quienes nos escriben por el formulario de contacto y quienes se suscriben al newsletter.
 
 — Visitantes: tu preferencia de idioma, tu decisión sobre cookies y datos técnicos de navegación (página visitada, origen del tráfico, tipo de dispositivo y navegador); solo si aceptas la analítica, también identificadores de analítica.
-— Contacto: nombre, correo, asunto y mensaje. Con una propuesta de artista, también los enlaces y la ciudad que indiques; con una consulta por servicios de dirección creativa, diseño y prensa, los servicios que te interesan, el tipo de proyecto, la fecha estimada de lanzamiento y los enlaces que compartas.
+— Contacto: nombre, correo, asunto, mensaje y el idioma del sitio desde el que escribes (ES o EN). Con una propuesta de artista, también los enlaces y la ciudad que indiques; con una consulta por servicios de dirección creativa, diseño y prensa, los servicios que te interesan, el tipo de proyecto, la fecha estimada de lanzamiento y los enlaces que compartas.
 — Newsletter: tu correo, tu idioma (ES o EN), el origen de la suscripción (portada, contacto, pie de página o formulario de contacto), la fecha y el texto exacto del consentimiento que aceptaste y un hash (huella irreversible) de tu dirección IP combinado con una sal que cambia cada día. No guardamos tu IP.
 
 Origen de los datos: los entregas tú o los genera tu navegador al visitar el sitio. No obtenemos datos de fuentes de acceso público ni de terceros.`,
@@ -61,6 +62,7 @@ Origen de los datos: los entregas tú o los genera tu navegador al visitar el si
         body: `— Responder consultas de booking, propuestas de artista y consultas por servicios: lo hacemos porque nos pediste una respuesta antes de un posible acuerdo (medidas precontractuales a tu solicitud).
 — Responder mensajes generales, de prensa o sobre el sello: nuestro interés legítimo en contestar lo que nos escribes.
 — Enviarte el newsletter con novedades de PHŌNÉ Records (lanzamientos, conciertos y journal) y guardar el respaldo de tu suscripción: tu consentimiento.
+— Conservar tu correo marcado como "dado de baja" después de que retires tu consentimiento al newsletter: nuestro interés legítimo en respetar tu baja y no volver a escribirte.
 — Analítica completa con cookies (Google Analytics 4) y Ahrefs Analytics: tu consentimiento.
 — Analítica sin cookies (Vercel Web Analytics y Speed Insights), Google en modo de consentimiento denegado y las cookies técnicas "phone_lang" y "phone_consent": nuestro interés legítimo en medir el uso agregado y la velocidad del sitio, y en recordar tu idioma y tu decisión sobre cookies.
 
@@ -68,7 +70,7 @@ No vendemos ni alquilamos tus datos, no los usamos para publicidad ni los compar
       },
       {
         title: "4 · Cookies y tu decisión",
-        body: `Cuando visitas el sitio sin enviarnos formularios, no activamos cookies ni identificadores de analítica sin tu consentimiento.
+        body: `Cuando visitas el sitio sin enviarnos formularios, no activamos cookies de analítica ni otros identificadores de analítica sin tu consentimiento.
 
 Siempre, sin necesidad de consentimiento:
 — Una cookie técnica llamada "phone_lang" para recordar tu preferencia de idioma (ES o EN). Esta cookie vive un año y se elimina cuando borras las cookies de tu navegador.
@@ -107,16 +109,23 @@ No utilizamos Meta Pixel ni publicidad de terceros.`,
         title: "6 · Transferencias internacionales",
         body: `Estos proveedores pueden tratar los datos fuera de Chile, principalmente en Estados Unidos; las funciones del sitio corren en São Paulo (Brasil).
 
-Nos amparamos en los términos de tratamiento de datos de cada proveedor. Cuando la Agencia de Protección de Datos Personales publique su listado de países con un nivel adecuado de protección y sus cláusulas modelo, revisaremos esta sección.`,
+La Agencia de Protección de Datos Personales aún no publica su listado de países con un nivel adecuado de protección, así que hoy no podemos indicarte si Estados Unidos o Brasil lo tienen según la ley chilena. Mientras tanto, nos amparamos en los términos de tratamiento de datos de cada proveedor, y revisaremos esta sección cuando la Agencia publique ese listado y sus cláusulas modelo.`,
       },
       {
         title: "7 · Cuánto tiempo los guardamos",
-        // TODO(integrador): confirmar en GA4 (Administrar → Recopilación y conservación de datos)
-        // el período de conservación (2 o 14 meses) y escribirlo en la línea de Google Analytics 4.
+        // TODO(integrador) · BLOQUEA LA PUBLICACIÓN, no solo la integración (art. 14 ter i: plazos
+        // concretos). Plazos tomados de la documentación de Google y Vercel (ver carrilQ-report.md):
+        //   1. GA4 (Administrar → Recopilación y conservación de datos): "hasta 14 meses" es el tope de
+        //      una propiedad estándar; si está en 2 meses, escribir "2 meses" en ES y EN.
+        //   2. Etiqueta de Google (configuración del flujo de datos): si se cambió la duración de las
+        //      cookies, corregir "hasta 2 años".
+        //   3. Ahrefs: no publica un plazo. Confirmarlo en la cuenta o el DPA de Ahrefs y escribirlo,
+        //      o dejar de cargar Ahrefs, antes de publicar.
         body: `— Cookies técnicas ("phone_lang", "phone_consent"): 1 año desde que se establecen, salvo que borres las cookies de tu navegador.
-— Cookies de analítica de Google (solo con consentimiento): la duración la define Google; puedes eliminarlas en cualquier momento borrando las cookies del sitio.
-— Datos de Google Analytics 4: el período de conservación configurado en nuestra cuenta; después, Google los elimina.
-— Datos de Vercel Web Analytics, Speed Insights y Ahrefs: según la política de cada proveedor; nosotros los usamos solo en conjunto.
+— Cookies de analítica de Google ("_ga" y "_ga_*", solo con consentimiento): hasta 2 años desde tu última visita, la duración predeterminada de Google; algunos navegadores la acortan, y puedes eliminarlas en cualquier momento borrando las cookies del sitio.
+— Datos de Google Analytics 4 asociados a esas cookies: hasta 14 meses; después, Google los elimina. Los informes con totales agregados no tienen ese límite.
+— Vercel Web Analytics: el identificador de cada visita (un hash de la petición, sin cookies ni IP) se descarta a las 24 horas; lo que queda son estadísticas agregadas que no te identifican. Vercel Speed Insights no asocia sus mediciones a ningún visitante ni dirección IP.
+— Datos de Ahrefs Analytics (solo con consentimiento): según la política de Ahrefs; nosotros los usamos solo en conjunto.
 — Mensajes del formulario de contacto: mientras tenga sentido para mantener la conversación; máximo 5 años.
 — Newsletter: mientras estés suscrito. Si te das de baja, conservamos tu correo marcado como "dado de baja" para no volver a escribirte, hasta que pidas su eliminación.`,
       },
@@ -178,7 +187,7 @@ For any privacy matter or to exercise your rights, write to ${LABEL_EMAIL} or us
         body: `We process data from three groups of people: those who visit the site, those who write to us through the contact form and those who subscribe to the newsletter.
 
 — Visitors: your language preference, your cookie decision and technical browsing data (page visited, traffic source, device type and browser); only if you accept analytics, also analytics identifiers.
-— Contact: name, email, topic and message. With an artist proposal, also the links and the city you provide; with an inquiry about creative direction, design and press services, the services you're interested in, the project type, the estimated release date and any links you share.
+— Contact: name, email, topic, message and the language of the site you write from (ES or EN). With an artist proposal, also the links and the city you provide; with an inquiry about creative direction, design and press services, the services you're interested in, the project type, the estimated release date and any links you share.
 — Newsletter: your email, your language (ES or EN), the source of the subscription (home page, contact page, footer or contact form), the date and exact text of the consent you accepted, and a hash (irreversible fingerprint) of your IP address combined with a salt that changes daily. We do not store your IP.
 
 Source of the data: you provide it or your browser generates it when you visit the site. We do not obtain data from publicly accessible sources or from third parties.`,
@@ -188,6 +197,7 @@ Source of the data: you provide it or your browser generates it when you visit t
         body: `— Answering booking inquiries, artist proposals and services inquiries: because you asked us for an answer before a possible agreement (pre-contractual steps at your request).
 — Answering general, press or label messages: our legitimate interest in replying to what you write to us.
 — Sending you the newsletter with PHŌNÉ Records news (releases, concerts and journal) and keeping the backup of your subscription: your consent.
+— Keeping your email flagged as "unsubscribed" after you withdraw your newsletter consent: our legitimate interest in respecting your unsubscribe and not writing to you again.
 — Full analytics with cookies (Google Analytics 4) and Ahrefs Analytics: your consent.
 — Cookieless analytics (Vercel Web Analytics and Speed Insights), Google in denied consent mode and the technical cookies "phone_lang" and "phone_consent": our legitimate interest in measuring aggregate use and site speed, and in remembering your language and your cookie decision.
 
@@ -234,14 +244,16 @@ We do not use Meta Pixel or third-party advertising.`,
         title: "6 · International transfers",
         body: `These providers may process data outside Chile, mainly in the United States; the site's functions run in São Paulo (Brazil).
 
-We rely on each provider's data processing terms. When the Personal Data Protection Agency (Agencia de Protección de Datos Personales) publishes its list of countries with an adequate level of protection and its model clauses, we will review this section.`,
+The Personal Data Protection Agency (Agencia de Protección de Datos Personales) has not yet published its list of countries with an adequate level of protection, so today we cannot tell you whether the United States or Brazil has one under Chilean law. Meanwhile, we rely on each provider's data processing terms, and we will review this section when the Agency publishes that list and its model clauses.`,
       },
       {
         title: "7 · How long we keep it",
+        // El mismo TODO(integrador) de la §7 en español: bloquea la publicación.
         body: `— Technical cookies ("phone_lang", "phone_consent"): 1 year from being set, unless you clear your browser cookies.
-— Google analytics cookies (only with consent): duration is set by Google; you can remove them at any time by clearing the site's cookies.
-— Google Analytics 4 data: the retention period configured in our account; after that, Google deletes it.
-— Vercel Web Analytics, Speed Insights and Ahrefs data: according to each provider's policy; we only use it in aggregate.
+— Google analytics cookies ("_ga" and "_ga_*", only with consent): up to 2 years from your last visit, Google's default duration; some browsers shorten it, and you can remove them at any time by clearing the site's cookies.
+— Google Analytics 4 data linked to those cookies: up to 14 months; after that, Google deletes it. Reports with aggregated totals are not subject to that limit.
+— Vercel Web Analytics: the identifier of each visit (a hash of the request, with no cookies or IP) is discarded after 24 hours; what remains is aggregated statistics that do not identify you. Vercel Speed Insights does not link its measurements to any visitor or IP address.
+— Ahrefs Analytics data (only with consent): according to Ahrefs' policy; we only use it in aggregate.
 — Contact form messages: while it makes sense to keep the conversation going; maximum 5 years.
 — Newsletter: while you remain subscribed. If you unsubscribe, we keep your email flagged as "unsubscribed" so we don't write to you again, until you ask for its deletion.`,
       },
