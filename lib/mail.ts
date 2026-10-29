@@ -12,8 +12,10 @@ function getTransporter() {
   const pass = process.env.ZOHO_SMTP_PASS;
 
   if (!user || !pass) {
-    throw new Error(
-      "Missing Zoho SMTP credentials. Set ZOHO_SMTP_USER and ZOHO_SMTP_PASS in environment.",
+    // Con código: los logs solo registran clase y códigos (errorInfo en lib/newsletter.ts), no el mensaje.
+    throw Object.assign(
+      new Error("Missing Zoho SMTP credentials. Set ZOHO_SMTP_USER and ZOHO_SMTP_PASS in environment."),
+      { code: "EMAILCONFIG" },
     );
   }
 

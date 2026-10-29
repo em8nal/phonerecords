@@ -3,6 +3,13 @@
 // Importa app/[lang]/contacto/contact-schema.ts (solo zod, sin directivas) y comprueba
 // que los campos extra se exigen solo con su asunto: enlaces y ciudad con "propuesta";
 // servicios de interés y tipo de proyecto con "servicios" (fecha estimada y enlaces, opcionales).
+// Al final corre las server actions reales (contacto y newsletter) con dobles de la base y del SMTP:
+// el navegador recibe solo { ok, error | status } y los logs no llevan mensajes ni datos personales.
+import { deepStrictEqual } from "node:assert";
+import { existsSync } from "node:fs";
+import { registerHooks } from "node:module";
+import { fileURLToPath, pathToFileURL } from "node:url";
+import { inspect } from "node:util";
 import {
   contactActionSchema,
   contactFormSchema,
@@ -115,7 +122,7 @@ report("city con salto de línea ⇒ falla en city", !r5b.success && issuePaths(
 const r6 = contactActionSchema.safeParse({ ...base, topic: "otro" });
 report("topic desconocido ⇒ falla en topic", failsOnlyAt(r6, "topic"), issuePaths(r6).join(","));
 
-// (6b) honeypot lleno ⇒ falla en el esquema (la acción, además, responde ok silencioso)
+// (6b) honeypot lleno ⇒ falla en el esquema (por eso la acción responde "invalid": ver el caso 24)
 const r6b = contactActionSchema.safeParse({ ...base, topic: "general", website: "http://spam" });
 report("honeypot lleno ⇒ falla en website", !r6b.success && issuePaths(r6b).includes("website"), issuePaths(r6b).join(","));
 
@@ -195,7 +202,188 @@ report(
 );
 report(
   "sin campo de presupuesto en el esquema",
-  !Object.keys(contactActionSchema._def.schema.shape).some((k) => /budget|presupuesto|monto|amount/i.test(k)),
+  // zod 4: superRefine devuelve el mismo ZodObject (ya no hay ZodEffects con _def.schema).
+  !Object.keys(contactActionSchema.shape).some((k) => /budget|presupuesto|monto|amount/i.test(k)),
+);
+
+// ── zod 4: casos que la migración no puede romper ──
+// (19) GHSA-mrhx-c7xc-m3w5: un arreglo enorme se corta por el largo, sin validar cada elemento.
+const big = contactActionSchema.safeParse({ ...servicios, services: Array(10000).fill("xyz") });
+report(
+  "10 000 servicios inválidos ⇒ un solo error too_big en services",
+  !big.success && big.error.issues.length === 1 && big.error.issues[0].code === "too_big" && issuePaths(big)[0] === "services",
+  big.success ? "" : `${big.error.issues.length} issues`,
+);
+// (20) el correo se recorta antes de validar el formato (z.email().trim() lo rechazaría)
+for (const [label, schema] of [["acción", contactActionSchema], ["formulario", contactFormSchema]]) {
+  const r = schema.safeParse({ ...base, topic: "general", email: "  ana@example.com " });
+  report(`${label}: correo con espacios ⇒ ok y recortado`, r.success && r.data.email === "ana@example.com", issuePaths(r).join(","));
+}
+// (21) los errores de campo no impiden las reglas por asunto (se ven todos a la vez)
+const multi = contactFormSchema.safeParse({ ...base, name: "A", topic: "propuesta", links: "", city: "" });
+report("nombre corto + propuesta vacía ⇒ name, links y city", failsOnlyAt(multi, "name", "links", "city"), issuePaths(multi).join(","));
+
+// ── Server actions: nada interno al navegador, nada personal en los logs ──
+// Corre las acciones reales y lib/newsletter.ts; solo se reemplazan los bordes (server-only, next/headers,
+// drizzle-orm, @/lib/db y @/lib/mail), así que nunca se envía un correo ni se toca la base.
+// Por qué así y no un chequeo de tipos: el tipo no ve lo que viaja en ejecución, y una función pura
+// no prueba que la acción la use. Si una acción importa un módulo @/ nuevo con efectos, súmalo a STUBS.
+const ROOT = fileURLToPath(new URL("..", import.meta.url));
+const stub = (src) => "data:text/javascript," + encodeURIComponent(src);
+const K = (globalThis.__K = { db: "off", failMail: () => false, sent: [] });
+const SECRET = "SECRETO-SMTP";
+const STUBS = {
+  "server-only": stub("export {};"),
+  "next/headers": stub('export async function headers() { return new Headers({ "x-real-ip": "203.0.113.7" }); }'),
+  "drizzle-orm": stub("export const eq = () => ({});"),
+  // Como DrizzleQueryError: el mensaje copia los parámetros de la consulta; la causa trae el SQLSTATE.
+  "@/lib/db": stub(`export const hasDb = () => globalThis.__K.db !== "off";
+export const schema = { subscribers: {} };
+export function getDb() {
+  const e = new Error("Failed query: insert into subscribers\\nparams: ana@example.com,es,home");
+  e.cause = { code: "57P01" };
+  throw e;
+}`),
+  // Como nodemailer: el mensaje y response copian la respuesta del servidor y la dirección.
+  "@/lib/mail": stub(`export async function sendContactMail(m) {
+  globalThis.__K.sent.push(m);
+  if (globalThis.__K.failMail(m)) {
+    const e = new Error("535 Authentication failed ${SECRET} " + m.replyTo);
+    Object.assign(e, { code: "EAUTH", responseCode: 535, command: "AUTH PLAIN", response: "535 ${SECRET} " + m.replyTo });
+    throw e;
+  }
+}`),
+};
+registerHooks({
+  resolve(specifier, context, nextResolve) {
+    if (STUBS[specifier]) return { url: STUBS[specifier], format: "module", shortCircuit: true };
+    if (specifier.startsWith("@/") && existsSync(`${ROOT}${specifier.slice(2)}.ts`)) {
+      return nextResolve(pathToFileURL(`${ROOT}${specifier.slice(2)}.ts`).href, context);
+    }
+    return nextResolve(specifier, context);
+  },
+});
+const load = (p) => import(pathToFileURL(ROOT + p).href);
+const { sendContactMessage } = await load("app/[lang]/contacto/actions.ts");
+const { subscribeAction } = await load("app/actions/newsletter.ts");
+const { errorInfo, subscribe } = await load("lib/newsletter.ts");
+
+const same = (a, b) => {
+  try {
+    deepStrictEqual(a, b);
+    return true;
+  } catch {
+    return false;
+  }
+};
+// Ejecuta fn capturando console.error/info tal como los verían los logs de Vercel (util.inspect).
+const run = async (fn) => {
+  const logs = [];
+  const { error, info } = console;
+  console.error = console.info = (...args) =>
+    logs.push(args.map((a) => (typeof a === "string" ? a : inspect(a, { depth: 5 }))).join(" "));
+  try {
+    return { res: await fn(), log: logs.join("\n"), mails: K.sent.splice(0) };
+  } finally {
+    Object.assign(console, { error, info });
+  }
+};
+const leaks = (text) => [SECRET, "ana@example.com", "params:", "ZOHO_"].filter((s) => text.includes(s));
+const form = { ...base, topic: "general", lang: "es" };
+const old = () => Date.now() - 5000;
+
+// (22) SMTP falla ⇒ el cliente recibe exactamente { ok: false, error: "send_failed" }; el log, solo códigos
+K.failMail = () => true;
+let c = await run(() => sendContactMessage({ ...form, renderedAt: old() }));
+report("contacto, SMTP falla ⇒ { ok:false, error:'send_failed' } sin details", same(c.res, { ok: false, error: "send_failed" }), JSON.stringify(c.res));
+report("contacto, SMTP falla ⇒ log con EAUTH y sin correo ni mensaje", c.log.includes("EAUTH") && leaks(c.log).length === 0, leaks(c.log).join(","));
+K.failMail = () => false;
+
+// (23) envío correcto ⇒ { ok: true } y el correo sale con su asunto y reply-to
+c = await run(() => sendContactMessage({ ...form, renderedAt: old() }));
+report(
+  "contacto válido ⇒ { ok:true } y un correo con reply-to",
+  same(c.res, { ok: true }) && c.mails.length === 1 && c.mails[0].replyTo === form.email && c.mails[0].subject === "[phonerecords.cl] General · Ana Prueba",
+  JSON.stringify(c.res),
+);
+
+// (24) honeypot, envío rápido e inválido: respuesta fija y ningún correo
+// (hoy el esquema rechaza el honeypot antes que la acción: responde "invalid", igual que con zod 3)
+for (const [label, input, expected] of [
+  ["honeypot lleno", { ...form, website: "http://spam", renderedAt: old() }, { ok: false, error: "invalid" }],
+  ["envío en < 2 s", { ...form, renderedAt: Date.now() }, { ok: false, error: "send_failed" }],
+  ["correo inválido", { ...form, email: "ana@", renderedAt: old() }, { ok: false, error: "invalid" }],
+]) {
+  c = await run(() => sendContactMessage(input));
+  report(`contacto, ${label} ⇒ ${JSON.stringify(expected)} y sin correo`, same(c.res, expected) && c.mails.length === 0, JSON.stringify(c.res));
+}
+
+// (25) opt-in con base y respaldo caídos ⇒ el contacto igual es { ok: true } y los logs no llevan datos personales
+K.db = "fail";
+K.failMail = (m) => m.subject.startsWith("Nueva suscripción");
+c = await run(() => sendContactMessage({ ...form, newsletter: true, renderedAt: old() }));
+report("contacto + opt-in fallido ⇒ { ok:true } y logs sin datos personales", same(c.res, { ok: true }) && leaks(c.log).length === 0, leaks(c.log).join(","));
+
+// (26) newsletter con base y correo caídos ⇒ exactamente { ok: false, error: "unavailable" }
+K.failMail = () => true;
+c = await run(() => subscribeAction({ email: "ana@example.com", lang: "es", source: "home", website: "", renderedAt: old() }));
+report("newsletter caído ⇒ { ok:false, error:'unavailable' }", same(c.res, { ok: false, error: "unavailable" }), JSON.stringify(c.res));
+report("newsletter caído ⇒ logs sin correo completo, parámetros ni mensaje SMTP", leaks(c.log).length === 0 && c.log.includes("a***@example.com"), leaks(c.log).join(","));
+
+// (27) respaldo por correo: el correo se recorta y pasa a minúsculas; respuesta uniforme
+K.db = "off";
+K.failMail = () => false;
+c = await run(() => subscribeAction({ email: "  ANA@Example.com ", lang: "en", source: "footer", website: "", renderedAt: old() }));
+report(
+  "newsletter por correo ⇒ { ok:true, status:'queued' } con el correo normalizado",
+  same(c.res, { ok: true, status: "queued" }) && c.mails.length === 1 && c.mails[0].text.includes("Email:       ana@example.com"),
+  JSON.stringify(c.res),
+);
+c = await run(() => subscribeAction({ email: "ana@example.com", lang: "es", source: "home", website: "x", renderedAt: old() }));
+report("newsletter, honeypot ⇒ { ok:true, status:'queued' } y sin correo", same(c.res, { ok: true, status: "queued" }) && c.mails.length === 0, JSON.stringify(c.res));
+c = await run(() => subscribe({ email: "ana@", lang: "es", source: "home", consentText: "ok" }));
+report("subscribe con correo inválido ⇒ { ok:false, error:'invalid' }", same(c.res, { ok: false, error: "invalid" }), JSON.stringify(c.res));
+
+// (28) errorInfo: solo clase y códigos con forma de código; nunca el mensaje ni texto libre
+class DrizzleQueryError extends Error {}
+const pgCause = Object.assign(new Error("terminating connection"), { code: "57P01" });
+for (const [label, input, expected] of [
+  [
+    "nodemailer (ESOCKET sobre ECONNREFUSED)",
+    Object.assign(new Error("connect ECONNREFUSED 203.0.113.9:465 ana@example.com"), { code: "ESOCKET", originalCode: "ECONNREFUSED", command: "CONN" }),
+    { name: "Error", code: "ESOCKET", originalCode: "ECONNREFUSED", command: "CONN" },
+  ],
+  [
+    "DrizzleQueryError con SQLSTATE en la causa",
+    new DrizzleQueryError("Failed query: insert\nparams: ana@example.com", { cause: pgCause }),
+    { name: "DrizzleQueryError", causeCode: "57P01" },
+  ],
+  [
+    "code y command con texto libre se descartan",
+    Object.assign(new Error("x"), { code: "rcpt ana@example.com rejected", command: "RCPT TO:<ana@example.com>" }),
+    { name: "Error" },
+  ],
+  ["un string no es un Error", "ana@example.com", { type: "string" }],
+  ["null", null, { type: "null" }],
+]) {
+  const got = errorInfo(input);
+  report(`errorInfo: ${label}`, same(got, expected), JSON.stringify(got));
+}
+
+// (29) lib/mail.ts real sin credenciales: falla antes de crear el transporte (sin red) y deja un código en el log
+delete process.env.ZOHO_SMTP_USER;
+delete process.env.ZOHO_SMTP_PASS;
+const { sendContactMail: realSendContactMail } = await load("lib/mail.ts");
+let configError;
+try {
+  await realSendContactMail({ subject: "prueba", text: "prueba" });
+} catch (err) {
+  configError = err;
+}
+report(
+  "lib/mail.ts sin credenciales ⇒ errorInfo { name:'Error', code:'EMAILCONFIG' }",
+  same(errorInfo(configError), { name: "Error", code: "EMAILCONFIG" }),
+  JSON.stringify(errorInfo(configError)),
 );
 
 process.exit(ok ? 0 : 1);
