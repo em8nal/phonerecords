@@ -265,26 +265,36 @@ const NEUTRAL = [
   "La portada evoca la Reserva Nacional Los Flamencos.",
   "un vino Gran Reserva",
   "un día después de que la canción llegara a plataformas el 22 de octubre de 2026",
-  // Textos nuevos de esta corrección (lib/releases.ts y lib/videos.ts).
-  'y su primer lanzamiento con PHŌNÉ Records, con fecha de salida el viernes 23 de octubre de 2026; el enlace de la sección "Escuchar" lleva a todas las plataformas.',
-  'and her first release with PHŌNÉ Records, with release date Friday, October 23, 2026; the link in the "Listen" section takes you to every platform.',
+];
+// Textos actuales de los estrenos de 2026 (lib/releases.ts y lib/videos.ts, corrección del 29-10):
+// tienen que existir tal cual en los datos (se comprueba abajo, con temporalFields) y pasar limpios.
+const NEUTRAL_DATA = [
+  'y su primer lanzamiento con PHŌNÉ Records, publicado el viernes 23 de octubre de 2026; el enlace de la sección "Escuchar" lleva a todas las plataformas.',
+  'and her first release with PHŌNÉ Records, released on Friday, October 23, 2026; the link in the "Listen" section takes you to all platforms.',
   '"La Fuerza" es un single de Newen Afrobeat editado con PHŌNÉ Records, con fecha de lanzamiento el viernes 30 de octubre de 2026.',
   "El tema dura 4:44 y se publica como single digital, también en alta resolución (24 bits / 48 kHz) en Qobuz.",
-  'El enlace de la sección "Escuchar" lleva a todas las plataformas, y en esa misma sección está la versión en alta resolución de Qobuz.',
-  '"La Fuerza" ("The Force") is a single by Newen Afrobeat on PHŌNÉ Records, with release date Friday, October 30, 2026.',
+  'El enlace de la sección "Escuchar" lleva a todas las plataformas.',
+  '"La Fuerza" ("The Force") is a single by Newen Afrobeat on PHŌNÉ Records, with a release date of Friday, October 30, 2026.',
   "The track runs 4:44 and is released as a digital single, also in high resolution (24-bit / 48 kHz) on Qobuz.",
-  'The link in the "Listen" section takes you to every platform, and the same section lists the high-resolution version on Qobuz.',
-  'Es el segundo adelanto de "Una Cuota De Caos", el álbum con fecha de salida el viernes 20 de noviembre de 2026, y cuenta con videoclip oficial.',
-  'It is the second single from "Una Cuota De Caos", the album whose release date is Friday, November 20, 2026, and it has an official music video.',
-  '"Destellos de ti" es un single de Klaus B, con fecha de lanzamiento el jueves 22 de octubre de 2026.',
-  '"Destellos de ti" is a single by Klaus B, with release date Thursday, October 22, 2026.',
-  'el single con el que Klaus B abre el ciclo de "Una Cuota De Caos", su álbum con PHŌNÉ Records (20 de noviembre de 2026).',
-  'the single with which Klaus B opens the cycle of "Una Cuota De Caos", his album with PHŌNÉ Records (November 20, 2026).',
+  'The link in the "Listen" section takes you to all platforms.',
+  '"Un Rezo" es un single de Klaus B con fecha de lanzamiento el jueves 5 de noviembre de 2026, dos semanas después de "Destellos de ti".',
+  'Es el segundo adelanto del álbum "Una Cuota De Caos" (viernes 20 de noviembre de 2026) y cuenta con videoclip oficial.',
+  '"Un Rezo" is a single by Klaus B with a release date of Thursday, November 5, 2026, two weeks after "Destellos de ti".',
+  'It is the second taste of the album "Una Cuota De Caos" (Friday, November 20, 2026), and it has an official music video.',
+  '"Destellos de ti" es un single de Klaus B publicado el jueves 22 de octubre de 2026.',
+  '"Destellos de ti" is a single by Klaus B, released on Thursday, October 22, 2026.',
+  'el single con el que Klaus B abre el ciclo de "Una Cuota De Caos" (20 de noviembre de 2026), su álbum con PHŌNÉ Records.',
+  'the single with which Klaus B opens the cycle of "Una Cuota De Caos" (November 20, 2026), his album with PHŌNÉ Records.',
   "Todas las plataformas",
   "Qobuz (hi-res)",
 ];
-const falsePos = NEUTRAL.flatMap((s) => temporalHits(s).map((h) => `${h.id} «${h.excerpt}»`));
-report(`TEMPORAL sin falsos positivos en ${NEUTRAL.length} frases neutras`, falsePos.length === 0, list(falsePos));
+const neutralAll = [...NEUTRAL, ...NEUTRAL_DATA];
+const falsePos = neutralAll.flatMap((s) => temporalHits(s).map((h) => `${h.id} «${h.excerpt}»`));
+report(
+  `TEMPORAL sin falsos positivos en ${neutralAll.length} frases neutras (${NEUTRAL_DATA.length} tomadas de los datos)`,
+  falsePos.length === 0,
+  list(falsePos),
+);
 
 const temporalFields = [
   ...releases.flatMap((r) => [
@@ -308,6 +318,14 @@ report(
   temporalFound.length ? `${temporalFound.length} coincidencias en ${new Set(temporalFound.map((h) => h.slug)).size} fichas, videos o bios` : "",
 );
 for (const h of temporalFound) console.log(`       ${h.slug} [${h.field}] ${h.id} «${h.excerpt}»`);
+// NEUTRAL_DATA no puede quedar desfasada: si se reescribe un texto, la frase nueva va a la lista.
+const flat = (t) => t.replace(/\s+/g, " ");
+const notInData = NEUTRAL_DATA.filter((s) => !temporalFields.some((f) => flat(f.text).includes(s)));
+report(
+  `las ${NEUTRAL_DATA.length} frases de NEUTRAL_DATA existen tal cual en fichas, videos o etiquetas`,
+  notInData.length === 0,
+  list(notInData.map((s) => `«${s.slice(0, 60)}»`)),
+);
 
 // --- Etiquetas de enlace -------------------------------------------------------------------
 // Cada etiqueta es una clave de LINK_LABEL_EN (texto en español que /en traduce) o un nombre de

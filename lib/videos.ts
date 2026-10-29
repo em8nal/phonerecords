@@ -406,12 +406,12 @@ With "Cántaros" and "Open Your Eyes" it forms the trilogy of Curiche videos.`,
     releaseSlug: "klaus-b-destellos-de-ti",
     featured: true,
     description: {
-      es: `Videoclip oficial de "Destellos de ti", el single con el que Klaus B abre el ciclo de "Una Cuota De Caos", su álbum con PHŌNÉ Records (20 de noviembre de 2026). Se publicó en el canal del artista el 23 de octubre de 2026, un día después de que la canción llegara a plataformas.
+      es: `Videoclip oficial de "Destellos de ti", el single con el que Klaus B abre el ciclo de "Una Cuota De Caos" (20 de noviembre de 2026), su álbum con PHŌNÉ Records. Se publicó en el canal del artista el 23 de octubre de 2026, un día después de que la canción llegara a plataformas.
 
 La dirección, el montaje y la cámara son de Matías Burgos; la producción del video es del propio Klaus B, y participa la bailarina Catalina Herrera. En la canción tocan Klaus B en saxo alto, Pablo James en trombón, Felamusic en teclados, José Toledo en guitarra eléctrica, Francisco Ruiz en bajo y Benjamín Plaza en batería. Se grabó con Martín Schlotfeldt en Estudio Vinilo, la mezcla es de Ticho en Modo Estudios y el master, de Francisco Holzmann.
 
 La descripción oficial presenta la canción como imágenes, sensaciones e intuiciones envueltas en una nostalgia luminosa: la memoria como aquello que nos define y el presente como lo que ilumina el camino. El segundo adelanto del ciclo es "Un Rezo" (5 de noviembre de 2026).`,
-      en: `Official music video for "Destellos de ti", the single with which Klaus B opens the cycle of "Una Cuota De Caos", his album with PHŌNÉ Records (November 20, 2026). It was published on the artist's channel on October 23, 2026, one day after the song reached streaming platforms.
+      en: `Official music video for "Destellos de ti", the single with which Klaus B opens the cycle of "Una Cuota De Caos" (November 20, 2026), his album with PHŌNÉ Records. It was published on the artist's channel on October 23, 2026, one day after the song reached streaming platforms.
 
 Direction, editing and camera are by Matías Burgos; the video was produced by Klaus B himself, and dancer Catalina Herrera takes part. On the song, Klaus B plays alto saxophone, with Pablo James on trombone, Felamusic on keys, José Toledo on electric guitar, Francisco Ruiz on bass and Benjamín Plaza on drums. It was recorded with Martín Schlotfeldt at Estudio Vinilo, mixed by Ticho at Modo Estudios and mastered by Francisco Holzmann.
 
