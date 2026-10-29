@@ -1,12 +1,12 @@
 import type { Metadata } from "next";
 import { notFound } from "next/navigation";
-import Image from "next/image";
 import Link from "next/link";
 import { ArrowLeft } from "lucide-react";
 import { artistSlugs, getArtist } from "@/lib/artists";
 import { getArtistEntries } from "@/lib/catalog";
 import type { Language } from "@/lib/translations";
 import { DownloadPdfButton } from "@/components/download-pdf-button";
+import { Logo } from "@/components/phone/logo";
 
 // Max releases to print in the discography section (keeps press kit ≤ 2 pages).
 // Beyond this we show a tail line directing readers to the full catalog page.
@@ -192,13 +192,8 @@ export default async function PressKitPage({
         {/* Header */}
         <header className="press-header">
           <div className="press-logo">
-            <Image
-              src="/phone-logo-dark.png"
-              alt="PHŌNÉ Records"
-              width={2000}
-              height={2000}
-              className="press-logo-img"
-            />
+            {/* SVG inline (currentColor = negro de .press-document; #000 al imprimir): nítido y vectorial en el PDF. */}
+            <Logo height={32} className="press-logo-img" />
           </div>
           <div className="press-header-meta">
             <div className="press-kit-label">{t.pressKit}</div>
@@ -273,13 +268,7 @@ export default async function PressKitPage({
         {/* PHŌNÉ block at the bottom — generic press kit footer */}
         <section className="press-label-block" aria-label="PHŌNÉ Records contact">
           <div className="press-label-header">
-            <Image
-              src="/phone-logo-dark.png"
-              alt="PHŌNÉ Records"
-              width={2000}
-              height={2000}
-              className="press-label-logo"
-            />
+            <Logo height={26} className="press-label-logo" />
             <div className="press-label-title-block">
               <div className="press-label-title">{t.about}</div>
               <div className="press-label-subtitle">phonerecords.cl</div>
