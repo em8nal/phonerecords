@@ -23,7 +23,7 @@ export function Navigation() {
   const home = `/${language}`;
   const isEs = language === "es";
   const navLinks = [
-    { name: "Roster", href: `${home}#roster` },
+    { name: "Roster", href: `${home}/artistas` },
     { name: isEs ? "Catálogo" : "Catalogue", href: `${home}/catalogo` },
     { name: t.nav.videos, href: `${home}/videos` },
     { name: t.nav.features, href: `${home}/servicios` },
