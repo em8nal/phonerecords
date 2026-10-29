@@ -5,11 +5,12 @@ import { ArrowLeft } from "lucide-react";
 import { Navigation } from "@/components/landing/navigation";
 import { PageHero } from "@/components/phone/page-hero";
 import { FooterSection } from "@/components/landing/footer-section";
-import { DownloadPdfButton } from "@/components/download-pdf-button";
+import { PressKitDownloads } from "@/components/phone/press-kit-downloads";
 import { artists } from "@/lib/artists";
 import { getArtistEntries } from "@/lib/catalog";
 import { ARTIST_PORTRAIT } from "@/lib/artist-media";
 import { pageMetadata } from "@/lib/seo";
+import type { Language } from "@/lib/translations";
 
 type LangParams = { lang: string };
 
@@ -50,7 +51,6 @@ const copy = {
     intro:
       "Sello cultural independiente con dirección autoral. Producción integral, management y curaduría de música independiente latinoamericana en diálogo con circuitos europeos y globales.",
     backHome: "Volver al inicio",
-    download: "Descargar PDF",
     sections: {
       label: "Sobre el sello",
       roster: "Roster",
@@ -80,7 +80,6 @@ const copy = {
     intro:
       "Independent cultural label with strong authorial direction. Integral production, management and curation of independent Latin American music in dialogue with European and global circuits.",
     backHome: "Back to home",
-    download: "Download PDF",
     sections: {
       label: "About the label",
       roster: "Roster",
@@ -114,6 +113,7 @@ export default async function PressKitPage({
   const { lang } = await params;
   const isEs = lang === "es";
   const c = isEs ? copy.es : copy.en;
+  const uiLang: Language = isEs ? "es" : "en";
 
   // For each artist, compute counts and pick a representative release (with cover if any).
   const orderedArtists = [...artists].sort((a, b) => {
@@ -180,7 +180,7 @@ export default async function PressKitPage({
         />
 
         <article className="max-w-[1100px] mx-auto px-6 lg:px-12 pt-12 lg:pt-16 pb-24 print:pt-8">
-          <div className="flex items-center justify-between mb-12 print:hidden">
+          <div className="flex flex-wrap items-center justify-between gap-4 mb-12 print:hidden">
             <Link
               href={`/${lang}`}
               className="inline-flex items-center gap-2 text-sm text-muted-foreground hover:text-foreground transition-colors group"
@@ -188,11 +188,8 @@ export default async function PressKitPage({
               <ArrowLeft className="w-4 h-4 group-hover:-translate-x-1 transition-transform" />
               {c.backHome}
             </Link>
-            <DownloadPdfButton
-              label={c.download}
-              href={`/press-kits/press-kit-${lang}.pdf`}
-              filename={`phone-records-press-kit-${lang}.pdf`}
-            />
+            {/* Los dos PDF desde cualquier idioma (11c) */}
+            <PressKitDownloads slug={null} uiLang={uiLang} layout="row" />
           </div>
 
           {/* Header */}

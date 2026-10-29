@@ -2,7 +2,7 @@ import type { Metadata } from "next";
 import { notFound } from "next/navigation";
 import Image from "next/image";
 import Link from "next/link";
-import { ArrowLeft, ExternalLink, FileText } from "lucide-react";
+import { ArrowLeft, ExternalLink } from "lucide-react";
 import { Navigation } from "@/components/landing/navigation";
 import { FooterSection } from "@/components/landing/footer-section";
 import { artistLinkRel, artistSameAs, artistSlugs, getArtist, linkPlatform } from "@/lib/artists";
@@ -15,6 +15,7 @@ import { getArtistHero, getArtistPortrait } from "@/lib/artist-media";
 import { ArtistVideosSection } from "@/components/phone/video-artist-section";
 import { ArtistKeyFacts } from "@/components/phone/artist-key-facts";
 import { PlatformIcon } from "@/components/phone/platform-icon";
+import { PressKitDownloads } from "@/components/phone/press-kit-downloads";
 import { splitOrigin } from "@/lib/artist-facts";
 
 type ActionLink = { href: string; kind: "listen" | "buy" };
@@ -393,17 +394,17 @@ export default async function ArtistPage({
                 </div>
               )}
 
-              {/* Press kit */}
+              {/* Press kit: los PDF en español y en inglés desde cualquier idioma (11c) y la versión web */}
               <div>
                 <h2 className="font-mono text-xs text-muted-foreground uppercase tracking-widest mb-4">
-                  {isEs ? "Press kit" : "Press kit"}
+                  Press kit
                 </h2>
+                <PressKitDownloads slug={slug} uiLang={uiLang} layout="stack" />
                 <Link
                   href={`/press/${lang}/${slug}`}
-                  className="inline-flex items-center gap-2 px-4 h-10 text-sm rounded-full border border-foreground/20 hover:bg-foreground/5 transition-colors"
+                  className="mt-4 inline-flex min-h-8 items-center font-mono text-xs uppercase tracking-widest text-muted-foreground underline underline-offset-4 hover:text-foreground transition-colors rounded-sm focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand"
                 >
-                  <FileText className="w-4 h-4" />
-                  {isEs ? "Descargar PDF" : "Download PDF"}
+                  {isEs ? "Versión web" : "View online"}
                 </Link>
               </div>
             </aside>

@@ -7,9 +7,10 @@
 //   3. components/landing/integrations-section.tsx exporta `roster` y su secuencia
 //      (slug + name) es exactamente la de `artists`.
 // El archivo TSX no se puede importar desde Node (alias @/, JSX): se lee como texto.
-import { readFileSync } from "node:fs";
+import { readFileSync, existsSync, statSync } from "node:fs";
 import { artists, getArtist, ARTIST_PLATFORMS, linkPlatform, artistLinkRel, artistSameAs } from "../lib/artists.ts";
 import { artistKeyFacts, splitOrigin } from "../lib/artist-facts.ts";
+import { PRESS_KIT_BYTES, pressKitHref, pressKitDownloadName, formatPdfSize } from "../lib/press-kits.ts";
 import { translations } from "../lib/translations.ts";
 
 const expected = artists.map(({ slug, name }) => ({ slug, name }));
@@ -207,6 +208,38 @@ for (const a of artists) {
   report("R5 artistSameAs sin duplicados", new Set(newen).size === newen.length);
   const page = readFileSync(new URL("../app/[lang]/artistas/[slug]/page.tsx", import.meta.url), "utf8");
   report("R5 el JSON-LD de la ficha usa artistSameAs(", page.includes("artistSameAs("));
+}
+
+// R6. Press kit ES · EN: cada PDF existe, el mapa de tamaños tiene su entrada y redondea igual
+// que el archivo real (si no, actualizar PRESS_KIT_BYTES con `stat -f%z public/press-kits/*.pdf`),
+// y el nombre de descarga es explícito. La ficha y /press-kit usan los botones.
+{
+  for (const slug of [...artists.map((a) => a.slug), null]) {
+    const key = slug ?? "press-kit";
+    for (const lang of LANGS) {
+      const href = pressKitHref(slug, lang);
+      const file = new URL(`../public${href}`, import.meta.url);
+      const exists = existsSync(file);
+      const mapped = PRESS_KIT_BYTES[key]?.[lang];
+      const real = exists ? statSync(file).size : undefined;
+      const sameSize = exists && mapped != null && LANGS.every((ui) => formatPdfSize(mapped, ui) === formatPdfSize(real, ui));
+      const name = pressKitDownloadName(slug, lang);
+      report(
+        `R6 ${key}-${lang}: PDF, tamaño y nombre de descarga`,
+        exists && sameSize && /^phone-records-[a-z0-9-]+-(es|en)\.pdf$/.test(name) && name.endsWith(`-${key}-${lang}.pdf`),
+        `${href} · mapa ${mapped ?? "—"} · disco ${real ?? "no existe"} · ${mapped != null ? formatPdfSize(mapped, "es") : ""} · ${name}`,
+      );
+    }
+  }
+  report("R6 formatPdfSize: «PDF · 0,3 MB» / «PDF · 0.3 MB»", formatPdfSize(320485, "es") === "PDF · 0,3 MB" && formatPdfSize(320485, "en") === "PDF · 0.3 MB");
+  const page = readFileSync(new URL("../app/[lang]/artistas/[slug]/page.tsx", import.meta.url), "utf8");
+  const kit = readFileSync(new URL("../app/[lang]/press-kit/page.tsx", import.meta.url), "utf8");
+  report("R6 la ficha y /press-kit usan <PressKitDownloads", page.includes("<PressKitDownloads") && kit.includes("<PressKitDownloads"));
+  const comp = readFileSync(new URL("../components/phone/press-kit-downloads.tsx", import.meta.url), "utf8");
+  report(
+    "R6 los botones llevan hrefLang, type=application/pdf y download",
+    comp.includes("hrefLang={") && comp.includes('type="application/pdf"') && comp.includes("download={pressKitDownloadName("),
+  );
 }
 
 process.exit(ok ? 0 : 1);
