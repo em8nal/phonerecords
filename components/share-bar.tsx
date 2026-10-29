@@ -2,8 +2,9 @@
 
 // Barra para compartir una ficha (pendiente 17g · carril O), sin scripts de terceros:
 // - "Copiar enlace" con navigator.clipboard y aviso en una región aria-live;
-// - "Más opciones" (hoja nativa, navigator.share) solo donde existe; aparece al hidratar al
-//   final de la primera fila, así que no mueve nada;
+// - "Compartir con…" (hoja nativa, navigator.share) solo donde existe; aparece al hidratar al
+//   final de la primera fila, así que no mueve nada. Bajo 380 px de ancho queda solo con el
+//   ícono (el texto pasa a sr-only) para no bajar a otra fila al aparecer, que sería CLS;
 // - enlaces de intención (WhatsApp, X, Facebook, Threads, Bluesky y correo) como <a> simples,
 //   armados por lib/share.ts con la canónica absoluta y el título que le pasa la página.
 // Cada acción registra el evento `share` (lib/analytics/events.ts). La página la renderiza en el
@@ -22,7 +23,7 @@ const COPY = {
   es: {
     heading: { release: "Compartir este lanzamiento", video: "Compartir este video", artist: "Compartir este artista" },
     copy: "Copiar enlace",
-    more: "Más opciones",
+    shareVia: "Compartir con…",
     copied: "Enlace copiado",
     failed: (url: string) => `No se pudo copiar. Enlace: ${url}`,
     email: "Enviar por correo",
@@ -31,7 +32,7 @@ const COPY = {
   en: {
     heading: { release: "Share this release", video: "Share this video", artist: "Share this artist" },
     copy: "Copy link",
-    more: "More options",
+    shareVia: "Share via…",
     copied: "Link copied",
     failed: (url: string) => `Couldn't copy. Link: ${url}`,
     email: "Send by email",
@@ -107,16 +108,34 @@ export function ShareBar({
   const headingId = useId();
   const canShare = useSyncExternalStore(subscribeNoop, canShareOnClient, canShareOnServer);
   const [status, setStatus] = useState<Status>({ kind: "idle" });
-  // Cada aviso nuevo invalida el temporizador del anterior (sin efectos ni limpieza al desmontar).
+  // Cada aviso nuevo invalida los temporizadores del anterior (sin efectos ni limpieza al desmontar).
   const seq = useRef(0);
+  // Aviso a la vista, leído solo en handlers y temporizadores (no en el render).
+  const shown = useRef<Status["kind"]>("idle");
+  const show = (s: Status) => {
+    shown.current = s.kind;
+    setStatus(s);
+  };
 
   const announce = (next: Status) => {
     const n = ++seq.current;
-    setStatus(next);
-    if (next.kind === "copied") {
+    const reveal = () => {
+      show(next);
+      if (next.kind === "copied") {
+        setTimeout(() => {
+          if (seq.current === n) show({ kind: "idle" });
+        }, 4000);
+      }
+    };
+    // Mismo texto dos veces seguidas (copiar de nuevo en menos de 4 s): el lector de pantalla no
+    // repite una región que no cambió, así que se vacía y el texto vuelve un instante después.
+    if (shown.current === next.kind) {
+      show({ kind: "idle" });
       setTimeout(() => {
-        if (seq.current === n) setStatus({ kind: "idle" });
-      }, 4000);
+        if (seq.current === n) reveal();
+      }, 150);
+    } else {
+      reveal();
     }
   };
 
@@ -163,9 +182,15 @@ export function ShareBar({
           {t.copy}
         </button>
         {canShare && (
-          <button type="button" onClick={shareNative} className={BUTTON}>
-            <Share2 className="h-4 w-4" aria-hidden="true" />
-            {t.more}
+          // Bajo 380 px: 40 × 40 solo con el ícono (el texto queda como nombre accesible en
+          // sr-only), para que al aparecer no baje a otra fila. Con texto mide ≈ 156 px en ES.
+          <button
+            type="button"
+            onClick={shareNative}
+            className={`${BUTTON} max-[380px]:w-10 max-[380px]:justify-center max-[380px]:px-0`}
+          >
+            <Share2 className="h-4 w-4 shrink-0" aria-hidden="true" />
+            <span className="max-[380px]:sr-only">{t.shareVia}</span>
           </button>
         )}
       </div>
