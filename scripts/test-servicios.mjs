@@ -8,7 +8,8 @@
 //   3. Imágenes: archivos en public/, alt ES/EN descriptivos, portadas = release.cover, tira de 3
 //      en orden y créditos leídos de lib/releases.ts (no escritos en la página).
 //   4. Sin valores: ningún patrón de monto, moneda o teléfono en los textos de servicios, la
-//      página, sus componentes, el formulario, translations (features y footer) ni el JSON-LD;
+//      página, sus componentes, el formulario, translations (features y footer), el barril,
+//      lib/i18n/** (solo hero.ts sin la regla de miles) y la privacidad ni el JSON-LD;
 //      sin vocabulario de compra en la página. Autocontrol con muestras armadas por partes.
 //   5. JSON-LD: Service con provider = ORG_ID, areaServed Chile, catálogo de 4 piezas y ninguna
 //      clave de montos.
@@ -260,8 +261,12 @@ const allPageText = pageAndComponents.map((x) => x.text).join("\n");
       { label: `translations.${l}.features`, text: JSON.stringify(translations[l].features), rules: PRICE },
       { label: `translations.${l}.footer`, text: JSON.stringify(translations[l].footer), rules: PRICE },
     ]),
-    // Todos los textos de interfaz, sin la regla de miles (las cifras de seguidores de hero.stats la disparan).
-    ...["lib/translations.ts", ...i18nFiles].map((f) => ({ label: `${f} (sin regla de miles)`, text: src(f), rules: PRICE_NO_THOUSANDS })),
+    // Todos los textos de interfaz con PRICE; solo lib/i18n/hero.ts sin la regla de miles (las cifras
+    // de seguidores de hero.stats la disparan).
+    ...["lib/translations.ts", ...i18nFiles].map((f) => {
+      const relaxed = f === "lib/i18n/hero.ts";
+      return { label: relaxed ? `${f} (sin regla de miles)` : f, text: src(f), rules: relaxed ? PRICE_NO_THOUSANDS : PRICE };
+    }),
     { label: "app/[lang]/privacidad/page.tsx (sin regla de miles)", text: src("app/[lang]/privacidad/page.tsx"), rules: PRICE_NO_THOUSANDS },
   ];
   if (process.env.SERVICIOS_EXTRA_FILE) {

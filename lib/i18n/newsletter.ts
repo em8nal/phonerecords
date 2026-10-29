@@ -1,6 +1,7 @@
 // Newsletter: formulario independiente (components/phone/newsletter-form.tsx), casilla y bloque
-// de /contacto (contact-form.tsx, page.tsx) y app/actions/newsletter.ts.
-// Ojo: `consent` y `checkbox` se guardan tal cual como texto del consentimiento.
+// de /contacto (contact-form.tsx, page.tsx, actions.ts) y app/actions/newsletter.ts.
+// Ojo: `consent` (app/actions/newsletter.ts) y `checkbox` (contacto/actions.ts) se guardan tal cual
+// como texto del consentimiento.
 export const newsletter = {
   en: {
     title: "Newsletter",

@@ -180,14 +180,17 @@ const releaseCases = [
   [rv("newen-afrobeat-grietas")?.slug, "newen-afrobeat-somos-el-presente", "releaseVideo(grietas): videoclip gana a lyric"],
   [rv("newen-afrobeat-curiche")?.slug, "newen-afrobeat-cantaros", "releaseVideo(curiche): 3 videoclips sin featured, gana el más reciente"],
   [rv("klaus-b-estudios-del-maipo")?.slug, "gestosimple-klaus-b-desde-la-emisora-estudios-del-maipo", "releaseVideo(estudios-del-maipo): featured gana a la fecha"],
-  [rv("newen-afrobeat-la-fuerza"), undefined, "releaseVideo(la-fuerza): sin video"],
+  // Reloj fijo: con Date.now(), el caso fallaría en cuanto se publique un video de La Fuerza.
+  [rv("newen-afrobeat-la-fuerza", Date.parse("2026-10-29T12:00:00-03:00")), undefined, "releaseVideo(la-fuerza): sin video antes del estreno"],
 ];
 // Sintéticos: el videoclip de Un Rezo cargado con su fecha (05-11) aparece solo a las 00:00 de
 // Santiago (03:00 UTC en noviembre); un visualizer destacado y más nuevo no le gana a un videoclip.
 const base = videos[0];
 const synth = (over) => ({ ...base, credits: undefined, featured: undefined, thumb: undefined, recordedYear: undefined, ...over });
 const unRezo = synth({ slug: "test-un-rezo-videoclip", youtubeId: "AAAAAAAAAAA", kind: "videoclip", date: "2026-11-05", releaseSlug: "klaus-b-un-rezo" });
-const withRezo = [...videos, unRezo];
+// Sin el videoclip real (cuando se cargue el 05-11, su slug klaus-b-… ganaría al sintético por
+// orden alfabético): el sintético prueba la regla, no los datos. Al cargarlo, sumar un caso con su slug.
+const withRezo = [...videos.filter((v) => v.releaseSlug !== "klaus-b-un-rezo"), unRezo];
 releaseCases.push(
   [rv("klaus-b-un-rezo", Date.parse("2026-11-05T02:59:59Z"), withRezo), undefined, "releaseVideo(un-rezo) a las 23:59:59 del 04-11 (Santiago): nada"],
   [rv("klaus-b-un-rezo", Date.parse("2026-11-05T03:00:00Z"), withRezo)?.youtubeId, "AAAAAAAAAAA", "releaseVideo(un-rezo) a las 00:00 del 05-11 (Santiago): el videoclip nuevo"],

@@ -1,6 +1,5 @@
 // Prueba de los textos de interfaz (D0, carril T del p19): pnpm test:i18n
 //   (node --import ./scripts/ts-resolve-hook.mjs scripts/test-i18n.mjs)
-//   (el integrador agrega "test:i18n" a package.json con ese comando)
 // Fuente de verdad: lib/i18n/<sección>.ts (un objeto { en, es } por sección); lib/translations.ts es
 // el barril que arma `translations` con la misma forma, claves y orden que antes de D0.
 // Los idiomas salen de Object.keys(translations) y `es` es la referencia (un idioma nuevo, X18, entra
@@ -258,6 +257,15 @@ for (const l of LANGS) {
   report("I6 lib/i18n/ existe", existsSync(I18N_DIR));
   const files = existsSync(I18N_DIR) ? readdirSync(I18N_DIR).filter((f) => f.endsWith(".ts")) : [];
   report("I6 sin lib/i18n/index.ts (el hook de pruebas no resuelve carpetas)", !files.includes("index.ts"));
+  // Solo .ts de primer nivel: un archivo en una subcarpeta o con otra extensión escaparía a I1-I6
+  // (J6 de test:journal y test:servicios sí recorren subcarpetas). Si algún día se adopta
+  // lib/i18n/<sub>/, este FAIL obliga a ajustar I6 a conciencia.
+  const walk = (rel) =>
+    readdirSync(path.join(I18N_DIR, rel), { withFileTypes: true }).flatMap((d) =>
+      d.isDirectory() ? walk(path.join(rel, d.name)) : [path.join(rel, d.name)],
+    );
+  const extra = existsSync(I18N_DIR) ? walk("").filter((f) => !/^[a-z][a-z0-9-]*\.ts$/.test(f)) : [];
+  report("I6 lib/i18n solo tiene archivos .ts de primer nivel", extra.length === 0, list(extra));
   const sections = files.filter((f) => f !== "shape.ts" && f !== "index.ts").map((f) => f.replace(/\.ts$/, ""));
   const keys = Object.keys(translations[REF]);
   const missing = keys.filter((k) => !sections.includes(k));

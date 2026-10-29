@@ -12,14 +12,14 @@ Los datos de artistas, lanzamientos, videos, fechas de gira y piezas del journal
 
 Comandos:
 
-- `pnpm content:index` regenera `content/generated/*.ts` desde las carpetas. Hace falta al **crear, borrar o renombrar** un archivo; editar uno que ya existe no lo requiere. El build lo corre antes de `next build`.
+- `pnpm content:index` regenera `content/generated/*.ts` desde las carpetas. Hace falta al **crear, borrar o renombrar** un archivo; editar uno que ya existe no lo requiere. El build (`pnpm build`) lo corre y después valida todo con `test:content` antes de `next build`: **un JSON inválido o mal formateado hace fallar el deploy** (Vercel deja publicada la versión anterior).
 - `pnpm test:content` valida cada JSON contra su esquema y comprueba que los índices estén al día.
 - `node scripts/content-index.mjs --check` solo comprueba los índices, sin escribir.
 
 ## Reglas comunes
 
 - **Nombre del archivo:** el slug en kebab-case (`^[a-z0-9]+(-[a-z0-9]+)*\.json$`). El campo `slug` va dentro del JSON y tiene que ser igual al nombre del archivo.
-- **Formato:** `JSON.stringify(entrada, null, 2)` más un salto de línea final, en UTF-8 y sin escapar tildes. Claves en este orden: `slug`, después `order` (si va) y después el resto como en las tablas.
+- **Formato:** `JSON.stringify(entrada, null, 2)` más un salto de línea final, en UTF-8 y sin escapar tildes. Claves: `slug` primero, después `order` (si va) y después el resto en el orden del archivo que se copia (las entradas migradas conservan el del literal original). El orden de las claves no cambia lo publicado ni lo revisa `test:content`; el formato sí (C6): un fragmento escrito en una sola línea falla, así que después de editar conviene reescribir el archivo con `node -e 'const f=process.argv[1],fs=require("fs");fs.writeFileSync(f,JSON.stringify(JSON.parse(fs.readFileSync(f,"utf8")),null,2)+"\n")' content/<colección>/<slug>.json`.
 - **Opcionales:** un campo opcional sin valor **no se escribe**. Nunca `null`, `""` ni arreglos de relleno.
 - **Textos largos** (`bio`, `description`): los párrafos se separan con una línea en blanco (`\n\n` dentro del string JSON).
 - **Rutas e imágenes:** `cover` es una ruta local (`/releases/<slug>.jpg`, archivo en `public/`) o una URL `https://`. Los enlaces (`href`, `smartLink`, `ticketsUrl`, `sameAs`) son URLs `https://`.
@@ -30,15 +30,15 @@ Comandos:
 | Campo | Formato | Regla |
 |---|---|---|
 | `releaseDate` (lanzamientos) | `AAAA`, `AAAA-MM` o `AAAA-MM-DD` | Fecha de Santiago. Un día completo sale a las 00:00 America/Santiago de ese día; una fecha parcial cuenta como publicada solo al terminar el período (`"2026-12"` desde el 1 de enero, `"2027"` desde el 1 de enero de 2028). Ver `releaseLiveMs` en `lib/release-date.ts`. |
-| `date` (videos) | `AAAA-MM-DD` (`AAAA-MM` tolerado) | Fecha de publicación en YouTube; el video aparece a las 00:00 de Santiago de ese día. |
-| `date` (fechas de gira) | `AAAA-MM-DD` | Día del concierto en su ciudad; pasa al archivo de la gira desde el día siguiente (hora de Santiago). |
+| `date` (videos) | `AAAA-MM-DD` (`AAAA-MM` tolerado) | Fecha de publicación en YouTube. Con `AAAA-MM-DD`, el video aparece a las 00:00 de Santiago de ese día; con `AAAA-MM`, desde el día 1 del mes siguiente (`releaseLiveMs`). |
+| `date` (fechas de gira) | `AAAA-MM-DD` | Día del concierto en su ciudad. Una fecha `scheduled` pasa al archivo de la gira desde el día siguiente (hora de Santiago); una `tentative` vencida deja de mostrarse y una `cancelled` no se muestra nunca (`getUpcomingEvents` / `getPastEvents`). |
 | `publishAt` (journal) | `AAAA-MM-DDTHH:MM[:SS]-03:00` o `-04:00` | Hora de Santiago con su offset real: -03:00 de septiembre a abril, -04:00 de abril a septiembre. Un valor sin offset o imposible deja la pieza sin publicar. |
 
 ## `order` (artistas y lanzamientos)
 
 Entero único dentro de su colección, con huecos de 10 (10, 20, 30…). Los módulos de `lib/` ordenan por `order` ascendente y lo quitan antes de exportar: nunca llega a las páginas.
 
-- **artists:** es la secuencia del roster (portada, footer, JSON-LD de miembros, FAQ, /llms.txt). Hoy: newen-afrobeat 10, ecamhi 20, con-fusion 30, klaus-b 40, rosario-lircay 50.
+- **artists:** es la secuencia del roster en el JSON-LD de miembros, la FAQ, /llms.txt y /artistas. Hoy: newen-afrobeat 10, ecamhi 20, con-fusion 30, klaus-b 40, rosario-lircay 50. La portada (`roster` en `components/landing/integrations-section.tsx`) y el footer (`footer.links.artists` en `lib/i18n/footer.ts`, EN y ES) son copias a mano: al cambiar `order` o al agregar o quitar un artista se editan en la misma secuencia (`pnpm test:roster` lo exige). El press kit tiene su propio orden (`PRESS_KIT_ORDER` en `app/[lang]/press-kit/page.tsx`).
 - **releases:** el sitemap y el catálogo recorren los lanzamientos en este orden, y los empates de fecha se resuelven por posición (Gaviotas antes que Laruz, ambos del 2022-11-09). Va agrupado por artista.
 - Para insertar entre dos entradas se usa un número libre entre ambas; para agregar al final, el máximo más 10.
 
@@ -142,12 +142,12 @@ El video de la ficha no se escribe aquí: sale de `content/videos/` por `release
 ## Agregar una entrada a mano
 
 1. Copiar un JSON parecido de la misma carpeta y guardarlo como `content/<colección>/<slug>.json`, con el mismo slug en el campo `slug`.
-2. Completar los campos según la tabla de la colección. Si es un artista o un lanzamiento, darle un `order` libre.
+2. Completar los campos según la tabla de la colección. Si es un artista o un lanzamiento, darle un `order` libre. Un artista nuevo además: las dos copias del roster (portada y footer) y `PRESS_KIT_ORDER`; `lib/artist-media.ts` si tiene retrato o hero; y su PDF (`scripts/generate-press-pdfs.sh`) con el tamaño en `lib/press-kits.ts` (`test:roster` R6).
 3. `pnpm content:index` (solo al crear, borrar o renombrar archivos).
-4. `pnpm test:content` y la prueba de la colección: `test:roster` (artistas), `test:releases` (lanzamientos), `test:videos` (videos), `test:banners` (fechas de gira) o `test:journal`.
+4. `pnpm test:content` y después las suites que leen content/: `pnpm test:releases && pnpm test:videos && pnpm test:roster && pnpm test:share && pnpm test:banners && pnpm test:seo && pnpm test:journal && pnpm test:servicios` (`test:releases` aplica la guardia `TEMPORAL` también a las descripciones de video y a las bios; `test:banners` cruza el smart link; `test:share`, el orden de enlaces: Bandcamp · Discogs · Apple Music · Spotify · YouTube).
 5. Commit del JSON junto con el `content/generated/<colección>.ts` que cambió.
 
-Editar un campo de un archivo existente (por ejemplo, agregar el enlace de Spotify el día del estreno) es solo el paso 4.
+Editar un campo de un archivo existente (por ejemplo, agregar el enlace de Spotify el día del estreno) es el paso 4, con el formato canónico. Si el cambio toca la discografía o una bio, regenerar además los PDF del press kit y actualizar `PRESS_KIT_BYTES` (`test:roster` R6).
 
 El carrusel de la portada no vive aquí: sigue en `lib/banner.ts`.
 
