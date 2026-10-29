@@ -4,13 +4,14 @@ import { ArrowLeft } from "lucide-react";
 import { Navigation } from "@/components/landing/navigation";
 import { PageHero } from "@/components/phone/page-hero";
 import { FooterSection } from "@/components/landing/footer-section";
-import { getUpcomingEvents } from "@/lib/events";
+import { getPastEvents, getUpcomingEvents, type Event } from "@/lib/events";
 import { pageMetadata } from "@/lib/seo";
 
 type LangParams = { lang: string };
 
-// Las fechas pasan solas a "pasadas" (getUpcomingEvents compara con hoy): la ruta es
-// estática con ISR (H2) y se regenera cada hora, así el estado vacío no queda congelado.
+// Las fechas pasan solas de "próximas" al archivo (getUpcomingEvents / getPastEvents comparan
+// con el día de hoy en Santiago): la ruta es estática con ISR (H2) y se regenera cada hora, así
+// el estado vacío y el archivo no quedan congelados.
 export const revalidate = 3600;
 
 // Solo el anillo de foco, sin `rounded-*`: con `rounded-full` en la misma lista, Tailwind 4
@@ -37,23 +38,79 @@ const EMPTY = {
   },
 } as const;
 
+/** Textos con fechas próximas: genéricos, sin describir una gira concreta. */
+const UPCOMING = {
+  es: {
+    intro: "Fechas confirmadas de los artistas de PHŌNÉ Records.",
+    backHome: "Volver al inicio",
+    booking: "Consultas de booking",
+    addedDates: "Más fechas se sumarán al calendario.",
+    cta: "Escríbenos",
+  },
+  en: {
+    intro: "Confirmed dates for PHŌNÉ Records artists.",
+    backHome: "Back to home",
+    booking: "Booking inquiries",
+    addedDates: "More dates will be added to the calendar.",
+    cta: "Get in touch",
+  },
+} as const;
+
+/** Título del archivo por año; sin entrada, "Archivo · <año>". */
+const ARCHIVE_TITLES: Record<string, { es: string; en: string }> = {
+  // Si el archivo de 2026 suma fechas fuera de Europa, este título deja de ser cierto.
+  "2026": { es: "Archivo · Europa 2026", en: "Archive · Europe 2026" },
+};
+
+// Hasta que lib/events.ts traiga la ciudad por idioma, las ciudades en español con nombre
+// propio en inglés se traducen aquí. El resto (Innsbruck, Frick…) es igual en los dos idiomas.
+const CITY_EN: Record<string, string> = {
+  Ginebra: "Geneva",
+  Viena: "Vienna",
+  Londres: "London",
+  Nápoles: "Naples",
+};
+
+function cityName(ev: Event, isEs: boolean): string {
+  return isEs ? ev.city : (CITY_EN[ev.city] ?? ev.city);
+}
+
+/** País en el idioma de la página a partir del código ISO; si no se puede, la etiqueta de los datos. */
+function countryName(ev: Event, lang: "es" | "en"): string {
+  try {
+    return new Intl.DisplayNames([lang], { type: "region" }).of(ev.countryCode) ?? ev.country;
+  } catch {
+    return ev.country;
+  }
+}
+
+/** Descripción con fechas próximas: las ciudades, sin repetir, en orden de fecha. */
+function upcomingDescription(events: Event[], isEs: boolean): string {
+  const cities = [...new Set(events.map((ev) => cityName(ev, isEs)))];
+  const list = new Intl.ListFormat(isEs ? "es" : "en", { type: "conjunction" }).format(cities);
+  const full = isEs
+    ? `Próximas fechas de los artistas de PHŌNÉ Records: ${list}.`
+    : `Upcoming dates for PHŌNÉ Records artists: ${list}.`;
+  if (full.length <= 160) return full;
+  return isEs ? "Próximas fechas de los artistas de PHŌNÉ Records." : "Upcoming dates for PHŌNÉ Records artists.";
+}
+
 export async function generateMetadata(
   { params }: { params: Promise<LangParams> }
 ): Promise<Metadata> {
   const { lang } = await params;
   const isEs = lang === "es";
-  const hasDates = getUpcomingEvents().length > 0;
+  const upcoming = getUpcomingEvents();
+  const hasDates = upcoming.length > 0;
   return pageMetadata({
     lang,
     path: "/eventos",
     // Sin fechas, ni el título anuncia una gira: es lo primero que lee un lector de pantalla.
     title: hasDates ? (isEs ? "Eventos · Gira" : "Events · Tour") : isEs ? "Eventos" : "Events",
-    description: hasDates
-      ? isEs
-        ? "Calendario de gira PHŌNÉ Records. Newen Afrobeat — Europa 2026: Innsbruck, Frick, Frankfurt, Ginebra, Viena, Manchester, Londres y Nápoles."
-        : "PHŌNÉ Records tour calendar. Newen Afrobeat — Europe 2026: Innsbruck, Frick, Frankfurt, Geneva, Vienna, Manchester, London and Naples."
-      : EMPTY[isEs ? "es" : "en"].description,
-    // Sin fechas próximas la página no se indexa (y sale del sitemap, app/sitemap.ts).
+    description: hasDates ? upcomingDescription(upcoming, isEs) : EMPTY[isEs ? "es" : "en"].description,
+    // Sin fechas próximas la página no se indexa (y sale del sitemap, app/sitemap.ts). El archivo
+    // de fechas pasadas no cambia esa regla: son pocas filas y la función de la página es anunciar
+    // lo que viene (decisión del carril Q, lote 4).
     noindex: !hasDates,
   });
 }
@@ -65,31 +122,28 @@ export default async function EventosPage({
 }) {
   const { lang } = await params;
   const isEs = lang === "es";
+  const locale = isEs ? "es" : "en";
   const events = getUpcomingEvents();
   const hasDates = events.length > 0;
-  const empty = EMPTY[isEs ? "es" : "en"];
+  const empty = EMPTY[locale];
+  const t = UPCOMING[locale];
 
-  const t = isEs
-    ? {
-        eyebrow: "En gira",
-        headline: "Newen Afrobeat\nEuropa 2026.",
-        intro: "Agosto y septiembre 2026: la primera orquesta chilena de afrobeat regresa a Europa con un nuevo show construido en torno al LP Grietas (OfficeHome Records, 2024). Booking europeo gestionado por Ludwig Sound Booking Agency (Heidelberg).",
-        backHome: "Volver al inicio",
-        booking: "Consultas de booking",
-        addedDates: "Más fechas se sumarán al calendario.",
-        venueLabel: "Venue",
-      }
-    : {
-        eyebrow: "On tour",
-        headline: "Newen Afrobeat\nEurope 2026.",
-        intro: "August and September 2026: the first Chilean afrobeat orchestra returns to Europe with a new show built around the LP Grietas (OfficeHome Records, 2024). European booking handled by Ludwig Sound Booking Agency (Heidelberg).",
-        backHome: "Back to home",
-        booking: "Booking inquiries",
-        addedDates: "More dates will be added to the calendar.",
-        venueLabel: "Venue",
+  // Archivo: fechas pasadas agrupadas por año (el más reciente primero), filas en orden de fecha.
+  const past = getPastEvents();
+  const archive = [...new Set(past.map((ev) => ev.date.slice(0, 4)))]
+    .sort((a, b) => b.localeCompare(a))
+    .map((year) => {
+      const list = past.filter((ev) => ev.date.startsWith(year));
+      return {
+        year,
+        title: ARCHIVE_TITLES[year]?.[locale] ?? (isEs ? `Archivo · ${year}` : `Archive · ${year}`),
+        artists: [...new Set(list.map((ev) => ev.artistName))].join(" · "),
+        list,
       };
+    });
 
-  // JSON-LD: one MusicEvent per scheduled date + BreadcrumbList
+  // JSON-LD: un MusicEvent por fecha próxima + BreadcrumbList. Las fechas del archivo no llevan
+  // MusicEvent (ya pasaron).
   const eventsSchema = {
     "@context": "https://schema.org",
     "@graph": [
@@ -138,10 +192,19 @@ export default async function EventosPage({
     ],
   };
 
+  // Las fechas "YYYY-MM-DD" se leen como medianoche UTC: se formatean en UTC para no mostrar
+  // el día anterior con la hora de Santiago.
   const dateFormatter = new Intl.DateTimeFormat(isEs ? "es-CL" : "en-GB", {
     day: "2-digit",
     month: "long",
     year: "numeric",
+    timeZone: "UTC",
+  });
+  const archiveDateFormatter = new Intl.DateTimeFormat(isEs ? "es-CL" : "en-GB", {
+    day: "numeric",
+    month: "short",
+    year: "numeric",
+    timeZone: "UTC",
   });
 
   return (
@@ -158,9 +221,9 @@ export default async function EventosPage({
             mobile: "/media/con-fusion/la-banca-hero-mobile.jpg",
             alt: { es: "Con.fusión y artistas invitados en la sesión La Banca", en: "Con.fusión and guest artists at the La Banca session" },
           }}
-          title={hasDates ? t.headline : empty.headline}
-          eyebrow={hasDates ? t.eyebrow : empty.eyebrow}
-          lang={lang === "es" ? "es" : "en"}
+          title={empty.headline}
+          eyebrow={empty.eyebrow}
+          lang={locale}
         />
 
         <article className="max-w-[1100px] mx-auto px-6 lg:px-12 pt-12 lg:pt-16 pb-24">
@@ -178,7 +241,7 @@ export default async function EventosPage({
                 <p className="text-xl text-foreground/85 leading-relaxed">{t.intro}</p>
               </header>
 
-              {/* Tour dates */}
+              {/* Próximas fechas */}
               <section className="mb-16">
                 <div className="border-t border-foreground/10">
                   {events.map((ev) => (
@@ -188,10 +251,10 @@ export default async function EventosPage({
                     >
                       <div className="col-span-12 sm:col-span-3">
                         <div className="font-mono text-xs uppercase tracking-widest text-muted-foreground mb-1">
-                          {dateFormatter.format(new Date(ev.date))}
+                          <time dateTime={ev.date}>{dateFormatter.format(new Date(ev.date))}</time>
                         </div>
-                        <div className="text-lg font-display">{ev.city}</div>
-                        <div className="text-sm text-muted-foreground">{ev.country}</div>
+                        <div className="text-lg font-display">{cityName(ev, isEs)}</div>
+                        <div className="text-sm text-muted-foreground">{countryName(ev, locale)}</div>
                       </div>
                       <div className="col-span-12 sm:col-span-6">
                         <div className="text-2xl font-display tracking-tight">{ev.venue}</div>
@@ -201,9 +264,9 @@ export default async function EventosPage({
                         >
                           {ev.artistName}
                         </Link>
-                        {ev.notes?.[isEs ? "es" : "en"] && (
+                        {ev.notes?.[locale] && (
                           <p className="text-xs text-muted-foreground/80 mt-2 leading-relaxed">
-                            {ev.notes[isEs ? "es" : "en"]}
+                            {ev.notes[locale]}
                           </p>
                         )}
                       </div>
@@ -236,15 +299,13 @@ export default async function EventosPage({
                     <h2 className="text-2xl lg:text-3xl font-display tracking-tight mb-2">
                       {t.booking}
                     </h2>
-                    <p className="text-sm text-muted-foreground">
-                      {isEs ? "PHŌNÉ Records" : "PHŌNÉ Records"} · Ludwig Sound (EU)
-                    </p>
+                    <p className="text-sm text-muted-foreground">PHŌNÉ Records · Ludwig Sound (EU)</p>
                   </div>
                   <Link
-                    href={`/${lang}/contacto`}
-                    className="inline-flex items-center justify-center px-8 h-12 text-sm rounded-full bg-foreground text-background hover:bg-foreground/90 transition-colors"
+                    href={`/${lang}/contacto?topic=booking`}
+                    className={`inline-flex items-center justify-center px-8 h-12 text-sm rounded-full bg-foreground text-background hover:bg-foreground/90 transition-colors ${LINK_FOCUS}`}
                   >
-                    {isEs ? "Escríbenos" : "Get in touch"}
+                    {t.cta}
                   </Link>
                 </div>
               </section>
@@ -261,6 +322,43 @@ export default async function EventosPage({
               </Link>
             </div>
           )}
+
+          {/* Archivo: fechas ya tocadas. Lista compacta con fecha, ciudad y sala; sin notas (traen
+              precios y textos de venta vencidos), sin entradas y sin estado. */}
+          {archive.map((group) => (
+            <section
+              key={group.year}
+              aria-labelledby={`archivo-${group.year}`}
+              className="mt-20 pt-12 border-t border-foreground/10"
+            >
+              <h2
+                id={`archivo-${group.year}`}
+                className="text-2xl lg:text-3xl font-display tracking-tight mb-2"
+              >
+                {group.title}
+              </h2>
+              <p className="text-sm text-muted-foreground mb-6">{group.artists}</p>
+              <ol className="border-t border-foreground/10">
+                {group.list.map((ev) => (
+                  <li
+                    key={ev.slug}
+                    className="grid grid-cols-[7rem_1fr] sm:grid-cols-[8rem_1fr_1fr] gap-x-4 gap-y-0.5 py-3 border-b border-foreground/10 text-sm"
+                  >
+                    <time
+                      dateTime={ev.date}
+                      className="font-mono text-xs uppercase tracking-widest text-muted-foreground pt-0.5"
+                    >
+                      {archiveDateFormatter.format(new Date(ev.date))}
+                    </time>
+                    <span>
+                      {cityName(ev, isEs)}, {countryName(ev, locale)}
+                    </span>
+                    <span className="col-start-2 sm:col-start-auto text-muted-foreground">{ev.venue}</span>
+                  </li>
+                ))}
+              </ol>
+            </section>
+          ))}
         </article>
       </main>
       <FooterSection />
