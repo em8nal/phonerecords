@@ -127,7 +127,7 @@ export default async function VideosPage({
 
           {/* useSearchParams exige un límite de Suspense. Con la página en ISR, los filtros se leen en el
               cliente: el HTML lleva el fallback del límite más cercano. VideosGrid trae el suyo con la
-              grilla completa sin filtros (carrilL-videos-grid.patch); este queda de respaldo. */}
+              grilla completa sin filtros (videos-grid.tsx); este queda de respaldo. */}
           <Suspense fallback={null}>
             <VideosGrid
               lang={uiLang}

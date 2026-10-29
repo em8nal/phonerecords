@@ -1,6 +1,6 @@
 "use client";
 
-import { useMemo, useTransition } from "react";
+import { Suspense, useMemo, useTransition } from "react";
 import { usePathname, useRouter, useSearchParams } from "next/navigation";
 import type { Language } from "@/lib/translations";
 import type { VideoKind } from "@/lib/videos";
@@ -37,16 +37,46 @@ type Props = {
 const CHIP_FOCUS =
   "focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand focus-visible:ring-offset-2";
 
+/** Lo que la grilla lee de la URL: ReadonlyURLSearchParams o un URLSearchParams vacío. */
+type Query = Pick<URLSearchParams, "get" | "toString">;
+
+/** Sin filtros: lo que pinta el fallback mientras no se leen los params de la URL. */
+const EMPTY_QUERY: Query = new URLSearchParams();
+
 /**
  * Filtros por artista (?artist=) y por tipo (?kind=) con la misma mecánica que
- * /catalogo: los params viven en la URL (router.replace sin scroll), así una
- * URL filtrada llega ya filtrada desde el servidor y se puede compartir.
- * Valores desconocidos se ignoran (= Todos). Grilla 2/4 columnas con rellenos.
+ * /catalogo: los params viven en la URL (router.replace sin scroll) y una URL
+ * filtrada se puede compartir. /videos es estática con ISR (H2), así que los
+ * params solo se leen en el cliente: el HTML trae la grilla completa sin filtros
+ * (el fallback del Suspense). Al prerenderizar, useSearchParams marca el límite
+ * para renderizarse en el cliente, así que en CADA visita, con filtros o sin
+ * ellos, React descarta esas tarjetas y crea la grilla de nuevo al hidratar
+ * (detalle en catalogo/catalog-grid.tsx). Valores desconocidos se ignoran
+ * (= Todos). Grilla 2/4 columnas con rellenos.
  */
-export function VideosGrid({ lang, entries, artistsList, kinds, labels }: Props) {
+export function VideosGrid(props: Props) {
+  return (
+    <Suspense fallback={<VideosGridView {...props} query={EMPTY_QUERY} />}>
+      <VideosGridWithQuery {...props} />
+    </Suspense>
+  );
+}
+
+function VideosGridWithQuery(props: Props) {
+  const query = useSearchParams();
+  return <VideosGridView {...props} query={query} />;
+}
+
+function VideosGridView({
+  lang,
+  entries,
+  artistsList,
+  kinds,
+  labels,
+  query: searchParams,
+}: Props & { query: Query }) {
   const router = useRouter();
   const pathname = usePathname();
-  const searchParams = useSearchParams();
   const [isPending, startTransition] = useTransition();
 
   // Un slug viejo guardado en un enlace (?artist=<slug anterior>) filtra igual por el vigente.
