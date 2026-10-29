@@ -9,8 +9,8 @@ import { pageMetadata } from "@/lib/seo";
 
 type LangParams = { lang: string };
 
-// Las fechas pasan solas a "pasadas" (getUpcomingEvents compara con hoy): si la ruta
-// llega a ser estática, se regenera cada hora y el estado vacío no queda congelado.
+// Las fechas pasan solas a "pasadas" (getUpcomingEvents compara con hoy): la ruta es
+// estática con ISR (H2) y se regenera cada hora, así el estado vacío no queda congelado.
 export const revalidate = 3600;
 
 // Solo el anillo de foco, sin `rounded-*`: con `rounded-full` en la misma lista, Tailwind 4

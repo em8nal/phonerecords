@@ -32,6 +32,10 @@ const localizeLabel = (label: string, isEs: boolean) =>
 
 type PressParams = { lang: string; slug: string };
 
+// ISR (H2): la discografía marca lo que está por salir y el documento lleva la fecha del día.
+// Basta con regenerar cada hora.
+export const revalidate = 3600;
+
 export function generateStaticParams() {
   const langs: Language[] = ["es", "en"];
   return langs.flatMap((lang) =>

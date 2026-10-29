@@ -47,6 +47,12 @@ function formatFullDate(releaseDate: string, lang: Language): string {
   return lang === "es" ? `${label} de ${year}` : `${label}, ${year}`;
 }
 
+// ISR (H2): el reproductor, datePublished y el CTA del hero dependen de isReleased(). La ficha
+// se regenera con la primera visita después de 5 minutos (stale-while-revalidate): el corte de
+// las 00:00 de Santiago llega con 300 s más el tiempo hasta la siguiente visita. test:releases
+// exige un valor entre 1 y 300.
+export const revalidate = 300;
+
 export function generateStaticParams() {
   const langs: Language[] = ["es", "en"];
   return langs.flatMap((lang) =>
@@ -120,9 +126,7 @@ export default async function ReleasePage({
     .split(/\n{2,}/)
     .map((p) => p.trim())
     .filter(Boolean);
-  // Se evalúa en cada petición: app/layout.tsx lee headers() y cookies(), así que la ruta no se
-  // prerenderiza aunque tenga generateStaticParams (el build del 24-10 no la trae en
-  // prerender-manifest.json). Si el layout deja de leerlos (H2), test:releases exige revalidate.
+  // Se evalúa al prerenderizar y en cada regeneración ISR (revalidate = 300, arriba).
   // Los componentes cliente vuelven a mirar el reloj para el badge y el label del CTA.
   const initiallyReleased = isReleased(release.releaseDate);
   const uiLang: Language = isEs ? "es" : "en";

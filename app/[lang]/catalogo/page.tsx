@@ -10,6 +10,10 @@ import { CatalogGrid } from "./catalog-grid";
 
 type LangParams = { lang: string };
 
+// ISR (H2): las entradas por salir llevan "Próximamente" según la fecha. Se regenera con la
+// primera visita después de 5 minutos.
+export const revalidate = 300;
+
 export async function generateMetadata(
   { params }: { params: Promise<LangParams> },
 ): Promise<Metadata> {

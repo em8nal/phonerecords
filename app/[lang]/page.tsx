@@ -9,9 +9,10 @@ import { ReleaseBanner } from "@/components/phone/release-banner";
 import { organizationJsonLd, toJsonLd, websiteJsonLd } from "@/lib/schema";
 
 // El banner de lanzamiento rota por fecha (Pre-save → Escuchar a las 00:00 de
-// Santiago y relevo entre lanzamientos) sin redeploy. Hoy el root layout lee
-// headers() y la ruta se renderiza por request (fecha siempre exacta); si algún
-// día pasa a estática, este revalidate la regenera cada 5 minutos.
+// Santiago y relevo entre lanzamientos) sin redeploy. La portada es estática con ISR
+// (H2): se regenera en segundo plano con la primera visita después de 5 minutos
+// (stale-while-revalidate), así que el cambio llega con 300 s más el tiempo hasta la
+// siguiente visita. Los componentes cliente vuelven a mirar el reloj.
 export const revalidate = 300;
 
 type LangParams = { lang: string };
