@@ -6,7 +6,7 @@
 //     plantilla (y `absolute` cuando no caben o traen la marca).
 //   Las 7 páginas (catalogo, contacto, eventos, manifiesto, privacidad, sello, videos):
 //     usan pageMetadata( y no traen `alternates:`; títulos con plantilla ≤ 60.
-//     app/layout.tsx sin es_CL, alternates ni canonical.
+//     lib/site-metadata.ts (metadata de los root layouts) sin es_CL, alternates ni canonical.
 //   organizationJsonLd: un solo @id (= ORG_ID) en ES y EN, tipo Organization (sin
 //     MusicLabel), miembros = lib/artists.ts en orden y con artistId(slug), sameAs con los
 //     canales del sello, email publicado en /press-kit, sin calle ni foundingDate; sin
@@ -154,9 +154,9 @@ for (const p of PAGES) {
   );
 }
 {
-  const layout = src("app/layout.tsx");
+  const layout = src("lib/site-metadata.ts");
   const bad = ["es_CL", "alternates", "canonical", "alternateLocale"].filter((k) => layout.includes(k));
-  report("app/layout.tsx sin es_CL, alternates ni canonical", bad.length === 0, list(bad));
+  report("lib/site-metadata.ts sin es_CL, alternates ni canonical", bad.length === 0, list(bad));
   const ev = src("app/[lang]/eventos/page.tsx");
   report(
     "eventos: noindex, título sin gira y estado vacío ES/EN con booking",
