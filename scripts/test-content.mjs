@@ -301,7 +301,7 @@ for (const { name } of COLLECTIONS) {
 
 // ── C8 la API sale de content/ ───────────────────────────────────────────────────────────────
 // Migración en curso (un commit por colección): las que faltan se saltan con INFO.
-const PENDING = new Set(["releases", "videos", "journal"]);
+const PENDING = new Set(["releases", "journal"]);
 {
   const fileSlugs = (name) => disk[name].entries.map((e) => e.data?.slug);
   const byOrder = (name) =>
