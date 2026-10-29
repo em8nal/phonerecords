@@ -1,60 +1,36 @@
 import { NextResponse } from "next/server";
 import type { NextRequest } from "next/server";
+import { LOCALES, LOCALE_COOKIE, pickLocale } from "./lib/locale";
 
-const LOCALES = ["es", "en"] as const;
-type Locale = (typeof LOCALES)[number];
-const DEFAULT_LOCALE: Locale = "es";
-const COOKIE_NAME = "phone_lang";
 const COOKIE_MAX_AGE = 60 * 60 * 24 * 365; // one year
 
-function pickLocale(request: NextRequest): Locale {
-  // Cookie-set preference (from a previous LanguageSelector click) wins.
-  const cookieLang = request.cookies.get(COOKIE_NAME)?.value as Locale | undefined;
-  if (cookieLang && LOCALES.includes(cookieLang)) return cookieLang;
-
-  // Vercel edge geo: Chile → Spanish, anywhere else → English.
-  const country = (
-    request.headers.get("x-vercel-ip-country") || ""
-  ).toUpperCase();
-  if (country === "CL") return "es";
-  if (country) return "en";
-
-  // Local dev / non-Vercel runtime: honour Accept-Language.
-  const acceptLang = request.headers.get("accept-language") || "";
-  if (/\bes(-|;|,|$)/i.test(acceptLang)) return "es";
-  return DEFAULT_LOCALE;
-}
-
+// Redirige las URL sin idioma (/ y /artistas/x…) a /es/… o /en/…. El idioma lo elige
+// pickLocale de lib/locale.ts, que documenta el orden: cookie phone_lang → Accept-Language
+// con "es" antes que "en" → país hispanohablante (x-vercel-ip-country) → inglés.
+//
+// Ya no le pasa el idioma al layout en una cabecera: desde H2 <html lang> sale del segmento de
+// la URL en los root layouts (app/[lang]/layout.tsx y app/press/[lang]/layout.tsx) y nadie lee
+// cabeceras, así que las páginas con prefijo no necesitan pasar por aquí.
 export function proxy(request: NextRequest) {
   const { pathname } = request.nextUrl;
 
-  // Press kit routes carry their own /<lang>/ segment after /press → no redirect,
-  // but still hand the locale to the root layout (<html lang>, cookie banner).
-  if (pathname.startsWith("/press/")) {
-    const pressLang = pathname.split("/")[2] as Locale | undefined;
-    if (pressLang && LOCALES.includes(pressLang)) {
-      const headers = new Headers(request.headers);
-      headers.set("x-phone-locale", pressLang);
-      return NextResponse.next({ request: { headers } });
-    }
-    return NextResponse.next();
-  }
-
-  // Already prefixed with a known locale → propagate the locale to layout via header
+  // Guarda: el matcher ya deja fuera /press/… y /es, /en con sus subrutas. Si alguna llega
+  // igual (otro matcher, pruebas), sigue sin cambios.
+  if (pathname.startsWith("/press/")) return NextResponse.next();
   for (const l of LOCALES) {
-    if (pathname === `/${l}` || pathname.startsWith(`/${l}/`)) {
-      const headers = new Headers(request.headers);
-      headers.set("x-phone-locale", l);
-      return NextResponse.next({ request: { headers } });
-    }
+    if (pathname === `/${l}` || pathname.startsWith(`/${l}/`)) return NextResponse.next();
   }
 
   // Otherwise redirect to /<locale><original-path>
-  const locale = pickLocale(request);
+  const locale = pickLocale({
+    cookie: request.cookies.get(LOCALE_COOKIE)?.value,
+    acceptLanguage: request.headers.get("accept-language"),
+    country: request.headers.get("x-vercel-ip-country"),
+  });
   const url = request.nextUrl.clone();
   url.pathname = `/${locale}${pathname === "/" ? "" : pathname}`;
   const response = NextResponse.redirect(url);
-  response.cookies.set(COOKIE_NAME, locale, {
+  response.cookies.set(LOCALE_COOKIE, locale, {
     maxAge: COOKIE_MAX_AGE,
     sameSite: "lax",
     path: "/",
@@ -67,7 +43,12 @@ export const config = {
   // that already serve their own content (favicon, robots, sitemap, and the
   // unprefixed root /opengraph-image + /twitter-image metadata routes — they
   // must not be redirected to /<locale>/…, crawlers fetch them directly).
+  // También quedan fuera /es, /en (con o sin subruta) y /press/…: ya traen el idioma y son
+  // estáticas con ISR, así que la CDN las sirve sin invocar el proxy (H2). /espacio o
+  // /english sí pasan: (?:es|en) tiene que ir seguido de "/" o del final. Un solo literal:
+  // Next lo analiza en el build. scripts/test-locale.mjs lo prueba con
+  // unstable_doesMiddlewareMatch de Next.
   matcher: [
-    "/((?!_next/|api/|opengraph-image|twitter-image|.*\\.(?:png|jpg|jpeg|svg|webp|avif|ico|gif|pdf|txt|xml|json|woff|woff2|ttf|otf|mp4|webm)).*)",
+    "/((?!_next/|api/|press/|(?:es|en)(?:/|$)|opengraph-image|twitter-image|.*\\.(?:png|jpg|jpeg|svg|webp|avif|ico|gif|pdf|txt|xml|json|woff|woff2|ttf|otf|mp4|webm)).*)",
   ],
 };
