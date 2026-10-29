@@ -18,13 +18,20 @@ import { Logo } from "@/components/phone/logo";
 function focusSamePageAnchor(href: string) {
   const [path, id] = href.split("#");
   if (!id || path !== window.location.pathname) return;
-  requestAnimationFrame(() => {
+  // Con query (p. ej. /contacto?topic=booking) el href del menú es otra URL: Next hace una
+  // navegación suave (el motivo elegido se conserva) pero no desplaza al ancla, así que el
+  // desplazamiento va aquí, después de que la URL cambió. Sin query, Next desplaza solo.
+  const withQuery = window.location.search !== "";
+  const focus = () => {
     const target = document.getElementById(id);
     if (!target) return;
     if (!target.hasAttribute("tabindex")) target.setAttribute("tabindex", "-1");
-    // Next ya desplaza hasta el ancla; el foco no debe volver a desplazar.
+    if (withQuery) target.scrollIntoView({ block: "start" });
+    // El foco no vuelve a desplazar (Next o la línea de arriba ya lo hicieron).
     target.focus({ preventScroll: true });
-  });
+  };
+  if (withQuery) window.setTimeout(focus, 300);
+  else requestAnimationFrame(focus);
 }
 
 export function Navigation() {
