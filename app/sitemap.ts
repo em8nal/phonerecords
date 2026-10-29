@@ -5,7 +5,6 @@ import { releases as releaseList } from "../lib/releases";
 import { getPublishedVideos } from "../lib/videos";
 import { getArtistEntries, getCatalogEntries } from "../lib/catalog";
 import { getUpcomingEvents } from "../lib/events";
-import { getAppearances } from "./[lang]/artistas/roster-index";
 import { getPublishedPieces, publishedDay } from "../lib/journal";
 import { SITE } from "../lib/schema";
 import { exactPastDate, latestDate } from "../lib/seo";
@@ -42,7 +41,10 @@ type StaticPath = "" | (typeof STATIC_PAGES)[number];
  */
 const STATIC_LASTMOD: Record<StaticPath, string | undefined> = {
   "": "2026-10-26",
-  "/artistas": "2026-10-29", // p19 carril R: fecha del commit que crea el índice
+  // p19 carril R: fecha del commit que crea el índice. La página es estática (cambia solo con un
+  // deploy), así que no toma fechas de "Aparece en": una colaboración futura ya está listada desde
+  // el deploy y su fecha no es un cambio de la página. Al sumar una, actualizar esta fecha.
+  "/artistas": "2026-10-29",
   "/manifiesto": "2026-10-26",
   "/sello": "2026-10-29",
   "/servicios": "2026-10-26", // pendiente 18: fecha del commit que crea la página
@@ -103,12 +105,6 @@ export default function sitemap(): MetadataRoute.Sitemap {
   const dataLastmod: Partial<Record<StaticPath, string | undefined>> = {
     "/catalogo": latestDate(getCatalogEntries().map((e) => exactPastDate(e.releaseDate, now))),
     "/videos": latestDate(published.map((v) => exactPastDate(v.date, now))),
-    // El índice lista "Aparece en": cuenta el lanzamiento más reciente de esa sección.
-    "/artistas": latestDate(
-      getAppearances()
-        .flatMap((a) => a.releases)
-        .map((r) => exactPastDate(r.releaseDate, now)),
-    ),
   };
 
   // /eventos sale del sitemap mientras no haya fechas próximas (mismo filtro que la página,

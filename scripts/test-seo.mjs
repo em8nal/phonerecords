@@ -344,7 +344,7 @@ for (const lang of LANGS) {
 // getAppearances ("Aparece en"), JSON-LD del índice, description y entrada del sitemap. Import
 // dinámico para no tocar la cabecera.
 {
-  const { getAppearances, rosterJsonLd, rosterDescription } = await import("../app/[lang]/artistas/roster-index.ts");
+  const { getAppearances, rosterJsonLd, rosterDescription, appearanceDate } = await import("../app/[lang]/artistas/roster-index.ts");
   const ap = getAppearances();
   const bySlug = new Map(ap.map((a) => [a.artist.slug, a.releases.map((r) => r.slug)]));
   // Regla, en las dos direcciones: r aparece bajo s ⇔ s está en r.featuredArtistSlugs y s ≠ r.artistSlug.
@@ -411,19 +411,31 @@ for (const lang of LANGS) {
 
   const now = Date.now();
   const sm = sitemapModule.default();
-  const latestAppearance = latestDate(ap.flatMap((a) => a.releases).map((r) => exactPastDate(r.releaseDate, now)));
   const rows = LANGS.map((l) => sm.find((e) => e.url === `${SITE}/${l}/artistas`));
   report(
-    "sitemap: /es/artistas y /en/artistas con lastmod verdadero (≥ el último \"Aparece en\")",
-    rows.every(
-      (e) =>
-        e &&
-        typeof e.lastModified === "string" &&
-        exactPastDate(e.lastModified, now) === e.lastModified &&
-        (!latestAppearance || e.lastModified >= latestAppearance),
-    ),
+    "sitemap: /es/artistas y /en/artistas con el mismo lastmod verdadero",
+    rows.every((e) => e && typeof e.lastModified === "string" && exactPastDate(e.lastModified, now) === e.lastModified) &&
+      rows[0].lastModified === rows[1].lastModified,
     rows.map((e) => e?.lastModified).join(" | "),
   );
+  // La página es estática: su lastmod es solo STATIC_LASTMOD. Una fecha de "Aparece en" lo haría
+  // saltar cuando pasa el día de una colaboración futura, sin que la página haya cambiado.
+  const smCode = src("app/sitemap.ts").replace(/\/\*[\s\S]*?\*\//g, "").replace(/^\s*\/\/.*$/gm, "");
+  report("sitemap: /artistas sin fechas de \"Aparece en\" (solo STATIC_LASTMOD)", !smCode.includes("getAppearances") && !smCode.includes("roster-index"));
+
+  // "Aparece en" en una página estática: el año si ya salió; la fecha (no "Próximamente") si es futuro.
+  const t0 = Date.UTC(2026, 9, 29, 15);
+  const cases = [
+    [{ releaseDate: "2026-10-01", year: 2026 }, "es", "2026"],
+    [{ releaseDate: "2026-11-10", year: 2026 }, "es", "10 de noviembre de 2026"],
+    [{ releaseDate: "2026-11-10", year: 2026 }, "en", "November 10, 2026"],
+    [{ releaseDate: "2023", year: 2023 }, "en", "2023"],
+  ];
+  const badDates = cases
+    .map(([r, l, want]) => [appearanceDate(r, l, t0), want])
+    .filter(([got, want]) => got !== want)
+    .map(([got, want]) => `«${got}»≠«${want}»`);
+  report("\"Aparece en\": año si ya salió, fecha completa si es futuro (sin \"Próximamente\")", badDates.length === 0, list(badDates));
 }
 
 // ── /llms.txt ──
