@@ -69,7 +69,7 @@ export function ArtistCardGrid({
           </h2>
           {showAllLink && (
             <Link
-              href={`/${lang}#roster`}
+              href={`/${lang}/artistas`}
               className="inline-flex min-h-11 items-center font-mono text-xs uppercase tracking-widest text-muted-foreground hover:text-foreground transition-colors"
             >
               {t.all} →

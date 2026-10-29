@@ -505,13 +505,13 @@ function resolveRedirect(pathname) {
 }
 
 const expected = [
-  ["/es/artistas/claudio-solis", "/es#roster"],
-  ["/en/artistas/claudio-solis", "/en#roster"],
+  ["/es/artistas/claudio-solis", "/es/artistas"],
+  ["/en/artistas/claudio-solis", "/en/artistas"],
   ["/press/es/claudio-solis", "/es/press-kit"],
   ["/press/en/claudio-solis", "/en/press-kit"],
   // Andrés Abrigo (salió del roster el 21-10): ficha, press kit web y PDF viejo.
-  ["/es/artistas/andres-abrigo", "/es#roster"],
-  ["/en/artistas/andres-abrigo", "/en#roster"],
+  ["/es/artistas/andres-abrigo", "/es/artistas"],
+  ["/en/artistas/andres-abrigo", "/en/artistas"],
   ["/press/es/andres-abrigo", "/es/press-kit"],
   ["/press/en/andres-abrigo", "/en/press-kit"],
   ["/press-kits/andres-abrigo-es.pdf", "/press-kits/press-kit-es.pdf"],

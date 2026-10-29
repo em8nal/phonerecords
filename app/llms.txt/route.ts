@@ -30,6 +30,7 @@ const COPY = {
     catalogue: ["Catálogo", "discos, EPs, sesiones en vivo y singles del roster."],
     services: ["Dirección creativa, diseño y prensa", "dirección creativa, diseño, prensa y planificación para lanzamientos discográficos, a la medida de cada artista."],
     artists: "Artistas",
+    artistsIndex: ["Índice de artistas", "el roster completo y los lanzamientos de otros artistas donde aparece cada uno."],
     releases: `Lanzamientos ℗ ${LABEL_NAME}`,
     videos: "Videos",
     videosNote: (n: number) =>
@@ -50,6 +51,7 @@ const COPY = {
     catalogue: ["Catalogue", "albums, EPs, live sessions and singles from the roster."],
     services: ["Creative direction, design & press", "creative direction, design, press and planning for record releases, tailored to each artist."],
     artists: "Artists",
+    artistsIndex: ["Artist index", "the full roster and the other artists' releases each one appears on."],
     releases: `Releases ℗ ${LABEL_NAME}`,
     videos: "Videos",
     videosNote: (n: number) =>
@@ -109,6 +111,7 @@ function sections(lang: Language, nowMs: number, prefix: "" | "English · "): st
     "",
     `${heading}${c.artists}`,
     "",
+    item(c.artistsIndex[0], `${base}/artistas`, c.artistsIndex[1]),
     ...artists.map((a) => item(a.name, `${base}/artistas/${a.slug}`, firstSentence(a.bio[lang]))),
     "",
     `${heading}${c.releases}`,

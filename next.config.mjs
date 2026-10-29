@@ -7,12 +7,12 @@ const nextConfig = {
   async redirects() {
     return [
       // Andrés Abrigo salió del roster (21-10-2026): sus URLs van al roster y al press kit.
-      { source: "/:lang(es|en)/artistas/andres-abrigo", destination: "/:lang#roster", permanent: true },
+      { source: "/:lang(es|en)/artistas/andres-abrigo", destination: "/:lang/artistas", permanent: true },
       { source: "/press/:lang(es|en)/andres-abrigo", destination: "/:lang/press-kit", permanent: true },
       // Lote 4 (carril Q): su PDF viejo daba 404; va al press kit del sello.
       { source: "/press-kits/andres-abrigo-:lang(es|en).pdf", destination: "/press-kits/press-kit-:lang.pdf", permanent: true },
       // A9: Claudio Solís, retirado del roster; GA4 aún registra visitas a sus URLs.
-      { source: "/:lang(es|en)/artistas/claudio-solis", destination: "/:lang#roster", permanent: true },
+      { source: "/:lang(es|en)/artistas/claudio-solis", destination: "/:lang/artistas", permanent: true },
       { source: "/press/:lang(es|en)/claudio-solis", destination: "/:lang/press-kit", permanent: true },
       // 17a (24-10-2026): la ficha de Klaus B pasa a /artistas/klaus-b, en un solo salto desde cada
       // URL vieja: ficha, subrutas (la imagen OG que guardaron las redes), ruta sin idioma (los
@@ -29,6 +29,8 @@ const nextConfig = {
   // time (fs), so make sure they are traced into that function's bundle.
   outputFileTracingIncludes: {
     "/[lang]/releases/[slug]/opengraph-image": ["./public/releases/*.jpg"],
+    // Portadas del journal (carril R): sin esto, la tarjeta descarga la portada desde phonerecords.cl.
+    "/[lang]/journal/[slug]/opengraph-image": ["./public/journal/**/*"],
   },
   images: {
     // Vercel image proxy serves WebP/AVIF on supported browsers and falls back

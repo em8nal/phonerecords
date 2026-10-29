@@ -93,7 +93,12 @@ export default async function JournalPiecePage({
           <PageHero
             image={{ desktop: p.cover.src, mobile: p.cover.mobile?.src ?? p.cover.src, alt: p.cover.alt }}
             title={p.title[l]}
-            eyebrow={`${JOURNAL_FORMAT_LABEL[p.format]} · ${date}`}
+            eyebrow={
+              <>
+                {/* Las etiquetas de formato van en español en los dos idiomas (decisión editorial pendiente). */}
+                <span lang={l === "en" ? "es" : undefined}>{JOURNAL_FORMAT_LABEL[p.format]}</span> · {date}
+              </>
+            }
             titleClassName="text-4xl lg:text-7xl"
             imagePosition={p.cover.position}
             lang={l}

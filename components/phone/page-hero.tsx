@@ -1,3 +1,4 @@
+import type { ReactNode } from "react";
 import { getImageProps } from "next/image";
 import type { Language } from "@/lib/translations";
 
@@ -9,7 +10,7 @@ type PageHeroProps = {
   };
   /** Es el h1 de la página (el único). Admite saltos de línea ("\n"). */
   title: string;
-  eyebrow?: string;
+  eyebrow?: ReactNode;
   lang: Language;
   /** "default" = 42svh (máx. 520px); "short" = 28svh. */
   size?: "default" | "short";
