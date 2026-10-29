@@ -58,6 +58,9 @@ export function SiteDocument({
 
   return (
     <html lang={lang}>
+      {/* La regla apunta al router de pages/ y solo exime archivos bajo app/: este esqueleto lo
+          usan únicamente los root layouts de app/, como el <head> que antes vivía en app/layout.tsx. */}
+      {/* eslint-disable-next-line @next/next/no-head-element */}
       <head>
         {/* Consent Mode v2 defaults: must be the first script, before GTM/GA4. */}
         <ConsentDefaultScript />
