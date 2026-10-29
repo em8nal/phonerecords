@@ -255,10 +255,12 @@ export default async function PrivacyPage({
 }) {
   const { lang } = await params;
   const c = lang === "es" ? copy.es : copy.en;
+  // LAST_UPDATED es medianoche UTC: sin timeZone, un build con la hora de Santiago mostraba el día anterior.
   const dateFormatter = new Intl.DateTimeFormat(lang === "es" ? "es-CL" : "en-GB", {
     year: "numeric",
     month: "long",
     day: "numeric",
+    timeZone: "UTC",
   });
   const lastUpdatedFmt = dateFormatter.format(new Date(LAST_UPDATED));
   const isEs = lang === "es";
