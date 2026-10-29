@@ -56,11 +56,24 @@ const UPCOMING = {
   },
 } as const;
 
-/** Título del archivo por año; sin entrada, "Archivo · <año>". */
-const ARCHIVE_TITLES: Record<string, { es: string; en: string }> = {
-  // Si el archivo de 2026 suma fechas fuera de Europa, este título deja de ser cierto.
-  "2026": { es: "Archivo · Europa 2026", en: "Archive · Europe 2026" },
-};
+// Países de Europa (ISO 3166-1 alfa-2). Rusia y Turquía quedan fuera a propósito: con una fecha
+// allí el título cae a "Archivo · <año>" en vez de afirmar "Europa".
+const EUROPE = new Set([
+  "AD", "AL", "AT", "BA", "BE", "BG", "BY", "CH", "CY", "CZ", "DE", "DK", "EE", "ES", "FI", "FR",
+  "GB", "GR", "HR", "HU", "IE", "IS", "IT", "LI", "LT", "LU", "LV", "MC", "MD", "ME", "MK", "MT",
+  "NL", "NO", "PL", "PT", "RO", "RS", "SE", "SI", "SK", "SM", "UA", "VA", "XK",
+]);
+
+/**
+ * Título del archivo de un año, a partir de los datos: "Archivo · Europa <año>" solo si todas sus
+ * fechas son en Europa; si no, "Archivo · <año>". Así no queda un título fijo que deje de ser cierto
+ * cuando lib/events.ts sume una fecha en otro continente.
+ */
+function archiveTitle(year: string, list: Event[], isEs: boolean): string {
+  const inEurope = list.length > 0 && list.every((ev) => EUROPE.has(ev.countryCode.toUpperCase()));
+  if (isEs) return inEurope ? `Archivo · Europa ${year}` : `Archivo · ${year}`;
+  return inEurope ? `Archive · Europe ${year}` : `Archive · ${year}`;
+}
 
 // Hasta que lib/events.ts traiga la ciudad por idioma, las ciudades en español con nombre
 // propio en inglés se traducen aquí. El resto (Innsbruck, Frick…) es igual en los dos idiomas.
@@ -136,7 +149,7 @@ export default async function EventosPage({
       const list = past.filter((ev) => ev.date.startsWith(year));
       return {
         year,
-        title: ARCHIVE_TITLES[year]?.[locale] ?? (isEs ? `Archivo · ${year}` : `Archive · ${year}`),
+        title: archiveTitle(year, list, isEs),
         artists: [...new Set(list.map((ev) => ev.artistName))].join(" · "),
         list,
       };
@@ -299,6 +312,8 @@ export default async function EventosPage({
                     <h2 className="text-2xl lg:text-3xl font-display tracking-tight mb-2">
                       {t.booking}
                     </h2>
+                    {/* Ludwig Sound es el booking europeo de todo el sello (/sello, /contacto, /press-kit,
+                        lib/faq.ts), no el de una gira concreta: vale para cualquier fecha próxima. */}
                     <p className="text-sm text-muted-foreground">PHŌNÉ Records · Ludwig Sound (EU)</p>
                   </div>
                   <Link
