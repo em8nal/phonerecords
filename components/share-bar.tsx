@@ -25,7 +25,7 @@ const COPY = {
     more: "Más opciones",
     copied: "Enlace copiado",
     failed: (url: string) => `No se pudo copiar. Enlace: ${url}`,
-    email: "Correo",
+    email: "Enviar por correo",
     newTab: " (se abre en pestaña nueva)",
   },
   en: {
@@ -34,7 +34,7 @@ const COPY = {
     more: "More options",
     copied: "Link copied",
     failed: (url: string) => `Couldn't copy. Link: ${url}`,
-    email: "Email",
+    email: "Send by email",
     newTab: " (opens in new tab)",
   },
 } as const;
@@ -70,8 +70,11 @@ function ShareIcon({ method, name }: { method: ShareLinkMethod; name: string }):
   );
 }
 
+// Contorno transparente y no `outline-none`: en modo de colores forzados (alto contraste de
+// Windows) la box-shadow del anillo desaparece y el contorno toma el color del sistema, así
+// que el foco se sigue viendo. Mismo patrón que FACADE_FOCUS (components/phone/media-facade.tsx).
 const FOCUS =
-  "focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand focus-visible:ring-offset-2 focus-visible:ring-offset-background";
+  "focus-visible:outline-2 focus-visible:outline-transparent focus-visible:ring-2 focus-visible:ring-brand focus-visible:ring-offset-2 focus-visible:ring-offset-background";
 const BUTTON = `inline-flex h-10 items-center gap-2 rounded-full border border-foreground/15 px-4 text-sm text-foreground/85 hover:border-foreground/40 hover:text-foreground transition-colors ${FOCUS}`;
 const ICON_LINK = `inline-flex h-10 w-10 items-center justify-center rounded-full border border-foreground/15 text-foreground/80 hover:border-foreground/40 hover:text-foreground transition-colors ${FOCUS}`;
 
@@ -167,7 +170,8 @@ export function ShareBar({
         )}
       </div>
 
-      <ul className="mt-3 flex flex-wrap gap-2">
+      {/* role="list": con list-style none, Safari/VoiceOver le quita la semántica de lista al <ul>. */}
+      <ul role="list" className="mt-3 flex flex-wrap gap-2">
         {links.map((link) => {
           const name = link.method === "email" ? t.email : link.label;
           const external = link.href.startsWith("https://");

@@ -60,7 +60,7 @@ const same = (a, b) => JSON.stringify(a) === JSON.stringify(b);
   };
   for (const m of ORDER) report(`shareLinks: ${m} exacto`, by[m] === expected[m], by[m]);
   const labels = links.map((l) => l.label);
-  report("shareLinks: nombres de red", same(labels, ["WhatsApp", "X", "Facebook", "Threads", "Bluesky", "Email"]), list(labels));
+  report("shareLinks: nombres de red", same(labels, ["WhatsApp", "X (Twitter)", "Facebook", "Threads", "Bluesky", "Email"]), list(labels));
   const special = shareLinks({ url, title: "Rock & Roll #1? — Canción ñandú" });
   const enc = "Rock%20%26%20Roll%20%231%3F%20%E2%80%94%20Canci%C3%B3n%20%C3%B1and%C3%BA";
   const missing = special.filter((l) => !l.href.includes(enc) && l.method !== "facebook").map((l) => l.method);

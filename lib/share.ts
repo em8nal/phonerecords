@@ -9,7 +9,7 @@ export type ShareLinkMethod = "whatsapp" | "x" | "facebook" | "threads" | "blues
 
 export type ShareLink = {
   method: ShareLinkMethod;
-  /** Nombre de la red; el del correo lo traduce la ShareBar ("Correo" / "Email"). */
+  /** Nombre de la red; el del correo lo traduce la ShareBar ("Enviar por correo" / "Send by email"). */
   label: string;
   href: string;
 };
@@ -17,9 +17,10 @@ export type ShareLink = {
 /** Orden fijo de los enlaces en la barra. */
 export const SHARE_METHODS: readonly ShareLinkMethod[] = ["whatsapp", "x", "facebook", "threads", "bluesky", "email"];
 
+// Nombre accesible (sr-only) y tooltip. "X" a secas el lector de pantalla lo lee "equis".
 const LABEL: Record<ShareLinkMethod, string> = {
   whatsapp: "WhatsApp",
-  x: "X",
+  x: "X (Twitter)",
   facebook: "Facebook",
   threads: "Threads",
   bluesky: "Bluesky",
