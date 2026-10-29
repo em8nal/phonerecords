@@ -5,7 +5,7 @@ import { ArrowLeft } from "lucide-react";
 import { Navigation } from "@/components/landing/navigation";
 import { FooterSection } from "@/components/landing/footer-section";
 import { PageHero } from "@/components/phone/page-hero";
-import { JournalBody } from "@/components/phone/journal-body";
+import { JournalBody, READING_COLUMN } from "@/components/phone/journal-body";
 import { JournalRelated } from "@/components/phone/journal-related";
 import {
   JOURNAL_FORMAT_LABEL,
@@ -105,7 +105,7 @@ export default async function JournalPiecePage({
             {t.back}
           </Link>
 
-          <header className="max-w-[60ch] mb-12 lg:mb-16">
+          <header className={`${READING_COLUMN} mb-12 lg:mb-16`}>
             <p className="text-xl lg:text-2xl text-foreground/85 leading-relaxed">{p.excerpt[l]}</p>
             <p className="mt-6 font-mono text-xs uppercase tracking-widest text-muted-foreground">
               {t.by} {p.author} · <time dateTime={p.publishAt}>{date}</time>

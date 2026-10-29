@@ -13,19 +13,28 @@ const copy = {
 const LINK_FOCUS =
   "rounded-sm focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand focus-visible:ring-offset-4";
 
-/** `sizes` de las imágenes y la facade: el ancho de la columna de lectura (60ch ≈ 640 px). */
-const COLUMN_SIZES = "(min-width: 768px) 640px, calc(100vw - 48px)";
+/**
+ * Ancho de la columna de lectura: 33,75rem = 540 px con la raíz de 16 px. Con text-lg (18 px) e
+ * Instrument Sans, la prosa del sitio promedia 0,45 em por carácter (≈ 8,1 px), así que una línea
+ * llena tiene unos 66 caracteres (60–70). No se usa `ch`: mide el "0", que en esta fuente ocupa
+ * 0,666 em, y 60ch daban unos 87 caracteres. En rem, el encabezado de la pieza (fuente base) y el
+ * cuerpo (text-lg) quedan con el mismo ancho. Cada rem de más o de menos ≈ 2 caracteres por línea.
+ */
+export const READING_COLUMN = "max-w-[33.75rem]";
+
+/** `sizes` de las imágenes y la facade: el ancho de la columna de lectura (540 px). */
+const COLUMN_SIZES = "(min-width: 768px) 540px, calc(100vw - 48px)";
 
 /**
- * Cuerpo de una pieza del journal: una sola columna de lectura de 60ch (60–70 caracteres por
- * línea con la tipografía del sitio), text-lg y leading-relaxed. Bloques: párrafo, subtítulo
+ * Cuerpo de una pieza del journal: una sola columna de lectura (READING_COLUMN, unos 66
+ * caracteres por línea con la tipografía del sitio), text-lg y leading-relaxed. Bloques: párrafo, subtítulo
  * (h2), cita (figure + blockquote), imagen con pie y crédito, video (facade de YouTube) y tarjeta
  * de lanzamiento. Server component; las imágenes se cargan diferidas (el LCP es el hero).
  */
 export function JournalBody({ blocks, lang }: { blocks: readonly JournalBlock[]; lang: Language }) {
   const t = copy[lang];
   return (
-    <div className="max-w-[60ch] space-y-6 text-lg leading-relaxed text-foreground/90">
+    <div className={`${READING_COLUMN} space-y-6 text-lg leading-relaxed text-foreground/90`}>
       {blocks.map((b, i) => {
         switch (b.type) {
           case "paragraph":
