@@ -82,12 +82,12 @@ export default async function Home({
 
   return (
     <>
+      <Navigation />
       <main id="contenido" tabIndex={-1} className="relative min-h-screen overflow-x-hidden noise-overlay">
         <script
           type="application/ld+json"
           dangerouslySetInnerHTML={{ __html: toJsonLd(labelSchema) }}
         />
-        <Navigation />
         <ReleaseBanner lang={lang === "en" ? "en" : "es"} />
         <HeroSection />
         <IntegrationsSection />

@@ -122,12 +122,12 @@ export default async function CatalogoPage({
 
   return (
     <>
+      <Navigation />
       <main id="contenido" tabIndex={-1} className="relative min-h-screen overflow-x-hidden noise-overlay">
         <script
           type="application/ld+json"
           dangerouslySetInnerHTML={{ __html: JSON.stringify(schema) }}
         />
-        <Navigation />
         <PageHero
           image={{
             desktop: "/media/klaus-b/destellos-hero.jpg",

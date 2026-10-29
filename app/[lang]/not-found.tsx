@@ -50,9 +50,8 @@ export default function NotFound() {
 
   return (
     <>
+      <Navigation />
       <main id="contenido" tabIndex={-1} className="relative min-h-screen overflow-x-hidden noise-overlay">
-        <Navigation />
-
         <article className="max-w-[1000px] mx-auto px-6 lg:px-12 pt-32 lg:pt-40 pb-24">
           <header className="mb-16 lg:mb-20">
             <span className="inline-flex items-center gap-3 text-sm font-mono text-muted-foreground mb-8">
