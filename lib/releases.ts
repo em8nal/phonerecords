@@ -112,9 +112,14 @@ The recording is ℗ 2026 Newen Afrobeat and the release © 2026 PHŌNÉ Records
       { role: "℗", name: "2026 Newen Afrobeat" },
       { role: "©", name: "2026 PHŌNÉ Records" },
     ],
+    // Apple Music verificado con iTunes Lookup el 29-10-2026 ("La Fuerza - Single", Newen Afrobeat,
+    // 2026-10-30, 1 tema). Spotify: el smart link apunta a open.spotify.com/album/7pDBGQqk3zOhnKhjz95SUZ,
+    // pero el oEmbed da 404 hasta el estreno. El 30-10, si el oEmbed lo confirma, reemplaza a
+    // "Spotify (artista)" con la etiqueta "Spotify" (el perfil ya está en la ficha del artista).
     links: [
       { label: "Todas las plataformas", href: "https://orcd.co/npk70nb" },
       { label: "Qobuz (hi-res)", href: "https://www.qobuz.com/us-en/album/la-fuerza-newen-afrobeat/rkxyy8xslgx0o" },
+      { label: "Apple Music", href: "https://music.apple.com/us/album/la-fuerza-single/6822447521" },
       { label: "Spotify (artista)", href: "https://open.spotify.com/artist/0PTJ848ulShbjTx2yqaAlb" },
     ],
   },
@@ -342,7 +347,12 @@ The album follows "Viaje Sin Tiempo" (2024), a record made together with Gestosi
       { role: "Sello, difusión y prensa", name: "PHŌNÉ Records" },
       { role: "Distribución", name: "ONErpm" },
     ],
-    links: [{ label: "Todas las plataformas", href: "https://onerpm.link/106214256083" }],
+    // Apple Music verificado con iTunes Lookup el 29-10-2026 ("Un Rezo - Single", Klaus B, 2026-11-05,
+    // 1 tema). Spotify: el smart link de ONErpm no trae el id; se agrega el 05-11 tras el oEmbed.
+    links: [
+      { label: "Todas las plataformas", href: "https://onerpm.link/106214256083" },
+      { label: "Apple Music", href: "https://music.apple.com/us/album/un-rezo-single/6821460706" },
+    ],
   },
   {
     slug: "klaus-b-destellos-de-ti",
