@@ -115,7 +115,7 @@ report("city con salto de línea ⇒ falla en city", !r5b.success && issuePaths(
 const r6 = contactActionSchema.safeParse({ ...base, topic: "otro" });
 report("topic desconocido ⇒ falla en topic", failsOnlyAt(r6, "topic"), issuePaths(r6).join(","));
 
-// (6b) honeypot lleno ⇒ falla en el esquema (la acción, además, responde ok silencioso)
+// (6b) honeypot lleno ⇒ falla en el esquema (por eso la acción responde "invalid": ver el caso 24)
 const r6b = contactActionSchema.safeParse({ ...base, topic: "general", website: "http://spam" });
 report("honeypot lleno ⇒ falla en website", !r6b.success && issuePaths(r6b).includes("website"), issuePaths(r6b).join(","));
 
@@ -195,7 +195,25 @@ report(
 );
 report(
   "sin campo de presupuesto en el esquema",
-  !Object.keys(contactActionSchema._def.schema.shape).some((k) => /budget|presupuesto|monto|amount/i.test(k)),
+  // zod 4: superRefine devuelve el mismo ZodObject (ya no hay ZodEffects con _def.schema).
+  !Object.keys(contactActionSchema.shape).some((k) => /budget|presupuesto|monto|amount/i.test(k)),
 );
+
+// ── zod 4: casos que la migración no puede romper ──
+// (19) GHSA-mrhx-c7xc-m3w5: un arreglo enorme se corta por el largo, sin validar cada elemento.
+const big = contactActionSchema.safeParse({ ...servicios, services: Array(10000).fill("xyz") });
+report(
+  "10 000 servicios inválidos ⇒ un solo error too_big en services",
+  !big.success && big.error.issues.length === 1 && big.error.issues[0].code === "too_big" && issuePaths(big)[0] === "services",
+  big.success ? "" : `${big.error.issues.length} issues`,
+);
+// (20) el correo se recorta antes de validar el formato (z.email().trim() lo rechazaría)
+for (const [label, schema] of [["acción", contactActionSchema], ["formulario", contactFormSchema]]) {
+  const r = schema.safeParse({ ...base, topic: "general", email: "  ana@example.com " });
+  report(`${label}: correo con espacios ⇒ ok y recortado`, r.success && r.data.email === "ana@example.com", issuePaths(r).join(","));
+}
+// (21) los errores de campo no impiden las reglas por asunto (se ven todos a la vez)
+const multi = contactFormSchema.safeParse({ ...base, name: "A", topic: "propuesta", links: "", city: "" });
+report("nombre corto + propuesta vacía ⇒ name, links y city", failsOnlyAt(multi, "name", "links", "city"), issuePaths(multi).join(","));
 
 process.exit(ok ? 0 : 1);

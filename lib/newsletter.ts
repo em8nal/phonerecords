@@ -7,7 +7,8 @@ import { getDb, hasDb, schema } from "@/lib/db";
 import { sendContactMail } from "@/lib/mail";
 
 export const subscribeSchema = z.object({
-  email: z.string().trim().toLowerCase().email().max(200),
+  // zod 4: recortar y pasar a minúsculas antes de validar el formato.
+  email: z.string().trim().toLowerCase().max(200).pipe(z.email()),
   lang: z.enum(["es", "en"]),
   source: z
     .string()

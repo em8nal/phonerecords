@@ -64,7 +64,8 @@ export const linkLines = (text: string): string[] =>
 
 export const contactFields = z.object({
   name: z.string().trim().min(2, "min").max(120),
-  email: z.string().trim().email("email").max(200),
+  // zod 4: recortar ANTES de validar el formato (z.email().trim() valida primero y rechaza " a@b.cl ").
+  email: z.string().trim().max(200).pipe(z.email("email")),
   topic: z.enum(topicValues),
   message: z.string().trim().min(10, "min").max(5000),
   // Enlaces: obligatorios con topic = "propuesta" (ver proposalRules), opcionales con "servicios".
@@ -89,10 +90,10 @@ export const proposalRules = (
 ) => {
   if (value.topic !== "propuesta") return;
   if (extractHttpsUrls(value.links ?? "").length === 0) {
-    ctx.addIssue({ code: z.ZodIssueCode.custom, path: ["links"], message: "links" });
+    ctx.addIssue({ code: "custom", path: ["links"], message: "links" });
   }
   if ((value.city ?? "").length < 2) {
-    ctx.addIssue({ code: z.ZodIssueCode.custom, path: ["city"], message: "city" });
+    ctx.addIssue({ code: "custom", path: ["city"], message: "city" });
   }
 };
 
@@ -103,10 +104,10 @@ export const servicesRules = (
 ) => {
   if (value.topic !== "servicios") return;
   if (!value.services || value.services.length === 0) {
-    ctx.addIssue({ code: z.ZodIssueCode.custom, path: ["services"], message: "services" });
+    ctx.addIssue({ code: "custom", path: ["services"], message: "services" });
   }
   if (!value.projectType) {
-    ctx.addIssue({ code: z.ZodIssueCode.custom, path: ["projectType"], message: "projectType" });
+    ctx.addIssue({ code: "custom", path: ["projectType"], message: "projectType" });
   }
 };
 
