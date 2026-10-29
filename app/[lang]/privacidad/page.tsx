@@ -1,21 +1,14 @@
 import type { Metadata } from "next";
-import type { ReactNode } from "react";
 import Link from "next/link";
 import { ArrowLeft } from "lucide-react";
 import { Navigation } from "@/components/landing/navigation";
 import { FooterSection } from "@/components/landing/footer-section";
 import { ConsentResetButton } from "@/components/consent/consent-reset-button";
 import { pageMetadata } from "@/lib/seo";
-import { LABEL_EMAIL } from "@/lib/schema";
 
 type LangParams = { lang: string };
 
-// Versión 2 (lote 4, carril Q): reescrita para lo que la Ley 21.719 exige informar desde el
-// 01-12-2026. El integrador ajusta LAST_UPDATED al día en que se publica y resuelve el TODO de la
-// §7 antes de publicar. Revisión legal recomendada antes del 01-12 (ver carrilQ-report.md:
-// representante legal, nivel adecuado de las transferencias, menores).
-const LAST_UPDATED = "2026-10-29";
-const POLICY_VERSION = "2";
+const LAST_UPDATED = "2026-10-26";
 
 export async function generateMetadata(
   { params }: { params: Promise<LangParams> }
@@ -27,8 +20,8 @@ export async function generateMetadata(
     path: "/privacidad",
     title: isEs ? "Política de privacidad" : "Privacy policy",
     description: isEs
-      ? "Qué datos tratamos, para qué y tus derechos según la Ley 19.628, con las modificaciones de la Ley 21.719 (rigen desde el 1 de diciembre de 2026)."
-      : "What data PHŌNÉ Records processes, why, and your rights under Chile's Law 19.628 as amended by Law 21.719 (in force from 1 December 2026) and the GDPR.",
+      ? "Política de privacidad de PHŌNÉ Records: qué datos recolectamos, cómo los usamos, cookies y derechos del usuario bajo Ley 19.628 (Chile) y GDPR (UE)."
+      : "PHŌNÉ Records privacy policy: what data we collect, how we use it, cookies and user rights under Ley 19.628 (Chile) and GDPR (EU).",
   });
 }
 
@@ -36,41 +29,17 @@ const copy = {
   es: {
     eyebrow: "Política de privacidad",
     headline: "Datos personales,\nde forma transparente.",
-    intro: `Esta política explica qué datos personales tratamos cuando visitas phonerecords.cl o nos escribes, para qué y con qué base, cuánto tiempo los guardamos y cómo ejercer tus derechos. Sigue la Ley 19.628 de Chile, con las modificaciones de la Ley 21.719 (rigen desde el 1 de diciembre de 2026), y el Reglamento General de Protección de Datos (RGPD) de la Unión Europea cuando aplique.`,
+    intro: `Esta política describe qué datos recolectamos cuando visitas phonerecords.cl, cómo los usamos y los derechos que te corresponden bajo la Ley 19.628 de Chile (Protección de la Vida Privada) y el Reglamento General de Protección de Datos (GDPR) de la Unión Europea cuando aplique.`,
     backHome: "Volver al inicio",
-    version: "Versión",
     lastUpdated: "Última actualización",
     sections: [
       {
-        title: "1 · Responsable",
-        body: `PHŌNÉ Records · Ñuñoa, Región Metropolitana, Chile.
-
-Para cualquier asunto de privacidad o para ejercer tus derechos, escríbenos a ${LABEL_EMAIL} o usa el formulario de phonerecords.cl/es/contacto.`,
+        title: "1 · Responsable del tratamiento",
+        body: `PHŌNÉ Records · Ñuñoa, Región Metropolitana, Chile. Canal de contacto para asuntos de privacidad: formulario en phonerecords.cl/es/contacto.`,
       },
       {
-        title: "2 · Qué datos tratamos y de quién",
-        body: `Tratamos datos de tres grupos de personas: quienes visitan el sitio, quienes nos escriben por el formulario de contacto y quienes se suscriben al newsletter.
-
-— Visitantes: tu preferencia de idioma, tu decisión sobre cookies y datos técnicos de navegación (página visitada, origen del tráfico, tipo de dispositivo y navegador); solo si aceptas la analítica, también identificadores de analítica.
-— Contacto: nombre, correo, asunto, mensaje y el idioma del sitio desde el que escribes (ES o EN). Con una propuesta de artista, también los enlaces y la ciudad que indiques; con una consulta por servicios de dirección creativa, diseño y prensa, los servicios que te interesan, el tipo de proyecto, la fecha estimada de lanzamiento y los enlaces que compartas.
-— Newsletter: tu correo, tu idioma (ES o EN), el origen de la suscripción (portada, contacto, pie de página o formulario de contacto), la fecha y el texto exacto del consentimiento que aceptaste y un hash (huella irreversible) de tu dirección IP combinado con una sal que cambia cada día. No guardamos tu IP.
-
-Origen de los datos: los entregas tú o los genera tu navegador al visitar el sitio. No obtenemos datos de fuentes de acceso público ni de terceros.`,
-      },
-      {
-        title: "3 · Para qué los usamos y con qué base",
-        body: `— Responder consultas de booking, propuestas de artista y consultas por servicios: lo hacemos porque nos pediste una respuesta antes de un posible acuerdo (medidas precontractuales a tu solicitud).
-— Responder mensajes generales, de prensa o sobre el sello: nuestro interés legítimo en contestar lo que nos escribes.
-— Enviarte el newsletter con novedades de PHŌNÉ Records (lanzamientos, conciertos y journal) y guardar el respaldo de tu suscripción: tu consentimiento.
-— Conservar tu correo marcado como "dado de baja" después de que retires tu consentimiento al newsletter: nuestro interés legítimo en respetar tu baja y no volver a escribirte.
-— Analítica completa con cookies (Google Analytics 4) y Ahrefs Analytics: tu consentimiento.
-— Analítica sin cookies (Vercel Web Analytics y Speed Insights), Google en modo de consentimiento denegado y las cookies técnicas "phone_lang" y "phone_consent": nuestro interés legítimo en medir el uso agregado y la velocidad del sitio, y en recordar tu idioma y tu decisión sobre cookies.
-
-No vendemos ni alquilamos tus datos, no los usamos para publicidad ni los compartimos con terceros para marketing.`,
-      },
-      {
-        title: "4 · Cookies y tu decisión",
-        body: `Cuando visitas el sitio sin enviarnos formularios, no activamos cookies de analítica ni otros identificadores de analítica sin tu consentimiento.
+        title: "2 · Datos que recolectamos",
+        body: `Cuando visitas el sitio sin enviarnos formularios, no activamos cookies ni identificadores de analítica sin tu consentimiento.
 
 Siempre, sin necesidad de consentimiento:
 — Una cookie técnica llamada "phone_lang" para recordar tu preferencia de idioma (ES o EN). Esta cookie vive un año y se elimina cuando borras las cookies de tu navegador.
@@ -86,125 +55,100 @@ Solo con tu consentimiento (si aceptas en el banner de cookies):
 — Google Analytics 4, cargado mediante Google Tag Manager, activa cookies e identificadores de analítica (por ejemplo "_ga" y "_ga_*") para medir cómo se usa el sitio (páginas vistas, origen del tráfico, tipo de dispositivo).
 — Se carga Ahrefs Analytics (analytics.ahrefs.com), que mide visitas y fuentes de tráfico.
 
-Cómo cambiar tu decisión: puedes borrar las cookies de este sitio en tu navegador o usar el botón al final de esta sección, que elimina "phone_consent" y vuelve a mostrar el banner. Retirar el consentimiento no afecta lo que tratamos antes con tu consentimiento.`,
+Cómo cambiar tu decisión: puedes borrar las cookies de este sitio en tu navegador o usar el botón al final de esta sección, que elimina "phone_consent" y vuelve a mostrar el banner.
+
+Si nos escribes por el formulario de contacto (phonerecords.cl/es/contacto), conservamos tu nombre, email y mensaje para responderte. No lo usamos para nada más. Si envías una propuesta de artista, guardamos también los enlaces y la ciudad que indiques, solo para evaluarla. Si nos escribes por servicios de dirección creativa, diseño y prensa, guardamos también los servicios que te interesan, el tipo de proyecto, la fecha estimada de lanzamiento y los enlaces que compartas, solo para responder tu consulta.`,
         consentButton: "Cambiar mi decisión de cookies",
       },
       {
-        title: "5 · Con quién los compartimos",
-        body: `Estos proveedores reciben datos del sitio, cada uno bajo sus propios términos:
-— Vercel (vercel.com): aloja el sitio y sus funciones y presta Web Analytics y Speed Insights. Política: vercel.com/legal/privacy-policy.
-— Neon (a través de Vercel): la base de datos Postgres donde se guardan las suscripciones al newsletter.
-— Zoho: el correo por el que recibimos los mensajes del formulario de contacto y el respaldo de las suscripciones.
-— Google: Google Tag Manager y Google Analytics 4 (con cookies solo si aceptas), y YouTube cuando cargas un video. Política: policies.google.com/privacy.
-— Ahrefs: Ahrefs Analytics, solo si aceptas. Política: ahrefs.com/privacy.
-— Spotify: los reproductores de las fichas de artista y de lanzamiento cargan contenido directamente desde Spotify cuando interactúas con ellos, y Spotify puede establecer sus propias cookies. Política: spotify.com/legal/privacy-policy.
+        title: "3 · Cómo usamos los datos",
+        body: `— La preferencia de idioma se usa únicamente para servir el contenido en el idioma que elegiste.
+— Tu decisión sobre cookies ("phone_consent") se usa solo para recordar si cargar o no la analítica con consentimiento.
+— Si aceptas, la analítica completa (Google Analytics 4 y Ahrefs Analytics) nos ayuda a entender qué páginas funcionan y cuáles no, para mejorar el sitio. Sin consentimiento, Google solo recibe datos técnicos, sin cookies ni identificadores persistentes; Google puede recibir datos técnicos como la página visitada.
+— Las analíticas de Vercel y los datos de Speed Insights se usan para medir el uso y optimizar la velocidad de carga.
+— No vendemos, alquilamos ni compartimos tus datos con terceros para marketing.`,
+      },
+      {
+        title: "4 · Compartición con terceros",
+        body: `El sitio se aloja en Vercel (vercel.com). Sus servicios procesan las solicitudes que llegan al sitio para servir las páginas. Vercel actúa como encargado de tratamiento bajo sus propios términos de privacidad (https://vercel.com/legal/privacy-policy).
 
-Los videos de YouTube se insertan con el dominio de privacidad mejorada (youtube-nocookie.com) y el reproductor se carga solo cuando pulsas reproducir. Desde ese momento YouTube/Google recibe datos técnicos y, si reproduces el video, puede guardar cookies o almacenamiento local.
+Google (Google Analytics 4 y Google Tag Manager; política en policies.google.com/privacy) está presente en el sitio aunque no aceptes la analítica, pero en ese caso opera en modo de consentimiento: solo recibe datos técnicos, sin cookies ni identificadores persistentes; Google puede recibir datos técnicos como la página visitada. Solo si aceptas, se activan las cookies e identificadores de analítica de Google Analytics 4 y se carga Ahrefs (Ahrefs Analytics; política en ahrefs.com/privacy), que recibe datos de navegación del sitio para generar estadísticas de uso.
 
-Envío del newsletter: hoy no usamos ningún proveedor externo de envío; cuando elijamos uno, actualizaremos esta sección antes de usarlo.
+Los embeds de Spotify (open.spotify.com) en las fichas de artista y de lanzamiento cargan contenido directamente desde Spotify cuando interactúas con ellos. Spotify puede establecer sus propias cookies; sus términos están en spotify.com/legal/privacy-policy.
+
+Los videos de YouTube se insertan con el dominio de privacidad mejorada (youtube-nocookie.com). Al cargar el reproductor, YouTube/Google recibe datos técnicos y, si reproduces el video, puede guardar cookies o almacenamiento local. Más información en policies.google.com/privacy. Los reproductores se cargan solo cuando pulsas reproducir.
 
 No utilizamos Meta Pixel ni publicidad de terceros.`,
       },
       {
-        title: "6 · Transferencias internacionales",
-        body: `Estos proveedores pueden tratar los datos fuera de Chile, principalmente en Estados Unidos; las funciones del sitio corren en São Paulo (Brasil).
+        title: "5 · Tus derechos",
+        body: `Bajo la Ley 19.628 y el GDPR (si te encuentras en la UE):
 
-La Agencia de Protección de Datos Personales aún no publica su listado de países con un nivel adecuado de protección, así que hoy no podemos indicarte si Estados Unidos o Brasil lo tienen según la ley chilena. Mientras tanto, nos amparamos en los términos de tratamiento de datos de cada proveedor, y revisaremos esta sección cuando la Agencia publique ese listado y sus cláusulas modelo.`,
+— Acceso: puedes pedir copia de los datos que tenemos sobre ti.
+— Rectificación: puedes pedir que corrijamos datos inexactos.
+— Cancelación / supresión: puedes pedir que eliminemos tus datos.
+— Oposición: puedes oponerte al tratamiento.
+— Portabilidad (GDPR): puedes pedir tus datos en formato estructurado.
+— Retirar el consentimiento: puedes cambiar o retirar tu decisión sobre la analítica en cualquier momento (ver sección 2).
+
+Para ejercer cualquiera de estos derechos, escríbenos por el formulario en phonerecords.cl/es/contacto. Te respondemos en un plazo máximo de 30 días.`,
       },
       {
-        title: "7 · Cuánto tiempo los guardamos",
-        // TODO(integrador) · BLOQUEA LA PUBLICACIÓN, no solo la integración (art. 14 ter i: plazos
-        // concretos). Plazos tomados de la documentación de Google y Vercel (ver carrilQ-report.md):
-        //   1. GA4 (Administrar → Recopilación y conservación de datos): "hasta 14 meses" es el tope de
-        //      una propiedad estándar; si está en 2 meses, escribir "2 meses" en ES y EN.
-        //   2. Etiqueta de Google (configuración del flujo de datos): si se cambió la duración de las
-        //      cookies, corregir "hasta 2 años".
-        //   3. Ahrefs: no publica un plazo. Confirmarlo en la cuenta o el DPA de Ahrefs y escribirlo,
-        //      o dejar de cargar Ahrefs, antes de publicar.
+        title: "6 · Retención",
         body: `— Cookies técnicas ("phone_lang", "phone_consent"): 1 año desde que se establecen, salvo que borres las cookies de tu navegador.
-— Cookies de analítica de Google ("_ga" y "_ga_*", solo con consentimiento): hasta 2 años desde tu última visita, la duración predeterminada de Google; algunos navegadores la acortan, y puedes eliminarlas en cualquier momento borrando las cookies del sitio.
-— Datos de Google Analytics 4 asociados a esas cookies: hasta 14 meses; después, Google los elimina. Los informes con totales agregados no tienen ese límite.
-— Vercel Web Analytics: el identificador de cada visita (un hash de la petición, sin cookies ni IP) se descarta a las 24 horas; lo que queda son estadísticas agregadas que no te identifican. Vercel Speed Insights no asocia sus mediciones a ningún visitante ni dirección IP.
-— Datos de Ahrefs Analytics (solo con consentimiento): según la política de Ahrefs; nosotros los usamos solo en conjunto.
-— Mensajes del formulario de contacto: mientras tenga sentido para mantener la conversación; máximo 5 años.
-— Newsletter: mientras estés suscrito. Si te das de baja, conservamos tu correo marcado como "dado de baja" para no volver a escribirte, hasta que pidas su eliminación.`,
+— Cookies de analítica de Google (solo con consentimiento): la duración la define Google; puedes eliminarlas en cualquier momento borrando las cookies del sitio.
+— Correos recibidos: conservados mientras tenga sentido para mantener la conversación; máximo 5 años.
+— Datos de analíticas (Google Analytics, Ahrefs, Vercel): se usan en conjunto; cada proveedor los retiene según sus políticas y la configuración de nuestras cuentas.`,
       },
       {
-        title: "8 · Tus derechos y cómo ejercerlos",
-        body: `Tienes derecho de acceso, rectificación, supresión, oposición, portabilidad y bloqueo de tus datos personales:
-— Acceso: saber si tratamos datos tuyos y obtener una copia.
-— Rectificación: corregir datos inexactos, desactualizados o incompletos.
-— Supresión: pedir que eliminemos tus datos.
-— Oposición: oponerte a un tratamiento, por ejemplo al que hacemos por interés legítimo.
-— Portabilidad: recibir tus datos en un formato estructurado y de uso común.
-— Bloqueo: pedir que suspendamos temporalmente el tratamiento mientras resolvemos una solicitud de rectificación, supresión u oposición.
-— Retirar el consentimiento: en cualquier momento y sin dar razones. Para la analítica, con el botón de la sección 4; para el newsletter, respondiendo a cualquier correo del newsletter o escribiéndonos (la baja con un enlace en cada correo llegará más adelante).
-
-Cómo pedirlo: escríbenos a ${LABEL_EMAIL} o por el formulario de phonerecords.cl/es/contacto, indicando tu nombre, dónde quieres que te respondamos, a qué datos te refieres y qué derecho ejerces.
-
-Plazos: acusamos recibo de tu solicitud y te respondemos dentro de 30 días corridos desde que la recibimos. Si hace falta, ese plazo puede prorrogarse una sola vez por otros 30 días corridos. Una solicitud de bloqueo la respondemos dentro de 2 días hábiles.
-
-Gratuidad: la rectificación, la supresión y la oposición son siempre gratuitas; el acceso es gratuito al menos una vez por trimestre.`,
+        title: "7 · Seguridad",
+        body: `El sitio se sirve por HTTPS (TLS 1.3). El acceso al hosting está protegido con autenticación de dos factores. No almacenamos información sensible (tarjetas de crédito, credenciales) en este sitio.`,
       },
       {
-        title: "9 · Agencia de Protección de Datos Personales",
-        body: `Si rechazamos tu solicitud o no te respondemos dentro del plazo, puedes reclamar ante la Agencia de Protección de Datos Personales dentro de 30 días hábiles desde que recibas nuestra respuesta negativa o desde que venza el plazo para responder.`,
+        title: "8 · Cambios a esta política",
+        body: `Si actualizamos esta política, la nueva versión se publicará en esta misma URL con la fecha de "Última actualización" modificada. Cambios sustanciales se anunciarán en el aviso de cookies del sitio durante al menos 30 días.`,
       },
       {
-        title: "10 · Seguridad",
-        body: `El sitio se sirve por HTTPS (TLS 1.3). El acceso al hosting está protegido con autenticación de dos factores. No almacenamos información sensible (tarjetas de crédito, credenciales) en este sitio.
+        title: "9 · Newsletter",
+        body: `Si te suscribes al newsletter (desde el bloque "Newsletter" de phonerecords.cl/es/contacto, desde la portada o marcando la casilla opcional del formulario de contacto), guardamos:
+— Tu correo electrónico.
+— Tu idioma (ES o EN) y el origen de la suscripción (portada, contacto o formulario de contacto).
+— La fecha de tu consentimiento y el texto exacto que aceptaste.
+— Un hash (huella irreversible) de tu dirección IP combinado con una sal que cambia cada día. No guardamos tu IP.
 
-Tu dirección IP nunca se guarda: del newsletter solo conservamos el hash con sal diaria descrito en la sección 2. Los registros de errores del servidor no llevan tus mensajes ni tu correo completo, y tu navegador nunca recibe detalles internos de un error.`,
-      },
-      {
-        title: "11 · Decisiones automatizadas y menores de edad",
-        body: `No tomamos decisiones automatizadas ni elaboramos perfiles que produzcan efectos sobre ti.
+Finalidad: enviarte novedades de PHŌNÉ Records (lanzamientos, conciertos, journal). No usamos estos datos para otra cosa ni los compartimos con terceros para marketing.
 
-El sitio no está dirigido a menores de 14 años. Si sabemos que recibimos datos de un menor de 14 años sin el consentimiento de su madre, padre o representante legal, los eliminaremos.`,
+Base legal: tu consentimiento, que puedes retirar en cualquier momento.
+
+Cómo darte de baja: responde a cualquier correo del newsletter pidiendo la baja, o escríbenos por el formulario de phonerecords.cl/es/contacto. La baja automática con un enlace en cada correo llegará más adelante.
+
+Proveedor de envío: por definir. Hoy no enviamos newsletters con ningún proveedor externo; cuando elijamos uno, actualizaremos esta sección antes de usarlo. Los datos se almacenan en una base de datos Postgres alojada en Neon (a través de Vercel).
+
+Retención: mientras estés suscrito. Si te das de baja, conservamos tu correo marcado como "dado de baja" para no volver a escribirte, hasta que pidas su eliminación.`,
       },
       {
-        title: "12 · Cambios a esta política",
-        body: `Esta es la versión ${POLICY_VERSION} de la política, con la fecha de actualización indicada al inicio. Si la cambiamos, publicaremos la nueva versión en esta misma URL, con un número de versión y una fecha nuevos. Si un cambio requiere tu consentimiento, te lo pediremos antes de aplicarlo.`,
+        title: "10 · Contacto",
+        body: `Para cualquier consulta sobre privacidad o protección de datos:
+
+phonerecords.cl/es/contacto
+PHŌNÉ Records
+Ñuñoa, Región Metropolitana, Chile`,
       },
     ],
   },
   en: {
     eyebrow: "Privacy policy",
     headline: "Personal data,\ntransparently.",
-    intro: `This policy explains what personal data we process when you visit phonerecords.cl or write to us, why and on what legal basis, how long we keep it and how to exercise your rights. It follows Chile's Law 19.628, as amended by Law 21.719 (in force from 1 December 2026), and the European Union's General Data Protection Regulation (GDPR) where applicable.`,
+    intro: `This policy describes what data we collect when you visit phonerecords.cl, how we use it, and your rights under Chile's Law 19.628 (Protection of Private Life) and the European Union's General Data Protection Regulation (GDPR) when applicable.`,
     backHome: "Back to home",
-    version: "Version",
     lastUpdated: "Last updated",
     sections: [
       {
         title: "1 · Data controller",
-        body: `PHŌNÉ Records · Ñuñoa, Región Metropolitana, Chile.
-
-For any privacy matter or to exercise your rights, write to ${LABEL_EMAIL} or use the form at phonerecords.cl/en/contacto.`,
+        body: `PHŌNÉ Records · Ñuñoa, Región Metropolitana, Chile. Contact channel for privacy matters: form at phonerecords.cl/en/contacto.`,
       },
       {
-        title: "2 · What data we process and whose",
-        body: `We process data from three groups of people: those who visit the site, those who write to us through the contact form and those who subscribe to the newsletter.
-
-— Visitors: your language preference, your cookie decision and technical browsing data (page visited, traffic source, device type and browser); only if you accept analytics, also analytics identifiers.
-— Contact: name, email, topic, message and the language of the site you write from (ES or EN). With an artist proposal, also the links and the city you provide; with an inquiry about creative direction, design and press services, the services you're interested in, the project type, the estimated release date and any links you share.
-— Newsletter: your email, your language (ES or EN), the source of the subscription (home page, contact page, footer or contact form), the date and exact text of the consent you accepted, and a hash (irreversible fingerprint) of your IP address combined with a salt that changes daily. We do not store your IP.
-
-Source of the data: you provide it or your browser generates it when you visit the site. We do not obtain data from publicly accessible sources or from third parties.`,
-      },
-      {
-        title: "3 · Why we use it and on what basis",
-        body: `— Answering booking inquiries, artist proposals and services inquiries: because you asked us for an answer before a possible agreement (pre-contractual steps at your request).
-— Answering general, press or label messages: our legitimate interest in replying to what you write to us.
-— Sending you the newsletter with PHŌNÉ Records news (releases, concerts and journal) and keeping the backup of your subscription: your consent.
-— Keeping your email flagged as "unsubscribed" after you withdraw your newsletter consent: our legitimate interest in respecting your unsubscribe and not writing to you again.
-— Full analytics with cookies (Google Analytics 4) and Ahrefs Analytics: your consent.
-— Cookieless analytics (Vercel Web Analytics and Speed Insights), Google in denied consent mode and the technical cookies "phone_lang" and "phone_consent": our legitimate interest in measuring aggregate use and site speed, and in remembering your language and your cookie decision.
-
-We do not sell or rent your data, use it for advertising or share it with third parties for marketing.`,
-      },
-      {
-        title: "4 · Cookies and your choice",
+        title: "2 · Data we collect",
         body: `When you visit the site without sending us forms, we do not activate analytics cookies or identifiers without your consent.
 
 Always, no consent needed:
@@ -221,158 +165,88 @@ Only with your consent (if you accept in the cookie banner):
 — Google Analytics 4, loaded through Google Tag Manager, activates analytics cookies and identifiers (for example "_ga" and "_ga_*") to measure how the site is used (page views, traffic source, device type).
 — Ahrefs Analytics (analytics.ahrefs.com) is loaded, which measures visits and traffic sources.
 
-How to change your decision: you can clear this site's cookies in your browser or use the button at the end of this section, which removes "phone_consent" and shows the banner again. Withdrawing consent does not affect what we processed earlier with your consent.`,
+How to change your decision: you can clear this site's cookies in your browser or use the button at the end of this section, which removes "phone_consent" and shows the banner again.
+
+If you write to us via the contact form (phonerecords.cl/en/contacto), we keep your name, email and message to respond. We don't use it for anything else. If you send an artist proposal, we also keep the links and the city you provide, only to evaluate it. If you write to us about creative direction, design and press services, we also keep the services you're interested in, the project type, the estimated release date and any links you share, only to answer your inquiry.`,
         consentButton: "Change my cookie choice",
       },
       {
-        title: "5 · Who we share it with",
-        body: `These providers receive data from the site, each under its own terms:
-— Vercel (vercel.com): hosts the site and its functions and provides Web Analytics and Speed Insights. Policy: vercel.com/legal/privacy-policy.
-— Neon (through Vercel): the Postgres database where newsletter subscriptions are stored.
-— Zoho: the email service through which we receive contact form messages and the backup of subscriptions.
-— Google: Google Tag Manager and Google Analytics 4 (with cookies only if you accept), and YouTube when you load a video. Policy: policies.google.com/privacy.
-— Ahrefs: Ahrefs Analytics, only if you accept. Policy: ahrefs.com/privacy.
-— Spotify: the players on artist and release pages load content directly from Spotify when you interact with them, and Spotify may set its own cookies. Policy: spotify.com/legal/privacy-policy.
+        title: "3 · How we use the data",
+        body: `— Language preference is used solely to serve content in the language you chose.
+— Your cookie decision ("phone_consent") is used only to remember whether to load consent-based analytics.
+— If you accept, full analytics (Google Analytics 4 and Ahrefs Analytics) help us understand which pages work and which don't, to improve the site. Without consent, Google only receives technical data, without cookies or persistent identifiers; Google may receive technical data such as the page visited.
+— Vercel analytics and Speed Insights data are used to measure usage and optimise load speed.
+— We do not sell, rent or share your data with third parties for marketing.`,
+      },
+      {
+        title: "4 · Third-party sharing",
+        body: `The site is hosted on Vercel (vercel.com). Their services process requests reaching the site to serve pages. Vercel acts as data processor under their own privacy terms (https://vercel.com/legal/privacy-policy).
 
-YouTube videos are embedded using the privacy-enhanced domain (youtube-nocookie.com) and the player loads only when you press play. From then on YouTube/Google receives technical data and, if you play the video, may store cookies or local storage.
+Google (Google Analytics 4 and Google Tag Manager; policy at policies.google.com/privacy) is present on the site even if you do not accept analytics, but in that case it runs in consent mode: it only receives technical data, without cookies or persistent identifiers; Google may receive technical data such as the page visited. Only if you accept are Google Analytics 4's analytics cookies and identifiers activated and Ahrefs (Ahrefs Analytics; policy at ahrefs.com/privacy) loaded, which receives browsing data from the site to produce usage statistics.
 
-Newsletter delivery: today we do not use any external sending provider; when we choose one, we will update this section before using it.
+Spotify embeds (open.spotify.com) on artist and release pages load content directly from Spotify when you interact with them. Spotify may set their own cookies; their terms are at spotify.com/legal/privacy-policy.
+
+YouTube videos are embedded using the privacy-enhanced domain (youtube-nocookie.com). When the player loads, YouTube/Google receives technical data and, if you play the video, may store cookies or local storage. More information at policies.google.com/privacy. Players load only when you press play.
 
 We do not use Meta Pixel or third-party advertising.`,
       },
       {
-        title: "6 · International transfers",
-        body: `These providers may process data outside Chile, mainly in the United States; the site's functions run in São Paulo (Brazil).
+        title: "5 · Your rights",
+        body: `Under Law 19.628 and GDPR (if you are in the EU):
 
-The Personal Data Protection Agency (Agencia de Protección de Datos Personales) has not yet published its list of countries with an adequate level of protection, so today we cannot tell you whether the United States or Brazil has one under Chilean law. Meanwhile, we rely on each provider's data processing terms, and we will review this section when the Agency publishes that list and its model clauses.`,
+— Access: you can request a copy of the data we hold about you.
+— Rectification: you can request we correct inaccurate data.
+— Erasure: you can request we delete your data.
+— Objection: you can object to processing.
+— Portability (GDPR): you can request your data in a structured format.
+— Withdraw consent: you can change or withdraw your analytics decision at any time (see section 2).
+
+To exercise any of these rights, write us via the form at phonerecords.cl/en/contacto. We respond within a maximum of 30 days.`,
       },
       {
-        title: "7 · How long we keep it",
-        // El mismo TODO(integrador) de la §7 en español: bloquea la publicación.
+        title: "6 · Retention",
         body: `— Technical cookies ("phone_lang", "phone_consent"): 1 year from being set, unless you clear your browser cookies.
-— Google analytics cookies ("_ga" and "_ga_*", only with consent): up to 2 years from your last visit, Google's default duration; some browsers shorten it, and you can remove them at any time by clearing the site's cookies.
-— Google Analytics 4 data linked to those cookies: up to 14 months; after that, Google deletes it. Reports with aggregated totals are not subject to that limit.
-— Vercel Web Analytics: the identifier of each visit (a hash of the request, with no cookies or IP) is discarded after 24 hours; what remains is aggregated statistics that do not identify you. Vercel Speed Insights does not link its measurements to any visitor or IP address.
-— Ahrefs Analytics data (only with consent): according to Ahrefs' policy; we only use it in aggregate.
-— Contact form messages: while it makes sense to keep the conversation going; maximum 5 years.
-— Newsletter: while you remain subscribed. If you unsubscribe, we keep your email flagged as "unsubscribed" so we don't write to you again, until you ask for its deletion.`,
+— Google analytics cookies (only with consent): duration is set by Google; you can remove them at any time by clearing the site's cookies.
+— Received emails: kept while it makes sense to maintain the conversation; maximum 5 years.
+— Analytics data (Google Analytics, Ahrefs, Vercel): used in combined form; each provider retains it according to its own policies and our account settings.`,
       },
       {
-        title: "8 · Your rights and how to exercise them",
-        body: `You have the right of access, rectification, erasure, objection, portability and blocking of your personal data:
-— Access: to know whether we process your data and get a copy.
-— Rectification: to correct inaccurate, outdated or incomplete data.
-— Erasure: to ask us to delete your data.
-— Objection: to object to a processing activity, for example one based on our legitimate interest.
-— Portability: to receive your data in a structured, commonly used format.
-— Blocking: to ask us to temporarily suspend processing while we resolve a rectification, erasure or objection request.
-— Withdrawing consent: at any time and without giving reasons. For analytics, with the button in section 4; for the newsletter, by replying to any newsletter email or writing to us (unsubscribing with a link in every email will come later).
-
-How to ask: write to ${LABEL_EMAIL} or use the form at phonerecords.cl/en/contacto, stating your name, where you want us to reply, which data you mean and which right you are exercising.
-
-Deadlines: we acknowledge receipt of your request and reply within 30 calendar days of receiving it. If needed, that period may be extended once by another 30 calendar days. We reply to a blocking request within 2 business days.
-
-No charge: rectification, erasure and objection are always free; access is free at least once per quarter.`,
+        title: "7 · Security",
+        body: `The site is served over HTTPS (TLS 1.3). Access to the hosting is protected with two-factor authentication. We do not store sensitive information (credit cards, credentials) on this site.`,
       },
       {
-        title: "9 · Personal Data Protection Agency",
-        body: `If we reject your request or do not reply in time, you can file a complaint with the Personal Data Protection Agency (Agencia de Protección de Datos Personales) within 30 business days of receiving our negative answer or of the deadline to reply expiring.`,
+        title: "8 · Changes to this policy",
+        body: `If we update this policy, the new version will be published at this same URL with the "Last updated" date modified. Substantial changes will be announced in the site's cookie notice for at least 30 days.`,
       },
       {
-        title: "10 · Security",
-        body: `The site is served over HTTPS (TLS 1.3). Access to the hosting is protected with two-factor authentication. We do not store sensitive information (credit cards, credentials) on this site.
+        title: "9 · Newsletter",
+        body: `If you subscribe to the newsletter (from the "Newsletter" block at phonerecords.cl/en/contacto, from the home page, or by ticking the optional box in the contact form), we store:
+— Your email address.
+— Your language (ES or EN) and the source of the subscription (home page, contact page or contact form).
+— The date of your consent and the exact text you accepted.
+— A hash (irreversible fingerprint) of your IP address combined with a salt that changes daily. We do not store your IP.
 
-Your IP address is never stored: for the newsletter we only keep the daily-salted hash described in section 2. Server error logs do not include your messages or your full email address, and your browser never receives internal error details.`,
-      },
-      {
-        title: "11 · Automated decisions and minors",
-        body: `We do not make automated decisions or build profiles that produce effects on you.
+Purpose: sending you PHŌNÉ Records news (releases, concerts, journal). We do not use this data for anything else nor share it with third parties for marketing.
 
-The site is not aimed at children under 14. If we learn that we received data from a child under 14 without the consent of their parent or legal representative, we will delete it.`,
+Legal basis: your consent, which you can withdraw at any time.
+
+How to unsubscribe: reply to any newsletter email asking to be removed, or write to us via the form at phonerecords.cl/en/contacto. Automatic unsubscribe with a link in every email will come later.
+
+Sending provider: to be decided. Today we do not send newsletters through any external provider; when we choose one, we will update this section before using it. The data is stored in a Postgres database hosted on Neon (through Vercel).
+
+Retention: while you remain subscribed. If you unsubscribe, we keep your email flagged as "unsubscribed" so we don't write to you again, until you ask for its deletion.`,
       },
       {
-        title: "12 · Changes to this policy",
-        body: `This is version ${POLICY_VERSION} of the policy, with the update date shown at the top. If we change it, we will publish the new version at this same URL, with a new version number and date. If a change requires your consent, we will ask for it before applying it.`,
+        title: "10 · Contact",
+        body: `For any inquiry about privacy or data protection:
+
+phonerecords.cl/en/contacto
+PHŌNÉ Records
+Ñuñoa, Región Metropolitana, Chile`,
       },
     ],
   },
 };
-
-// El correo del sello, la URL del formulario y la mención del botón de la §4 (en la §8) se
-// vuelven enlaces dentro del texto.
-const EMAIL_PATTERN = LABEL_EMAIL.replace(/[.*+?^${}()|[\]\\]/g, "\\$&");
-const CONSENT_BUTTON_ID = "decision-cookies";
-const CONSENT_BUTTON_REF = /^(?:el botón de la sección 4|the button in section 4)$/;
-const INLINE_LINK_RE = new RegExp(
-  `(${EMAIL_PATTERN}|phonerecords\\.cl/(?:es|en)/contacto|el botón de la sección 4|the button in section 4)`,
-  "g",
-);
-const INLINE_LINK_CLASS = "underline underline-offset-4 decoration-foreground/30 hover:decoration-foreground";
-
-function withLinks(text: string, lang: string): ReactNode[] {
-  return text.split(INLINE_LINK_RE).map((part, i) => {
-    if (part === LABEL_EMAIL) {
-      return (
-        <a key={i} href={`mailto:${LABEL_EMAIL}`} className={INLINE_LINK_CLASS}>
-          {part}
-        </a>
-      );
-    }
-    if (/^phonerecords\.cl\/(?:es|en)\/contacto$/.test(part)) {
-      return (
-        <Link key={i} href={`/${lang === "es" ? "es" : "en"}/contacto`} prefetch={false} className={INLINE_LINK_CLASS}>
-          {part}
-        </Link>
-      );
-    }
-    if (CONSENT_BUTTON_REF.test(part)) {
-      // Ancla nativa: el navegador lleva el punto de partida del Tab al contenedor del botón.
-      return (
-        <a key={i} href={`#${CONSENT_BUTTON_ID}`} className={INLINE_LINK_CLASS}>
-          {part}
-        </a>
-      );
-    }
-    return part;
-  });
-}
-
-const LIST_MARK = "— ";
-
-/**
- * Un bloque del texto (separado por línea en blanco). Las líneas que empiezan con "— " se agrupan en
- * un <ul> para que el lector de pantalla anuncie la lista y cuántos elementos tiene; la raya queda
- * visible pero oculta al lector, así que el aspecto es el mismo que con el <p> en pre-line.
- */
-function TextBlock({ text, lang }: { text: string; lang: string }) {
-  const groups: { list: boolean; lines: string[] }[] = [];
-  for (const line of text.split("\n")) {
-    const list = line.startsWith(LIST_MARK);
-    const last = groups.at(-1);
-    if (last && last.list === list) last.lines.push(line);
-    else groups.push({ list, lines: [line] });
-  }
-  return (
-    <div>
-      {groups.map((g, j) =>
-        g.list ? (
-          <ul key={j}>
-            {g.lines.map((line, k) => (
-              <li key={k}>
-                <span aria-hidden="true">{LIST_MARK}</span>
-                {withLinks(line.slice(LIST_MARK.length), lang)}
-              </li>
-            ))}
-          </ul>
-        ) : (
-          <p key={j} className="whitespace-pre-line">
-            {withLinks(g.lines.join("\n"), lang)}
-          </p>
-        ),
-      )}
-    </div>
-  );
-}
 
 export default async function PrivacyPage({
   params,
@@ -381,12 +255,10 @@ export default async function PrivacyPage({
 }) {
   const { lang } = await params;
   const c = lang === "es" ? copy.es : copy.en;
-  // LAST_UPDATED es medianoche UTC: sin timeZone, con la hora de Santiago se mostraba el día anterior.
   const dateFormatter = new Intl.DateTimeFormat(lang === "es" ? "es-CL" : "en-GB", {
     year: "numeric",
     month: "long",
     day: "numeric",
-    timeZone: "UTC",
   });
   const lastUpdatedFmt = dateFormatter.format(new Date(LAST_UPDATED));
   const isEs = lang === "es";
@@ -401,7 +273,6 @@ export default async function PrivacyPage({
         inLanguage: isEs ? "es-CL" : "en-US",
         isPartOf: { "@id": "https://phonerecords.cl/#organization" },
         dateModified: LAST_UPDATED,
-        version: POLICY_VERSION,
         about: { "@type": "Organization", "@id": "https://phonerecords.cl/#organization" },
       },
       {
@@ -444,8 +315,7 @@ export default async function PrivacyPage({
               {c.intro}
             </p>
             <p className="mt-8 font-mono text-xs uppercase tracking-widest text-muted-foreground">
-              {c.version} {POLICY_VERSION} · {c.lastUpdated}:{" "}
-              <time dateTime={LAST_UPDATED}>{lastUpdatedFmt}</time>
+              {c.lastUpdated}: {lastUpdatedFmt}
             </p>
           </header>
 
@@ -456,14 +326,13 @@ export default async function PrivacyPage({
                   {section.title}
                 </h2>
                 <div className="lg:col-span-8 space-y-5 text-base leading-relaxed text-foreground/90">
-                  {section.body.split(/\n{2,}/).map((block, i) => (
-                    <TextBlock key={i} text={block} lang={lang} />
+                  {section.body.split(/\n{2,}/).map((p, i) => (
+                    <p key={i} className="whitespace-pre-line">
+                      {p}
+                    </p>
                   ))}
                   {section.consentButton && (
-                    // Destino del enlace "el botón de la sección 4" de la §8; scroll-mt deja libre el menú fijo.
-                    <div id={CONSENT_BUTTON_ID} className="scroll-mt-32">
-                      <ConsentResetButton label={section.consentButton} />
-                    </div>
+                    <ConsentResetButton label={section.consentButton} />
                   )}
                 </div>
               </section>
