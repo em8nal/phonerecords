@@ -470,6 +470,13 @@ const expected = [
   ["/en/artistas/claudio-solis", "/en#roster"],
   ["/press/es/claudio-solis", "/es/press-kit"],
   ["/press/en/claudio-solis", "/en/press-kit"],
+  // Andrés Abrigo (salió del roster el 21-10): ficha, press kit web y PDF viejo.
+  ["/es/artistas/andres-abrigo", "/es#roster"],
+  ["/en/artistas/andres-abrigo", "/en#roster"],
+  ["/press/es/andres-abrigo", "/es/press-kit"],
+  ["/press/en/andres-abrigo", "/en/press-kit"],
+  ["/press-kits/andres-abrigo-es.pdf", "/press-kits/press-kit-es.pdf"],
+  ["/press-kits/andres-abrigo-en.pdf", "/press-kits/press-kit-en.pdf"],
   ...legacy.flatMap(([from, to]) => [
     [`/es/artistas/${from}`, `/es/artistas/${to}`],
     [`/en/artistas/${from}`, `/en/artistas/${to}`],
@@ -484,11 +491,14 @@ const expected = [
 ];
 const wrong = expected.filter(([from, to]) => resolveRedirect(from) !== to);
 report(
-  `redirects: las 5 formas por slug viejo (ES/EN) y las 2 de claudio-solis (${expected.length} rutas)`,
+  `redirects: las 5 formas por slug viejo (ES/EN), las 2 de claudio-solis y las 3 de andres-abrigo (${expected.length} rutas)`,
   wrong.length === 0,
   list(wrong.map(([from, to]) => `${from} → ${resolveRedirect(from)} (esperado ${to})`)),
 );
-const mustNotMatch = legacy.flatMap(([from]) => [`/press-kits/${from}-fr.pdf`, `/fr/artistas/${from}`]);
+const mustNotMatch = [
+  ...legacy.flatMap(([from]) => [`/press-kits/${from}-fr.pdf`, `/fr/artistas/${from}`]),
+  "/press-kits/andres-abrigo-fr.pdf",
+];
 const overMatch = mustNotMatch.filter((p) => resolveRedirect(p) !== null);
 report("redirects: idiomas desconocidos no calzan", overMatch.length === 0, list(overMatch));
 
@@ -499,6 +509,12 @@ const chained = expected
   .filter(Boolean)
   .filter((dest) => resolveRedirect(dest.split("#")[0]) !== null);
 report("redirects en un solo salto (ningún destino calza con otro source)", chained.length === 0, list(chained));
+// Todo destino que sea un PDF de public/press-kits existe (para cada idioma de la regla).
+const missingPdf = redirects
+  .filter((r) => r.destination.startsWith("/press-kits/") && r.destination.endsWith(".pdf"))
+  .flatMap((r) => ["es", "en"].map((l) => r.destination.replace(":lang", l)))
+  .filter((dest) => !existsSync(path.join(ROOT, "public", dest)));
+report("redirects: todo destino /press-kits/*.pdf existe en public/", missingPdf.length === 0, list(missingPdf));
 
 // --- Avisos ------------------------------------------------------------------------------
 // Toda ficha ya publicada sin Spotify reproducible (spotifyRefFromLinks nulo: la ficha no muestra

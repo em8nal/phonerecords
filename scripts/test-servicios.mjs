@@ -331,7 +331,11 @@ const allPageText = pageAndComponents.map((x) => x.text).join("\n");
     );
   }
   report("features-section.tsx pinta servicesLink", src("components/landing/features-section.tsx").includes("servicesLink"));
-  report("menú intacto (Servicios sigue en #features)", src("components/landing/navigation.tsx").includes("#features"));
+  // Lote 4 (carril Q): el menú superior también va a la página de Servicios.
+  {
+    const nav = src("components/landing/navigation.tsx");
+    report("menú: Servicios → /servicios, sin #features", nav.includes("${home}/servicios") && !nav.includes("#features"));
+  }
 }
 
 // ── 8. Página ──

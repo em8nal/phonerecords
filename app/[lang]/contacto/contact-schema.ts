@@ -77,8 +77,10 @@ export const contactFields = z.object({
   // react-hook-form entrega null con los radios sin marcar.
   projectType: z.enum(projectTypeValues).nullish(),
   releaseWindow: z.string().trim().max(60).regex(/^[^\r\n]*$/, "releaseWindow").optional(),
-  // honeypot — debe venir vacío
-  website: z.string().max(0).optional().or(z.literal("")),
+  // Honeypot: una persona lo deja vacío. El esquema lo acepta lleno (con un máximo, como todo
+  // string) para que el formulario no se trabe en el navegador y la acción decida: con el campo
+  // lleno responde éxito sin enviar nada (honeypotFilled en actions.ts, antes de safeParse).
+  website: z.string().max(2000).optional(),
   // opt-in opcional al newsletter
   newsletter: z.boolean().optional(),
 });

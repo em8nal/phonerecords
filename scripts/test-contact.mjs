@@ -6,7 +6,7 @@
 // Al final corre las server actions reales (contacto y newsletter) con dobles de la base y del SMTP:
 // el navegador recibe solo { ok, error | status } y los logs no llevan mensajes ni datos personales.
 import { deepStrictEqual } from "node:assert";
-import { existsSync } from "node:fs";
+import { existsSync, readFileSync } from "node:fs";
 import { registerHooks } from "node:module";
 import { fileURLToPath, pathToFileURL } from "node:url";
 import { inspect } from "node:util";
@@ -122,9 +122,12 @@ report("city con salto de línea ⇒ falla en city", !r5b.success && issuePaths(
 const r6 = contactActionSchema.safeParse({ ...base, topic: "otro" });
 report("topic desconocido ⇒ falla en topic", failsOnlyAt(r6, "topic"), issuePaths(r6).join(","));
 
-// (6b) honeypot lleno ⇒ falla en el esquema (por eso la acción responde "invalid": ver el caso 24)
-const r6b = contactActionSchema.safeParse({ ...base, topic: "general", website: "http://spam" });
-report("honeypot lleno ⇒ falla en website", !r6b.success && issuePaths(r6b).includes("website"), issuePaths(r6b).join(","));
+// (6b) honeypot lleno ⇒ el esquema lo acepta (la acción decide antes de validar: ver el caso 24),
+// también en el navegador, para que el formulario no se trabe sin mostrar error
+for (const [label, schema] of [["acción", contactActionSchema], ["formulario", contactFormSchema]]) {
+  const r6b = schema.safeParse({ ...base, topic: "general", website: "http://spam" });
+  report(`${label}: honeypot lleno ⇒ el esquema lo acepta`, r6b.success, issuePaths(r6b).join(","));
+}
 
 // (7) extractHttpsUrls: solo https con host con punto
 const urls = extractHttpsUrls("Spotify: https://a.b/c, http://x.y https://localhost/z");
@@ -234,7 +237,9 @@ const K = (globalThis.__K = { db: "off", failMail: () => false, sent: [] });
 const SECRET = "SECRETO-SMTP";
 const STUBS = {
   "server-only": stub("export {};"),
-  "next/headers": stub('export async function headers() { return new Headers({ "x-real-ip": "203.0.113.7" }); }'),
+  "next/headers": stub(
+    'export async function headers() { if (globalThis.__K.headersFail) throw new Error("headers ana@example.com"); return new Headers({ "x-real-ip": "203.0.113.7" }); }',
+  ),
   "drizzle-orm": stub("export const eq = () => ({});"),
   // Como DrizzleQueryError: el mensaje copia los parámetros de la consulta; la causa trae el SQLSTATE.
   "@/lib/db": stub(`export const hasDb = () => globalThis.__K.db !== "off";
@@ -307,10 +312,14 @@ report(
   JSON.stringify(c.res),
 );
 
-// (24) honeypot, envío rápido e inválido: respuesta fija y ningún correo
-// (hoy el esquema rechaza el honeypot antes que la acción: responde "invalid", igual que con zod 3)
+// (24) honeypot, envío rápido e inválido: respuesta fija y ningún correo.
+// El honeypot se revisa antes de validar: éxito silencioso aunque el resto sea inválido (24b) y sin
+// suscribir aunque marque el newsletter (24c: con la base apagada, suscribir enviaría el respaldo
+// por correo, así que 0 correos prueba que no se suscribe).
 for (const [label, input, expected] of [
-  ["honeypot lleno", { ...form, website: "http://spam", renderedAt: old() }, { ok: false, error: "invalid" }],
+  ["honeypot lleno", { ...form, website: "http://spam", renderedAt: old() }, { ok: true }],
+  ["honeypot lleno + correo inválido y sin renderedAt (24b)", { ...form, website: "http://spam", email: "ana@" }, { ok: true }],
+  ["honeypot lleno + newsletter (24c)", { ...form, website: "http://spam", newsletter: true, renderedAt: old() }, { ok: true }],
   ["envío en < 2 s", { ...form, renderedAt: Date.now() }, { ok: false, error: "send_failed" }],
   ["correo inválido", { ...form, email: "ana@", renderedAt: old() }, { ok: false, error: "invalid" }],
 ]) {
@@ -341,6 +350,44 @@ report(
 );
 c = await run(() => subscribeAction({ email: "ana@example.com", lang: "es", source: "home", website: "x", renderedAt: old() }));
 report("newsletter, honeypot ⇒ { ok:true, status:'queued' } y sin correo", same(c.res, { ok: true, status: "queued" }) && c.mails.length === 0, JSON.stringify(c.res));
+// El honeypot va antes de validar: uno de 300 caracteres (el esquema admite 200) o con otro campo
+// inválido recibe la misma respuesta de éxito, sin correo.
+c = await run(() => subscribeAction({ email: "ana@example.com", lang: "es", source: "home", website: "x".repeat(300), renderedAt: old() }));
+report("newsletter, honeypot de 300 caracteres ⇒ queued y sin correo", same(c.res, { ok: true, status: "queued" }) && c.mails.length === 0, JSON.stringify(c.res));
+c = await run(() => subscribeAction({ email: "ana@example.com", lang: "es", source: "otro", website: "x", renderedAt: old() }));
+report("newsletter, honeypot con source inválido ⇒ queued y sin correo", same(c.res, { ok: true, status: "queued" }) && c.mails.length === 0, JSON.stringify(c.res));
+
+// (27b) getClientIp dentro del try: si headers() falla, la acción no lanza y el log no lleva el correo
+K.headersFail = true;
+let threw = false;
+try {
+  c = await run(() => subscribeAction({ email: "ana@example.com", lang: "es", source: "home", website: "", renderedAt: old() }));
+} catch {
+  threw = true;
+}
+K.headersFail = false;
+report(
+  "newsletter, headers() falla ⇒ { ok:false, error:'unavailable' } sin lanzar y log sin el correo",
+  !threw && same(c.res, { ok: false, error: "unavailable" }) && !c.log.includes("ana@example.com"),
+  threw ? "lanzó" : JSON.stringify(c.res),
+);
+
+// (27c) analítica: con el honeypot lleno no se registra ningún envío (el cliente también lo mira)
+const srcOf = (p) => readFileSync(ROOT + p, "utf8");
+report(
+  'contact-form.tsx: if (!values.website) track("contact_submit_success"',
+  srcOf("app/[lang]/contacto/contact-form.tsx").includes('if (!values.website) track("contact_submit_success"'),
+);
+report(
+  'newsletter-form.tsx: if (!website) track("newsletter_signup"',
+  srcOf("components/phone/newsletter-form.tsx").includes('if (!website) track("newsletter_signup"'),
+);
+// La guarda va antes de safeParse en las dos acciones.
+for (const p of ["app/[lang]/contacto/actions.ts", "app/actions/newsletter.ts"]) {
+  const s = srcOf(p);
+  const guard = s.indexOf("if (honeypotFilled(raw))");
+  report(`${p}: honeypot antes de safeParse`, guard > 0 && guard < s.indexOf(".safeParse(raw)"));
+}
 c = await run(() => subscribe({ email: "ana@", lang: "es", source: "home", consentText: "ok" }));
 report("subscribe con correo inválido ⇒ { ok:false, error:'invalid' }", same(c.res, { ok: false, error: "invalid" }), JSON.stringify(c.res));
 

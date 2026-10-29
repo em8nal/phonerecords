@@ -29,9 +29,23 @@ const topicLabels = {
   servicios: { es: "Dirección creativa, diseño y prensa", en: "Creative direction, design & press" },
 } as const;
 
+/**
+ * Honeypot lleno: se revisa sobre el payload crudo, antes de validar, para que el bot reciba la
+ * misma respuesta de éxito aunque el resto del formulario sea inválido. No se exporta: un archivo
+ * "use server" solo puede exportar funciones async.
+ */
+function honeypotFilled(raw: unknown): boolean {
+  if (typeof raw !== "object" || raw === null) return false;
+  const v = (raw as { website?: unknown }).website;
+  return typeof v === "string" && v.length > 0;
+}
+
 export async function sendContactMessage(
   raw: unknown,
 ): Promise<ContactResult> {
+  // Honeypot lleno: éxito silencioso, sin correo, sin suscripción y sin señal para el bot.
+  if (honeypotFilled(raw)) return { ok: true };
+
   const parsed = contactActionSchema.safeParse(raw);
   if (!parsed.success) {
     return { ok: false, error: "invalid" };
@@ -47,16 +61,10 @@ export async function sendContactMessage(
     services,
     projectType,
     releaseWindow,
-    website,
     lang,
     newsletter,
     renderedAt,
   } = parsed.data;
-
-  // Honeypot tripped: silently succeed so bots don't get signal.
-  if (website && website.length > 0) {
-    return { ok: true };
-  }
 
   // Demasiado rápido: error genérico (una persona reintenta; un bot no obtiene señal útil).
   // Delta negativo = reloj del cliente adelantado: no se puede medir, se deja pasar (el honeypot sigue activo).

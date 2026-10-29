@@ -11,11 +11,17 @@
 //      la ficha tiene smartLink y el CTA no es YouTube, cta.href === smartLink; si el eyebrow lleva
 //      fecha, la lleva en los dos idiomas ("22 de octubre" / "October 22", nunca "22 October") y es
 //      el día de releaseDate.
+//   5. regla de fechas (lib/release-date.ts): un día completo se publica a las 00:00 de Santiago;
+//      una fecha parcial ("YYYY" / "YYYY-MM") solo cuando su período terminó, nunca por el reloj
+//      mientras siga en curso o en el futuro; las parciales pasadas siguen publicadas.
+//   6. eventos (lib/events.ts): próximas y pasadas se reparten por el día de hoy en Santiago, sin
+//      solaparse; el archivo va en orden ascendente.
 // Con --dias imprime el carrusel de cada día del 29-10 al 02-12 (a las 12:00) para el reporte:
 //   node --import ./scripts/ts-resolve-hook.mjs scripts/test-banners.mjs --dias
 import { BANNER_ENTRIES, getActiveBanners, isReleased } from "../lib/banner.ts";
 import { releases } from "../lib/releases.ts";
-import { releaseStartMs } from "../lib/release-date.ts";
+import { events, getPastEvents, getUpcomingEvents } from "../lib/events.ts";
+import { isReleased as isReleasedDate, isUpcoming, releaseLiveMs, releaseStartMs } from "../lib/release-date.ts";
 
 let ok = true;
 const report = (label, pass, detail) => {
@@ -84,7 +90,7 @@ const SWEEP_TO = Date.parse("2026-12-31T23:00:00-03:00");
 const ONE_ARTIST_FROM = Date.parse("2026-10-21T00:00:00-03:00");
 const instants = new Set();
 for (let t = SWEEP_FROM; t <= SWEEP_TO; t += 3_600_000) instants.add(t);
-const borders = BANNER_ENTRIES.flatMap((b) => [Date.parse(b.startsAt), b.endsAt ? Date.parse(b.endsAt) : null, releaseStartMs(b.releaseDate)]);
+const borders = BANNER_ENTRIES.flatMap((b) => [Date.parse(b.startsAt), b.endsAt ? Date.parse(b.endsAt) : null, releaseLiveMs(b.releaseDate)]);
 for (const t of borders) {
   if (t === null) continue;
   for (const d of [-1000, 0, 1000]) if (t + d >= SWEEP_FROM && t + d <= SWEEP_TO) instants.add(t + d);
@@ -113,7 +119,7 @@ for (const b of BANNER_ENTRIES) {
   const start = Date.parse(b.startsAt);
   const end = b.endsAt ? Date.parse(b.endsAt) : Infinity;
   if (!(start < end)) entryProblems.push(`${id}: ventana vacía`);
-  const releaseAt = releaseStartMs(b.releaseDate);
+  const releaseAt = releaseLiveMs(b.releaseDate);
   if (releaseAt !== null && end <= releaseAt) {
     if (!(start < releaseAt)) entryProblems.push(`${id}: ventana de pre-save que no empieza antes del estreno`);
     if (b.cta.beforeRelease.es !== "Pre-save" || b.cta.beforeRelease.en !== "Pre-save") entryProblems.push(`${id}: ventana de pre-save sin CTA "Pre-save"`);
@@ -166,6 +172,135 @@ report(
   entryProblems.length === 0,
   entryProblems.join(" · "),
 );
+
+// --- 5. Regla de fechas (lib/release-date.ts) --------------------------------------------
+{
+  const P = (iso) => Date.parse(iso);
+  const TODAY = P("2026-10-29T12:00:00-03:00");
+  /** [fecha, instante, esperado] */
+  const dateCases = [
+    // "2027": ni el 01-01-2027 ni el último segundo del año la publican; sí el 01-01-2028.
+    ["2027", TODAY, false],
+    ["2027", P("2027-01-01T00:00:00-03:00"), false],
+    ["2027", P("2027-12-31T23:59:59-03:00"), false],
+    ["2027", P("2028-01-01T00:00:00-03:00") - 1, false],
+    ["2027", P("2028-01-01T00:00:00-03:00"), true],
+    // Mes en curso = futuro; el mes siguiente a las 00:00 de Santiago lo publica.
+    ["2026-10", TODAY, false],
+    ["2026-10", P("2026-11-01T00:00:00-03:00") - 1, false],
+    ["2026-10", P("2026-11-01T00:00:00-03:00"), true],
+    ["2026-12", P("2027-01-01T00:00:00-03:00") - 1, false],
+    ["2026-12", P("2027-01-01T00:00:00-03:00"), true],
+    // Septiembre arranca en horario de invierno (-04:00).
+    ["2026-08", P("2026-09-01T00:00:00-04:00") - 1, false],
+    ["2026-08", P("2026-09-01T00:00:00-04:00"), true],
+    // Parciales pasadas, también con "00" (entradas livianas del catálogo).
+    ["2023", TODAY, true],
+    ["2026-06", TODAY, true],
+    ["2020-10", TODAY, true],
+    ["2026-06-00", TODAY, true],
+    ["2023-00-00", TODAY, true],
+    // Día completo: sin cambios (00:00 de Santiago de ese día).
+    ["2026-11-05", P("2026-11-04T23:59:59-03:00"), false],
+    ["2026-11-05", P("2026-11-05T00:00:00-03:00"), true],
+    // No-fechas: siempre publicadas.
+    ["in production", TODAY, true],
+    ["0000-00-00", TODAY, true],
+  ];
+  const bad = [];
+  for (const [d, t, expected] of dateCases) {
+    const got = isReleasedDate(d, t);
+    if (got !== expected) bad.push(`${d} @ ${new Date(t).toISOString()}: ${got} (esperado ${expected})`);
+    if (isUpcoming(d, t) !== !got) bad.push(`${d} @ ${new Date(t).toISOString()}: isUpcoming ≠ !isReleased`);
+  }
+  report(`regla de fechas: ${dateCases.length} casos (parciales futuras y en curso sin publicar, pasadas publicadas)`, bad.length === 0, bad.join(" · "));
+  report(
+    "día completo: releaseLiveMs === releaseStartMs",
+    releaseLiveMs("2026-11-05") === releaseStartMs("2026-11-05") && releaseLiveMs("2026-10-30") === releaseStartMs("2026-10-30"),
+  );
+  report(
+    "no-fechas: releaseLiveMs null",
+    releaseLiveMs("in production") === null && releaseLiveMs("0000-00-00") === null,
+  );
+  const enViaje = releases.find((r) => r.slug === "ecamhi-en-viaje");
+  report(
+    'datos: ecamhi-en-viaje ("2027") sigue próximo el 15-06-2027',
+    Boolean(enViaje) && isUpcoming(enViaje.releaseDate, P("2027-06-15T12:00:00-04:00")),
+    enViaje?.releaseDate,
+  );
+}
+
+// --- 6. Eventos: próximas y archivo (lib/events.ts) ----------------------------------------
+// Sin conteos fijos: las expectativas salen de los datos de lib/events.ts, así la prueba sigue
+// valiendo cuando otro carril agrega, mueve o quita fechas.
+{
+  const slugs = (list) => list.map((e) => e.slug);
+  const sameSet = (a, b) => a.length === b.length && a.every((s) => b.includes(s));
+  const SANTIAGO = new Intl.DateTimeFormat("en-CA", {
+    timeZone: "America/Santiago",
+    year: "numeric",
+    month: "2-digit",
+    day: "2-digit",
+    hour: "2-digit",
+    minute: "2-digit",
+    hourCycle: "h23",
+  });
+  /** Instante de `date` a la hora `hhmm` en Santiago (-03:00 o -04:00); null si esa hora no existe. */
+  const santiagoAt = (date, hhmm) => {
+    for (const off of ["-03:00", "-04:00"]) {
+      const t = new Date(`${date}T${hhmm}:00${off}`);
+      const p = Object.fromEntries(SANTIAGO.formatToParts(t).map((x) => [x.type, x.value]));
+      if (`${p.year}-${p.month}-${p.day}` === date && `${p.hour}:${p.minute}` === hhmm) return t;
+    }
+    return null;
+  };
+  const nextDay = (date) => new Date(Date.parse(`${date}T12:00:00Z`) + 86_400_000).toISOString().slice(0, 10);
+
+  // Cada fecha confirmada: a las 22:00 de su día en Santiago (ya el día siguiente en UTC) sigue
+  // próxima; desde el primer instante del día siguiente (00:00, o 01:00 si el cambio de hora se
+  // salta la medianoche) pasa al archivo.
+  const scheduled = events.filter((e) => e.status === "scheduled");
+  const edgeBad = [];
+  for (const ev of scheduled) {
+    const late = santiagoAt(ev.date, "22:00");
+    const next = santiagoAt(nextDay(ev.date), "00:00") ?? santiagoAt(nextDay(ev.date), "01:00");
+    if (!late || !next) {
+      edgeBad.push(`${ev.slug}: sin instante en Santiago`);
+      continue;
+    }
+    if (!slugs(getUpcomingEvents(late)).includes(ev.slug) || slugs(getPastEvents(late)).includes(ev.slug))
+      edgeBad.push(`${ev.slug} a las 22:00 de su día`);
+    if (slugs(getUpcomingEvents(next)).includes(ev.slug) || !slugs(getPastEvents(next)).includes(ev.slug))
+      edgeBad.push(`${ev.slug} a las 00:00 del día siguiente`);
+  }
+  report(
+    `bordes por el día de Santiago: ${scheduled.length} fechas confirmadas (próxima a las 22:00, archivo desde las 00:00 siguientes)`,
+    edgeBad.length === 0,
+    edgeBad.join(" · "),
+  );
+
+  const today = new Date("2026-10-29T12:00:00-03:00");
+  const TODAY_STR = "2026-10-29";
+  const past = getPastEvents(today);
+  const upcoming = getUpcomingEvents(today);
+  const dates = past.map((e) => e.date);
+  const expectedPast = events.filter((e) => e.status === "scheduled" && e.date < TODAY_STR).map((e) => e.slug);
+  const expectedUp = events.filter((e) => e.status !== "cancelled" && e.date >= TODAY_STR).map((e) => e.slug);
+  report(
+    "29-10-2026: archivo = confirmadas anteriores a hoy, en orden ascendente; próximas = no canceladas desde hoy",
+    sameSet(slugs(past), expectedPast) &&
+      dates.every((d, i) => i === 0 || dates[i - 1] <= d) &&
+      sameSet(slugs(upcoming), expectedUp),
+    `${past.length} pasadas · ${upcoming.length} próximas`,
+  );
+  const overlaps = [];
+  const instantsEv = [today, ...events.flatMap((e) => [santiagoAt(e.date, "22:00"), new Date(`${e.date}T12:00:00-03:00`)])].filter(Boolean);
+  for (const t of instantsEv) {
+    const up = new Set(slugs(getUpcomingEvents(t)));
+    for (const s of slugs(getPastEvents(t))) if (up.has(s)) overlaps.push(`${t.toISOString()}: ${s}`);
+  }
+  report(`ningún evento en las dos listas (${instantsEv.length} instantes)`, overlaps.length === 0, overlaps.join(" · "));
+}
 
 // --- Tabla por día (--dias) --------------------------------------------------------------
 if (process.argv.includes("--dias")) {

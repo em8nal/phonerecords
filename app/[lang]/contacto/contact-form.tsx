@@ -219,7 +219,8 @@ export function ContactForm({ lang }: { lang: Lang }) {
       if (res.ok) {
         setServerState({ kind: "ok" });
         reset();
-        track("contact_submit_success", { topic: values.topic });
+        // Honeypot lleno: la acción responde éxito, pero no se registra como envío real.
+        if (!values.website) track("contact_submit_success", { topic: values.topic });
       } else if (res.error === "invalid") {
         setServerState({ kind: "err", msg: c.errorInvalid });
       } else {

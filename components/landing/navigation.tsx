@@ -1,32 +1,65 @@
 "use client";
 
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
+import Link from "next/link";
+import { usePathname } from "next/navigation";
 import { Button } from "@/components/ui/button";
 import { Menu, X } from "lucide-react";
 import { useLanguage } from "@/lib/language-context";
 import { LanguageSelector } from "@/components/language-selector";
 import { Logo } from "@/components/phone/logo";
 
+/**
+ * Enlace a un ancla de la página en la que ya estás (Newsletter estando en /contacto): Next no
+ * mueve el foco y, en el menú móvil, el overlay pasa a inert con el foco dentro, así que caería al
+ * body. Se lleva al destino, como haría un ancla nativa. Entre páginas no hace nada: el foco tras
+ * una navegación lo decide el layout (ver carrilQ-report.md).
+ */
+function focusSamePageAnchor(href: string) {
+  const [path, id] = href.split("#");
+  if (!id || path !== window.location.pathname) return;
+  requestAnimationFrame(() => {
+    const target = document.getElementById(id);
+    if (!target) return;
+    if (!target.hasAttribute("tabindex")) target.setAttribute("tabindex", "-1");
+    // Next ya desplaza hasta el ancla; el foco no debe volver a desplazar.
+    target.focus({ preventScroll: true });
+  });
+}
+
 export function Navigation() {
   const { t, language } = useLanguage();
+  const pathname = usePathname();
   const [isScrolled, setIsScrolled] = useState(false);
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
+  const menuButtonRef = useRef<HTMLButtonElement>(null);
 
   // Menú honesto (22-10): cada ítem va a su destino real. Eventos salió del menú
   // (sigue en el footer); Booking vive en Servicios, fichas y footer; el botón
   // destacado es la suscripción al newsletter.
+  // Lote 4 (carril Q): enlaces internos con next/link sin precarga. El overlay
+  // móvil está siempre montado (opacity-0), así que con la precarga por defecto el
+  // IntersectionObserver pediría todas las rutas del menú en cada página vista en el
+  // teléfono. Servicios va a su página propia, no a la sección de la portada.
   const home = `/${language}`;
   const isEs = language === "es";
   const navLinks = [
-    { name: "Roster", href: `${home}#roster` },
+    { name: "Roster", href: `${home}/artistas` },
     { name: isEs ? "Catálogo" : "Catalogue", href: `${home}/catalogo` },
     { name: t.nav.videos, href: `${home}/videos` },
-    { name: t.nav.features, href: `${home}#features` },
+    { name: t.nav.features, href: `${home}/servicios` },
     { name: t.nav.howItWorks, href: `${home}/manifiesto` },
     { name: t.nav.label, href: `${home}/sello` },
   ];
   const pressHref = `${home}/press-kit`;
   const newsletterHref = `${home}/contacto#newsletter-heading`;
+  // aria-current solo en la página exacta (usePathname en un componente cliente no vuelve dinámica la ruta).
+  const current = (href: string) => (pathname === href ? ("page" as const) : undefined);
+  const closeMenu = () => setIsMobileMenuOpen(false);
+  const closeMenuAndFocus = (href: string) => {
+    setIsMobileMenuOpen(false);
+    focusSamePageAnchor(href);
+  };
 
   useEffect(() => {
     const handleScroll = () => {
@@ -35,6 +68,18 @@ export function Navigation() {
     window.addEventListener("scroll", handleScroll);
     return () => window.removeEventListener("scroll", handleScroll);
   }, []);
+
+  // Escape cierra el menú móvil abierto y devuelve el foco al botón que lo abrió.
+  useEffect(() => {
+    if (!isMobileMenuOpen) return;
+    const onKeyDown = (e: KeyboardEvent) => {
+      if (e.key !== "Escape") return;
+      setIsMobileMenuOpen(false);
+      menuButtonRef.current?.focus();
+    };
+    document.addEventListener("keydown", onKeyDown);
+    return () => document.removeEventListener("keydown", onKeyDown);
+  }, [isMobileMenuOpen]);
 
   return (
     <header
@@ -57,49 +102,59 @@ export function Navigation() {
           }`}
         >
           {/* Logo */}
-          <a href={home} className="flex items-center group text-foreground">
+          <Link href={home} prefetch={false} className="flex items-center group text-foreground">
             <Logo
               className={`w-auto transition-all duration-500 ${isScrolled ? "h-7" : "h-8"}`}
             />
-          </a>
+          </Link>
 
           {/* Desktop Navigation desde lg: con 6 ítems la fila no cabe en tablet (768–1023 px usa el menú móvil). */}
           <div className="hidden lg:flex items-center gap-8 xl:gap-12">
             {navLinks.map((link) => (
-              <a
+              <Link
                 key={link.href}
                 href={link.href}
+                prefetch={false}
+                aria-current={current(link.href)}
                 className="text-sm text-foreground/70 hover:text-foreground transition-colors duration-300 relative group"
               >
                 {link.name}
                 <span className="absolute -bottom-1 left-0 w-0 h-px bg-foreground transition-all duration-300 group-hover:w-full" />
-              </a>
+              </Link>
             ))}
           </div>
 
           {/* Desktop CTA */}
           <div className="hidden lg:flex items-center gap-4">
             <LanguageSelector />
-            <a
+            <Link
               href={pressHref}
+              prefetch={false}
+              aria-current={current(pressHref)}
               className={`text-foreground/70 hover:text-foreground transition-all duration-500 ${isScrolled ? "text-xs" : "text-sm"}`}
             >
               {t.nav.signIn}
-            </a>
+            </Link>
             <Button
               asChild
               size="sm"
               className={`bg-foreground hover:bg-foreground/90 text-background rounded-full transition-all duration-500 ${isScrolled ? "px-4 h-8 text-xs" : "px-6"}`}
             >
-              <a href={newsletterHref}>{t.nav.startCreating}</a>
+              <Link href={newsletterHref} prefetch={false} onClick={() => focusSamePageAnchor(newsletterHref)}>
+                {t.nav.startCreating}
+              </Link>
             </Button>
           </div>
 
-          {/* Mobile Menu Button */}
+          {/* Mobile Menu Button: etiqueta fija; el estado lo anuncia aria-expanded (sin repetirlo). */}
           <button
+            ref={menuButtonRef}
+            type="button"
             onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
             className="lg:hidden p-2"
-            aria-label="Toggle menu"
+            aria-expanded={isMobileMenuOpen}
+            aria-controls="menu-movil"
+            aria-label={isEs ? "Menú" : "Menu"}
           >
             {isMobileMenuOpen ? (
               <X className="w-6 h-6" />
@@ -111,8 +166,11 @@ export function Navigation() {
 
       </nav>
       
-      {/* Mobile Menu - Full Screen Overlay */}
+      {/* Mobile Menu - Full Screen Overlay. Siempre montado para la transición; inert
+          lo saca del orden de tabulación y del árbol de accesibilidad mientras está cerrado. */}
       <div
+        id="menu-movil"
+        inert={!isMobileMenuOpen}
         className={`lg:hidden fixed inset-0 bg-background z-40 transition-all duration-500 ${
           isMobileMenuOpen 
             ? "opacity-100 pointer-events-auto" 
@@ -129,10 +187,12 @@ export function Navigation() {
           {/* Navigation Links */}
           <div className="flex-1 flex flex-col justify-center gap-8">
             {navLinks.map((link, i) => (
-              <a
+              <Link
                 key={link.href}
                 href={link.href}
-                onClick={() => setIsMobileMenuOpen(false)}
+                prefetch={false}
+                aria-current={current(link.href)}
+                onClick={closeMenu}
                 className={`text-5xl font-display text-foreground hover:text-muted-foreground transition-all duration-500 ${
                   isMobileMenuOpen 
                     ? "opacity-100 translate-y-0" 
@@ -141,7 +201,7 @@ export function Navigation() {
                 style={{ transitionDelay: isMobileMenuOpen ? `${i * 75}ms` : "0ms" }}
               >
                 {link.name}
-              </a>
+              </Link>
             ))}
           </div>
           
@@ -157,16 +217,20 @@ export function Navigation() {
               asChild
               variant="outline"
               className="flex-1 rounded-full h-14 text-base"
-              onClick={() => setIsMobileMenuOpen(false)}
+              onClick={closeMenu}
             >
-              <a href={pressHref}>{t.nav.signIn}</a>
+              <Link href={pressHref} prefetch={false} aria-current={current(pressHref)}>
+                {t.nav.signIn}
+              </Link>
             </Button>
             <Button
               asChild
               className="flex-1 bg-foreground text-background rounded-full h-14 text-base"
-              onClick={() => setIsMobileMenuOpen(false)}
+              onClick={() => closeMenuAndFocus(newsletterHref)}
             >
-              <a href={newsletterHref}>{t.nav.startCreating}</a>
+              <Link href={newsletterHref} prefetch={false}>
+                {t.nav.startCreating}
+              </Link>
             </Button>
           </div>
         </div>

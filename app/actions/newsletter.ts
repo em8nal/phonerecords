@@ -20,15 +20,26 @@ export type SubscribeActionResult =
   | { ok: true; status: "created" | "already" | "reactivated" | "queued" }
   | { ok: false; error: "invalid" | "unavailable" };
 
+/**
+ * Honeypot lleno: se revisa sobre el payload crudo, antes de validar, para que el bot reciba la
+ * misma respuesta de éxito aunque el resto sea inválido (p. ej. un honeypot de más de 200
+ * caracteres). No se exporta: un archivo "use server" solo puede exportar funciones async.
+ */
+function honeypotFilled(raw: unknown): boolean {
+  if (typeof raw !== "object" || raw === null) return false;
+  const v = (raw as { website?: unknown }).website;
+  return typeof v === "string" && v.length > 0;
+}
+
 export async function subscribeAction(
   raw: unknown,
 ): Promise<SubscribeActionResult> {
+  // Honeypot lleno: éxito silencioso, sin guardar ni enviar nada.
+  if (honeypotFilled(raw)) return { ok: true, status: "queued" };
+
   const parsed = inputSchema.safeParse(raw);
   if (!parsed.success) return { ok: false, error: "invalid" };
-  const { email, lang, source, website, renderedAt } = parsed.data;
-
-  // Honeypot lleno: éxito silencioso, sin guardar.
-  if (website.length > 0) return { ok: true, status: "queued" };
+  const { email, lang, source, renderedAt } = parsed.data;
   // Envío demasiado rápido: error genérico (una persona puede reintentar).
   // Delta negativo = reloj del cliente adelantado: no se puede medir, se deja pasar (el honeypot sigue activo).
   const elapsed = renderedAt ? Date.now() - renderedAt : -1;
@@ -36,9 +47,9 @@ export async function subscribeAction(
     return { ok: false, error: "unavailable" };
   }
 
-  const ip = await getClientIp();
-
   try {
+    // Dentro del try: si headers() falla, la acción responde "unavailable" en vez de lanzar.
+    const ip = await getClientIp();
     const res = await subscribe({
       email,
       lang,
