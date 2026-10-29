@@ -1,0 +1,119 @@
+{
+  "slug": "newen-afrobeat-grietas",
+  "order": 30,
+  "title": "Grietas",
+  "artistSlug": "newen-afrobeat",
+  "artistName": "Newen Afrobeat",
+  "featuredArtistSlugs": [
+    "ecamhi",
+    "klaus-b"
+  ],
+  "releaseDate": "2024-09-25",
+  "year": 2024,
+  "type": "album",
+  "format": "LP · vinilo + digital",
+  "label": "OfficeHome Records (París)",
+  "cover": "https://f4.bcbits.com/img/a1399189381_10.jpg",
+  "description": {
+    "es": "Cuarto LP de Newen Afrobeat, grabado en Santuario Sónico (Santiago, abril 2022) con producción general de Sebastián Crooker, mezcla de Fran 'Antena' Infante y master de Carlos Barros. Además de la banda, el disco reúne a dos artistas del roster PHŌNÉ: ecamhi (trompeta, co-composición de Mare Mare y co-dirección de arte con Tom Pavez) y Klaus B (composición de Es la vida). Featurings de Lido Pimienta, Dele Sosimi, Joe Vasconcellos y Chico César.",
+    "en": "Newen Afrobeat's fourth LP, recorded at Santuario Sónico (Santiago, April 2022) with general production by Sebastián Crooker, mixing by Fran 'Antena' Infante and mastering by Carlos Barros. Besides the band, the album brings together two PHŌNÉ roster artists: ecamhi (trumpet, co-composition of Mare Mare and co-art direction with Tom Pavez) and Klaus B (composer of Es la vida). Featurings by Lido Pimienta, Dele Sosimi, Joe Vasconcellos and Chico César."
+  },
+  "tracklist": [
+    {
+      "n": 1,
+      "title": "Grietas",
+      "duration": "5:13",
+      "composer": "Fran Ri",
+      "guests": [
+        "Lido Pimienta"
+      ]
+    },
+    {
+      "n": 2,
+      "title": "Mare Mare",
+      "duration": "5:08",
+      "composer": "Enrique Camhi & Martin Concha",
+      "guests": [
+        "Dele Sosimi"
+      ]
+    },
+    {
+      "n": 3,
+      "title": "Lloverá",
+      "duration": "4:31",
+      "composer": "Sebastian Crooker"
+    },
+    {
+      "n": 4,
+      "title": "Somos el Presente",
+      "duration": "5:29",
+      "composer": "Alejandro Orellana",
+      "guests": [
+        "Joe Vasconcellos"
+      ]
+    },
+    {
+      "n": 5,
+      "title": "Widin",
+      "duration": "2:53",
+      "composer": "Sebastian Crooker"
+    },
+    {
+      "n": 6,
+      "title": "Es la vida",
+      "duration": "5:59",
+      "composer": "Klaus Brantmayer",
+      "guests": [
+        "Chico César"
+      ]
+    }
+  ],
+  "credits": [
+    {
+      "role": "Producción general",
+      "name": "Sebastián Crooker"
+    },
+    {
+      "role": "Mezcla",
+      "name": "Fran 'Antena' Infante"
+    },
+    {
+      "role": "Master",
+      "name": "Carlos Barros"
+    },
+    {
+      "role": "Dirección de arte",
+      "name": "Tom Pavez + ecamhi"
+    },
+    {
+      "role": "Cover art",
+      "name": "Matías Lasen"
+    },
+    {
+      "role": "Diseño gráfico",
+      "name": "Claudio Solís"
+    },
+    {
+      "role": "Producción ejecutiva",
+      "name": "Martín Canessa, Lichens Family"
+    },
+    {
+      "role": "Grabación",
+      "name": "Juan Pablo Quezada Kaulen · Santuario Sónico, Santiago, abril 2022"
+    }
+  ],
+  "links": [
+    {
+      "label": "Bandcamp",
+      "href": "https://officehomerecords.bandcamp.com/album/grietas-2"
+    },
+    {
+      "label": "Discogs",
+      "href": "https://www.discogs.com/release/35010053-Newen-Afrobeat-Grietas"
+    },
+    {
+      "label": "Spotify",
+      "href": "https://open.spotify.com/album/7eICxMxArdEHZdkQY40n0N"
+    }
+  ]
+}

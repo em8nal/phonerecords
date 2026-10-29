@@ -1,0 +1,57 @@
+{
+  "slug": "newen-afrobeat-la-fuerza",
+  "order": 20,
+  "title": "La Fuerza",
+  "artistSlug": "newen-afrobeat",
+  "artistName": "Newen Afrobeat",
+  "releaseDate": "2026-10-30",
+  "year": 2026,
+  "type": "single",
+  "format": "Single · digital",
+  "label": "PHŌNÉ Records",
+  "cover": "/releases/newen-afrobeat-la-fuerza.jpg",
+  "smartLink": "https://orcd.co/npk70nb",
+  "description": {
+    "es": "\"La Fuerza\" es un single de Newen Afrobeat editado con PHŌNÉ Records, con fecha de lanzamiento el viernes 30 de octubre de 2026. Es la primera canción nueva de la banda desde \"Liverpool Session\" (2025) y el primer adelanto de la etapa que abre su próximo álbum de estudio, el disco que el grupo prepara durante 2026 y que profundiza el cruce entre afrobeat, música latinoamericana y elementos contemporáneos de jazz, soul y electrónica. El tema dura 4:44 y se publica como single digital, también en alta resolución (24 bits / 48 kHz) en Qobuz.\n\nNewen Afrobeat es una de las agrupaciones más influyentes de la escena afrobeat latinoamericana. Formada en Santiago de Chile en 2009, fue la primera banda de afrobeat del país y en más de quince años ha llevado su música a escenarios y festivales de América, Europa y África. Su discografía incluye el disco debut \"Newen Afrobeat\" (2014), \"Newen Plays Fela\" (2017, con Seun Kuti, Cheick Tidiane Seck y músicos de Egypt 80), \"Curiche\" (2019), el álbum \"Grietas\" (2024, con Lido Pimienta, Dele Sosimi, Joe Vasconcellos y Chico César) y \"Liverpool Session\" (2025), grabado de forma íntegramente análoga.\n\nLa portada de \"La Fuerza\", obra del ilustrador chileno Wacko (@wacko_art), es un paisaje andino: una montaña de cumbres nevadas sobre un desierto rojo, una laguna con flamencos y guanacos bajo un cielo violeta y un sol lleno. Ese imaginario de altura y territorio acompaña el título y anticipa el tono del single, que la banda presentará en vivo en los próximos conciertos.\n\nLa grabación es ℗ 2026 Newen Afrobeat y la edición © 2026 PHŌNÉ Records. El enlace de la sección \"Escuchar\" lleva a todas las plataformas. Los créditos completos de composición, grabación, mezcla y master se publicarán cuando la banda los confirme.",
+    "en": "\"La Fuerza\" (\"The Force\") is a single by Newen Afrobeat on PHŌNÉ Records, with a release date of Friday, October 30, 2026. It is the band's first new song since \"Liverpool Session\" (2025) and the first taste of the stage opened by their next studio album, the record the group is preparing through 2026, which deepens the crossing of afrobeat, Latin American music and contemporary elements of jazz, soul and electronics. The track runs 4:44 and is released as a digital single, also in high resolution (24-bit / 48 kHz) on Qobuz.\n\nNewen Afrobeat is one of the most influential bands of the Latin American afrobeat scene. Formed in Santiago, Chile in 2009, it was the country's first afrobeat band and in more than fifteen years has taken its music to stages and festivals across the Americas, Europe and Africa. Its discography includes the debut album \"Newen Afrobeat\" (2014), \"Newen Plays Fela\" (2017, with Seun Kuti, Cheick Tidiane Seck and members of Egypt 80), \"Curiche\" (2019), the album \"Grietas\" (2024, with Lido Pimienta, Dele Sosimi, Joe Vasconcellos and Chico César) and \"Liverpool Session\" (2025), recorded entirely on analog equipment.\n\nThe cover of \"La Fuerza\", by Chilean illustrator Wacko (@wacko_art), is an Andean landscape: a snow-capped mountain over a red desert, a lagoon with flamingos and guanacos under a violet sky and a full sun. That imagery of altitude and territory matches the title and sets the tone of the single, which the band will present live at its upcoming concerts.\n\nThe recording is ℗ 2026 Newen Afrobeat and the release © 2026 PHŌNÉ Records. The link in the \"Listen\" section takes you to all platforms. Full composition, recording, mixing and mastering credits will be published once the band confirms them."
+  },
+  "tracklist": [
+    {
+      "n": 1,
+      "title": "La Fuerza",
+      "duration": "4:44"
+    }
+  ],
+  "credits": [
+    {
+      "role": "Ilustración de portada",
+      "name": "Wacko (@wacko_art)"
+    },
+    {
+      "role": "℗",
+      "name": "2026 Newen Afrobeat"
+    },
+    {
+      "role": "©",
+      "name": "2026 PHŌNÉ Records"
+    }
+  ],
+  "links": [
+    {
+      "label": "Todas las plataformas",
+      "href": "https://orcd.co/npk70nb"
+    },
+    {
+      "label": "Qobuz (hi-res)",
+      "href": "https://www.qobuz.com/us-en/album/la-fuerza-newen-afrobeat/rkxyy8xslgx0o"
+    },
+    {
+      "label": "Apple Music",
+      "href": "https://music.apple.com/us/album/la-fuerza-single/6822447521"
+    },
+    {
+      "label": "Spotify (artista)",
+      "href": "https://open.spotify.com/artist/0PTJ848ulShbjTx2yqaAlb"
+    }
+  ]
+}

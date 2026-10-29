@@ -1,0 +1,16 @@
+{
+  "slug": "newen-2026-08-30-vienna",
+  "date": "2026-08-30",
+  "artistSlug": "newen-afrobeat",
+  "artistName": "Newen Afrobeat",
+  "venue": "Porgy & Bess",
+  "city": "Viena",
+  "country": "Austria",
+  "countryCode": "AT",
+  "status": "scheduled",
+  "ticketsUrl": "https://www.porgy.at/en/events/upcoming",
+  "notes": {
+    "es": "Programación del venue se publica más cerca de la fecha.",
+    "en": "Venue programme published closer to the date."
+  }
+}

@@ -1,0 +1,121 @@
+{
+  "slug": "klaus-b-memorias-mixtape",
+  "order": 110,
+  "title": "Memorias: Mixtape",
+  "artistSlug": "klaus-b",
+  "artistName": "Klaus B",
+  "releaseDate": "2025-11-17",
+  "year": 2025,
+  "type": "mixtape",
+  "format": "LP / Mixtape · 15 tracks",
+  "cover": "https://f4.bcbits.com/img/a2195737014_10.jpg",
+  "description": {
+    "es": "Mixtape de 15 tracks que funciona como archivo personal: piezas compuestas y grabadas a lo largo de varios años que Klaus reúne en un solo objeto. Cruza nu-jazz, hip-hop jazz, neo-soul instrumental, vocoder y flauta. No es álbum convencional sino documento vivo de una práctica continua, presentado como mixtape porque ese formato permite la heterogeneidad que el LP cerrado no admite. Master de Victor Sáez y Chalo G.",
+    "en": "15-track mixtape that functions as personal archive: pieces composed and recorded over several years that Klaus gathers in a single object. Crosses nu-jazz, hip-hop jazz, instrumental neo-soul, vocoder and flute. Not a conventional album but a living document of continuous practice, presented as mixtape because that format allows the heterogeneity a closed LP doesn't admit. Mastering by Victor Sáez and Chalo G."
+  },
+  "tracklist": [
+    {
+      "n": 1,
+      "title": "Intro: Memorias",
+      "duration": "1:52"
+    },
+    {
+      "n": 2,
+      "title": "Viento Radiante",
+      "duration": "3:28"
+    },
+    {
+      "n": 3,
+      "title": "Devoción",
+      "duration": "2:55"
+    },
+    {
+      "n": 4,
+      "title": "El Secreto",
+      "duration": "2:47"
+    },
+    {
+      "n": 5,
+      "title": "Quisiera Entender feat. Newen Afrobeat",
+      "duration": "4:12"
+    },
+    {
+      "n": 6,
+      "title": "Those Days Far Away feat. Mr.Li, Seven Star, Racecar",
+      "duration": "5:01"
+    },
+    {
+      "n": 7,
+      "title": "Voy Y Vuelvo",
+      "duration": "1:32"
+    },
+    {
+      "n": 8,
+      "title": "Todo Vibra",
+      "duration": "6:54"
+    },
+    {
+      "n": 9,
+      "title": "Haz De Luz",
+      "duration": "1:22"
+    },
+    {
+      "n": 10,
+      "title": "Espejismos",
+      "duration": "4:08"
+    },
+    {
+      "n": 11,
+      "title": "Cielo",
+      "duration": "2:17"
+    },
+    {
+      "n": 12,
+      "title": "Groove Amor",
+      "duration": "2:45"
+    },
+    {
+      "n": 13,
+      "title": "De Noche",
+      "duration": "3:47"
+    },
+    {
+      "n": 14,
+      "title": "Como Una Mariposa",
+      "duration": "1:43"
+    },
+    {
+      "n": 15,
+      "title": "Nube",
+      "duration": "3:00"
+    }
+  ],
+  "credits": [
+    {
+      "role": "Composición, producción y grabación",
+      "name": "Klaus B"
+    },
+    {
+      "role": "Mezcla",
+      "name": "Sebastián Pangal & Klaus B"
+    },
+    {
+      "role": "Master",
+      "name": "Victor Sáez & Chalo G"
+    }
+  ],
+  "links": [
+    {
+      "label": "Apple Music",
+      "href": "https://music.apple.com/us/album/memorias-mixtape/1854040694"
+    },
+    {
+      "label": "Bandcamp",
+      "href": "https://klausb.bandcamp.com/album/memorias-mixtape"
+    },
+    {
+      "label": "Spotify",
+      "href": "https://open.spotify.com/album/3G6RYtdVGxDhkeVcX9aesa"
+    }
+  ]
+}

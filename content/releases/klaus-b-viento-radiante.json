@@ -1,0 +1,52 @@
+{
+  "slug": "klaus-b-viento-radiante",
+  "order": 170,
+  "title": "Viento Radiante",
+  "artistSlug": "klaus-b",
+  "artistName": "Klaus B",
+  "releaseDate": "2021-06-29",
+  "year": 2021,
+  "type": "single",
+  "format": "Single instrumental",
+  "cover": "https://f4.bcbits.com/img/a4057419649_10.jpg",
+  "description": {
+    "es": "Primer single solista del proyecto Klaus B, publicado en mediados de 2021. Construido con Diego Alarcón en teclados, Iván Araya en bajo y Tito Gevert en batería, define la fórmula inicial del catálogo: flauta funk sobre base orgánica, con vocoder mínimo. Es el punto de partida que las series posteriores expanden o contraen, y queda como referencia formal del sonido fundacional del proyecto en su versión 2021.",
+    "en": "First solo single of the Klaus B project, released mid-2021. Built with Diego Alarcón on keys, Iván Araya on bass and Tito Gevert on drums, it defines the catalogue's initial formula: funk flute over organic base, with minimal vocoder. The starting point that later series expand or contract, and stays as formal reference of the project's foundational sound in its 2021 version."
+  },
+  "credits": [
+    {
+      "role": "Flauta · synths",
+      "name": "Klaus B"
+    },
+    {
+      "role": "Teclados · synths",
+      "name": "Diego Alarcón"
+    },
+    {
+      "role": "Bajo",
+      "name": "Iván Araya"
+    },
+    {
+      "role": "Batería",
+      "name": "Tito Gevert"
+    },
+    {
+      "role": "Música y producción",
+      "name": "Klaus B"
+    },
+    {
+      "role": "Arreglos",
+      "name": "Samurai Groove"
+    }
+  ],
+  "links": [
+    {
+      "label": "Bandcamp",
+      "href": "https://klausb.bandcamp.com/track/viento-radiante"
+    },
+    {
+      "label": "Spotify",
+      "href": "https://open.spotify.com/album/1E15jH8wgNsJXCl4ZWHTVB"
+    }
+  ]
+}

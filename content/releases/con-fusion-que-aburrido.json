@@ -1,0 +1,26 @@
+{
+  "slug": "con-fusion-que-aburrido",
+  "order": 300,
+  "title": "Que Aburrido!",
+  "artistSlug": "con-fusion",
+  "artistName": "Con.fusión",
+  "releaseDate": "2020-07-10",
+  "year": 2020,
+  "type": "single",
+  "format": "Single · digital",
+  "cover": "https://is1-ssl.mzstatic.com/image/thumb/Music113/v4/5d/ca/30/5dca302d-2a10-e04e-cfbc-4f5604f5cb67/0.jpg/1000x1000bb.jpg",
+  "description": {
+    "es": "Single con Fat Jota publicado en julio 2020, primera entrega de la colaboración entre ambos. Beat hip hop con flow vocal de Aguilera que cruza rap, scat y melodía sin pausa entre técnicas: la voz funciona como ejercicio simultáneo de tradiciones distintas. Es la entrega más temprana del catálogo público de Con.fusión y queda como referencia formal del método que se va a desarrollar en los singles siguientes y en el LP Tulpa.",
+    "en": "Single with Fat Jota released July 2020, first delivery of the collaboration between both. Hip hop beat with Aguilera's vocal flow crossing rap, scat and melody without pause between techniques: voice functioning as simultaneous exercise of distinct traditions. The earliest delivery in Con.fusión's public catalogue and remains formal reference of the method to be developed in the following singles and in the Tulpa LP."
+  },
+  "links": [
+    {
+      "label": "Apple Music",
+      "href": "https://music.apple.com/us/album/que-aburrido/1518666439"
+    },
+    {
+      "label": "Spotify",
+      "href": "https://open.spotify.com/album/5OvNVAP10yNQF4uuJPfwWC"
+    }
+  ]
+}

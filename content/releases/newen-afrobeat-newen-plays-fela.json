@@ -1,0 +1,47 @@
+{
+  "slug": "newen-afrobeat-newen-plays-fela",
+  "order": 60,
+  "title": "Newen Plays Fela",
+  "artistSlug": "newen-afrobeat",
+  "artistName": "Newen Afrobeat",
+  "releaseDate": "2017-02-20",
+  "year": 2017,
+  "type": "ep",
+  "format": "EP · CD (sold out) + digital",
+  "cover": "https://f4.bcbits.com/img/a2971239057_10.jpg",
+  "description": {
+    "es": "EP grabado en Lagos durante el viaje formativo de la banda a Nigeria. Tres tracks que reúnen dos composiciones de Fela Anikulapo Kuti con Seun Kuti, Cheick Tidiane Seck y músicos de Egypt 80 en sesiones directas. No es homenaje desde la distancia: es Newen escribiendo afrobeat junto a quienes lo fundaron, en su lugar de origen. Documento clave del puente que la banda construye entre el afrobeat clásico y la lectura latinoamericana posterior.",
+    "en": "EP recorded in Lagos during the band's formative trip to Nigeria. Three tracks gathering two Fela Anikulapo Kuti compositions with Seun Kuti, Cheick Tidiane Seck and Egypt 80 musicians in direct sessions. Not homage from a distance: it's Newen writing afrobeat alongside those who founded it, in its place of origin. Key document of the bridge the band builds between classic afrobeat and the later Latin American reading."
+  },
+  "tracklist": [
+    {
+      "n": 1,
+      "title": "Upside Down",
+      "duration": "11:06"
+    },
+    {
+      "n": 2,
+      "title": "Opposite People Intro",
+      "duration": "1:02"
+    },
+    {
+      "n": 3,
+      "title": "Opposite People (with Seun Kuti, Cheick Tidiane Seck and more)",
+      "duration": "13:38"
+    }
+  ],
+  "links": [
+    {
+      "label": "Bandcamp",
+      "href": "https://newenafrobeat.bandcamp.com/album/newen-plays-fela"
+    },
+    {
+      "label": "Discogs",
+      "href": "https://www.discogs.com/release/10585070-Newen-Afrobeat-Newen-Plays-Fela"
+    },
+    {
+      "label": "Spotify",
+      "href": "https://open.spotify.com/album/38wiZ5NMBVnXPLwk8dUiVL"
+    }
+  ]
+}

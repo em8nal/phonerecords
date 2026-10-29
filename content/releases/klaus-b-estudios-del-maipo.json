@@ -1,0 +1,88 @@
+{
+  "slug": "klaus-b-estudios-del-maipo",
+  "order": 120,
+  "title": "Estudios Del Maipo: Live Session",
+  "artistSlug": "klaus-b",
+  "artistName": "Gestosimple & Klaus B",
+  "featuredArtistSlugs": [
+    "ecamhi"
+  ],
+  "releaseDate": "2025-11-26",
+  "year": 2025,
+  "type": "live",
+  "format": "EP en vivo · 3 tracks",
+  "cover": "https://f4.bcbits.com/img/a0583641197_10.jpg",
+  "description": {
+    "es": "EP en vivo del dúo Gestosimple & Klaus B grabado en Cajón del Maipo, con Enrique Camhi en trompeta como invitado. Tres tracks que cruzan future jazz y hip-hop instrumental en formato sesión cerrada: nada de la artificialidad del estudio, todo el aire del lugar. Es uno de los pocos registros en vivo del catálogo de Klaus y el más reciente puente formal entre su proyecto y el de ecamhi dentro del ecosistema PHŌNÉ.",
+    "en": "Live EP by the duo Gestosimple & Klaus B recorded in Cajón del Maipo, with Enrique Camhi as guest on trumpet. Three tracks crossing future jazz and instrumental hip-hop in closed-session format: none of the studio's artifice, all the air of the place. One of the few live records in Klaus's catalogue and the most recent formal bridge between his project and ecamhi's within the PHŌNÉ ecosystem."
+  },
+  "tracklist": [
+    {
+      "n": 1,
+      "title": "Intro: Thank You Jay Dee",
+      "duration": "1:08"
+    },
+    {
+      "n": 2,
+      "title": "Desde La Emisora",
+      "duration": "9:10"
+    },
+    {
+      "n": 3,
+      "title": "Requiem",
+      "duration": "5:45"
+    }
+  ],
+  "credits": [
+    {
+      "role": "Producción · alto sax · flauta",
+      "name": "Klaus B"
+    },
+    {
+      "role": "Rap",
+      "name": "Gestosimple"
+    },
+    {
+      "role": "Scratch",
+      "name": "DJ Dacel"
+    },
+    {
+      "role": "Trompeta · fluegelhorn",
+      "name": "ecamhi"
+    },
+    {
+      "role": "Teclados",
+      "name": "Felamusic"
+    },
+    {
+      "role": "Guitarra eléctrica",
+      "name": "José Toledo"
+    },
+    {
+      "role": "Bajo",
+      "name": "Pancho Ruiz"
+    },
+    {
+      "role": "Batería",
+      "name": "Tito Gevert"
+    },
+    {
+      "role": "Grabación",
+      "name": "Nico Romero"
+    },
+    {
+      "role": "Mezcla y master",
+      "name": "Juan Faúndez"
+    }
+  ],
+  "links": [
+    {
+      "label": "Bandcamp",
+      "href": "https://klausb.bandcamp.com/album/estudios-del-maipo-live-session"
+    },
+    {
+      "label": "Spotify",
+      "href": "https://open.spotify.com/album/7fP1wduZdnVnuOLSI9Yf1N"
+    }
+  ]
+}

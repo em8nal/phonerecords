@@ -1,0 +1,67 @@
+{
+  "slug": "newen-afrobeat-liverpool-session",
+  "order": 40,
+  "title": "Liverpool Session",
+  "artistSlug": "newen-afrobeat",
+  "artistName": "Newen Afrobeat",
+  "releaseDate": "2025-04-11",
+  "year": 2025,
+  "type": "live",
+  "format": "EP en vivo · 4 tracks",
+  "label": "Independent",
+  "cover": "https://f4.bcbits.com/img/a2149195633_10.jpg",
+  "description": {
+    "es": "EP en vivo capturado en Quarry, Liverpool, durante la gira de verano 2024. Versiones explosivas en directo de tracks de Grietas junto a relecturas de clásicos de Fela Kuti. Grabado 100% en vivo y completamente análogo. Representa el cruce entre la herencia musical africana y las perspectivas latinoamericanas.",
+    "en": "Live EP captured at Quarry, Liverpool, during the 2024 summer tour. Explosive live versions of tracks from Grietas alongside reimagined Fela Kuti classics. Recorded 100% live and fully analog. Represents the intersection of African musical heritage with Latin American perspectives."
+  },
+  "tracklist": [
+    {
+      "n": 1,
+      "title": "Es la vida",
+      "duration": "6:08"
+    },
+    {
+      "n": 2,
+      "title": "Ako (Fela Kuti)",
+      "duration": "3:38"
+    },
+    {
+      "n": 3,
+      "title": "Grietas",
+      "duration": "5:53"
+    },
+    {
+      "n": 4,
+      "title": "No Agreement (Fela Kuti)",
+      "duration": "9:24"
+    }
+  ],
+  "credits": [
+    {
+      "role": "Grabación",
+      "name": "The Lightning Cave"
+    },
+    {
+      "role": "Audio engineer",
+      "name": "Thomas Benson, Jack Wait"
+    },
+    {
+      "role": "Master",
+      "name": "Victor Sáez"
+    },
+    {
+      "role": "Voces",
+      "name": "Fran Ri, Erin Rutledge"
+    }
+  ],
+  "links": [
+    {
+      "label": "Bandcamp",
+      "href": "https://newenafrobeat.bandcamp.com/album/liverpool-session"
+    },
+    {
+      "label": "YouTube",
+      "href": "https://www.youtube.com/watch?v=yyKGWQ7RwKk"
+    }
+  ]
+}

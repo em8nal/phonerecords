@@ -1,9 +1,9 @@
 // Journal (M11, carril R del p19): piezas editoriales del sello.
 //
 // Arriba, los tipos y los datos; abajo, los helpers. Los datos son serializables (texto, números
-// y arreglos, sin funciones ni fechas): el carril S los pasará a content/journal/<slug>.json sin
-// tocar los helpers. Imports relativos: app/sitemap.ts y scripts/test-journal.mjs cargan este
-// módulo desde Node, sin el alias @/.
+// y arreglos, sin funciones ni fechas) y viven en content/journal/<slug>.json (esquema en
+// content/README.md; carril S). Imports relativos: app/sitemap.ts y scripts/test-journal.mjs
+// cargan este módulo desde Node, sin el alias @/.
 //
 // Publicación: `publishAt` es un ISO con hora y el offset de Santiago ("2026-11-10T10:00:00-03:00";
 // -03:00 de septiembre a abril, -04:00 de abril a septiembre). La pieza aparece sola a esa hora:
@@ -18,6 +18,7 @@ import { formatReleaseLabel } from "./release-date";
 import { getArtist } from "./artists";
 import { getRelease } from "./releases";
 import { videos } from "./videos";
+import { journalEntries } from "../content/generated/journal";
 
 export type Localized = { es: string; en: string };
 
@@ -89,9 +90,11 @@ export type JournalPiece = {
 };
 
 // ─────────── Datos ───────────
-// Vacío a propósito: no se inventan piezas. Sin Object.freeze: test:journal agrega fixtures y las
-// quita en un finally. El ejemplo de pieza vive en el reporte del carril R, no aquí.
-export const journalPieces: JournalPiece[] = [];
+// Un archivo por pieza en content/journal/<slug>.json, por el índice generado
+// content/generated/journal.ts (pnpm content:index). Hoy vacío a propósito: no se inventan piezas.
+// Copia mutable y sin Object.freeze: test:journal agrega fixtures y las quita en un finally. El
+// ejemplo de pieza vive en el reporte del carril R, no aquí.
+export const journalPieces: JournalPiece[] = (journalEntries as JournalPiece[]).slice();
 
 // ─────────── Helpers ───────────
 

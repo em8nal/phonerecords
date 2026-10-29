@@ -1,0 +1,60 @@
+{
+  "slug": "klaus-b-those-days-far-away",
+  "order": 150,
+  "title": "Those Days Far Away",
+  "artistSlug": "klaus-b",
+  "artistName": "Klaus B",
+  "releaseDate": "2025-11-11",
+  "year": 2025,
+  "type": "single",
+  "format": "Single",
+  "cover": "https://f4.bcbits.com/img/a4131860185_10.jpg",
+  "description": {
+    "es": "Single co-producido con Lister Rossel (Mr.Li, Londres), con MC Seven Star (Orlando) y MC Racecar (París) como voces invitadas. Mueve el catálogo de Klaus hacia el formato hip-hop colaborativo trans-continental: tres ciudades, tres voces, una base hecha en Santiago. Master de Sebastián Pangal y Klaus B. Anuncia la dirección del proyecto post-mixtape Memorias y consolida la red internacional alrededor del sonido neo-soul jazz de Klaus.",
+    "en": "Single co-produced with Lister Rossel (Mr.Li, London), with MC Seven Star (Orlando) and MC Racecar (Paris) as guest vocalists. Moves Klaus's catalogue toward trans-continental collaborative hip-hop: three cities, three voices, one base made in Santiago. Mastering by Sebastián Pangal and Klaus B. Announces the project's direction post-Memorias mixtape and consolidates the international network around Klaus's neo-soul jazz sound."
+  },
+  "credits": [
+    {
+      "role": "Flauta · vocoder · producción",
+      "name": "Klaus B"
+    },
+    {
+      "role": "Co-producción",
+      "name": "Lister Rossel (Mr.Li)"
+    },
+    {
+      "role": "Rap",
+      "name": "Seven Star, Racecar"
+    },
+    {
+      "role": "Coros",
+      "name": "Camila Fuentes"
+    },
+    {
+      "role": "Piano",
+      "name": "Felamusic"
+    },
+    {
+      "role": "Guitarra",
+      "name": "José Toledo"
+    },
+    {
+      "role": "Trombón",
+      "name": "Pablo James"
+    },
+    {
+      "role": "Clarinete bajo",
+      "name": "Diego Toro"
+    }
+  ],
+  "links": [
+    {
+      "label": "Bandcamp",
+      "href": "https://klausb.bandcamp.com/track/those-days-far-away-feat-mr-li-seven-star-racecar"
+    },
+    {
+      "label": "Spotify",
+      "href": "https://open.spotify.com/album/2KYfzVZSsEkPsJv12YN5rN"
+    }
+  ]
+}
