@@ -15,7 +15,15 @@ type Props = {
   headingId?: string;
   /** Enlace "Ver roster" junto al título; el índice /artistas lo apaga (ya es el roster). */
   showAllLink?: boolean;
+  /**
+   * Tarjeta oscura de cierre, como la de la portada ("Catálogo PHŌNÉ"): con 2 columnas (hasta lg)
+   * y un número impar de artistas ocupa la celda libre en lugar del relleno. Sin la prop, la grilla
+   * queda como en la ficha de artista.
+   */
+  closingTile?: ClosingTile;
 };
+
+export type ClosingTile = { href: string; eyebrow: string; headline: string; cta: string };
 
 const copy = {
   es: { heading: "Otros artistas", all: "Ver roster" },
@@ -29,7 +37,8 @@ const FOCUS_LIGHT =
 /**
  * Grilla de cierre de la ficha de artista: los demás artistas del roster con
  * retrato en B/N (regla institucional), nombre y géneros. Server component.
- * El índice /artistas la usa con todo el roster, su propio título y sin "Ver roster".
+ * El índice /artistas la usa con todo el roster, su propio título, sin "Ver roster" y con la
+ * tarjeta de cierre hacia el catálogo (sin celdas vacías a 2 columnas).
  * Imágenes diferidas (el LCP de la página es el hero). Renderiza null si no hay otros.
  */
 export function ArtistCardGrid({
@@ -38,11 +47,18 @@ export function ArtistCardGrid({
   heading,
   headingId = "other-artists-heading",
   showAllLink = true,
+  closingTile,
 }: Props) {
   const others = artists.filter((a) => a.slug !== excludeSlug);
   if (others.length === 0) return null;
   const t = copy[lang];
   const cols = pickLgCols(others.length);
+  // La tarjeta de cierre solo existe hasta lg (2 columnas) y solo si la última fila queda impar.
+  const showTile = closingTile !== undefined && others.length % 2 === 1;
+  // Celdas libres de la última fila desde lg (los mismos rellenos que GridFillers).
+  const desktopFillers = (cols - (others.length % cols)) % cols;
+  // Retrato: 1/cols del contenedor desde lg (1320 px útiles a 1400 px), media pantalla antes.
+  const sizes = `(min-width: 1400px) ${Math.round(1320 / cols)}px, (min-width: 1024px) ${Math.round(100 / cols)}vw, 50vw`;
 
   return (
     <section aria-labelledby={headingId} className="border-t border-foreground/10">
@@ -76,7 +92,7 @@ export function ArtistCardGrid({
                       src={portrait}
                       alt=""
                       fill
-                      sizes="(min-width: 1400px) 330px, (min-width: 1024px) 25vw, 50vw"
+                      sizes={sizes}
                       className="object-cover grayscale transition-transform duration-500 motion-safe:group-hover:scale-[1.02]"
                     />
                   ) : (
@@ -97,7 +113,32 @@ export function ArtistCardGrid({
               </Link>
             );
           })}
-          <GridFillers count={others.length} cols={cols} />
+          {showTile ? (
+            <>
+              <Link
+                href={closingTile.href}
+                className="group flex flex-col justify-between gap-10 bg-foreground p-4 text-background md:p-8 lg:hidden focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-inset focus-visible:ring-brand"
+              >
+                <span className="font-mono text-xs uppercase tracking-wider text-background/60">{closingTile.eyebrow}</span>
+                <span className="block">
+                  <span className="mb-6 block font-display text-xl tracking-tight text-balance md:text-2xl">
+                    {closingTile.headline}
+                  </span>
+                  <span className="inline-flex items-center gap-2 font-mono text-xs uppercase tracking-widest">
+                    {closingTile.cta}
+                    <span aria-hidden="true" className="text-brand motion-safe:transition-transform motion-safe:group-hover:translate-x-1">
+                      →
+                    </span>
+                  </span>
+                </span>
+              </Link>
+              {Array.from({ length: desktopFillers }, (_, i) => (
+                <div key={`d${i}`} aria-hidden="true" className="hidden bg-background lg:block" />
+              ))}
+            </>
+          ) : (
+            <GridFillers count={others.length} cols={cols} />
+          )}
         </div>
       </div>
     </section>
