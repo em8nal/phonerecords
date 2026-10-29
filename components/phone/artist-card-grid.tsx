@@ -9,6 +9,12 @@ type Props = {
   lang: Language;
   /** Artista de la ficha actual: se excluye de la grilla. */
   excludeSlug?: string;
+  /** Título de la sección; por defecto "Otros artistas" / "Other artists" (ficha de artista). */
+  heading?: string;
+  /** id del h2 (aria-labelledby de la sección); por defecto "other-artists-heading". */
+  headingId?: string;
+  /** Enlace "Ver roster" junto al título; el índice /artistas lo apaga (ya es el roster). */
+  showAllLink?: boolean;
 };
 
 const copy = {
@@ -23,27 +29,36 @@ const FOCUS_LIGHT =
 /**
  * Grilla de cierre de la ficha de artista: los demás artistas del roster con
  * retrato en B/N (regla institucional), nombre y géneros. Server component.
+ * El índice /artistas la usa con todo el roster, su propio título y sin "Ver roster".
  * Imágenes diferidas (el LCP de la página es el hero). Renderiza null si no hay otros.
  */
-export function ArtistCardGrid({ lang, excludeSlug }: Props) {
+export function ArtistCardGrid({
+  lang,
+  excludeSlug,
+  heading,
+  headingId = "other-artists-heading",
+  showAllLink = true,
+}: Props) {
   const others = artists.filter((a) => a.slug !== excludeSlug);
   if (others.length === 0) return null;
   const t = copy[lang];
   const cols = pickLgCols(others.length);
 
   return (
-    <section aria-labelledby="other-artists-heading" className="border-t border-foreground/10">
+    <section aria-labelledby={headingId} className="border-t border-foreground/10">
       <div className="mx-auto max-w-[1400px] px-6 lg:px-12 py-16 lg:py-24">
         <div className="flex items-baseline justify-between gap-6 mb-8 lg:mb-12">
-          <h2 id="other-artists-heading" className="text-3xl lg:text-5xl font-display tracking-tight">
-            {t.heading}
+          <h2 id={headingId} className="text-3xl lg:text-5xl font-display tracking-tight">
+            {heading ?? t.heading}
           </h2>
-          <Link
-            href={`/${lang}#roster`}
-            className="inline-flex min-h-11 items-center font-mono text-xs uppercase tracking-widest text-muted-foreground hover:text-foreground transition-colors"
-          >
-            {t.all} →
-          </Link>
+          {showAllLink && (
+            <Link
+              href={`/${lang}#roster`}
+              className="inline-flex min-h-11 items-center font-mono text-xs uppercase tracking-widest text-muted-foreground hover:text-foreground transition-colors"
+            >
+              {t.all} →
+            </Link>
+          )}
         </div>
 
         <div className={`grid grid-cols-2 ${lgColsClass(cols)} gap-px bg-foreground/10 border border-foreground/10`}>
