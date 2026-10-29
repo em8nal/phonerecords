@@ -1,0 +1,45 @@
+{
+  "slug": "ecamhi",
+  "order": 20,
+  "name": "ecamhi",
+  "genres": [
+    "Instrumental",
+    "Jazz",
+    "Interdisciplinar"
+  ],
+  "genresEn": [
+    "Instrumental",
+    "Jazz",
+    "Interdisciplinary"
+  ],
+  "origin": "Santiago, Chile",
+  "role": {
+    "es": "Trompeta, producción y composición (proyecto solista)",
+    "en": "Trumpet, production and composition (solo project)"
+  },
+  "bio": {
+    "es": "ecamhi es el proyecto solista de Enrique Camhi, trompetista, productor y compositor chileno con una trayectoria ligada a distintos proyectos relevantes de la escena musical nacional. A lo largo de los años ha trabajado como músico y creativo junto a artistas y bandas como Newen Afrobeat y La Combo Tortuga, desarrollando una identidad artística marcada por la exploración sonora y la mezcla de géneros.\n\nBajo el nombre ecamhi, presenta una propuesta instrumental y electrónica influenciada por el beatmaking, el jazz, el hip-hop y la música experimental, combinando elementos orgánicos con producción contemporánea. Actualmente se encuentra preparando el lanzamiento de un nuevo disco, un trabajo que expande su universo musical hacia sonidos más personales, atmosféricos y cinematográficos, consolidando una nueva etapa en su carrera como artista independiente.\n\nPróximos lanzamientos: álbum εποχή (2026), EP \"en viaje\" (2027).",
+    "en": "ecamhi is the solo project of Enrique Camhi, a Chilean trumpet player, producer and composer with a trajectory tied to various key projects in the national music scene. Over the years he has worked as musician and creative alongside artists and bands such as Newen Afrobeat and La Combo Tortuga, developing an artistic identity marked by sonic exploration and the mixing of genres.\n\nUnder the name ecamhi, he presents an instrumental and electronic proposal influenced by beatmaking, jazz, hip-hop and experimental music, combining organic elements with contemporary production. He is currently preparing the release of a new album — a work that expands his musical universe towards more personal, atmospheric and cinematographic sounds, consolidating a new stage in his career as an independent artist.\n\nUpcoming releases: album εποχή (2026), EP \"en viaje\" (2027)."
+  },
+  "links": [
+    {
+      "label": "Spotify",
+      "href": "https://open.spotify.com/artist/6dUvYBGnjpf2emwATOIP4c"
+    },
+    {
+      "label": "Apple Music",
+      "href": "https://music.apple.com/us/artist/ecamhi/1654191972"
+    },
+    {
+      "label": "SoundCloud",
+      "href": "https://soundcloud.com/enrique-camhi"
+    },
+    {
+      "label": "Instagram",
+      "href": "https://www.instagram.com/ecamhi/"
+    }
+  ],
+  "stats": {
+    "monthlyListeners": 3
+  }
+}

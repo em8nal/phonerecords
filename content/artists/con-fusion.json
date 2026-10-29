@@ -1,0 +1,51 @@
+{
+  "slug": "con-fusion",
+  "order": 30,
+  "name": "Con.fusión",
+  "alternateName": [
+    "Con.fusion"
+  ],
+  "genres": [
+    "Hip Hop",
+    "Jazz",
+    "Neo Soul"
+  ],
+  "origin": "Santiago, Chile",
+  "role": {
+    "es": "Voz: canto, rap y scat (proyecto solista)",
+    "en": "Vocals: singing, rap and scat (solo project)"
+  },
+  "stats": {
+    "monthlyListeners": 8700
+  },
+  "bio": {
+    "es": "Con.fusión es el proyecto musical solista de Catalina Aguilera Martínez, de Santiago de Chile: una propuesta que transita entre el hip hop, el jazz y el neosoul, incorporando exploraciones vocales que van desde el canto hasta el rap y el scat. Su trayectoria comienza en colaboración con el productor Fat Jota, desarrollando un sonido cercano al lo-fi hip hop, para luego evolucionar hacia la banda Fat Lady, donde profundiza en una fusión entre neosoul y rock a partir de composiciones previas. Ha participado en espacios como Beatminds, encuentro de hip hop dirigido por el beatmaker chileno DJ Dacel, consolidando su presencia en la escena.\n\nEn paralelo, ha desarrollado un amplio trabajo colaborativo en la música chilena, participando en grabaciones junto a Matiah Chinaski, Pablo Joaquín (en su disco Tintinea), Búfalo Dit (en Errores irrepetibles, producido por Jenry Cancura) y siendo parte del disco Del dicho al hecho del artista Terrible. Como intérprete versátil, se ha desempeñado además como corista para proyectos como Pau, La Hipocresía Mató al Gato y actualmente en la grabación de coros para la banda Newen Afrobeat.\n\nActualmente forma parte del show en vivo de Matiah Chinaski, donde aporta una presencia femenina en una escena predominantemente masculina, integrando canto, rap e improvisación vocal. Hoy se encuentra desarrollando su primer disco de larga duración \"Tulpa\" solista bajo el sello PHŌNÉ Records, consolidando una propuesta artística propia dentro de la música contemporánea chilena.\n\nÚltimo lanzamiento: \"Cuántas veces\" (octubre 2026), single que abre el catálogo 2026 del sello. Próximo: \"Tulpa\", su primer álbum solista, producido por Matiah Chinaski (2027).",
+    "en": "Con.fusión is the solo musical project of Catalina Aguilera Martínez, from Santiago, Chile: a proposal moving between hip hop, jazz and neosoul, incorporating vocal explorations that range from singing to rap and scat. Her trajectory begins in collaboration with producer Fat Jota, developing a sound close to lo-fi hip hop, later evolving towards the band Fat Lady, where she deepens a fusion between neosoul and rock from earlier compositions. She has participated in spaces such as Beatminds, the hip hop gathering led by Chilean beatmaker DJ Dacel, consolidating her presence in the scene.\n\nIn parallel, she has developed extensive collaborative work in Chilean music, recording with Matiah Chinaski, Pablo Joaquín (on his album Tintinea), Búfalo Dit (on Errores irrepetibles, produced by Jenry Cancura) and as part of Del dicho al hecho by the artist Terrible. As a versatile performer, she has also worked as backing vocalist for projects such as Pau, La Hipocresía Mató al Gato, and is currently recording choir parts for Newen Afrobeat.\n\nShe is currently part of Matiah Chinaski's live show, where she contributes a female presence in a predominantly male scene, integrating song, rap and vocal improvisation. Today she is developing her first full-length solo album \"Tulpa\" under the PHŌNÉ Records label, consolidating an artistic proposal of her own within contemporary Chilean music.\n\nLatest release: \"Cuántas veces\" (October 2026), the single that opens the label's 2026 catalogue. Next: \"Tulpa\", her first solo album, produced by Matiah Chinaski (2027)."
+  },
+  "links": [
+    {
+      "label": "Spotify",
+      "href": "https://open.spotify.com/artist/3LnpeMefgyavyTUTFNs5Xd"
+    },
+    {
+      "label": "Apple Music",
+      "href": "https://music.apple.com/us/artist/con-fusi%C3%B3n/1518275936"
+    },
+    {
+      "label": "YouTube",
+      "href": "https://www.youtube.com/channel/UCJP4nihg8wJcMjSNYrWkxxw"
+    },
+    {
+      "label": "Instagram",
+      "href": "https://www.instagram.com/aguasudaca/"
+    }
+  ],
+  "releases": [
+    {
+      "year": "in production",
+      "title": "Tulpa",
+      "format": "Álbum",
+      "notes": "Tracks: Acertijo · En vez de quejarte tanto · Pisando caca a propósito"
+    }
+  ]
+}

@@ -1,0 +1,84 @@
+{
+  "slug": "rosario-lircay",
+  "order": 50,
+  "name": "Rosario Lircay",
+  "genres": [
+    "R&B",
+    "Pop alternativo",
+    "Hip hop",
+    "Soul"
+  ],
+  "genresEn": [
+    "R&B",
+    "Alternative pop",
+    "Hip hop",
+    "Soul"
+  ],
+  "origin": "Ñuble · Santiago, Chile",
+  "role": {
+    "es": "Voz",
+    "en": "Vocals"
+  },
+  "bio": {
+    "es": "Rosario Lircay es el nombre artístico de Rosario Meléndez, cantante chilena nacida en la Región de Ñuble y radicada en Santiago. Con formación en canto jazz y música popular y en producción musical, construyó su oficio en los escenarios como corista: hoy es voz estable en la banda de Alex Anwandter y ha acompañado a Brain Damage, Celeste Shaw, Con.fusión, Pau y LHMG, entre otros, en escenarios como Lollapalooza Chile, el Teatro Caupolicán, el Movistar Arena y el Teatro Gran Rex de Buenos Aires.\n\nAntes de firmar con su propio nombre pasó por bandas de jazz, rock progresivo y soul latino (Proyecto Sin Raza, Personalidad Múltiple, Franck Palace, Fractos), fue vocalista del grupo electro pop Mareo!, con el que giró por Japón, y de Narcisa. Desde \"Nina\" (2020) publica como Rosario Lircay sus propias canciones y colaboraciones, entre ellas \"Infinito\" con Ziervo y Con.fusión y \"No necesito más\" con Low Criss.\n\nSu primer álbum, \"La Piel\", reúne diez canciones cortas nacidas de beats y luego tocadas por músicos: bajo, sintetizadores, guitarras, la batería de Pablo Trangol y una voz cantada-hablada que se mueve entre el r&b, el hip hop y el pop alternativo. Producido por Fresco Fresco (Pablo Acuña y Nacho Barrientos), grabado en La Salitrera y Fresco Fresco y masterizado por Chalo G, cuenta con participaciones de Con.fusión, Balta Neira y la flauta de Emaflu, y letras que recorren la depresión, la frustración, el enojo, la esperanza y el juego. Lo adelantan los singles \"ya me tienes\" (abril de 2026), \"a ti\" (junio de 2026) y \"En Vela\" (23 de octubre de 2026), su primer lanzamiento con PHŌNÉ Records.",
+    "en": "Rosario Lircay is the stage name of Rosario Meléndez, a Chilean singer born in the Ñuble region and based in Santiago. Trained in jazz and popular singing and in music production, she built her craft on stage as a backing vocalist: today she is a permanent voice in Alex Anwandter's band and has sung with Brain Damage, Celeste Shaw, Con.fusión, Pau and LHMG, among others, at Lollapalooza Chile, Teatro Caupolicán, Movistar Arena and Teatro Gran Rex in Buenos Aires.\n\nBefore signing under her own name she passed through jazz, progressive rock and Latin soul bands (Proyecto Sin Raza, Personalidad Múltiple, Franck Palace, Fractos), fronted the electro-pop group Mareo!, with whom she toured Japan, and sang in Narcisa. Since \"Nina\" (2020) she has released her own songs and collaborations as Rosario Lircay, including \"Infinito\" with Ziervo and Con.fusión and \"No necesito más\" with Low Criss.\n\nHer debut album, \"La Piel\", gathers ten short songs born from beats and then played by musicians: bass, synthesizers, guitars, Pablo Trangol's drums and a half-sung, half-spoken voice that moves between R&B, hip hop and alternative pop. Produced by Fresco Fresco (Pablo Acuña and Nacho Barrientos), recorded at La Salitrera and Fresco Fresco and mastered by Chalo G, it features Con.fusión, Balta Neira and Emaflu's flute, with lyrics that run through depression, frustration, anger, hope and play. It is previewed by the singles \"ya me tienes\" (April 2026), \"a ti\" (June 2026) and \"En Vela\" (October 23, 2026), her first release with PHŌNÉ Records."
+  },
+  "links": [
+    {
+      "label": "Spotify",
+      "href": "https://open.spotify.com/artist/7Fx3PtKk7xitpPfDsSCw9S"
+    },
+    {
+      "label": "Apple Music",
+      "href": "https://music.apple.com/us/artist/rosario-lircay/1530697143"
+    },
+    {
+      "label": "YouTube",
+      "href": "https://www.youtube.com/@rosariolircay"
+    },
+    {
+      "label": "Instagram",
+      "href": "https://www.instagram.com/rosariolircay/"
+    },
+    {
+      "label": "TikTok",
+      "href": "https://www.tiktok.com/@rosariolircay"
+    }
+  ],
+  "releases": [
+    {
+      "year": "in production",
+      "title": "La Piel",
+      "format": "Álbum debut · 10 tracks",
+      "notes": "Producido por Fresco Fresco (Pablo Acuña y Nacho Barrientos) · master Chalo G"
+    },
+    {
+      "year": "2026-06",
+      "title": "a ti",
+      "format": "Single · digital",
+      "label": "seda.wav",
+      "cover": "https://is1-ssl.mzstatic.com/image/thumb/Music221/v4/18/8c/c1/188cc1b3-279c-abff-6810-5054fb6627d0/artwork.jpg/600x600bb.jpg",
+      "href": "https://music.apple.com/us/album/a-ti-single/6780959605",
+      "hrefKind": "listen"
+    },
+    {
+      "year": "2026-04",
+      "title": "ya me tienes",
+      "format": "Single · digital",
+      "label": "seda.wav",
+      "notes": "Producción: Fresco Fresco · batería Pablo Trangol (La Salitrera) · master Chalo G",
+      "cover": "https://is1-ssl.mzstatic.com/image/thumb/Music221/v4/37/d9/2d/37d92df1-40f3-1a96-72c2-9f26a0212133/artwork.jpg/600x600bb.jpg",
+      "href": "https://music.apple.com/us/album/ya-me-tienes-single/1885689900",
+      "hrefKind": "listen"
+    },
+    {
+      "year": "2020-10",
+      "title": "Nina",
+      "format": "Single · digital",
+      "label": "Fat Jota",
+      "cover": "https://is1-ssl.mzstatic.com/image/thumb/Music124/v4/c2/b4/ba/c2b4ba5c-a2f7-6655-c76c-46e3bc19512f/0.jpg/600x600bb.jpg",
+      "href": "https://music.apple.com/us/album/nina-single/1530783846",
+      "hrefKind": "listen"
+    }
+  ]
+}

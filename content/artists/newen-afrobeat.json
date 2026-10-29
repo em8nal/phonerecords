@@ -1,0 +1,54 @@
+{
+  "slug": "newen-afrobeat",
+  "order": 10,
+  "name": "Newen Afrobeat",
+  "genres": [
+    "Afrobeat",
+    "Afrofunk",
+    "World Music"
+  ],
+  "origin": "Santiago, Chile · 2009",
+  "role": {
+    "es": "Banda",
+    "en": "Band"
+  },
+  "bio": {
+    "es": "Newen Afrobeat es una banda de afrobeat formada en Santiago de Chile en 2009 y una de las agrupaciones más influyentes de la escena afrobeat latinoamericana contemporánea. La banda ha construido una propuesta que combina la herencia del afrobeat de Fela Kuti con ritmos latinoamericanos, jazz, funk y sonidos de raíz, desarrollando una identidad propia marcada por la energía en vivo, la exploración musical y un fuerte contenido social y político.\n\nCon más de una década de trayectoria, Newen Afrobeat ha llevado su música a escenarios y festivales de América, Europa y África, consolidándose como una de las principales referencias del afrobeat fuera de Nigeria. La banda ha colaborado con figuras históricas del género como Seun Kuti y Dele Sosimi, además de desarrollar una reconocida serie de reinterpretaciones de clásicos de Fela Kuti que han alcanzado millones de reproducciones en plataformas digitales.\n\nEn 2026, la agrupación se encuentra preparando un nuevo álbum de estudio que marcará una nueva etapa sonora para la banda, profundizando la mezcla entre afrobeat, música latinoamericana y elementos contemporáneos de jazz, soul y electrónica. Este nuevo trabajo acompañará una nueva gira internacional por Europa y otros territorios, continuando la expansión global del proyecto.\n\nLanzamientos 2026 con PHŌNÉ Records: single \"La Fuerza\" (30 de octubre de 2026); nuevo álbum de estudio 2026/2027.",
+    "en": "Newen Afrobeat is an afrobeat band formed in Santiago, Chile, in 2009, and one of the most influential bands of the contemporary Latin American afrobeat scene. The band has built a proposal that combines the legacy of Fela Kuti's afrobeat with Latin American rhythms, jazz, funk and roots sounds, developing a distinctive identity marked by live energy, musical exploration and strong social and political content.\n\nWith more than a decade of trajectory, Newen Afrobeat has taken its music to stages and festivals across America, Europe and Africa, consolidating its position as one of the leading afrobeat references outside Nigeria. The band has collaborated with historical figures of the genre such as Seun Kuti and Dele Sosimi, and has developed a recognised series of reinterpretations of Fela Kuti classics that have reached millions of streams on digital platforms.\n\nIn 2026 the group is preparing a new studio album that will mark a new sonic stage for the band, deepening the mix of afrobeat, Latin American music and contemporary elements of jazz, soul and electronics. This new work will accompany a new international tour through Europe and other territories, continuing the global expansion of the project.\n\n2026 releases with PHŌNÉ Records: single \"La Fuerza\" (October 30, 2026); new studio album 2026/2027."
+  },
+  "links": [
+    {
+      "label": "Spotify",
+      "href": "https://open.spotify.com/artist/0PTJ848ulShbjTx2yqaAlb"
+    },
+    {
+      "label": "Apple Music",
+      "href": "https://music.apple.com/us/artist/newen-afrobeat/1023313707"
+    },
+    {
+      "label": "YouTube",
+      "href": "https://www.youtube.com/channel/UCTHMwr5NTvQ0MWbq0nbeP-w"
+    },
+    {
+      "label": "Bandcamp",
+      "href": "https://newenafrobeat.bandcamp.com/music"
+    },
+    {
+      "label": "Instagram",
+      "href": "https://www.instagram.com/newenafrobeat/"
+    },
+    {
+      "label": "Discogs",
+      "href": "https://www.discogs.com/artist/4910686"
+    }
+  ],
+  "sameAs": [
+    "https://musicbrainz.org/artist/e9f34d84-4b44-43d2-a2a2-00f5c235a2c1",
+    "https://www.wikidata.org/wiki/Q56879388"
+  ],
+  "stats": {
+    "spotifyFollowers": 66199,
+    "monthlyListeners": 28729,
+    "youtubeSubs": 44200
+  }
+}
