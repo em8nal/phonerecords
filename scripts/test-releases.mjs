@@ -139,7 +139,30 @@ const DAY_ES = "(?:lunes|martes|mi[eé]rcoles|jueves|viernes|s[aá]bado|domingo)
 const DAY_EN = "(?:Monday|Tuesday|Wednesday|Thursday|Friday|Saturday|Sunday)";
 const MONTH_EN =
   "(?:January|February|March(?=\\s+\\d)|April|May(?=\\s+\\d)|June|July|August|September|October|November|December)";
+const MONTH_EN_ANY = "(?:January|February|March|April|May|June|July|August|September|October|November|December)";
+// Hasta 5 palabras sin puntuación entre el verbo y la fecha: "llega a plataformas digitales el 20 de",
+// "estará disponible en todas las plataformas el 20 de", "hits streaming platforms on November 20".
+const GAP = "(?:[^\\s.,;:()\"«»]+\\s+){0,5}?";
+const FECHA_ES = `(?:(?:el|este)\\s+)?(?:pr[oó]ximo\\s+)?(?:${DAY_ES}|\\d{1,2}\\s+de\\b)`;
+const FECHA_EN = `(?:on\\s+)?(?:(?:this|next)\\s+)?(?:${DAY_EN}|${MONTH_EN}|\\d{1,2}\\s+${MONTH_EN_ANY}\\b|tomorrow)`;
 const TEMPORAL = [
+  // Generalización de la re-revisión del 29-10: verbo de estreno + hueco corto + fecha, con
+  // "el próximo", "verá la luz", "desde" y el formato inglés "30 October". "out" no lleva hueco:
+  // con hueco calzaría "came out in June 2026" (videos de Rosario Lircay y Grietas).
+  [
+    "es-verbo-fecha",
+    new RegExp(
+      `\\b(?:saldr[aá]|llegará|sale|llega|se\\s+(?:lanza|lanzará|publica|publicará|estrena|estrenará)|estar[aá]\\s+disponible|ver[aá]\\s+la\\s+luz|disponible)\\s+${GAP}(?:desde\\s+|a\\s+partir\\s+del?\\s+)?${FECHA_ES}`,
+      "i",
+    ),
+  ],
+  [
+    "en-verbo-fecha",
+    new RegExp(
+      `\\b(?:available|streaming|releases|arrives|arriving|drops|lands|hits)\\s+${GAP}${FECHA_EN}\\b|\\bout\\s+(?:on\\s+)?(?:\\d{1,2}\\s+${MONTH_EN_ANY}\\b|tomorrow\\b)`,
+      "i",
+    ),
+  ],
   // Futuro o presente con fecha: "sale el viernes 23", "saldrá el viernes 20 de", "llegará a
   // plataformas el 20 de", "llega a todas las plataformas el viernes 30", "se lanza / se lanzará el
   // 20 de", "se publica el viernes", "estará disponible el 30 de".
@@ -240,6 +263,19 @@ const KNOWN_BAD = [
   "out May 8",
   "available from October 30",
   "The single releases this Friday.",
+  // Re-revisión del 29-10: con palabras entre el verbo y la fecha, "el próximo", "verá la luz" y "30 October".
+  "El álbum sale el próximo viernes 20 de noviembre.",
+  "El single llega el próximo 30 de octubre.",
+  "estará disponible en todas las plataformas el 20 de noviembre",
+  "llega a plataformas digitales el 20 de noviembre",
+  "llegará a plataformas digitales el viernes 20",
+  "disponible en todas las plataformas desde el 20 de noviembre",
+  "verá la luz el 20 de noviembre",
+  "the single, out 30 October on PHŌNÉ Records",
+  "available from 30 October",
+  "available on all platforms from November 20",
+  "hits streaming platforms on November 20",
+  "out tomorrow",
 ];
 const missed = KNOWN_BAD.filter((s) => temporalHits(s).length === 0);
 report(`TEMPORAL detecta las ${KNOWN_BAD.length} frases y etiquetas viejas o probables`, missed.length === 0, list(missed.map((s) => `«${s.slice(0, 60)}»`)));
@@ -270,7 +306,7 @@ const NEUTRAL = [
 // tienen que existir tal cual en los datos (se comprueba abajo, con temporalFields) y pasar limpios.
 const NEUTRAL_DATA = [
   'y su primer lanzamiento con PHŌNÉ Records, publicado el viernes 23 de octubre de 2026; el enlace de la sección "Escuchar" lleva a todas las plataformas.',
-  'and her first release with PHŌNÉ Records, released on Friday, October 23, 2026; the link in the "Listen" section takes you to all platforms.',
+  'and her first release with PHŌNÉ Records, published on Friday, October 23, 2026; the link in the "Listen" section takes you to all platforms.',
   '"La Fuerza" es un single de Newen Afrobeat editado con PHŌNÉ Records, con fecha de lanzamiento el viernes 30 de octubre de 2026.',
   "El tema dura 4:44 y se publica como single digital, también en alta resolución (24 bits / 48 kHz) en Qobuz.",
   'El enlace de la sección "Escuchar" lleva a todas las plataformas.',
@@ -280,7 +316,7 @@ const NEUTRAL_DATA = [
   '"Un Rezo" es un single de Klaus B con fecha de lanzamiento el jueves 5 de noviembre de 2026, dos semanas después de "Destellos de ti".',
   'Es el segundo adelanto del álbum "Una Cuota De Caos" (viernes 20 de noviembre de 2026) y cuenta con videoclip oficial.',
   '"Un Rezo" is a single by Klaus B with a release date of Thursday, November 5, 2026, two weeks after "Destellos de ti".',
-  'It is the second taste of the album "Una Cuota De Caos" (Friday, November 20, 2026), and it has an official music video.',
+  'It is the second preview from the album "Una Cuota De Caos" (Friday, November 20, 2026), and it has an official music video.',
   '"Destellos de ti" es un single de Klaus B publicado el jueves 22 de octubre de 2026.',
   '"Destellos de ti" is a single by Klaus B, released on Thursday, October 22, 2026.',
   'el single con el que Klaus B abre el ciclo de "Una Cuota De Caos" (20 de noviembre de 2026), su álbum con PHŌNÉ Records.',

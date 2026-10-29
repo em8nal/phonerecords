@@ -16,13 +16,16 @@ import { ArtistVideosSection } from "@/components/phone/video-artist-section";
 
 type ActionLink = { href: string; kind: "listen" | "buy" };
 
+// El smart link del lanzamiento (ONErpm, The Orchard) manda como "Escuchar": antes del estreno es el
+// pre-save y después lleva a todas las plataformas. Un perfil de Spotify (/artist/) no es el lanzamiento.
 function pickReleaseActions(
   links: { label: string; href: string }[] | undefined,
+  smartLink?: string,
 ): { listen?: ActionLink; buy?: ActionLink } {
-  if (!links?.length) return {};
-  let listen: ActionLink | undefined;
+  if (!links?.length && !smartLink) return {};
+  let listen: ActionLink | undefined = smartLink ? { href: smartLink, kind: "listen" } : undefined;
   let buy: ActionLink | undefined;
-  for (const l of links) {
+  for (const l of links ?? []) {
     const u = l.href.toLowerCase();
     const isBuy =
       u.includes("discogs.com/release") ||
@@ -35,9 +38,11 @@ function pickReleaseActions(
       u.includes("soundcloud.com") ||
       u.includes("tidal.com") ||
       u.includes("onerpm.link") ||
+      u.includes("orcd.co") ||
       u.includes("youtube.com");
+    const isArtistProfile = u.includes("open.spotify.com/") && u.includes("/artist/");
     if (isBuy && !buy) buy = { href: l.href, kind: "buy" };
-    else if (isListen && !listen) listen = { href: l.href, kind: "listen" };
+    else if (isListen && !isArtistProfile && !listen) listen = { href: l.href, kind: "listen" };
   }
   return { listen, buy };
 }
@@ -424,7 +429,7 @@ export default async function ArtistPage({
               <div className="border-t border-foreground/10">
                 {allEntries.map((r) => {
                   const release = r.releaseSlug ? getRelease(r.releaseSlug) : undefined;
-                  const richActions = pickReleaseActions(release?.links);
+                  const richActions = pickReleaseActions(release?.links, release?.smartLink);
                   // Compose final listen + buy. Lightweight entries (no rich record) fall back to externalHref.
                   let listenAction: ActionLink | undefined = richActions.listen;
                   let buyAction: ActionLink | undefined = richActions.buy;
