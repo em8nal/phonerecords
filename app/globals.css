@@ -90,8 +90,11 @@
   body {
     @apply bg-background text-foreground;
   }
-  html {
-    scroll-behavior: smooth;
+  /* Solo si el sistema no pide movimiento reducido: con "reduce", las anclas saltan sin animar. */
+  @media (prefers-reduced-motion: no-preference) {
+    html {
+      scroll-behavior: smooth;
+    }
   }
 }
 
