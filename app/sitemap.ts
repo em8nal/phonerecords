@@ -5,6 +5,7 @@ import { releases as releaseList } from "../lib/releases";
 import { getPublishedVideos } from "../lib/videos";
 import { getArtistEntries, getCatalogEntries } from "../lib/catalog";
 import { getUpcomingEvents } from "../lib/events";
+import { getAppearances } from "./[lang]/artistas/roster-index";
 import { SITE } from "../lib/schema";
 import { exactPastDate, latestDate } from "../lib/seo";
 
@@ -28,7 +29,7 @@ function withAlternates(path: string) {
   };
 }
 
-const STATIC_PAGES = ["/manifiesto", "/sello", "/servicios", "/catalogo", "/videos", "/eventos", "/contacto", "/privacidad", "/press-kit"] as const;
+const STATIC_PAGES = ["/artistas", "/manifiesto", "/sello", "/servicios", "/catalogo", "/videos", "/eventos", "/contacto", "/privacidad", "/press-kit"] as const;
 type StaticPath = "" | (typeof STATIC_PAGES)[number];
 
 /**
@@ -40,6 +41,7 @@ type StaticPath = "" | (typeof STATIC_PAGES)[number];
  */
 const STATIC_LASTMOD: Record<StaticPath, string | undefined> = {
   "": "2026-10-26",
+  "/artistas": "2026-10-29", // p19 carril R: fecha del commit que crea el índice
   "/manifiesto": "2026-10-26",
   "/sello": "2026-10-29",
   "/servicios": "2026-10-26", // pendiente 18: fecha del commit que crea la página
@@ -100,6 +102,12 @@ export default function sitemap(): MetadataRoute.Sitemap {
   const dataLastmod: Partial<Record<StaticPath, string | undefined>> = {
     "/catalogo": latestDate(getCatalogEntries().map((e) => exactPastDate(e.releaseDate, now))),
     "/videos": latestDate(published.map((v) => exactPastDate(v.date, now))),
+    // El índice lista "Aparece en": cuenta el lanzamiento más reciente de esa sección.
+    "/artistas": latestDate(
+      getAppearances()
+        .flatMap((a) => a.releases)
+        .map((r) => exactPastDate(r.releaseDate, now)),
+    ),
   };
 
   // /eventos sale del sitemap mientras no haya fechas próximas (mismo filtro que la página,
