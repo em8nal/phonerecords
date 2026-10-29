@@ -6,7 +6,11 @@
 //   2. ES y EN del footer tienen la misma secuencia entre sí.
 //   3. components/landing/integrations-section.tsx exporta `roster` y su secuencia
 //      (slug + name) es exactamente la de `artists`.
-// El archivo TSX no se puede importar desde Node (alias @/, JSX): se lee como texto.
+// Carril N (p19): R1 primera oración de cada bio (nombre, lugar y año de `origin`); R2 `role`;
+//   R3 enlaces https en el orden de ARTIST_PLATFORMS con su etiqueta; R4 rel="me" e íconos;
+//   R5 `sameAs` (MusicBrainz y Wikidata); R6 press kit ES · EN (PDF, mapa de tamaños, nombre
+//   de descarga); R7 "Datos clave" con relojes fijos.
+// Los archivos TSX no se pueden importar desde Node (alias @/, JSX): se leen como texto.
 import { readFileSync, existsSync, statSync } from "node:fs";
 import { artists, getArtist, ARTIST_PLATFORMS, linkPlatform, artistLinkRel, artistSameAs } from "../lib/artists.ts";
 import { artistKeyFacts, splitOrigin } from "../lib/artist-facts.ts";
