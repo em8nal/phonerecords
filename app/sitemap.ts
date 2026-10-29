@@ -6,6 +6,7 @@ import { getPublishedVideos } from "../lib/videos";
 import { getArtistEntries, getCatalogEntries } from "../lib/catalog";
 import { getUpcomingEvents } from "../lib/events";
 import { getAppearances } from "./[lang]/artistas/roster-index";
+import { getPublishedPieces, publishedDay } from "../lib/journal";
 import { SITE } from "../lib/schema";
 import { exactPastDate, latestDate } from "../lib/seo";
 
@@ -117,7 +118,18 @@ export default function sitemap(): MetadataRoute.Sitemap {
     (path) => entries(path, latestDate([STATIC_LASTMOD[path], dataLastmod[path]]), "monthly", 0.7),
   );
 
-  const rest = [...editorial, ...artists, ...releases, ...videos];
+  // Journal: solo con piezas publicadas (sin piezas, el índice lleva noindex y queda fuera). Una
+  // pieza entra a la hora de su publishAt, en paridad con su página (404 hasta entonces).
+  const pieces = getPublishedPieces(now);
+  const journal =
+    pieces.length > 0
+      ? [
+          ...entries("/journal", latestDate(pieces.map((p) => exactPastDate(publishedDay(p), now))), "weekly", 0.7),
+          ...pieces.flatMap((p) => entries(`/journal/${p.slug}`, exactPastDate(publishedDay(p), now), "monthly", 0.6)),
+        ]
+      : [];
+
+  const rest = [...editorial, ...journal, ...artists, ...releases, ...videos];
 
   // Portada: el último cambio de todo el sitio.
   const home = entries(
