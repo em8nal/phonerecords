@@ -11,6 +11,58 @@ export type ArtistLink = {
   href: string;
 };
 
+export type ArtistPlatform =
+  | "spotify"
+  | "apple-music"
+  | "youtube"
+  | "bandcamp"
+  | "soundcloud"
+  | "instagram"
+  | "tiktok"
+  | "discogs";
+
+const hostIs = (...domains: string[]) => (host: string) =>
+  domains.some((d) => host === d || host.endsWith(`.${d}`));
+
+/**
+ * Plataformas de los enlaces del artista, en el orden del estándar del 21-10 (plan 11a):
+ * Spotify · Apple Music · YouTube · Bandcamp · SoundCloud · Instagram · TikTok, y Discogs al
+ * final. `links` sigue este orden y usa estas etiquetas (lo vigila `pnpm test:roster`).
+ * `official`: perfil propio del artista, que lleva `rel="me"`. Discogs no lo es: es una ficha
+ * de base de datos que cualquiera edita, y `rel="me"` afirma identidad.
+ */
+export const ARTIST_PLATFORMS: readonly {
+  id: ArtistPlatform;
+  label: string;
+  matchHost: (host: string) => boolean;
+  official: boolean;
+}[] = [
+  { id: "spotify", label: "Spotify", matchHost: hostIs("spotify.com"), official: true },
+  { id: "apple-music", label: "Apple Music", matchHost: hostIs("music.apple.com"), official: true },
+  { id: "youtube", label: "YouTube", matchHost: hostIs("youtube.com", "youtu.be"), official: true },
+  { id: "bandcamp", label: "Bandcamp", matchHost: hostIs("bandcamp.com"), official: true },
+  { id: "soundcloud", label: "SoundCloud", matchHost: hostIs("soundcloud.com"), official: true },
+  { id: "instagram", label: "Instagram", matchHost: hostIs("instagram.com"), official: true },
+  { id: "tiktok", label: "TikTok", matchHost: hostIs("tiktok.com"), official: true },
+  { id: "discogs", label: "Discogs", matchHost: hostIs("discogs.com"), official: false },
+];
+
+/** Plataforma de un enlace según su hostname; undefined si no es una de ARTIST_PLATFORMS. */
+export function linkPlatform(href: string): (typeof ARTIST_PLATFORMS)[number] | undefined {
+  let host: string;
+  try {
+    host = new URL(href).hostname.toLowerCase();
+  } catch {
+    return undefined;
+  }
+  return ARTIST_PLATFORMS.find((p) => p.matchHost(host));
+}
+
+/** `rel` del enlace en la ficha: "me" solo en los perfiles propios (no en Discogs ni en uno desconocido). */
+export function artistLinkRel(href: string): string {
+  return linkPlatform(href)?.official ? "me noopener noreferrer" : "noopener noreferrer";
+}
+
 export type Release = {
   year: string;
   title: string;
@@ -32,8 +84,20 @@ export type Artist = {
   alternateName?: string[];
   genres: string[];
   origin: string;
+  /**
+   * Formación o instrumento principal, tal como lo dice la bio ("Datos clave" de la ficha,
+   * lib/artist-facts.ts). Obligatorio: un artista nuevo no compila sin él.
+   */
+  role: { es: string; en: string };
   bio: { es: string; en: string };
   links: ArtistLink[];
+  /**
+   * Identificadores en bases de datos públicas (MusicBrainz, Wikidata) que van al `sameAs`
+   * del JSON-LD junto con `links` (artistSameAs) y no se muestran en la ficha. Solo
+   * coincidencias inequívocas: mismo nombre, país y género o miembros, con la evidencia en
+   * el reporte del carril N (p19). Si hay duda, no se agrega.
+   */
+  sameAs?: string[];
   /**
    * Solo lanzamientos SIN ficha en lib/releases.ts (singles de otros sellos, discos
    * en producción…). Lo que ya tiene ficha no se repite aquí: la discografía de la
@@ -53,9 +117,10 @@ export const artists: Artist[] = [
     name: "Newen Afrobeat",
     genres: ["Afrobeat", "Afrofunk", "World Music"],
     origin: "Santiago, Chile · 2009",
+    role: { es: "Banda", en: "Band" },
     bio: {
       es:
-        `Newen Afrobeat es una de las agrupaciones más influyentes de la escena afrobeat latinoamericana contemporánea. Formada en Santiago de Chile, la banda ha construido una propuesta que combina la herencia del afrobeat de Fela Kuti con ritmos latinoamericanos, jazz, funk y sonidos de raíz, desarrollando una identidad propia marcada por la energía en vivo, la exploración musical y un fuerte contenido social y político.
+        `Newen Afrobeat es una banda de afrobeat formada en Santiago de Chile en 2009 y una de las agrupaciones más influyentes de la escena afrobeat latinoamericana contemporánea. La banda ha construido una propuesta que combina la herencia del afrobeat de Fela Kuti con ritmos latinoamericanos, jazz, funk y sonidos de raíz, desarrollando una identidad propia marcada por la energía en vivo, la exploración musical y un fuerte contenido social y político.
 
 Con más de una década de trayectoria, Newen Afrobeat ha llevado su música a escenarios y festivales de América, Europa y África, consolidándose como una de las principales referencias del afrobeat fuera de Nigeria. La banda ha colaborado con figuras históricas del género como Seun Kuti y Dele Sosimi, además de desarrollar una reconocida serie de reinterpretaciones de clásicos de Fela Kuti que han alcanzado millones de reproducciones en plataformas digitales.
 
@@ -63,7 +128,7 @@ En 2026, la agrupación se encuentra preparando un nuevo álbum de estudio que m
 
 Lanzamientos 2026 con PHŌNÉ Records: single "La Fuerza" (30 de octubre de 2026); nuevo álbum de estudio 2026/2027.`,
       en:
-        `Newen Afrobeat is one of the most influential bands of the contemporary Latin American afrobeat scene. Formed in Santiago, Chile, the band has built a proposal that combines the legacy of Fela Kuti's afrobeat with Latin American rhythms, jazz, funk and roots sounds, developing a distinctive identity marked by live energy, musical exploration and strong social and political content.
+        `Newen Afrobeat is an afrobeat band formed in Santiago, Chile, in 2009, and one of the most influential bands of the contemporary Latin American afrobeat scene. The band has built a proposal that combines the legacy of Fela Kuti's afrobeat with Latin American rhythms, jazz, funk and roots sounds, developing a distinctive identity marked by live energy, musical exploration and strong social and political content.
 
 With more than a decade of trajectory, Newen Afrobeat has taken its music to stages and festivals across America, Europe and Africa, consolidating its position as one of the leading afrobeat references outside Nigeria. The band has collaborated with historical figures of the genre such as Seun Kuti and Dele Sosimi, and has developed a recognised series of reinterpretations of Fela Kuti classics that have reached millions of streams on digital platforms.
 
@@ -77,6 +142,13 @@ In 2026 the group is preparing a new studio album that will mark a new sonic sta
       { label: "YouTube", href: "https://www.youtube.com/channel/UCTHMwr5NTvQ0MWbq0nbeP-w" },
       { label: "Bandcamp", href: "https://newenafrobeat.bandcamp.com/music" },
       { label: "Instagram", href: "https://www.instagram.com/newenafrobeat/" },
+      // De las relaciones de MusicBrainz y de Wikidata (P1953), verificado el 29-10-2026.
+      { label: "Discogs", href: "https://www.discogs.com/artist/4910686" },
+    ],
+    // MusicBrainz (Group, CL, afrobeat; mismo canal de YouTube y Bandcamp) y Wikidata (P434 = ese MBID).
+    sameAs: [
+      "https://musicbrainz.org/artist/e9f34d84-4b44-43d2-a2a2-00f5c235a2c1",
+      "https://www.wikidata.org/wiki/Q56879388",
     ],
     stats: { spotifyFollowers: 66199, monthlyListeners: 28729, youtubeSubs: 44200 },
   },
@@ -85,6 +157,10 @@ In 2026 the group is preparing a new studio album that will mark a new sonic sta
     name: "ecamhi",
     genres: ["Instrumental", "Jazz", "Interdisciplinar"],
     origin: "Santiago, Chile",
+    role: {
+      es: "Trompeta, producción y composición (proyecto solista)",
+      en: "Trumpet, production and composition (solo project)",
+    },
     bio: {
       es:
         `ecamhi es el proyecto solista de Enrique Camhi, trompetista, productor y compositor chileno con una trayectoria ligada a distintos proyectos relevantes de la escena musical nacional. A lo largo de los años ha trabajado como músico y creativo junto a artistas y bandas como Newen Afrobeat y La Combo Tortuga, desarrollando una identidad artística marcada por la exploración sonora y la mezcla de géneros.
@@ -113,10 +189,14 @@ Upcoming releases: album εποχή (2026), EP "en viaje" (2027).`,
     alternateName: ["Con.fusion"],
     genres: ["Hip Hop", "Jazz", "Neo Soul"],
     origin: "Santiago, Chile",
+    role: {
+      es: "Voz: canto, rap y scat (proyecto solista)",
+      en: "Vocals: singing, rap and scat (solo project)",
+    },
     stats: { monthlyListeners: 8700 },
     bio: {
       es:
-        `Con.fusión es el proyecto musical solista de Catalina Aguilera Martínez, una propuesta que transita entre el hip hop, el jazz y el neosoul, incorporando exploraciones vocales que van desde el canto hasta el rap y el scat. Su trayectoria comienza en colaboración con el productor Fat Jota, desarrollando un sonido cercano al lo-fi hip hop, para luego evolucionar hacia la banda Fat Lady, donde profundiza en una fusión entre neosoul y rock a partir de composiciones previas. Ha participado en espacios como Beatminds, encuentro de hip hop dirigido por el beatmaker chileno DJ Dacel, consolidando su presencia en la escena.
+        `Con.fusión es el proyecto musical solista de Catalina Aguilera Martínez, de Santiago de Chile: una propuesta que transita entre el hip hop, el jazz y el neosoul, incorporando exploraciones vocales que van desde el canto hasta el rap y el scat. Su trayectoria comienza en colaboración con el productor Fat Jota, desarrollando un sonido cercano al lo-fi hip hop, para luego evolucionar hacia la banda Fat Lady, donde profundiza en una fusión entre neosoul y rock a partir de composiciones previas. Ha participado en espacios como Beatminds, encuentro de hip hop dirigido por el beatmaker chileno DJ Dacel, consolidando su presencia en la escena.
 
 En paralelo, ha desarrollado un amplio trabajo colaborativo en la música chilena, participando en grabaciones junto a Matiah Chinaski, Pablo Joaquín (en su disco Tintinea), Búfalo Dit (en Errores irrepetibles, producido por Jenry Cancura) y siendo parte del disco Del dicho al hecho del artista Terrible. Como intérprete versátil, se ha desempeñado además como corista para proyectos como Pau, La Hipocresía Mató al Gato y actualmente en la grabación de coros para la banda Newen Afrobeat.
 
@@ -124,7 +204,7 @@ Actualmente forma parte del show en vivo de Matiah Chinaski, donde aporta una pr
 
 Último lanzamiento: "Cuántas veces" (octubre 2026), single que abre el catálogo 2026 del sello. Próximo: "Tulpa", su primer álbum solista, producido por Matiah Chinaski (2027).`,
       en:
-        `Con.fusión is the solo musical project of Catalina Aguilera Martínez, a proposal moving between hip hop, jazz and neosoul, incorporating vocal explorations that range from singing to rap and scat. Her trajectory begins in collaboration with producer Fat Jota, developing a sound close to lo-fi hip hop, later evolving towards the band Fat Lady, where she deepens a fusion between neosoul and rock from earlier compositions. She has participated in spaces such as Beatminds, the hip hop gathering led by Chilean beatmaker DJ Dacel, consolidating her presence in the scene.
+        `Con.fusión is the solo musical project of Catalina Aguilera Martínez, from Santiago, Chile: a proposal moving between hip hop, jazz and neosoul, incorporating vocal explorations that range from singing to rap and scat. Her trajectory begins in collaboration with producer Fat Jota, developing a sound close to lo-fi hip hop, later evolving towards the band Fat Lady, where she deepens a fusion between neosoul and rock from earlier compositions. She has participated in spaces such as Beatminds, the hip hop gathering led by Chilean beatmaker DJ Dacel, consolidating her presence in the scene.
 
 In parallel, she has developed extensive collaborative work in Chilean music, recording with Matiah Chinaski, Pablo Joaquín (on his album Tintinea), Búfalo Dit (on Errores irrepetibles, produced by Jenry Cancura) and as part of Del dicho al hecho by the artist Terrible. As a versatile performer, she has also worked as backing vocalist for projects such as Pau, La Hipocresía Mató al Gato, and is currently recording choir parts for Newen Afrobeat.
 
@@ -148,9 +228,13 @@ Latest release: "Cuántas veces" (October 2026), the single that opens the label
     alternateName: ["Klaus Brantmayer"],
     genres: ["Nu-jazz", "Hip-hop jazz", "Rap jazz", "Neo-soul"],
     origin: "Santiago, Chile",
+    role: {
+      es: "Saxofón, flauta, composición y producción",
+      en: "Saxophone, flute, composition and production",
+    },
     bio: {
       es:
-        `Saxofonista, flautista, compositor y productor chileno. Realizó estudios independientes y académicos, tanto doctos como populares. Ha profundizado su desarrollo musical a través de la improvisación y de la experiencia en escenarios. Actualmente forma parte estable en diversos proyectos como Newen Afrobeat, Pascuala Ilabaca y Fauna, el dúo de hip-hop Gestosimple & Klaus B, Valentina Marinkovic, Fran Ri y Camila Bañados.
+        `Klaus B es un saxofonista, flautista, compositor y productor chileno. Realizó estudios independientes y académicos, tanto doctos como populares. Ha profundizado su desarrollo musical a través de la improvisación y de la experiencia en escenarios. Actualmente forma parte estable en diversos proyectos como Newen Afrobeat, Pascuala Ilabaca y Fauna, el dúo de hip-hop Gestosimple & Klaus B, Valentina Marinkovic, Fran Ri y Camila Bañados.
 
 Su enfoque artístico y su búsqueda personal actual están estrechamente vinculados al nu jazz y a géneros contemporáneos como el funk, el neo soul y el hip-hop, en una exploración constante de un sonido moderno e innovador. Este camino se centra en la calidad interpretativa, la expresividad y la musicalidad, integrando sus influencias dentro de un lenguaje propio.
 
@@ -158,7 +242,7 @@ Ha tocado en diversos escenarios y festivales alrededor del mundo, como en Brasi
 
 Ciclo de lanzamientos 2026 con PHŌNÉ Records: "Destellos de ti" (22 de octubre de 2026), "Un Rezo" (5 de noviembre de 2026) y el álbum "Una Cuota De Caos" (20 de noviembre de 2026).`,
       en:
-        `Saxophone player, flautist, composer and producer from Chile. He pursued both independent and academic studies, in classical and popular music. He has deepened his musical development through improvisation and live experience. He is currently a stable member of various projects such as Newen Afrobeat, Pascuala Ilabaca y Fauna, the hip-hop duo Gestosimple & Klaus B, Valentina Marinkovic, Fran Ri and Camila Bañados.
+        `Klaus B is a saxophone player, flautist, composer and producer from Chile. He pursued both independent and academic studies, in classical and popular music. He has deepened his musical development through improvisation and live experience. He is currently a stable member of various projects such as Newen Afrobeat, Pascuala Ilabaca y Fauna, the hip-hop duo Gestosimple & Klaus B, Valentina Marinkovic, Fran Ri and Camila Bañados.
 
 His artistic focus and current personal search are closely tied to nu jazz and contemporary genres such as funk, neo soul and hip-hop, in a constant exploration of a modern and innovative sound. The path centres on interpretive quality, expressivity and musicality, integrating his influences into a personal language.
 
@@ -180,6 +264,7 @@ He has played on stages and at festivals around the world — Brazil, Colombia, 
     name: "Rosario Lircay",
     genres: ["R&B", "Pop alternativo", "Hip hop", "Soul"],
     origin: "Ñuble · Santiago, Chile",
+    role: { es: "Voz", en: "Vocals" },
     bio: {
       es:
         `Rosario Lircay es el nombre artístico de Rosario Meléndez, cantante chilena nacida en la Región de Ñuble y radicada en Santiago. Con formación en canto jazz y música popular y en producción musical, construyó su oficio en los escenarios como corista: hoy es voz estable en la banda de Alex Anwandter y ha acompañado a Brain Damage, Celeste Shaw, Con.fusión, Pau y LHMG, entre otros, en escenarios como Lollapalooza Chile, el Teatro Caupolicán, el Movistar Arena y el Teatro Gran Rex de Buenos Aires.
@@ -214,4 +299,9 @@ export const artistSlugs = artists.map((a) => a.slug);
 
 export function getArtist(slug: string): Artist | undefined {
   return artists.find((a) => a.slug === slug);
+}
+
+/** `sameAs` del JSON-LD del artista: `links` + `sameAs`, sin duplicados. */
+export function artistSameAs(artist: Pick<Artist, "links" | "sameAs">): string[] {
+  return [...new Set([...artist.links.map((l) => l.href), ...(artist.sameAs ?? [])])];
 }

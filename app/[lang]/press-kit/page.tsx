@@ -5,11 +5,15 @@ import { ArrowLeft } from "lucide-react";
 import { Navigation } from "@/components/landing/navigation";
 import { PageHero } from "@/components/phone/page-hero";
 import { FooterSection } from "@/components/landing/footer-section";
-import { DownloadPdfButton } from "@/components/download-pdf-button";
+import { PressKitDownloads } from "@/components/phone/press-kit-downloads";
 import { artists } from "@/lib/artists";
 import { getArtistEntries } from "@/lib/catalog";
 import { ARTIST_PORTRAIT } from "@/lib/artist-media";
 import { pageMetadata } from "@/lib/seo";
+import type { Language } from "@/lib/translations";
+import { ORG_ID, WEBSITE_ID, toJsonLd } from "@/lib/schema";
+import { FAQ, faqMainEntity } from "@/lib/faq";
+import { FaqList } from "@/components/phone/faq-list";
 
 type LangParams = { lang: string };
 
@@ -50,7 +54,6 @@ const copy = {
     intro:
       "Sello cultural independiente con dirección autoral. Producción integral, management y curaduría de música independiente latinoamericana en diálogo con circuitos europeos y globales.",
     backHome: "Volver al inicio",
-    download: "Descargar PDF",
     sections: {
       label: "Sobre el sello",
       roster: "Roster",
@@ -80,7 +83,6 @@ const copy = {
     intro:
       "Independent cultural label with strong authorial direction. Integral production, management and curation of independent Latin American music in dialogue with European and global circuits.",
     backHome: "Back to home",
-    download: "Download PDF",
     sections: {
       label: "About the label",
       roster: "Roster",
@@ -114,6 +116,7 @@ export default async function PressKitPage({
   const { lang } = await params;
   const isEs = lang === "es";
   const c = isEs ? copy.es : copy.en;
+  const uiLang: Language = isEs ? "es" : "en";
 
   // For each artist, compute counts and pick a representative release (with cover if any).
   const orderedArtists = [...artists].sort((a, b) => {
@@ -139,15 +142,20 @@ export default async function PressKitPage({
 
   const totalReleases = rosterRows.reduce((s, r) => s + r.releaseCount, 0);
 
+  // La página trata sobre el sello (`about`), es parte del sitio (`isPartOf`, un CreativeWork)
+  // y es un FAQPage: `mainEntity` lleva las preguntas frecuentes visibles (lib/faq.ts).
   const schema = {
     "@context": "https://schema.org",
     "@graph": [
       {
-        "@type": "AboutPage",
+        "@type": ["AboutPage", "FAQPage"],
         "@id": `https://phonerecords.cl/${lang}/press-kit`,
+        url: `https://phonerecords.cl/${lang}/press-kit`,
         name: "Press Kit — PHŌNÉ Records",
         inLanguage: isEs ? "es-CL" : "en-US",
-        isPartOf: { "@id": "https://phonerecords.cl/#organization" },
+        about: { "@id": ORG_ID },
+        isPartOf: { "@id": WEBSITE_ID },
+        mainEntity: faqMainEntity("pressKit", lang),
       },
       {
         "@type": "BreadcrumbList",
@@ -165,7 +173,7 @@ export default async function PressKitPage({
       <main id="contenido" tabIndex={-1} className="relative min-h-screen overflow-x-hidden noise-overlay print:noise-overlay-none">
         <script
           type="application/ld+json"
-          dangerouslySetInnerHTML={{ __html: JSON.stringify(schema) }}
+          dangerouslySetInnerHTML={{ __html: toJsonLd(schema) }}
         />
         <PageHero
           image={{
@@ -180,7 +188,7 @@ export default async function PressKitPage({
         />
 
         <article className="max-w-[1100px] mx-auto px-6 lg:px-12 pt-12 lg:pt-16 pb-24 print:pt-8">
-          <div className="flex items-center justify-between mb-12 print:hidden">
+          <div className="flex flex-wrap items-center justify-between gap-4 mb-12 print:hidden">
             <Link
               href={`/${lang}`}
               className="inline-flex items-center gap-2 text-sm text-muted-foreground hover:text-foreground transition-colors group"
@@ -188,11 +196,8 @@ export default async function PressKitPage({
               <ArrowLeft className="w-4 h-4 group-hover:-translate-x-1 transition-transform" />
               {c.backHome}
             </Link>
-            <DownloadPdfButton
-              label={c.download}
-              href={`/press-kits/press-kit-${lang}.pdf`}
-              filename={`phone-records-press-kit-${lang}.pdf`}
-            />
+            {/* Los dos PDF desde cualquier idioma (11c) */}
+            <PressKitDownloads slug={null} uiLang={uiLang} layout="row" />
           </div>
 
           {/* Header */}
@@ -312,6 +317,17 @@ export default async function PressKitPage({
                 ))}
               </dl>
               <p className="mt-6 text-sm italic text-foreground/70">{c.contactNote}</p>
+            </div>
+          </section>
+
+          {/* Preguntas frecuentes (fuera del PDF, que se imprime desde esta página); los mismos
+              textos van al FAQPage del JSON-LD */}
+          <section aria-labelledby="faq-heading" className="mb-16 grid lg:grid-cols-12 gap-6 lg:gap-12 print:hidden">
+            <h2 id="faq-heading" className="lg:col-span-4 text-2xl lg:text-3xl font-display tracking-tight text-foreground/70">
+              {isEs ? "Preguntas frecuentes" : "Frequently asked questions"}
+            </h2>
+            <div className="lg:col-span-8">
+              <FaqList items={FAQ.pressKit[uiLang]} lang={uiLang} />
             </div>
           </section>
 

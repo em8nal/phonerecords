@@ -2,10 +2,10 @@ import type { Metadata } from "next";
 import { notFound } from "next/navigation";
 import Image from "next/image";
 import Link from "next/link";
-import { ArrowLeft, ExternalLink, FileText } from "lucide-react";
+import { ArrowLeft, ExternalLink } from "lucide-react";
 import { Navigation } from "@/components/landing/navigation";
 import { FooterSection } from "@/components/landing/footer-section";
-import { artistSlugs, getArtist } from "@/lib/artists";
+import { artistLinkRel, artistSameAs, artistSlugs, getArtist, linkPlatform } from "@/lib/artists";
 import { getArtistEntries } from "@/lib/catalog";
 import { getRelease, isPhoneRelease } from "@/lib/releases";
 import { isUpcoming } from "@/lib/release-date";
@@ -13,6 +13,10 @@ import { PageHero } from "@/components/phone/page-hero";
 import { ArtistCardGrid } from "@/components/phone/artist-card-grid";
 import { getArtistHero, getArtistPortrait } from "@/lib/artist-media";
 import { ArtistVideosSection } from "@/components/phone/video-artist-section";
+import { ArtistKeyFacts } from "@/components/phone/artist-key-facts";
+import { PlatformIcon } from "@/components/phone/platform-icon";
+import { PressKitDownloads } from "@/components/phone/press-kit-downloads";
+import { splitOrigin } from "@/lib/artist-facts";
 
 type ActionLink = { href: string; kind: "listen" | "buy" };
 
@@ -48,7 +52,7 @@ function pickReleaseActions(
 }
 import { SpotifyArtistEmbed } from "@/components/spotify-embed";
 import type { Language } from "@/lib/translations";
-import { SITE, ORG_ID, artistId as artistLdId, absUrl } from "@/lib/schema";
+import { SITE, ORG_ID, artistId as artistLdId, absUrl, toJsonLd } from "@/lib/schema";
 
 function extractSpotifyArtistId(links: { href: string }[]): string | null {
   const sp = links.find((l) => l.href.includes("open.spotify.com/artist/"));
@@ -62,8 +66,6 @@ type ArtistParams = { lang: string; slug: string };
 
 /** Fecha ISO completa o parcial ("2026", "2026-06", "2026-06-12"); deja fuera "in production". */
 const LD_DATE_RE = /^\d{4}(-\d{2}){0,2}$/;
-/** Origen con año de formación: "Santiago, Chile · 2009" → lugar + año. */
-const ORIGIN_YEAR_RE = /^(.*\S)\s*·\s*(\d{4})$/;
 
 /**
  * Sello que edita el lanzamiento, para `recordLabel`: PHŌNÉ con el @id de la
@@ -164,10 +166,12 @@ export default async function ArtistPage({
   // @id estable e igual en ES y EN (la url sí va por idioma); el mismo que usa el
   // `member` del sello en la portada y el `byArtist` de las fichas de lanzamiento.
   const artistId = artistLdId(slug);
-  const originMatch = ORIGIN_YEAR_RE.exec(artist.origin);
+  const origin = splitOrigin(artist.origin);
   // `album` solo con los lanzamientos propios: las colaboraciones (otro artista
   // principal) ya cuelgan del grafo de ese artista.
   const ownEntries = allEntries.filter((e) => e.artistSlug === slug);
+  // Enlaces de la ficha + MusicBrainz y Wikidata (que no se muestran).
+  const sameAs = artistSameAs(artist);
   const schema = {
     "@context": "https://schema.org",
     "@graph": [
@@ -179,14 +183,14 @@ export default async function ArtistPage({
         description: bio,
         genre: artist.genres,
         url,
-        ...(artist.links.length ? { sameAs: artist.links.map((l) => l.href) } : {}),
+        ...(sameAs.length ? { sameAs } : {}),
         ...(portrait ? { image: absUrl(portrait) } : {}),
         // Un Place es un lugar: el año de "Santiago, Chile · 2009" va solo en foundingDate.
-        location: { "@type": "Place", name: originMatch?.[1] ?? artist.origin },
-        ...(originMatch
+        location: { "@type": "Place", name: origin.place },
+        ...(origin.year
           ? {
-              foundingLocation: { "@type": "Place", name: originMatch[1] },
-              foundingDate: originMatch[2],
+              foundingLocation: { "@type": "Place", name: origin.place },
+              foundingDate: origin.year,
             }
           : {}),
         // Inverso del `member` de la organización. MusicGroup no tiene `recordLabel`.
@@ -243,7 +247,7 @@ export default async function ArtistPage({
       <main id="contenido" tabIndex={-1} className="relative min-h-screen overflow-x-hidden noise-overlay">
         <script
           type="application/ld+json"
-          dangerouslySetInnerHTML={{ __html: JSON.stringify(schema) }}
+          dangerouslySetInnerHTML={{ __html: toJsonLd(schema) }}
         />
 
         {/* Hero fotográfico ancho: contiene el h1 (nombre) y el eyebrow (géneros) */}
@@ -263,14 +267,12 @@ export default async function ArtistPage({
             {labels.back}
           </Link>
 
-          {/* Header: con hero, el nombre y los géneros ya van sobre la foto (h1 del PageHero) */}
+          {/* Con hero, el nombre y los géneros ya van sobre la foto (h1 del PageHero) y la ficha
+              abre con "Datos clave"; sin hero, "Datos clave" va justo después del header. */}
           {hero ? (
-            <header className="mb-12 lg:mb-16">
-              <p className="font-mono text-sm text-muted-foreground">
-                {labels.origin} · {artist.origin}
-              </p>
-            </header>
+            <ArtistKeyFacts slug={slug} lang={uiLang} className="mb-16 lg:mb-20" />
           ) : (
+            <>
             <header className={`mb-16 lg:mb-24 ${portrait ? "grid lg:grid-cols-12 gap-8 lg:gap-12 items-end" : ""}`}>
               <div className={portrait ? "lg:col-span-7 order-2 lg:order-1" : ""}>
                 <div className="font-mono text-xs text-muted-foreground tracking-widest uppercase mb-6">
@@ -299,6 +301,8 @@ export default async function ArtistPage({
                 </div>
               )}
             </header>
+            <ArtistKeyFacts slug={slug} lang={uiLang} className="mb-16 lg:mb-20" />
+            </>
           )}
 
           {/* Bio */}
@@ -367,35 +371,40 @@ export default async function ArtistPage({
                   <h2 className="font-mono text-xs text-muted-foreground uppercase tracking-widest mb-4">
                     {labels.links}
                   </h2>
-                  <ul className="space-y-2">
-                    {artist.links.map((link) => (
-                      <li key={link.href}>
-                        <a
-                          href={link.href}
-                          target="_blank"
-                          rel="noopener noreferrer"
-                          className="inline-flex items-center gap-2 text-sm hover:text-foreground/70 transition-colors group"
-                        >
-                          {link.label}
-                          <ExternalLink className="w-3 h-3 opacity-50 group-hover:opacity-100 transition-opacity" />
-                        </a>
-                      </li>
-                    ))}
+                  {/* Orden y etiquetas: ARTIST_PLATFORMS (lib/artists.ts). rel="me" solo en los perfiles propios. */}
+                  <ul className="space-y-1">
+                    {artist.links.map((link) => {
+                      const platform = linkPlatform(link.href);
+                      return (
+                        <li key={link.href}>
+                          <a
+                            href={link.href}
+                            target="_blank"
+                            rel={artistLinkRel(link.href)}
+                            className="inline-flex min-h-8 items-center gap-2.5 text-sm hover:text-foreground/70 transition-colors rounded-sm focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand"
+                          >
+                            {platform && <PlatformIcon platform={platform.id} />}
+                            {link.label}
+                            <span className="sr-only">{isEs ? " (se abre en pestaña nueva)" : " (opens in new tab)"}</span>
+                          </a>
+                        </li>
+                      );
+                    })}
                   </ul>
                 </div>
               )}
 
-              {/* Press kit */}
+              {/* Press kit: los PDF en español y en inglés desde cualquier idioma (11c) y la versión web */}
               <div>
                 <h2 className="font-mono text-xs text-muted-foreground uppercase tracking-widest mb-4">
-                  {isEs ? "Press kit" : "Press kit"}
+                  Press kit
                 </h2>
+                <PressKitDownloads slug={slug} uiLang={uiLang} layout="stack" />
                 <Link
                   href={`/press/${lang}/${slug}`}
-                  className="inline-flex items-center gap-2 px-4 h-10 text-sm rounded-full border border-foreground/20 hover:bg-foreground/5 transition-colors"
+                  className="mt-4 inline-flex min-h-8 items-center font-mono text-xs uppercase tracking-widest text-muted-foreground underline underline-offset-4 hover:text-foreground transition-colors rounded-sm focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand"
                 >
-                  <FileText className="w-4 h-4" />
-                  {isEs ? "Descargar PDF" : "Download PDF"}
+                  {isEs ? "Versión web" : "View online"}
                 </Link>
               </div>
             </aside>
