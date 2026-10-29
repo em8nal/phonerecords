@@ -515,7 +515,8 @@ const baseSlugs = journalPieces.map((p) => p.slug);
   const og = code(OG);
   report("J6 imagen OG con revalidate = 300 y getPublishedPiece(", /export const revalidate = 300;/.test(og) && og.includes("getPublishedPiece("));
   if (getPublishedPieces(Date.now()).length === 0) {
-    // lib/i18n/** llega con el carril T (lib/translations.ts pasa a barril): se recorre si existe.
+    // Desde el carril T los textos viven en lib/i18n/** (lib/translations.ts es un barril): la carpeta
+    // es obligatoria, para que la guarda no pase en vacío si se mueve o se renombra.
     const walk = (rel) =>
       readdirSync(path.join(ROOT, rel), { withFileTypes: true }).flatMap((d) =>
         d.isDirectory() ? walk(`${rel}/${d.name}`) : /\.(ts|tsx)$/.test(d.name) ? [`${rel}/${d.name}`] : [],
@@ -524,8 +525,8 @@ const baseSlugs = journalPieces.map((p) => p.slug);
     const linked = ["components/landing/navigation.tsx", "components/landing/footer-section.tsx", "lib/translations.ts", ...i18n].filter((f) => src(f).includes("/journal"));
     report(
       `J6 sin piezas publicadas: ni el menú, ni el footer, ni lib/translations.ts, ni lib/i18n/** (${i18n.length} archivos) enlazan a /journal`,
-      linked.length === 0,
-      list(linked),
+      linked.length === 0 && i18n.length > 0,
+      i18n.length === 0 ? "lib/i18n/ no existe o está vacía" : list(linked),
     );
   } else {
     info("J6 hay piezas publicadas: enlazar /journal desde el menú y el footer lo decide el equipo");
