@@ -62,4 +62,39 @@ report(
   portada.map((g) => g.slug).join(" > "),
 );
 
+// ── Carril N ──
+const LANGS = ["es", "en"];
+const list = (arr) => (arr.length ? arr.join(", ") : "");
+/** Sin tildes y en minúsculas: "Chile" calza con "chileno" y con "Chilean". */
+const norm = (s) => s.normalize("NFD").replace(/[̀-ͯ]/g, "").toLowerCase();
+
+// R1. Primera oración de cada bio: nombre, un lugar de `origin` y el año si `origin` lo trae.
+// Misma regla de corte que firstSentence de app/llms.txt/route.ts (no corta en "Con.fusión").
+{
+  const firstSentence = (bio) => {
+    const paragraph = bio.split(/\n{2,}/)[0].replace(/\s+/g, " ").trim();
+    return paragraph.match(/^.*?[.!?](?=\s|$)/)?.[0] ?? paragraph;
+  };
+  for (const a of artists) {
+    const m = /^(.*\S)\s*·\s*(\d{4})$/.exec(a.origin);
+    const place = m ? m[1] : a.origin;
+    const year = m?.[2];
+    const places = place.split(/[,·]/).map((p) => norm(p.trim())).filter(Boolean);
+    for (const lang of LANGS) {
+      const first = firstSentence(a.bio[lang]);
+      const s = norm(first);
+      const missing = [
+        s.includes(norm(a.name)) ? null : "nombre",
+        places.some((p) => s.includes(p)) ? null : "lugar",
+        !year || s.includes(year) ? null : `año ${year}`,
+      ].filter(Boolean);
+      report(
+        `R1 [${lang}] ${a.slug}: la primera oración dice quién es`,
+        missing.length === 0,
+        missing.length ? `falta ${list(missing)} en «${first}»` : "",
+      );
+    }
+  }
+}
+
 process.exit(ok ? 0 : 1);
