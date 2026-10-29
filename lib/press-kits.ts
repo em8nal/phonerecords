@@ -14,12 +14,12 @@ export const PRESS_KIT_LANGS: readonly Language[] = ["es", "en"];
 
 /** Bytes de public/press-kits/<clave>-<idioma>.pdf; la clave del sello es "press-kit". */
 export const PRESS_KIT_BYTES: Record<string, Record<Language, number>> = {
-  "press-kit": { es: 1023385, en: 1022357 },
-  "newen-afrobeat": { es: 320485, en: 318835 },
-  "klaus-b": { es: 326162, en: 327557 },
-  ecamhi: { es: 330266, en: 329125 },
-  "con-fusion": { es: 308720, en: 310879 },
-  "rosario-lircay": { es: 304492, en: 306155 },
+  "press-kit": { es: 1025696, en: 1024687 },
+  "newen-afrobeat": { es: 229225, en: 225026 },
+  "klaus-b": { es: 236636, en: 235717 },
+  ecamhi: { es: 241362, en: 238036 },
+  "con-fusion": { es: 217454, en: 217121 },
+  "rosario-lircay": { es: 212109, en: 211590 },
 };
 
 /** `slug` del artista, o null para el press kit del sello. */
