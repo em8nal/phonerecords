@@ -25,6 +25,7 @@ export type Release = {
   description: { es: string; en: string };
   tracklist?: Track[];
   credits?: ReleaseCredit[];
+  /** `label` en español o nombre de plataforma; /en la traduce con releaseLinkLabel (LINK_LABEL_EN). */
   links?: { label: string; href: string }[];
   cover?: string;
   /** Co-credited roster artists; release appears under their filter too. */
@@ -49,14 +50,14 @@ export const releases: Release[] = [
     cover: "/releases/rosario-lircay-en-vela.jpg",
     smartLink: "https://onerpm.link/105010589210",
     description: {
-      es: `"En Vela" es el tercer adelanto de "La Piel", el álbum debut de Rosario Lircay, y su primer lanzamiento con PHŌNÉ Records: sale el viernes 23 de octubre de 2026 en todas las plataformas, con pre-save disponible desde esta ficha. La canción se apoya en un ritmo de hip hop a medio tiempo, con el teclado de Fede Rocha y el scratch de DJ Acres dibujando el fondo sobre el que la voz se debate entre lamentar y superar una pérdida amorosa.
+      es: `"En Vela" es el tercer adelanto de "La Piel", el álbum debut de Rosario Lircay, y su primer lanzamiento con PHŌNÉ Records, publicado el viernes 23 de octubre de 2026; el enlace de la sección "Escuchar" lleva a todas las plataformas. La canción se apoya en un ritmo de hip hop a medio tiempo, con el teclado de Fede Rocha y el scratch de DJ Acres dibujando el fondo sobre el que la voz se debate entre lamentar y superar una pérdida amorosa.
 
 El relato parte con una frase desafiante: no importa si quieres irte, que te vaya bien. Desde ahí la cantante deja claro que quien se fue ya no es bienvenido y que volver tiene consecuencias: encontrarla con otras caricias que se parecen a las suyas. El coro insiste en que se trata de una canción de superación, pero la segunda estrofa vuelve a mirar atrás, pregunta qué nos pasó y se cierra con un cansado "ya qué más da". Ese vaivén es el centro del tema: el autoconvencimiento de quien dice haber dado vuelta la página cuando el olvido todavía no llega. Una noche en vela.
 
 Como el resto del disco, "En Vela" nació de un beat y luego fue interpretada por músicos, con la voz cantada-hablada que caracteriza esta etapa de Rosario Lircay, entre el r&b, el hip hop y el pop alternativo. "La Piel" fue producido por Fresco Fresco (Pablo Acuña y Nacho Barrientos), grabado en La Salitrera y Fresco Fresco y masterizado por Chalo G; sus adelantos anteriores fueron "ya me tienes" (abril de 2026) y "a ti" (junio de 2026).
 
 Rosario Lircay es el nombre artístico de Rosario Meléndez, cantante de la Región de Ñuble radicada en Santiago, corista estable de Alex Anwandter y ex vocalista de Mareo! y Narcisa. "En Vela" dura 2:50 y es ℗ 2026 PHŌNÉ Records, bajo licencia exclusiva a ONErpm. Los créditos completos de composición, grabación, mezcla y arte se agregarán a esta ficha cuando la artista los confirme.`,
-      en: `"En Vela" ("Sleepless") is the third single from "La Piel", Rosario Lircay's debut album, and her first release with PHŌNÉ Records: out Friday, October 23, 2026 on all platforms, with pre-save available from this page. The song rests on a mid-tempo hip hop beat, with Fede Rocha's keyboard and DJ Acres' scratching drawing the backdrop over which the voice wavers between mourning and getting over a lost love.
+      en: `"En Vela" ("Sleepless") is the third single from "La Piel", Rosario Lircay's debut album, and her first release with PHŌNÉ Records, published on Friday, October 23, 2026; the link in the "Listen" section takes you to all platforms. The song rests on a mid-tempo hip hop beat, with Fede Rocha's keyboard and DJ Acres' scratching drawing the backdrop over which the voice wavers between mourning and getting over a lost love.
 
 The story opens with a defiant line: it doesn't matter if you want to leave, good luck to you. From there the singer makes it clear that the one who left is no longer welcome and that coming back has consequences: finding her with other caresses that resemble his. The chorus insists this is a song about moving on, but the second verse looks back again, asks what happened to us and closes with a tired "what does it matter now". That back-and-forth is the heart of the track: the self-persuasion of someone who claims to have turned the page while forgetting hasn't arrived yet. A sleepless night.
 
@@ -71,7 +72,7 @@ Rosario Lircay is the stage name of Rosario Meléndez, a singer from the Ñuble 
       { role: "℗", name: "2026 PHŌNÉ Records, bajo licencia exclusiva a ONErpm" },
     ],
     links: [
-      { label: "Pre-save / Escuchar", href: "https://onerpm.link/105010589210" },
+      { label: "Todas las plataformas", href: "https://onerpm.link/105010589210" },
       { label: "Apple Music", href: "https://music.apple.com/us/album/en-vela-single/6821221086" },
       // Del smartlink; verificado con el oEmbed de Spotify (título "En Vela") el 24-10 y el 26-10-2026.
       { label: "Spotify", href: "https://open.spotify.com/album/5ONQBpFhxX31ruaLxwUMqw" },
@@ -90,20 +91,20 @@ Rosario Lircay is the stage name of Rosario Meléndez, a singer from the Ñuble 
     cover: "/releases/newen-afrobeat-la-fuerza.jpg",
     smartLink: "https://orcd.co/npk70nb",
     description: {
-      es: `"La Fuerza" es el nuevo single de Newen Afrobeat y llega el viernes 30 de octubre de 2026, editado con PHŌNÉ Records. Es la primera canción nueva de la banda desde "Liverpool Session" (2025) y el primer adelanto de la etapa que abre su próximo álbum de estudio, el disco que el grupo prepara durante 2026 y que profundiza el cruce entre afrobeat, música latinoamericana y elementos contemporáneos de jazz, soul y electrónica. El tema dura 4:44 y se publica como single digital; en Qobuz ya puede reservarse en alta resolución (24 bits / 48 kHz) y el streaming queda disponible desde la fecha de salida.
+      es: `"La Fuerza" es un single de Newen Afrobeat editado con PHŌNÉ Records, con fecha de lanzamiento el viernes 30 de octubre de 2026. Es la primera canción nueva de la banda desde "Liverpool Session" (2025) y el primer adelanto de la etapa que abre su próximo álbum de estudio, el disco que el grupo prepara durante 2026 y que profundiza el cruce entre afrobeat, música latinoamericana y elementos contemporáneos de jazz, soul y electrónica. El tema dura 4:44 y se publica como single digital, también en alta resolución (24 bits / 48 kHz) en Qobuz.
 
 Newen Afrobeat es una de las agrupaciones más influyentes de la escena afrobeat latinoamericana. Formada en Santiago de Chile en 2009, fue la primera banda de afrobeat del país y en más de quince años ha llevado su música a escenarios y festivales de América, Europa y África. Su discografía incluye el disco debut "Newen Afrobeat" (2014), "Newen Plays Fela" (2017, con Seun Kuti, Cheick Tidiane Seck y músicos de Egypt 80), "Curiche" (2019), el álbum "Grietas" (2024, con Lido Pimienta, Dele Sosimi, Joe Vasconcellos y Chico César) y "Liverpool Session" (2025), grabado de forma íntegramente análoga.
 
 La portada de "La Fuerza", obra del ilustrador chileno Wacko (@wacko_art), es un paisaje andino: una montaña de cumbres nevadas sobre un desierto rojo, una laguna con flamencos y guanacos bajo un cielo violeta y un sol lleno. Ese imaginario de altura y territorio acompaña el título y anticipa el tono del single, que la banda presentará en vivo en los próximos conciertos.
 
-La grabación es ℗ 2026 Newen Afrobeat y la edición © 2026 PHŌNÉ Records. El pre-save ya está disponible desde el enlace de la sección "Escuchar", donde también puede reservarse en Qobuz en alta resolución. Los créditos completos de composición, grabación, mezcla y master se publicarán cuando la banda los confirme.`,
-      en: `"La Fuerza" ("The Force") is the new single by Newen Afrobeat, out Friday, October 30, 2026 on PHŌNÉ Records. It is the band's first new song since "Liverpool Session" (2025) and the first taste of the stage opened by their next studio album, the record the group is preparing through 2026, which deepens the crossing of afrobeat, Latin American music and contemporary elements of jazz, soul and electronics. The track runs 4:44 and is released as a digital single; on Qobuz it can already be pre-ordered in high resolution (24-bit / 48 kHz), with streaming available from release day.
+La grabación es ℗ 2026 Newen Afrobeat y la edición © 2026 PHŌNÉ Records. El enlace de la sección "Escuchar" lleva a todas las plataformas. Los créditos completos de composición, grabación, mezcla y master se publicarán cuando la banda los confirme.`,
+      en: `"La Fuerza" ("The Force") is a single by Newen Afrobeat on PHŌNÉ Records, with a release date of Friday, October 30, 2026. It is the band's first new song since "Liverpool Session" (2025) and the first taste of the stage opened by their next studio album, the record the group is preparing through 2026, which deepens the crossing of afrobeat, Latin American music and contemporary elements of jazz, soul and electronics. The track runs 4:44 and is released as a digital single, also in high resolution (24-bit / 48 kHz) on Qobuz.
 
 Newen Afrobeat is one of the most influential bands of the Latin American afrobeat scene. Formed in Santiago, Chile in 2009, it was the country's first afrobeat band and in more than fifteen years has taken its music to stages and festivals across the Americas, Europe and Africa. Its discography includes the debut album "Newen Afrobeat" (2014), "Newen Plays Fela" (2017, with Seun Kuti, Cheick Tidiane Seck and members of Egypt 80), "Curiche" (2019), the album "Grietas" (2024, with Lido Pimienta, Dele Sosimi, Joe Vasconcellos and Chico César) and "Liverpool Session" (2025), recorded entirely on analog equipment.
 
 The cover of "La Fuerza", by Chilean illustrator Wacko (@wacko_art), is an Andean landscape: a snow-capped mountain over a red desert, a lagoon with flamingos and guanacos under a violet sky and a full sun. That imagery of altitude and territory matches the title and sets the tone of the single, which the band will present live at its upcoming concerts.
 
-The recording is ℗ 2026 Newen Afrobeat and the release © 2026 PHŌNÉ Records. The pre-save is now available through the link in the "Listen" section, where it can also be pre-ordered on Qobuz in high resolution. Full composition, recording, mixing and mastering credits will be published once the band confirms them.`,
+The recording is ℗ 2026 Newen Afrobeat and the release © 2026 PHŌNÉ Records. The link in the "Listen" section takes you to all platforms. Full composition, recording, mixing and mastering credits will be published once the band confirms them.`,
     },
     tracklist: [{ n: 1, title: "La Fuerza", duration: "4:44" }],
     credits: [
@@ -111,9 +112,14 @@ The recording is ℗ 2026 Newen Afrobeat and the release © 2026 PHŌNÉ Records
       { role: "℗", name: "2026 Newen Afrobeat" },
       { role: "©", name: "2026 PHŌNÉ Records" },
     ],
+    // Apple Music verificado con iTunes Lookup el 29-10-2026 ("La Fuerza - Single", Newen Afrobeat,
+    // 2026-10-30, 1 tema). Spotify: el smart link apunta a open.spotify.com/album/7pDBGQqk3zOhnKhjz95SUZ,
+    // pero el oEmbed da 404 hasta el estreno. El 30-10, si el oEmbed lo confirma, reemplaza a
+    // "Spotify (artista)" con la etiqueta "Spotify" (el perfil ya está en la ficha del artista).
     links: [
-      { label: "Pre-save / Escuchar", href: "https://orcd.co/npk70nb" },
-      { label: "Qobuz (reserva · hi-res)", href: "https://www.qobuz.com/us-en/album/la-fuerza-newen-afrobeat/rkxyy8xslgx0o" },
+      { label: "Todas las plataformas", href: "https://orcd.co/npk70nb" },
+      { label: "Qobuz (hi-res)", href: "https://www.qobuz.com/us-en/album/la-fuerza-newen-afrobeat/rkxyy8xslgx0o" },
+      { label: "Apple Music", href: "https://music.apple.com/us/album/la-fuerza-single/6822447521" },
       { label: "Spotify (artista)", href: "https://open.spotify.com/artist/0PTJ848ulShbjTx2yqaAlb" },
     ],
   },
@@ -317,7 +323,7 @@ The recording is ℗ 2026 Newen Afrobeat and the release © 2026 PHŌNÉ Records
     cover: "/releases/klaus-b-un-rezo.jpg",
     smartLink: "https://onerpm.link/106214256083",
     description: {
-      es: `"Un Rezo" es el segundo single de Klaus B, con fecha de lanzamiento el jueves 5 de noviembre de 2026, dos semanas después de "Destellos de ti". Es el segundo adelanto de "Una Cuota De Caos", el álbum que se publica el viernes 20 de noviembre de 2026, y cuenta con videoclip oficial.
+      es: `"Un Rezo" es un single de Klaus B con fecha de lanzamiento el jueves 5 de noviembre de 2026, dos semanas después de "Destellos de ti". Es el segundo adelanto del álbum "Una Cuota De Caos" (viernes 20 de noviembre de 2026) y cuenta con videoclip oficial.
 
 La canción es nu jazz futurista de carácter espiritual y devocional. La flauta y el trombón se apoyan en una batería con inercia que no deja que la pieza se detenga. El resultado es un tema moderno, inspirador y emocional. El título, "Un Rezo", ya anticipa ese espíritu devocional, aunque el sonido mire hacia adelante: es música de hoy, con la vista puesta en el futuro.
 
@@ -326,7 +332,7 @@ Si "Destellos de ti" abrió el ciclo con un tema emotivo e íntimo, de saxofón,
 Klaus B es integrante de Newen Afrobeat y de la banda de Pascuala Ilabaca, y su música propia fusiona hip hop, jazz, neo soul, funk y ritmos afro-latinoamericanos. En "Un Rezo" firma la composición y la producción, además del saxofón y la flauta que figuran en los créditos del single.
 
 El álbum llega después de "Viaje Sin Tiempo" (2024), disco hecho junto a Gestosimple, y de "Memorias: Mixtape" (2025). Detrás del lanzamiento está PHŌNÉ Records, que lo acompaña en difusión y prensa, con distribución de ONErpm. "Un Rezo" ocupa el centro del calendario: queda entre el primer single (22 de octubre) y el álbum completo (20 de noviembre), a quince días de este último, que cierra el ciclo.`,
-      en: `"Un Rezo" is the second single from Klaus B, with release date Thursday, November 5, 2026, two weeks after "Destellos de ti". It is the second single from "Una Cuota De Caos", the album coming out on Friday, November 20, 2026, and it has an official music video.
+      en: `"Un Rezo" is a single by Klaus B with a release date of Thursday, November 5, 2026, two weeks after "Destellos de ti". It is the second preview from the album "Una Cuota De Caos" (Friday, November 20, 2026), and it has an official music video.
 
 The song is futuristic nu jazz with a spiritual, devotional character. Flute and trombone rest on drums with an inertia that never lets the piece stand still. The result is a modern, inspiring and emotional track. The title, "Un Rezo" ("A Prayer"), already hints at that devotional spirit, even though the sound looks ahead: it is music of today, with its eyes on the future.
 
@@ -341,7 +347,12 @@ The album follows "Viaje Sin Tiempo" (2024), a record made together with Gestosi
       { role: "Sello, difusión y prensa", name: "PHŌNÉ Records" },
       { role: "Distribución", name: "ONErpm" },
     ],
-    links: [{ label: "Pre-save / Escuchar", href: "https://onerpm.link/106214256083" }],
+    // Apple Music verificado con iTunes Lookup el 29-10-2026 ("Un Rezo - Single", Klaus B, 2026-11-05,
+    // 1 tema). Spotify: el smart link de ONErpm no trae el id; se agrega el 05-11 tras el oEmbed.
+    links: [
+      { label: "Todas las plataformas", href: "https://onerpm.link/106214256083" },
+      { label: "Apple Music", href: "https://music.apple.com/us/album/un-rezo-single/6821460706" },
+    ],
   },
   {
     slug: "klaus-b-destellos-de-ti",
@@ -356,7 +367,7 @@ The album follows "Viaje Sin Tiempo" (2024), a record made together with Gestosi
     cover: "/releases/klaus-b-destellos-de-ti.jpg",
     smartLink: "https://onerpm.link/102211016130",
     description: {
-      es: `"Destellos de ti" es el nuevo single de Klaus B, con fecha de lanzamiento el jueves 22 de octubre de 2026. Es el primer adelanto de "Una Cuota De Caos", el álbum del saxofonista, flautista, compositor y productor chileno, y cuenta con videoclip oficial.
+      es: `"Destellos de ti" es un single de Klaus B publicado el jueves 22 de octubre de 2026. Es el primer adelanto de "Una Cuota De Caos", el álbum del saxofonista, flautista, compositor y productor chileno, y cuenta con videoclip oficial.
 
 Lo que suena es nu jazz moderno y futurista. El saxofón y el trombón se encuentran con una banda, y todo descansa sobre una batería con reminiscencias de drum and bass que le da impulso a la canción. Es un tema emotivo e íntimo, pero con mucha potencia y presencia sonora: la emoción y la contundencia conviven en el mismo espacio, sin que una le quite lugar a la otra.
 
@@ -367,7 +378,7 @@ El single tiene además videoclip oficial, igual que el segundo adelanto, "Un Re
 Klaus B llega a este lanzamiento con dos trabajos recientes: el álbum "Viaje Sin Tiempo" (2024), hecho junto a Gestosimple, y "Memorias: Mixtape" (2025). Su música mezcla hip hop, jazz, neo soul y funk con ritmos afro-latinoamericanos, y "Destellos de ti" lleva ese cruce hacia un nu jazz moderno y futurista, con una batería de herencia drum and bass.
 
 En este single, Klaus B firma la composición, el saxofón, la flauta y la producción. PHŌNÉ Records, sello cultural independiente de Santiago de Chile, respalda el lanzamiento con difusión y prensa, y la distribución está a cargo de ONErpm. Dentro del catálogo 2026 del sello, "Destellos de ti" llega tres semanas después de "Cuántas veces", el single de Con.fusión con el que PHŌNÉ Records abre ese catálogo.`,
-      en: `"Destellos de ti" is the new single from Klaus B, with release date Thursday, October 22, 2026. It is the first single from "Una Cuota De Caos", the album by the Chilean saxophonist, flautist, composer and producer, and it has an official music video.
+      en: `"Destellos de ti" is a single by Klaus B, released on Thursday, October 22, 2026. It is the first single from "Una Cuota De Caos", the album by the Chilean saxophonist, flautist, composer and producer, and it has an official music video.
 
 What you hear is modern, futuristic nu jazz. Saxophone and trombone meet a band, and everything rests on drums with echoes of drum and bass that give the song its drive. It is an emotional, intimate piece with real power and sonic presence: feeling and force share the same space without either one taking room from the other.
 
@@ -396,7 +407,7 @@ On this single, Klaus B is credited with composition, saxophone, flute and produ
     ],
     video: { youtubeId: "zEfVXTYtuo8", title: "Klaus B - Destellos De Ti [Videoclip Oficial]" },
     links: [
-      { label: "Pre-save / Escuchar", href: "https://onerpm.link/102211016130" },
+      { label: "Todas las plataformas", href: "https://onerpm.link/102211016130" },
       // Del smartlink; verificado con el oEmbed de Spotify (título "Destellos de Ti") el 24-10 y el 26-10-2026.
       { label: "Spotify", href: "https://open.spotify.com/album/5loHWji5dshEXJv1LavbCF" },
     ],
@@ -1031,6 +1042,24 @@ export function spotifyRefFromLinks(links?: { href: string }[]): SpotifyRef | nu
     if (m) return { kind: m[1] as SpotifyRef["kind"], id: m[2] };
   }
   return null;
+}
+
+/**
+ * Etiquetas de `links` escritas en español que cambian en /en. Las demás son nombres de
+ * plataforma ("Spotify", "Apple Music", "Qobuz (hi-res)"…) y se muestran igual en ambos idiomas.
+ * "Todas las plataformas" nombra el smart link por su destino, no por una acción: "Pre-save" es
+ * falso después del estreno y "Escuchar", antes. `pnpm test:releases` exige que cada etiqueta sea
+ * una clave de este mapa o un nombre de plataforma conocido.
+ */
+export const LINK_LABEL_EN: Record<string, string> = {
+  "Todas las plataformas": "All platforms",
+  "Spotify (artista)": "Spotify (artist)",
+};
+
+/** Etiqueta de un enlace de la ficha en el idioma de la página. */
+export function releaseLinkLabel(label: string, lang: string): string {
+  if (lang === "es") return label;
+  return Object.hasOwn(LINK_LABEL_EN, label) ? LINK_LABEL_EN[label] : label;
 }
 
 /** Nombre del sello tal como aparece en `label` cuando PHŌNÉ edita el lanzamiento. */
